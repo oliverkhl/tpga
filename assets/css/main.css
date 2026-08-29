@@ -1,0 +1,425 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+
+/* --- [1] COLOR PALETTE SYSTEM (AUSTRALIA, VICTORIA & ABORIGINAL FLAGS) ---
+   - Navy Blue (#002147): Australian & Victorian Flag Field
+   - Ochre Red (#C8102E / #B22222): Aboriginal Flag Red Earth
+   - Sun Gold (#FFCC00): Aboriginal Sun & Australian Gold
+   - Charcoal/Black (#111827): Aboriginal Flag Black / Top Half
+*/
+
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+body { background: #f8fafc; color: #111827; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+a { text-decoration: none !important; }
+ul { list-style: none !important; }
+
+/* --- [2] HERITAGE ACKNOWLEDGMENT BAR --- */
+.au-heritage-bar {
+    background: #0f172a;
+    color: #f1f5f9;
+    padding: 10px 0;
+    font-size: 0.85rem;
+    border-bottom: 2px solid #C8102E;
+}
+
+.au-heritage-bar .main-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.flag-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.flag-item {
+    font-size: 1.3rem;
+    line-height: 1;
+}
+
+.state-badge {
+    background: #002147;
+    color: #FFCC00;
+    border: 1px solid #FFCC00;
+    font-weight: 800;
+    font-size: 0.75rem;
+    padding: 2px 8px;
+    border-radius: 6px;
+    letter-spacing: 0.5px;
+}
+
+/* CSS Graphic for the Australian Aboriginal Flag */
+.aboriginal-flag-icon {
+    width: 26px;
+    height: 18px;
+    position: relative;
+    border-radius: 2px;
+    overflow: hidden;
+    display: inline-block;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+
+.flag-top-black {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 50%;
+    background: #000000;
+}
+
+.flag-bottom-red {
+    position: absolute;
+    bottom: 0; left: 0; width: 100%; height: 50%;
+    background: #C8102E;
+}
+
+.flag-sun-yellow {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 8px; height: 8px;
+    background: #FFCC00;
+    border-radius: 50%;
+    z-index: 2;
+}
+
+.country-ack {
+    color: #cbd5e1;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+/* --- [3] HEADER & NAVIGATION --- */
+#header-fixed {
+    position: fixed; top: 0px; left: 0; width: 100%; height: 80px;
+    background: #ffffff; z-index: 10000;
+    border-bottom: 3px solid #002147; display: flex; align-items: center;
+}
+.main-container { max-width: 1200px; width: 90%; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+
+.image-logo { display: flex; align-items: center; transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important; will-change: transform; }
+.image-logo img { height: 60px; width: auto; pointer-events: none; }
+.image-logo:hover { transform: scale(1.08) !important; }
+
+#main-nav { display: flex; align-items: center; }
+#main-nav a { 
+    color: #002147; font-weight: 600; text-decoration: none; 
+    margin-left: 15px; font-size: 0.95rem; padding: 10px 22px; 
+    border-radius: 50px; 
+    transition: 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    will-change: transform;
+}
+#main-nav a:hover { 
+    transform: translateY(-2px) scale(1.05) !important; 
+    background: #002147; color: #FFCC00 !important; 
+}
+.active-link { background: #f1f5f9; color: #C8102E !important; border: 1px solid #C8102E; }
+
+/* --- [4] HERO BANNER (AUSTRALIAN NAVY, OCHRE RED & SUN GOLD GRADIENT) --- */
+#page-wrapper { padding-top: 0px; }
+#hero-banner {
+    min-height: 600px;
+    display: flex; align-items: center; color: #ffffff; padding: 80px 0;
+    background: linear-gradient(135deg, #00152e 0%, #002147 50%, #7f091c 100%);
+}
+
+.hero-flex { 
+    display: flex; flex-direction: column; align-items: center; 
+    text-align: center; gap: 60px; width: 100%;
+}
+.hero-content h1 { font-size: 2.5rem; line-height: 1.1; margin-bottom: 25px; font-weight: 800; text-shadow: 0 2px 10px rgba(0,0,0,0.4); }
+.hero-slogan { font-size: 1.15rem; color: #f8fafc; line-height: 1.6; margin-bottom: 50px; max-width: 600px; }
+
+.badge { 
+    background: rgba(255, 204, 0, 0.15); color: #FFCC00; padding: 6px 16px; 
+    border-radius: 50px; font-size: 0.85rem; font-weight: 800; text-transform: uppercase; 
+    margin-bottom: 20px; border: 1px solid #FFCC00; display: inline-block; 
+}
+
+.hero-btn.big-btn { 
+    display: inline-block; padding: 22px 60px; background: #C8102E; 
+    color: #ffffff !important; text-decoration: none; border-radius: 100px; 
+    font-size: 1.6rem; font-weight: 800; 
+    transition: 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    will-change: transform;
+    box-shadow: 0 10px 25px rgba(200, 16, 46, 0.4);
+}
+.hero-btn:hover { 
+    background: #FFCC00 !important; color: #002147 !important; 
+    transform: translateY(-6px) scale(1.05) !important; 
+    box-shadow: 0 15px 35px rgba(255, 204, 0, 0.5); 
+}
+
+.hero-image { flex: 0 0 45%; display: flex; justify-content: center; align-items: center; }
+.hero-image img { 
+    max-width: 550px; width: 100%; height: auto; border-radius: 20px; 
+    box-shadow: 0 25px 50px rgba(0,0,0,0.5); 
+    border: 2px solid rgba(255,204,0,0.3);
+    transition: 0.6s cubic-bezier(0.165, 0.84, 0.44, 1) !important;
+}
+.hero-image img:hover { transform: scale(1.03) translateY(-8px) !important; }
+
+/* --- [5] LOGO SLIDER --- */
+.logo-slider { background: #ffffff; padding: 35px 0; overflow: hidden; border-bottom: 1px solid #e2e8f0; white-space: nowrap; }
+.slider-track { display: flex; align-items: center; animation: scroll 40s linear infinite; width: max-content; }
+.logo-slider:hover .slider-track { animation-play-state: paused; }
+.text-logo { font-size: 1.8rem; font-weight: 800; margin: 0 50px; transition: 0.4s; display: inline-block; opacity: 0.7; }
+.text-logo:hover { opacity: 1; transform: scale(1.15); }
+.unifi { color: #002147 !important; font-family: sans-serif; } 
+.cisco { color: #C8102E !important; letter-spacing: 2px; border-top: 3px solid #C8102E; }
+.sophos { color: #FFCC00 !important; font-style: italic; background: #002147; padding: 2px 8px; border-radius: 4px; }
+.draytek { color: #002147 !important; font-weight: 700; }
+.tplink { color: #C8102E !important; text-transform: lowercase; }
+.netgear { color: #FFCC00 !important; font-weight: 800; background: #111827; padding: 2px 8px; }
+.telstra { color: #002147 !important; font-style: italic; }
+@keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* --- [6] SERVICE CARDS --- */
+.services-section { padding: 100px 0; background: #f8fafc; }
+.services-grid { display: grid; grid-template-columns: 1fr; gap: 50px; width: 90%; max-width: 1200px; margin: 0 auto; }
+
+.service-card { 
+    background: #ffffff; 
+    border-radius: 35px; 
+    padding: 60px 40px; 
+    text-align: center; 
+    border: 1px solid rgba(0, 33, 71, 0.1); 
+    box-shadow: 0 15px 40px rgba(0, 33, 71, 0.05); 
+    transition: 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); 
+    position: relative;
+    overflow: hidden;
+}
+
+.card-icon-wrapper { 
+    font-size: 5rem; 
+    margin-bottom: 30px; 
+    display: inline-block; 
+    background: #f1f5f9; 
+    width: 130px; 
+    height: 130px; 
+    line-height: 130px; 
+    border-radius: 30px; 
+    transition: 0.4s ease;
+    border: 1px solid rgba(200, 16, 46, 0.2);
+}
+
+.service-card h4 {
+    font-size: 1.6rem;
+    font-weight: 800;
+    margin-bottom: 20px;
+    color: #002147;
+}
+
+.service-card p {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: #475569;
+}
+
+.service-card:hover { 
+    transform: translateY(-15px); 
+    border-color: #C8102E; 
+    box-shadow: 0 30px 60px rgba(200, 16, 46, 0.12);
+}
+
+.service-card:hover .card-icon-wrapper {
+    transform: scale(1.1);
+    background: #fffbe6;
+    border-color: #FFCC00;
+}
+
+/* --- [7] FOOTER --- */
+#modern-footer { background: #00152e; color: #cbd5e1; padding: 60px 0 30px 0; border-top: 4px solid #C8102E; }
+.footer-grid { display: grid; grid-template-columns: 1fr; gap: 40px; }
+.footer-logo { height: 50px; filter: brightness(0) invert(1); margin-bottom: 20px; }
+.footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 25px; margin-top: 30px; text-align: center; font-size: 0.8rem; color: #94a3b8; }
+.footer-col h4 { color: #FFCC00; margin-bottom: 20px; }
+.footer-col a { color: #cbd5e1 !important; transition: 0.3s; display: inline-block; }
+.footer-col a:hover { color: #FFCC00 !important; transform: translateX(5px); display: inline-block; }
+
+/* --- [8] RESPONSIVE LAYOUT --- */
+@media screen and (min-width: 981px) {
+    .hero-flex { flex-direction: row; text-align: left; justify-content: space-between; gap: 20px; }
+    .hero-content { flex: 0 0 55%; }
+    .hero-image { flex: 0 0 40%; }
+    .hero-content h1 { font-size: 3.5rem; }
+    .services-grid { grid-template-columns: repeat(3, 1fr) !important; }
+    .footer-grid { grid-template-columns: 2fr 1fr 1fr !important; }
+}
+
+@media screen and (max-width: 980px) {
+    #header-fixed { top: 0px; }
+    #page-wrapper { padding-top: 140px; }
+    .menu-toggle { display: flex; flex-direction: column; justify-content: space-between; width: 30px; height: 21px; background: transparent; border: none; z-index: 10001; }
+    .menu-toggle .bar { width: 100%; height: 3px; background-color: #002147; border-radius: 10px; transition: 0.3s; }
+    #main-nav { position: fixed; top: 140px; left: 0; width: 100%; background: #ffffff; flex-direction: column; display: none; z-index: 9999; }
+    #main-nav.is-open { display: flex !important; }
+    #main-nav a { width: 100%; text-align: center; margin: 0; border-bottom: 1px solid #f1f5f9; }
+}
+
+/* --- REDESIGNED HERO & CONTACT FORM --- */
+.support-desk-hero {
+    background: linear-gradient(135deg, #00152e 0%, #002147 60%, #7f091c 100%) !important;
+    padding: 80px 0 !important;
+    min-height: auto !important;
+}
+
+/* Action Buttons (Left Side) */
+.hero-action-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 35px;
+}
+
+.action-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 20px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #ffffff !important;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    backdrop-filter: blur(10px);
+}
+
+.action-btn:hover {
+    transform: translateY(-4px);
+    background: #FFCC00;
+    border-color: #FFCC00;
+    color: #002147 !important;
+    box-shadow: 0 10px 25px rgba(255, 204, 0, 0.3);
+}
+
+.action-btn:hover .btn-text small,
+.action-btn:hover .btn-text strong {
+    color: #002147 !important;
+}
+
+.btn-icon {
+    font-size: 1.5rem;
+}
+
+.btn-text {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.btn-text small {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #cbd5e1;
+}
+
+.btn-text strong {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #ffffff;
+}
+
+/* Glassmorphic Form Card (Right Side) */
+.glass-form-container {
+    flex: 0 0 460px;
+    max-width: 100%;
+    background: #ffffff;
+    border: 1px solid rgba(0, 33, 71, 0.1);
+    padding: 40px;
+    border-radius: 28px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
+}
+
+.support-form-modern h3 {
+    color: #002147;
+    font-size: 1.6rem;
+    font-weight: 800;
+    margin-bottom: 4px;
+    text-align: left;
+}
+
+.form-subtext {
+    color: #64748b;
+    font-size: 0.88rem;
+    margin-bottom: 25px;
+    text-align: left;
+}
+
+.form-group {
+    margin-bottom: 18px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #002147;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 14px 18px;
+    border-radius: 12px;
+    border: 1.5px solid #cbd5e1;
+    background: #f8fafc;
+    font-size: 0.95rem;
+    color: #0f172a;
+    outline: none;
+    transition: all 0.3s ease;
+    font-family: inherit;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #002147;
+    background: #ffffff;
+    box-shadow: 0 0 0 4px rgba(0, 33, 71, 0.08);
+}
+
+/* Form Submit Button */
+.submit-btn-glow {
+    width: 100%;
+    padding: 18px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 50px;
+    background: #C8102E;
+    color: #ffffff !important;
+    font-size: 1.05rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 25px rgba(200, 16, 46, 0.35);
+}
+
+.submit-btn-glow:hover {
+    background: #FFCC00;
+    color: #002147 !important;
+    transform: translateY(-2px);
+    box-shadow: 0 15px 30px rgba(255, 204, 0, 0.4);
+}
+
+/* Mobile Adjustments */
+@media screen and (max-width: 980px) {
+    .hero-flex {
+        flex-direction: column;
+        gap: 40px;
+    }
+    .glass-form-container {
+        width: 100%;
+        flex: 1 1 auto;
+        padding: 30px 20px;
+    }
+    .hero-action-row {
+        justify-content: center;
+    }
+}

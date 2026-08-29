@@ -1,0 +1,496 @@
+<!DOCTYPE HTML>
+<html lang="en">
+	<head>
+		<title>Product Catalog | Two Parrots Group Australia</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<style>
+			/* Eye-Catching Product Page Specific Enhancements */
+			.catalog-hero {
+				background: linear-gradient(135deg, #00152e 0%, #002147 60%, #7f091c 100%) !important;
+				text-align: center;
+				padding: 70px 0 50px 0 !important;
+			}
+			.filter-tab-container {
+				display: flex;
+				justify-content: center;
+				gap: 12px;
+				flex-wrap: wrap;
+				margin: -30px auto 40px auto;
+				position: relative;
+				z-index: 10;
+				max-width: 1000px;
+				padding: 0 20px;
+			}
+			.filter-btn {
+				background: #ffffff;
+				color: #002147;
+				border: 2px solid #002147;
+				padding: 12px 26px;
+				border-radius: 50px;
+				font-weight: 700;
+				font-size: 0.95rem;
+				cursor: pointer;
+				transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+				box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+			}
+			.filter-btn:hover, .filter-btn.active {
+				background: #C8102E;
+				color: #ffffff;
+				border-color: #C8102E;
+				transform: translateY(-3px);
+				box-shadow: 0 8px 20px rgba(200, 16, 46, 0.3);
+			}
+			.product-card-modern {
+				background: #ffffff;
+				border-radius: 24px;
+				padding: 30px;
+				border: 1px solid rgba(0, 33, 71, 0.08);
+				box-shadow: 0 10px 30px rgba(0, 33, 71, 0.05);
+				transition: all 0.4s ease;
+				display: flex;
+				flex-direction: column;
+				justify-content: space-between;
+				position: relative;
+				overflow: hidden;
+			}
+			.product-card-modern:hover {
+				transform: translateY(-10px);
+				box-shadow: 0 20px 45px rgba(0, 33, 71, 0.12);
+				border-color: #FFCC00;
+			}
+			.card-badge {
+				position: absolute;
+				top: 15px;
+				right: 15px;
+				background: #f1f5f9;
+				color: #002147;
+				font-size: 0.75rem;
+				font-weight: 800;
+				padding: 4px 12px;
+				border-radius: 50px;
+				text-transform: uppercase;
+				letter-spacing: 0.5px;
+			}
+			.card-badge.gold {
+				background: #fffbe6;
+				color: #b45309;
+				border: 1px solid #fde68a;
+			}
+			.product-icon-box {
+				width: 80px;
+				height: 80px;
+				border-radius: 20px;
+				background: #f8fafc;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				font-size: 2.8rem;
+				margin-bottom: 20px;
+				border: 1px solid rgba(0, 33, 71, 0.05);
+			}
+			.product-title {
+				font-size: 1.35rem;
+				font-weight: 800;
+				color: #002147;
+				margin-bottom: 8px;
+			}
+			.product-specs-list {
+				margin: 15px 0;
+				font-size: 0.9rem;
+				color: #475569;
+				line-height: 1.6;
+			}
+			.product-specs-list li {
+				margin-bottom: 6px;
+				display: flex;
+				align-items: center;
+				gap: 6px;
+			}
+			.price-tag {
+				font-size: 1.25rem;
+				font-weight: 800;
+				color: #C8102E;
+				margin-top: 10px;
+			}
+			.quote-btn-small {
+				display: block;
+				width: 100%;
+				text-align: center;
+				padding: 12px;
+				background: #002147;
+				color: #ffffff !important;
+				border-radius: 50px;
+				font-weight: 700;
+				font-size: 0.9rem;
+				margin-top: 15px;
+				transition: 0.3s ease;
+			}
+			.quote-btn-small:hover {
+				background: #C8102E;
+				transform: scale(1.02);
+			}
+		</style>
+	</head>
+	<body ontouchstart=""> 
+		<div id="page-wrapper">
+
+			<!-- Header -->
+			<header id="header-fixed">
+				<div class="main-container">
+					<a href="index.html" class="image-logo">
+						<img src="images/logo.png" alt="Two Parrots Group Australia Logo">
+					</a>
+					<button class="menu-toggle" id="menuBtn" aria-label="Toggle Menu" onclick="toggleMobileMenu(event)">
+						<span class="bar"></span>
+						<span class="bar"></span>
+						<span class="bar"></span>
+					</button>
+					<nav id="main-nav">
+						<a href="index.html">Home</a>
+						<a href="products.html" class="active-link">Products</a>
+						<a href="compliance.html">Biosecurity & QA</a>
+						<a href="about.html">About Us</a>
+						<a href="contact.html">Contact Us</a>
+					</nav>
+				</div>
+			</header>
+
+			<!-- Catalog Hero -->
+			<section id="hero-banner" class="catalog-hero">
+				<div class="main-container">
+					<div class="hero-content" style="max-width: 800px; margin: 0 auto;">
+						<div class="badge">🇦🇺 Single-Origin Cambodian Imports</div>
+						<h1>Premium Agricultural Product Catalog</h1>
+						<p class="hero-slogan">GMP & HACCP certified agricultural lines imported directly from Two Parrots Trading Solutions Co., Ltd. Certified steam-sterilized spices and pure agricultural starches.</p>
+					</div>
+				</div>
+			</section>
+
+			<!-- Interactive Filter Tabs -->
+			<div class="filter-tab-container">
+				<button class="filter-btn active" onclick="filterProducts('all')">All Products</button>
+				<button class="filter-btn" onclick="filterProducts('flours')">🌾 Agricultural Flours</button>
+				<button class="filter-btn" onclick="filterProducts('bulk-pepper')">🌿 Bulk Industrial Pepper</button>
+				<button class="filter-btn" onclick="filterProducts('retail-pepper')">🫙 Retail Canisters</button>
+			</div>
+
+			<!-- Main Product Grid -->
+			<section class="services-section" style="padding-top: 20px;">
+				<div class="main-container">
+					<div class="services-grid" id="product-grid">
+						
+						<!-- === FLOURS === -->
+						<div class="product-card-modern" data-category="flours">
+							<span class="card-badge gold">Retail Pack</span>
+							<div>
+								<div class="product-icon-box">🍚</div>
+								<h3 class="product-title">Finest Rice Flour (500g)</h3>
+								<ul class="product-specs-list">
+									<li>📦 <strong>Packaging:</strong> 20 Pkgs (10kg) / Box</li>
+									<li>✨ Fine-milled, pure Cambodian rice starch </li>
+									<li>🌾 Ideal for gluten-free baking & CPG manufacturing </li>
+								</ul>
+							</div>
+							<div>
+								<div class="price-tag">AUD $12.10 <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ Box </span></div>
+								<a href="contact.html" class="quote-btn-small">Request Wholesale Sample</a>
+							</div>
+						</div>
+
+						<div class="product-card-modern" data-category="flours">
+							<span class="card-badge gold">Retail Pack</span>
+							<div>
+								<div class="product-icon-box">🌾</div>
+								<h3 class="product-title">Glutinous Rice Flour (500g)</h3>
+								<ul class="product-specs-list">
+									<li>📦 <strong>Packaging:</strong> 20 Pkgs (10kg) / Box </li>
+									<li>✨ Premium high-sticky starch formulation </li>
+									<li>🥟 Essential for Asian bakery & dumplings </li>
+								</ul>
+							</div>
+							<div>
+								<div class="price-tag">AUD $18.60 <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ Box </span></div>
+								<a href="contact.html" class="quote-btn-small">Request Wholesale Sample</a>
+							</div>
+						</div>
+
+						<div class="product-card-modern" data-category="flours">
+							<span class="card-badge">Industrial & Retail</span>
+							<div>
+								<div class="product-icon-box">🥣</div>
+								<h3 class="product-title">Tapioca Flour (500g)</h3>
+								<ul class="product-specs-list">
+									<li>📦 <strong>Packaging:</strong> 20 Pkgs (10kg) / Box </li>
+									<li>✨ High-clarity native tapioca starch </li>
+									<li>🧪 Perfect thickener for commercial kitchens </li>
+								</ul>
+							</div>
+							<div>
+								<div class="price-tag">AUD $13.95 <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ Box </span></div>
+								<a href="contact.html" class="quote-btn-small">Request Wholesale Sample</a>
+							</div>
+						</div>
+
+						<div class="product-card-modern" data-category="flours">
+							<span class="card-badge gold">Pre-Mix</span>
+							<div>
+								<div class="product-icon-box">🥞</div>
+								<h3 class="product-title">Specialty Pancake Flour (500g)</h3>
+								<ul class="product-specs-list">
+									<li>📦 <strong>Packaging:</strong> 20 Pkgs (10kg) / Box </li>
+									<li>✨ Authentic Cambodian recipe pre-mix </li>
+									<li>🍳 Fast-prep for foodservice & grocery </li>
+								</ul>
+							</div>
+							<div>
+								<div class="price-tag">AUD $37.25 <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ Box </span></div>
+								<a href="contact.html" class="quote-btn-small">Request Wholesale Sample</a>
+							</div>
+						</div>
+
+						<div class="product-card-modern" data-category="flours">
+							<span class="card-badge gold">Popular</span>
+							<div>
+								<div class="product-icon-box">🍤</div>
+								<h3 class="product-title">Crispy Tempura Flour</h3>
+								<ul class="product-specs-list">
+									<li>📦 <strong>Formats:</strong> 1000g (10kg/Box) & 150g (60 pcs/Box) </li>
+									<li>✨ High-crunch batter for seafood & veggies </li>
+									<li>🥢 Formulated for restaurant hospitality </li>
+								</ul>
+							</div>
+							<div>
+								<div class="price-tag">AUD $18.60 – $32.10 <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ Box </span></div>
+								<a href="contact.html" class="quote-btn-small">Request Wholesale Sample</a>
+							</div>
+						</div>
+
+						<div class="product-card-modern" data-category="flours">
+							<span class="card-badge gold">Specialty</span>
+							<div>
+								<div class="product-icon-box">🍌</div>
+								<h3 class="product-title">Fried Banana Flour (500g)</h3>
+								<ul class="product-specs-list">
+									<li>📦 <strong>Packaging:</strong> 20 Pkgs (10kg) / Box </li>
+									<li>✨ Traditional crispy dessert batter mix </li>
+									<li>🍨 High margin retail & street-food favorite </li>
+								</ul>
+							</div>
+							<div>
+								<div class="price-tag">AUD $43.75 <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ Box </span></div>
+								<a href="contact.html" class="quote-btn-small">Request Wholesale Sample</a>
+							</div>
+						</div>
+
+						<!-- === BULK PEPPER === -->
+						<div class="product-card-modern" data-category="bulk-pepper">
+							<span class="card-badge">10kg Bulk Box</span>
+							<div>
+								<div class="product-icon-box">⬛</div>
+								<h3 class="product-title">Whole Black Pepper (1000g/500g)</h3>
+								<ul class="product-specs-list">
+									<li>🔬 <strong>Specs:</strong> Density 550 g/l | Size ≥ 4mm </li>
+									<li>💨 Steam-sterilized round peppercorns </li>
+									<li>⚙️ Moisture ≤ 12% | Foreign Matter 0.00% </li>
+								</ul>
+							</div>
+							<div>
+								<div class="price-tag">AUD $126.00 <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ 10kg Box </span></div>
+								<a href="contact.html" class="quote-btn-small">Request Bulk Spec Sheet</a>
+							</div>
+						</div>
+
+						<div class="product-card-modern" data-category="bulk-pepper">
+							<span class="card-badge">10kg Bulk Box</span>
+							<div>
+								<div class="product-icon-box">⚙️</div>
+								<h3 class="product-title">Crushed Black Pepper</h3>
+								<ul class="product-specs-list">
+									<li>🔬 <strong>Specs:</strong> 10–20 Mesh Granulation </li>
+									<li>🥩 Perfect coarse cut for meat rubs & sauces </li>
+									<li>⚙️ Steam sterilized & sorted </li>
+								</ul>
+							</div>
+							<div>
+								<div class="price-tag">AUD $133.00 <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ 10kg Box </span></div>
+								<a href="contact.html" class="quote-btn-small">Request Bulk Spec Sheet</a>
+							</div>
+						</div>
+
+						<div class="product-card-modern" data-category="bulk-pepper">
+							<span class="card-badge">10kg Bulk Box</span>
+							<div>
+								<div class="product-icon-box">🧂</div>
+								<h3 class="product-title">Ground Black Pepper (40 Mesh)</h3>
+								<ul class="product-specs-list">
+									<li>🔬 <strong>Specs:</strong> 40 Fine Mesh Granulation </li>
+									<li>🏭 Industrial grade for commercial formulations </li>
+									<li>⚙️ Steam sterilized | Moisture ≤ 12% </li>
+								</ul>
+							</div>
+							<div>
+								<div class="price-tag">AUD $133.00 <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ 10kg Box </span></div>
+								<a href="contact.html" class="quote-btn-small">Request Bulk Spec Sheet</a>
+							</div>
+						</div>
+
+						<div class="product-card-modern" data-category="bulk-pepper">
+							<span class="card-badge">10kg Bulk Box</span>
+							<div>
+								<div class="product-icon-box">⚪</div>
+								<h3 class="product-title">Whole White Pepper (1000g/500g)</h3>
+								<ul class="product-specs-list">
+									<li>🔬 <strong>Specs:</strong> High Density 630 g/l | Size ≥ 4mm </li>
+									<li>✨ Clean aroma & high volatile oil content </li>
+									<li>⚙️ Steam sterilized whole peppercorns </li>
+								</ul>
+							</div>
+							<div>
+								<div class="price-tag">AUD $168.00 <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ 10kg Box </span></div>
+								<a href="contact.html" class="quote-btn-small">Request Bulk Spec Sheet</a>
+							</div>
+						</div>
+
+						<div class="product-card-modern" data-category="bulk-pepper">
+							<span class="card-badge">10kg Bulk Box</span>
+							<div>
+								<div class="product-icon-box">🌫️</div>
+								<h3 class="product-title">Ground White Pepper (60 Mesh)</h3>
+								<ul class="product-specs-list">
+									<li>🔬 <strong>Specs:</strong> 60 Micro Mesh Fine Powder </li>
+									<li>🍲 Tailored for white sauces & fine cuisine </li>
+									<li>⚙️ Steam sterilized | Moisture ≤ 12% </li>
+								</ul>
+							</div>
+							<div>
+								<div class="price-tag">AUD $175.00 <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ 10kg Box </span></div>
+								<a href="contact.html" class="quote-btn-small">Request Bulk Spec Sheet</a>
+							</div>
+						</div>
+
+						<!-- === RETAIL PEPPER CANISTERS === -->
+						<div class="product-card-modern" data-category="retail-pepper">
+							<span class="card-badge gold">24 Cans / Box</span>
+							<div>
+								<div class="product-icon-box">🥫</div>
+								<h3 class="product-title">Fine Ground Black Pepper (80g)</h3>
+								<ul class="product-specs-list">
+									<li>📦 <strong>Package:</strong> 24 Cans / Outer Box </li>
+									<li>✨ 40 Mesh fine ground in display canisters </li>
+									<li>🛒 Ready for grocery & supermarket shelves </li>
+								</ul>
+							</div>
+							<div>
+								<div class="price-tag">AUD $48.00 <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ Box (24 Cans) </span></div>
+								<a href="contact.html" class="quote-btn-small">Request Retail Sample</a>
+							</div>
+						</div>
+
+						<div class="product-card-modern" data-category="retail-pepper">
+							<span class="card-badge gold">24 Cans / Box</span>
+							<div>
+								<div class="product-icon-box">🥫</div>
+								<h3 class="product-title">Coarse Ground Black Pepper (80g)</h3>
+								<ul class="product-specs-list">
+									<li>📦 <strong>Package:</strong> 24 Cans / Outer Box </li>
+									<li>✨ 10–20 Mesh coarse ground spice canisters </li>
+									<li>🛒 High margin retail tabletop product </li>
+								</ul>
+							</div>
+							<div>
+								<div class="price-tag">AUD $48.00 <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ Box (24 Cans) </span></div>
+								<a href="contact.html" class="quote-btn-small">Request Retail Sample</a>
+							</div>
+						</div>
+
+						<div class="product-card-modern" data-category="retail-pepper">
+							<span class="card-badge gold">24 Cans / Box</span>
+							<div>
+								<div class="product-icon-box">🥫</div>
+								<h3 class="product-title">Fine Ground White Pepper (80g)</h3>
+								<ul class="product-specs-list">
+									<li>📦 <strong>Package:</strong> 24 Cans / Outer Box </li>
+									<li>✨ 40 Mesh fine white pepper canister </li>
+									<li>🛒 Modern sealed packaging for fresh flavor </li>
+								</ul>
+							</div>
+							<div>
+								<div class="price-tag">AUD $48.00 <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ Box (24 Cans) </span></div>
+								<a href="contact.html" class="quote-btn-small">Request Retail Sample</a>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</section>
+
+			<!-- Footer -->
+			<footer id="modern-footer">
+				<div class="main-container">
+					<div class="footer-grid">
+						<div class="footer-col brand-col">
+							<img src="images/logo.png" alt="Two Parrots Group Australia Logo" class="footer-logo">
+							<p>Exclusive Australian importer and B2B distributor of premium agricultural products from Two Parrots Trading Solutions Co., Ltd (Cambodia) .</p>
+							<div class="footer-badges">
+								<span class="license-badge">ACN: 699 476 107</span>
+							</div>
+						</div>
+
+						<div class="footer-col">
+							<h4>Quick Links</h4>
+							<ul class="footer-links">
+								<li><a href="index.html">Home</a></li>
+								<li><a href="compliance.html">Biosecurity & QA</a></li>
+								<li><a href="about.html">About Us</a></li>
+								<li><a href="contact.html">Contact Us</a></li>
+							</ul>
+						</div>
+
+						<div class="footer-col">
+							<h4>Get In Touch</h4>
+							<ul class="contact-list">
+								<li><a href="tel:0468829988"><span>📞</span> 0468 829 988</a></li>
+								<li><a href="mailto:info@twoparrotsgroup.com.au"><span>✉️</span> info@twoparrotsgroup.com.au</a></li>
+								<li><span>📍</span> 1118/18 Mt Alexander Rd, Travancore VIC 3032</li>
+							</ul>
+						</div>
+					</div>
+
+					<div class="footer-bottom">
+						<div class="bottom-content">
+							<p>&copy; 2026 Two Parrots Group Australia Pty Ltd. All Rights Reserved.</p>
+						</div>
+					</div>
+				</div>
+			</footer>
+
+		</div>
+
+		<!-- Interactive Filter Script -->
+		<script>
+			function filterProducts(category) {
+				const buttons = document.querySelectorAll('.filter-btn');
+				buttons.forEach(btn => btn.classList.remove('active'));
+				event.target.classList.add('active');
+
+				const cards = document.querySelectorAll('.product-card-modern');
+				cards.forEach(card => {
+					if (category === 'all' || card.getAttribute('data-category') === category) {
+						card.style.display = 'flex';
+					} else {
+						card.style.display = 'none';
+					}
+				});
+			}
+
+			const nav = document.getElementById("main-nav");
+			const btn = document.getElementById("menuBtn");
+			function toggleMobileMenu(e) { e.stopPropagation(); nav.classList.toggle("is-open"); btn.classList.toggle("active"); }
+			function closeMenu() { nav.classList.remove("is-open"); btn.classList.remove("active"); }
+			document.querySelectorAll('#main-nav a').forEach(link => { link.addEventListener('click', closeMenu); });
+			document.addEventListener('click', (e) => { if (!nav.contains(e.target) && !btn.contains(e.target)) closeMenu(); });
+		</script>
+	</body>
+</html>

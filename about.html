@@ -1,0 +1,406 @@
+<!DOCTYPE HTML>
+<html lang="en">
+	<head>
+		<title>About Us | Two Parrots Group Australia</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<style>
+			/* Enhanced About Page Custom Styles */
+			.team-grid {
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+				gap: 25px;
+				margin-top: 30px;
+			}
+			.team-card {
+				background: #ffffff;
+				padding: 35px 25px;
+				border-radius: 20px;
+				border: 1px solid rgba(0, 33, 71, 0.08);
+				text-align: center;
+				box-shadow: 0 10px 25px rgba(0,33,71,0.04);
+				transition: 0.3s ease;
+			}
+			.team-card:hover {
+				transform: translateY(-5px);
+				border-color: #C8102E;
+				box-shadow: 0 15px 35px rgba(200,16,46,0.1);
+			}
+			.au-executive-card {
+				background: #ffffff;
+				padding: 40px 30px;
+				border-radius: 24px;
+				border: 1px solid rgba(0, 33, 71, 0.12);
+				text-align: center;
+				box-shadow: 0 12px 30px rgba(0,33,71,0.06);
+				transition: 0.3s ease;
+				position: relative;
+			}
+			.au-executive-card:hover {
+				transform: translateY(-6px);
+				border-color: #FFCC00;
+				box-shadow: 0 18px 40px rgba(0, 33, 71, 0.15);
+			}
+			.testimonial-card {
+				background: linear-gradient(135deg, #002147 0%, #00152e 100%);
+				color: #ffffff;
+				padding: 50px 40px;
+				border-radius: 30px;
+				margin-top: 50px;
+				text-align: center;
+				border: 1px solid rgba(255,204,0,0.3);
+				box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+			}
+		</style>
+	</head>
+	<body ontouchstart=""> 
+		<div id="page-wrapper" style="padding-top: 80px;">
+
+			<!-- Australian & Indigenous Cultural Acknowledgment Header Bar -->
+			<div class="au-heritage-bar">
+				<div class="main-container">
+					<div class="flag-container">
+						<span class="flag-item" title="Australian Flag">🇦🇺</span>
+						<span class="state-badge">VIC</span>
+						<div class="aboriginal-flag-icon" title="Australian Aboriginal Flag">
+							<span class="flag-top-black"></span>
+							<span class="flag-sun-yellow"></span>
+							<span class="flag-bottom-red"></span>
+						</div>
+					</div>
+					<p class="country-ack">
+						Proudly Australian Owned & Operated | Based in Travancore, Victoria. We acknowledge the Traditional Custodians of Country throughout Australia.
+					</p>
+				</div>
+			</div>
+
+			<!-- Fixed Navigation Header -->
+			<header id="header-fixed" style="top: 0;">
+				<div class="main-container">
+					<a href="index.html" class="image-logo">
+						<img src="images/logo.png" alt="Two Parrots Group Australia Logo">
+					</a>
+					<button class="menu-toggle" id="menuBtn" aria-label="Toggle Menu" onclick="toggleMobileMenu(event)">
+						<span class="bar"></span>
+						<span class="bar"></span>
+						<span class="bar"></span>
+					</button>
+					<nav id="main-nav">
+						<a href="index.html">Home</a>
+						<a href="products.html">Products</a>
+						<a href="compliance.html">Biosecurity & QA</a>
+						<a href="about.html" class="active-link">About Us</a>
+						<a href="contact.html">Contact Us</a>
+					</nav>
+				</div>
+			</header>
+
+			<!-- Hero Banner -->
+			<section id="hero-banner" class="about-hero-layout" style="margin-top:0;">
+				<div class="main-container">
+					<div class="hero-flex">
+						
+						<div class="hero-content">
+							<div class="badge-outline">20+ Years Sourcing Heritage</div>
+							<h1>Ethical Origin.<br>Export-Ready Reliability.</h1>
+							<p class="hero-slogan">Backed by 20 years of professional agribusiness experience from our Cambodian founding entity , Two Parrots Group Australia Pty Ltd bridges the gap between smallholder farming networks and Australian procurement teams.</p>
+						</div>
+
+						<div class="about-profile-card">
+							<div class="profile-icon">🦜</div>
+							<h3>Two Parrots Group AU</h3>
+							<p>Backed by Origin Founders</p>
+							<div class="profile-divider"></div>
+							<ul class="profile-stats">
+								<li><span>ACN:</span> 699 476 107</li>
+								<li><span>State:</span> Victoria, Australia</li>
+								<li><span>Origin HQ:</span> Phnom Penh, Cambodia </li>
+							</ul>
+						</div>
+
+					</div>
+				</div>
+			</section>
+
+			<!-- Certifications & Standards Slider -->
+			<section class="logo-slider">
+				<div class="slider-track">
+					<span class="text-logo unifi">GMP<span>Certified</span></span>
+					<span class="text-logo cisco">HACCP</span>
+					<span class="text-logo sophos">Kampot Pepper GI</span>
+					<span class="text-logo draytek">DAFF Approved</span>
+					<span class="text-logo tplink">BICON Compliant</span>
+					<span class="text-logo netgear">Single Origin</span>
+					<span class="text-logo unifi">GMP<span>Certified</span></span>
+					<span class="text-logo cisco">HACCP</span>
+				</div>
+			</section>
+
+			<!-- Vision, Mission & Core Values Section -->
+			<section class="services-section" style="padding: 80px 0; background: #ffffff;">
+				<div class="main-container" style="flex-direction: column; gap: 50px;">
+					
+					<!-- Vision & Mission Callouts -->
+					<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; width: 100%;">
+						<div style="background: #f8fafc; padding: 40px; border-radius: 24px; border-left: 6px solid #002147;">
+							<h3 style="color: #002147; font-size: 1.5rem; margin-bottom: 12px; font-weight: 800;">👁️ Our Vision</h3>
+							<p style="color: #475569; line-height: 1.7; font-size: 1.05rem;">
+								To be a leading, trusted, and ethical agribusiness partner driving sustainable growth for farmers, partners, and consumers .
+							</p>
+						</div>
+
+						<div style="background: #f8fafc; padding: 40px; border-radius: 24px; border-left: 6px solid #C8102E;">
+							<h3 style="color: #C8102E; font-size: 1.5rem; margin-bottom: 12px; font-weight: 800;">🎯 Our Mission</h3>
+							<p style="color: #475569; line-height: 1.7; font-size: 1.05rem;">
+								To build sustainable agricultural value chains delivering high-quality and traceable products while promoting environmental and social responsibility .
+							</p>
+						</div>
+					</div>
+
+					<!-- Core Values Grid -->
+					<div style="width: 100%; text-align: center; margin-top: 20px;">
+						<h2 style="font-size: 2.2rem; color: #002147; font-weight: 800; margin-bottom: 15px;">Our Core Values</h2>
+						<p style="color: #475569; margin-bottom: 40px;">Professional & Trustworthy in every transaction .</p>
+
+						<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px;">
+							<div style="background:#ecfdf5; padding:25px; border-radius:20px; border:1px solid #10b981;">
+								<h4 style="color:#064e3b; margin-bottom:8px;">Integrity</h4>
+								<p style="font-size:0.85rem; color:#047857;">Building professional trust through honesty and transparency .</p>
+							</div>
+							<div style="background:#fef3c7; padding:25px; border-radius:20px; border:1px solid #f59e0b;">
+								<h4 style="color:#92400e; margin-bottom:8px;">Innovation</h4>
+								<p style="font-size:0.85rem; color:#b45309;">Constantly improving solutions to meet market demands .</p>
+							</div>
+							<div style="background:#eff6ff; padding:25px; border-radius:20px; border:1px solid #3b82f6;">
+								<h4 style="color:#1e40af; margin-bottom:8px;">Quality</h4>
+								<p style="font-size:0.85rem; color:#1d4ed8;">Maintaining highest product and service standards .</p>
+							</div>
+							<div style="background:#f0fdf4; padding:25px; border-radius:20px; border:1px solid #22c55e;">
+								<h4 style="color:#15803d; margin-bottom:8px;">Sustainability</h4>
+								<p style="font-size:0.85rem; color:#166534;">Ensuring economic, social, and environmental responsibility .</p>
+							</div>
+							<div style="background:#fdf2f8; padding:25px; border-radius:20px; border:1px solid #ec4899;">
+								<h4 style="color:#9d174d; margin-bottom:8px;">Partnership</h4>
+								<p style="font-size:0.85rem; color:#be185d;">Growing together with farmers, suppliers, and customers .</p>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</section>
+
+			<!-- NEW SECTION: Australian Leadership Team -->
+			<section class="services-section" style="padding: 80px 0; background: #f1f5f9;">
+				<div class="main-container" style="flex-direction: column; gap: 40px; text-align: center;">
+					
+					<div>
+						<div class="state-badge" style="display:inline-block; margin-bottom:12px;">🇦🇺 Executive Directorate</div>
+						<h2 style="font-size: 2.2rem; color: #002147; font-weight: 800; margin-bottom: 12px;">Australian Leadership Team</h2>
+						<p style="color: #475569; max-width: 700px; margin: 0 auto;">Directing domestic market expansion, corporate governance, cross-border import strategy, and 3PL distribution networks from Victoria.</p>
+					</div>
+
+					<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; width: 100%; margin-top: 10px;">
+						
+						<!-- Kim Heng LY -->
+						<div class="au-executive-card">
+							<div style="font-size: 3rem; margin-bottom: 15px;">👨‍💼</div>
+							<h3 style="color:#002147; font-size:1.4rem; margin-bottom:4px; font-weight:800;">Kim Heng LY</h3>
+							<p style="color:#C8102E; font-weight:800; font-size:0.95rem; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:15px;">Managing Director</p>
+							<div style="height:2px; background:#e2e8f0; width:50px; margin:0 auto 20px auto;"></div>
+							<p style="color:#475569; font-size:0.95rem; line-height:1.7; text-align:left;">
+								Specializes in strategic trade expansion, international cross-border logistics, market penetration, and establishing robust supply channels connecting Cambodian producers with Australian B2B distribution and commercial food networks.
+							</p>
+						</div>
+
+						<!-- Chhingleang Loy -->
+						<div class="au-executive-card">
+							<div style="font-size: 3rem; margin-bottom: 15px;">👩‍💼</div>
+							<h3 style="color:#002147; font-size:1.4rem; margin-bottom:4px; font-weight:800;">Chhingleang Loy</h3>
+							<p style="color:#C8102E; font-weight:800; font-size:0.95rem; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:15px;">Operations Manager</p>
+							<div style="height:2px; background:#e2e8f0; width:50px; margin:0 auto 20px auto;"></div>
+							<p style="color:#475569; font-size:0.95rem; line-height:1.7; text-align:left;">
+								Spearheads end-to-end operational execution, human resources management, localized Victorian 3PL fulfillment, regulatory administration, and day-to-day workflow optimizations across our domestic supply infrastructure.
+							</p>
+						</div>
+
+					</div>
+
+				</div>
+			</section>
+
+			<!-- Origin Story & Business Model Section -->
+			<section class="services-section" style="padding: 80px 0; background: #ffffff;">
+				<div class="main-container" style="flex-direction: column; gap: 60px;">
+					
+					<!-- Story Detail -->
+					<div style="max-width: 900px; margin: 0 auto; text-align: left;">
+						<h2 style="font-size: 2.2rem; color: #002147; margin-bottom: 20px; font-weight: 800;">About Two Parrots Sourcing & Origin</h2>
+						<p style="font-size: 1.1rem; line-height: 1.8; color: #475569; margin-bottom: 25px;">
+							Two Parrots Trading Solutions is a social agribusiness committed to building sustainable and inclusive value chains in Cambodia . We connect farmers, producers, and markets through innovative production, processing, sourcing, and trading solutions that ensure quality and traceability from farm to market .
+						</p>
+						<p style="font-size: 1.1rem; line-height: 1.8; color: #475569; margin-bottom: 25px;">
+							With <strong>20 years of agri-food experience</strong>, Two Parrots bridges smallholder farmers, local partners, and international buyers through a transparent, fair-trade, and sustainability-driven approach that creates shared value for all . We work across the value chain—from farm-level sourcing and processing coordination to quality control and shipment readiness—so buyers can purchase with confidence.
+						</p>
+
+						<h3 style="font-size: 1.6rem; color: #002147; margin: 40px 0 15px 0; font-weight: 800;">From Origin to Shipment: How We Work</h3>
+						<p style="font-size: 1.05rem; line-height: 1.7; color: #475569;">
+							We organize supply with clear specifications, lot-level traceability, and practical quality checks aligned with buyer requirements. Our team supports sampling, documentation, packing formats, and shipment coordination. The result is an export-ready supply process designed to reduce risk, improve consistency, and strengthen long-term sourcing programs.
+						</p>
+					</div>
+
+					<!-- Strategic Business Approaches Grid -->
+					<div class="services-grid">
+						<div class="service-card">
+							<div class="card-icon-wrapper">🤝</div>
+							<h4>Inclusive Business</h4>
+							<p>We partner directly with smallholder farmers, cooperatives, unions, and SMEs to promote sustainable agriculture and green investment in Cambodia .</p>
+						</div>
+
+						<div class="service-card">
+							<div class="card-icon-wrapper">🛡️</div>
+							<h4>Quality & Safety</h4>
+							<p>We focus on unique products committed to local and international certifications (GMP, HACCP, GAP, Organic) to ensure full traceability and gain buyer confidence .</p>
+						</div>
+
+						<div class="service-card">
+							<div class="card-icon-wrapper">🌱</div>
+							<h4>Sustainability & ESG</h4>
+							<p>Our operations prioritize green investments, sustainable farming development, eco-friendly packaging, fair pay, and ESG/CSR compliance .</p>
+						</div>
+					</div>
+
+					<!-- Origin Leadership Team -->
+					<div style="width: 100%; text-align: center; margin-top: 20px;">
+						<h2 style="font-size: 2rem; color: #002147; font-weight: 800; margin-bottom: 10px;">Origin Leadership Team</h2>
+						<p style="color: #475569; margin-bottom: 30px;">Directing sourcing, processing quality, and global trade development from Phnom Penh, Cambodia .</p>
+
+						<div class="team-grid">
+							<div class="team-card">
+								<div style="font-size: 2.5rem; margin-bottom: 10px;">👤</div>
+								<h4 style="color:#002147; font-size:1.1rem; margin-bottom:4px;">Mr. Try Senhoeun</h4>
+								<p style="font-size:0.85rem; color:#C8102E; font-weight:700; margin-bottom:8px;">Founder & Chairman </p>
+								<p style="font-size:0.85rem; color:#64748b; line-height:1.5;">Extensive experience in agribusiness, supply chain development, and building sustainable market linkages .</p>
+							</div>
+
+							<div class="team-card">
+								<div style="font-size: 2.5rem; margin-bottom: 10px;">👩‍💼</div>
+								<h4 style="color:#002147; font-size:1.1rem; margin-bottom:4px;">Mrs. To Sony</h4>
+								<p style="font-size:0.85rem; color:#C8102E; font-weight:700; margin-bottom:8px;">Founder & CEO </p>
+								<p style="font-size:0.85rem; color:#64748b; line-height:1.5;">Leads sustainable production, marketing, and export strategies while empowering local farmers .</p>
+							</div>
+
+							<div class="team-card">
+								<div style="font-size: 2.5rem; margin-bottom: 10px;">👨‍💼</div>
+								<h4 style="color:#002147; font-size:1.1rem; margin-bottom:4px;">Mr. Noun Tum</h4>
+								<p style="font-size:0.85rem; color:#C8102E; font-weight:700; margin-bottom:8px;">Managing Director </p>
+								<p style="font-size:0.85rem; color:#64748b; line-height:1.5;">Specializes in trade strategy, market development, and connecting local producers with international buyers .</p>
+							</div>
+
+							<div class="team-card">
+								<div style="font-size: 2.5rem; margin-bottom: 10px;">👩‍🔬</div>
+								<h4 style="color:#002147; font-size:1.1rem; margin-bottom:4px;">Ms. Heng Socheata</h4>
+								<p style="font-size:0.85rem; color:#C8102E; font-weight:700; margin-bottom:8px;">Operations Manager </p>
+								<p style="font-size:0.85rem; color:#64748b; line-height:1.5;">Oversees daily production, supply chain efficiency, product quality control, and timely delivery .</p>
+							</div>
+						</div>
+					</div>
+
+					<!-- Origin Operations Structure -->
+					<div style="width: 100%; text-align: center; margin-top: 20px;">
+						<h2 style="font-size: 2rem; color: #002147; font-weight: 800;">Cross-Functional Operations Team</h2>
+						<p style="color: #475569; margin-bottom: 30px;">Supporting responsive service for international procurement teams.</p>
+
+						<div class="team-grid">
+							<div class="team-card">
+								<div style="font-size: 2.5rem; margin-bottom: 10px;">🌾</div>
+								<h4 style="color:#002147; font-size:1.1rem; margin-bottom:8px;">Sourcing & Farmer Partnerships</h4>
+								<p style="font-size:0.88rem; color:#64748b;">Origin relationships and supply planning.</p>
+							</div>
+
+							<div class="team-card">
+								<div style="font-size: 2.5rem; margin-bottom: 10px;">🔬</div>
+								<h4 style="color:#002147; font-size:1.1rem; margin-bottom:8px;">Quality & Specifications</h4>
+								<p style="font-size:0.88rem; color:#64748b;">Lot checks, sampling support, and documentation.</p>
+							</div>
+
+							<div class="team-card">
+								<div style="font-size: 2.5rem; margin-bottom: 10px;">📦</div>
+								<h4 style="color:#002147; font-size:1.1rem; margin-bottom:8px;">Processing & Packing</h4>
+								<p style="font-size:0.88rem; color:#64748b;">Packing formats, labeling, and export readiness.</p>
+							</div>
+
+							<div class="team-card">
+								<div style="font-size: 2.5rem; margin-bottom: 10px;">🌐</div>
+								<h4 style="color:#002147; font-size:1.1rem; margin-bottom:8px;">Logistics & Customer Support</h4>
+								<p style="font-size:0.88rem; color:#64748b;">Shipment coordination and buyer communication.</p>
+							</div>
+						</div>
+					</div>
+
+					<!-- International Buyer Testimonial -->
+					<div class="testimonial-card">
+						<div style="font-size: 2rem; color: #FFCC00; margin-bottom: 15px;">★★★★★</div>
+						<blockquote style="font-size: 1.25rem; font-style: italic; line-height: 1.7; color: #f8fafc; max-width: 800px; margin: 0 auto 20px auto;">
+							“Two Parrots provided clear specifications, responsive communication, and export-ready documentation. Sampling and shipment coordination were handled professionally from start to finish.”
+						</blockquote>
+						<p style="color: #FFCC00; font-weight: 800; font-size: 1.05rem;">Procurement Manager — Spices & Nuts Importer</p>
+						<p style="color: #94a3b8; font-size: 0.85rem;">International Buyer (Confidential)</p>
+					</div>
+
+				</div>
+			</section>
+
+			<!-- Footer -->
+			<footer id="modern-footer">
+				<div class="main-container">
+					<div class="footer-grid">
+						<div class="footer-col brand-col">
+							<img src="images/logo.png" alt="Two Parrots Group Australia Logo" class="footer-logo">
+							<p>Exclusive Australian importer and B2B distributor of premium agricultural products from Two Parrots Trading Solutions Co., Ltd (Cambodia)[cite: 1].</p>
+							<div class="footer-badges">
+								<span class="license-badge">ACN: 699 476 107</span>
+							</div>
+						</div>
+
+						<div class="footer-col">
+							<h4>Quick Links</h4>
+							<ul class="footer-links">
+								<li><a href="index.html">Home</a></li>
+								<li><a href="products.html">Products</a></li>
+								<li><a href="compliance.html">Biosecurity & QA</a></li>
+								<li><a href="contact.html">Contact Us</a></li>
+							</ul>
+						</div>
+
+						<div class="footer-col">
+							<h4>Get In Touch</h4>
+							<ul class="contact-list">
+								<li><a href="tel:0468829988"><span>📞</span> 0468 829 988</a></li>
+								<li><a href="mailto:info@twoparrotsgroup.com.au"><span>✉️</span> info@twoparrotsgroup.com.au</a></li>
+								<li><span>📍</span> 1118/18 Mt Alexander Rd, Travancore VIC 3032</li>
+							</ul>
+						</div>
+					</div>
+
+					<div class="footer-bottom">
+						<div class="bottom-content">
+							<p>&copy; 2026 Two Parrots Group Australia Pty Ltd. All Rights Reserved.</p>
+						</div>
+					</div>
+				</div>
+			</footer>
+
+		</div>
+
+		<!-- Mobile Menu Script -->
+		<script>
+			const nav = document.getElementById("main-nav");
+			const btn = document.getElementById("menuBtn");
+			function toggleMobileMenu(e) { e.stopPropagation(); nav.classList.toggle("is-open"); btn.classList.toggle("active"); }
+			function closeMenu() { nav.classList.remove("is-open"); btn.classList.remove("active"); }
+			document.querySelectorAll('#main-nav a').forEach(link => { link.addEventListener('click', closeMenu); });
+			document.addEventListener('click', (e) => { if (!nav.contains(e.target) && !btn.contains(e.target)) closeMenu(); });
+		</script>
+	</body>
+</html>
