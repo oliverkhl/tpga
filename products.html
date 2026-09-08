@@ -5,133 +5,6 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
-		<style>
-			/* Eye-Catching Product Page Specific Enhancements */
-			.catalog-hero {
-				background: linear-gradient(135deg, #00152e 0%, #002147 60%, #7f091c 100%) !important;
-				text-align: center;
-				padding: 70px 0 50px 0 !important;
-			}
-			.filter-tab-container {
-				display: flex;
-				justify-content: center;
-				gap: 12px;
-				flex-wrap: wrap;
-				margin: -30px auto 40px auto;
-				position: relative;
-				z-index: 10;
-				max-width: 1000px;
-				padding: 0 20px;
-			}
-			.filter-btn {
-				background: #ffffff;
-				color: #002147;
-				border: 2px solid #002147;
-				padding: 12px 26px;
-				border-radius: 50px;
-				font-weight: 700;
-				font-size: 0.95rem;
-				cursor: pointer;
-				transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-				box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-			}
-			.filter-btn:hover, .filter-btn.active {
-				background: #C8102E;
-				color: #ffffff;
-				border-color: #C8102E;
-				transform: translateY(-3px);
-				box-shadow: 0 8px 20px rgba(200, 16, 46, 0.3);
-			}
-			.product-card-modern {
-				background: #ffffff;
-				border-radius: 24px;
-				padding: 30px;
-				border: 1px solid rgba(0, 33, 71, 0.08);
-				box-shadow: 0 10px 30px rgba(0, 33, 71, 0.05);
-				transition: all 0.4s ease;
-				display: flex;
-				flex-direction: column;
-				justify-content: space-between;
-				position: relative;
-				overflow: hidden;
-			}
-			.product-card-modern:hover {
-				transform: translateY(-10px);
-				box-shadow: 0 20px 45px rgba(0, 33, 71, 0.12);
-				border-color: #FFCC00;
-			}
-			.card-badge {
-				position: absolute;
-				top: 15px;
-				right: 15px;
-				background: #f1f5f9;
-				color: #002147;
-				font-size: 0.75rem;
-				font-weight: 800;
-				padding: 4px 12px;
-				border-radius: 50px;
-				text-transform: uppercase;
-				letter-spacing: 0.5px;
-			}
-			.card-badge.gold {
-				background: #fffbe6;
-				color: #b45309;
-				border: 1px solid #fde68a;
-			}
-			.product-icon-box {
-				width: 80px;
-				height: 80px;
-				border-radius: 20px;
-				background: #f8fafc;
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				font-size: 2.8rem;
-				margin-bottom: 20px;
-				border: 1px solid rgba(0, 33, 71, 0.05);
-			}
-			.product-title {
-				font-size: 1.35rem;
-				font-weight: 800;
-				color: #002147;
-				margin-bottom: 8px;
-			}
-			.product-specs-list {
-				margin: 15px 0;
-				font-size: 0.9rem;
-				color: #475569;
-				line-height: 1.6;
-			}
-			.product-specs-list li {
-				margin-bottom: 6px;
-				display: flex;
-				align-items: center;
-				gap: 6px;
-			}
-			.price-tag {
-				font-size: 1.25rem;
-				font-weight: 800;
-				color: #C8102E;
-				margin-top: 10px;
-			}
-			.quote-btn-small {
-				display: block;
-				width: 100%;
-				text-align: center;
-				padding: 12px;
-				background: #002147;
-				color: #ffffff !important;
-				border-radius: 50px;
-				font-weight: 700;
-				font-size: 0.9rem;
-				margin-top: 15px;
-				transition: 0.3s ease;
-			}
-			.quote-btn-small:hover {
-				background: #C8102E;
-				transform: scale(1.02);
-			}
-		</style>
 	</head>
 	<body ontouchstart=""> 
 		<div id="page-wrapper">
@@ -158,12 +31,18 @@
 			</header>
 
 			<!-- Catalog Hero -->
-			<section id="hero-banner" class="catalog-hero">
+			<section id="hero-banner">
 				<div class="main-container">
-					<div class="hero-content" style="max-width: 800px; margin: 0 auto;">
-						<div class="badge">🇦🇺 Single-Origin Cambodian Imports</div>
-						<h1>Premium Agricultural Product Catalog</h1>
-						<p class="hero-slogan">GMP & HACCP certified agricultural lines imported directly from Two Parrots Trading Solutions Co., Ltd. Certified steam-sterilized spices and pure agricultural starches.</p>
+					<div class="hero-flex">
+						<div class="hero-content">
+							<div class="badge">🇦🇺 Origin Cambodian Imports</div>
+							<h1>Premium Agricultural Product Catalog</h1>
+							<p class="hero-slogan">GMP & HACCP certified agricultural lines imported directly from Two Parrots Trading Solutions Co., Ltd. Certified steam-sterilized spices and pure agricultural starches.</p>
+							</div>					
+							<div class="hero-image">
+							<img src="images/products banner.JPG" class="scalable-hero" alt="Two Parrots Agricultural Imports">
+							</div>
+						</div>
 					</div>
 				</div>
 			</section>
@@ -185,7 +64,7 @@
 						<div class="product-card-modern" data-category="flours">
 							<span class="card-badge gold">Retail Pack</span>
 							<div>
-								<div class="product-icon-box">🍚</div>
+								<div class="product-icon-box"><img src="images/p-01.png" alt="Finest Rice Flour"></div>
 								<h3 class="product-title">Finest Rice Flour (500g)</h3>
 								<ul class="product-specs-list">
 									<li>📦 <strong>Packaging:</strong> 20 Pkgs (10kg) / Box</li>
@@ -202,7 +81,7 @@
 						<div class="product-card-modern" data-category="flours">
 							<span class="card-badge gold">Retail Pack</span>
 							<div>
-								<div class="product-icon-box">🌾</div>
+								<div class="product-icon-box"><img src="images/p-02.png" alt="Glutinous Rice Flour"></div>
 								<h3 class="product-title">Glutinous Rice Flour (500g)</h3>
 								<ul class="product-specs-list">
 									<li>📦 <strong>Packaging:</strong> 20 Pkgs (10kg) / Box </li>
@@ -219,7 +98,7 @@
 						<div class="product-card-modern" data-category="flours">
 							<span class="card-badge">Industrial & Retail</span>
 							<div>
-								<div class="product-icon-box">🥣</div>
+								<div class="product-icon-box"><img src="images/p-03.png" alt="Tapioca Flour"></div>
 								<h3 class="product-title">Tapioca Flour (500g)</h3>
 								<ul class="product-specs-list">
 									<li>📦 <strong>Packaging:</strong> 20 Pkgs (10kg) / Box </li>
@@ -236,7 +115,7 @@
 						<div class="product-card-modern" data-category="flours">
 							<span class="card-badge gold">Pre-Mix</span>
 							<div>
-								<div class="product-icon-box">🥞</div>
+								<div class="product-icon-box"><img src="images/p-04.png" alt="Specialty Pancake Flour"></div>
 								<h3 class="product-title">Specialty Pancake Flour (500g)</h3>
 								<ul class="product-specs-list">
 									<li>📦 <strong>Packaging:</strong> 20 Pkgs (10kg) / Box </li>
@@ -253,7 +132,7 @@
 						<div class="product-card-modern" data-category="flours">
 							<span class="card-badge gold">Popular</span>
 							<div>
-								<div class="product-icon-box">🍤</div>
+								<div class="product-icon-box"><img src="images/p-05.png" alt="Crispy Tempura Flour"></div>
 								<h3 class="product-title">Crispy Tempura Flour</h3>
 								<ul class="product-specs-list">
 									<li>📦 <strong>Formats:</strong> 1000g (10kg/Box) & 150g (60 pcs/Box) </li>
@@ -270,7 +149,7 @@
 						<div class="product-card-modern" data-category="flours">
 							<span class="card-badge gold">Specialty</span>
 							<div>
-								<div class="product-icon-box">🍌</div>
+								<div class="product-icon-box"><img src="images/p-06.png" alt="Fried Banana Flour"></div>
 								<h3 class="product-title">Fried Banana Flour (500g)</h3>
 								<ul class="product-specs-list">
 									<li>📦 <strong>Packaging:</strong> 20 Pkgs (10kg) / Box </li>
@@ -288,7 +167,7 @@
 						<div class="product-card-modern" data-category="bulk-pepper">
 							<span class="card-badge">10kg Bulk Box</span>
 							<div>
-								<div class="product-icon-box">⬛</div>
+								<div class="product-icon-box"><img src="images/p-07.png" alt="Whole Black Pepper"></div>
 								<h3 class="product-title">Whole Black Pepper (1000g/500g)</h3>
 								<ul class="product-specs-list">
 									<li>🔬 <strong>Specs:</strong> Density 550 g/l | Size ≥ 4mm </li>
@@ -305,7 +184,7 @@
 						<div class="product-card-modern" data-category="bulk-pepper">
 							<span class="card-badge">10kg Bulk Box</span>
 							<div>
-								<div class="product-icon-box">⚙️</div>
+								<div class="product-icon-box"><img src="images/p-08.png" alt="Crushed Black Pepper"></div>
 								<h3 class="product-title">Crushed Black Pepper</h3>
 								<ul class="product-specs-list">
 									<li>🔬 <strong>Specs:</strong> 10–20 Mesh Granulation </li>
@@ -322,7 +201,7 @@
 						<div class="product-card-modern" data-category="bulk-pepper">
 							<span class="card-badge">10kg Bulk Box</span>
 							<div>
-								<div class="product-icon-box">🧂</div>
+								<div class="product-icon-box"><img src="images/p-09.png" alt="Ground Black Pepper"></div>
 								<h3 class="product-title">Ground Black Pepper (40 Mesh)</h3>
 								<ul class="product-specs-list">
 									<li>🔬 <strong>Specs:</strong> 40 Fine Mesh Granulation </li>
@@ -339,7 +218,7 @@
 						<div class="product-card-modern" data-category="bulk-pepper">
 							<span class="card-badge">10kg Bulk Box</span>
 							<div>
-								<div class="product-icon-box">⚪</div>
+								<div class="product-icon-box"><img src="images/p-10.png" alt="Whole White Pepper"></div>
 								<h3 class="product-title">Whole White Pepper (1000g/500g)</h3>
 								<ul class="product-specs-list">
 									<li>🔬 <strong>Specs:</strong> High Density 630 g/l | Size ≥ 4mm </li>
@@ -356,7 +235,7 @@
 						<div class="product-card-modern" data-category="bulk-pepper">
 							<span class="card-badge">10kg Bulk Box</span>
 							<div>
-								<div class="product-icon-box">🌫️</div>
+								<div class="product-icon-box"><img src="images/p-11.png" alt="Ground White Pepper"></div>
 								<h3 class="product-title">Ground White Pepper (60 Mesh)</h3>
 								<ul class="product-specs-list">
 									<li>🔬 <strong>Specs:</strong> 60 Micro Mesh Fine Powder </li>
@@ -374,7 +253,7 @@
 						<div class="product-card-modern" data-category="retail-pepper">
 							<span class="card-badge gold">24 Cans / Box</span>
 							<div>
-								<div class="product-icon-box">🥫</div>
+								<div class="product-icon-box"><img src="images/p-12.png" alt="Fine Ground Black Pepper"></div>
 								<h3 class="product-title">Fine Ground Black Pepper (80g)</h3>
 								<ul class="product-specs-list">
 									<li>📦 <strong>Package:</strong> 24 Cans / Outer Box </li>
@@ -391,7 +270,7 @@
 						<div class="product-card-modern" data-category="retail-pepper">
 							<span class="card-badge gold">24 Cans / Box</span>
 							<div>
-								<div class="product-icon-box">🥫</div>
+								<div class="product-icon-box"><img src="images/p-13.png" alt="Coarse Ground Black Pepper"></div>
 								<h3 class="product-title">Coarse Ground Black Pepper (80g)</h3>
 								<ul class="product-specs-list">
 									<li>📦 <strong>Package:</strong> 24 Cans / Outer Box </li>
@@ -408,7 +287,7 @@
 						<div class="product-card-modern" data-category="retail-pepper">
 							<span class="card-badge gold">24 Cans / Box</span>
 							<div>
-								<div class="product-icon-box">🥫</div>
+								<div class="product-icon-box"><img src="images/p-14.png" alt="Fine Ground White Pepper"></div>
 								<h3 class="product-title">Fine Ground White Pepper (80g)</h3>
 								<ul class="product-specs-list">
 									<li>📦 <strong>Package:</strong> 24 Cans / Outer Box </li>
@@ -453,7 +332,7 @@
 							<ul class="contact-list">
 								<li><a href="tel:0468829988"><span>📞</span> 0468 829 988</a></li>
 								<li><a href="mailto:info@twoparrotsgroup.com.au"><span>✉️</span> info@twoparrotsgroup.com.au</a></li>
-								<li><span>📍</span>1/57 Elonera Road Noble Park North 3174 VIC</li>
+								<li><span>📍</span> 1/57 Elonera Rd Noble Park North VIC 3174</li>
 							</ul>
 						</div>
 					</div>
