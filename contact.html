@@ -67,54 +67,57 @@
 				</div>
 			</div>
 
-			<!-- Right Column: Premium Form Card -->
-			<div class="glass-form-container">
-				<form class="support-form-modern" onsubmit="event.preventDefault();">
-					<h3>Request Wholesale Quote</h3>
-					<p class="form-subtext">Fill out your details for pricing & sample dispatch.</p>
+<!-- Right Column: Premium Form Card -->
+<div class="glass-form-container">
+	<form class="support-form-modern" id="wholesaleForm">
+		<h3>Request Wholesale Quote</h3>
+		<p class="form-subtext">Fill out your details for pricing & sample dispatch.</p>
 
-					<div class="form-group">
-						<label>Full Name</label>
-						<input type="text" placeholder="e.g. Sarah Jenkins" required>
-					</div>
+		<div class="form-group">
+			<label>Full Name</label>
+			<input type="text" name="Full Name" placeholder="e.g. Sarah Jenkins" required>
+		</div>
 
-					<div class="form-group">
-						<label>Company / Business Name</label>
-						<input type="text" placeholder="e.g. Pacific Food Imports" required>
-					</div>
+		<div class="form-group">
+			<label>Company / Business Name</label>
+			<input type="text" name="Company Name" placeholder="e.g. Pacific Food Imports" required>
+		</div>
 
-					<div class="form-group">
-						<label>Email Address</label>
-						<input type="email" placeholder="name@company.com.au" required>
-					</div>
+		<div class="form-group">
+			<label>Email Address</label>
+			<input type="email" name="Email Address" placeholder="name@company.com.au" required>
+		</div>
 
-					<div class="form-group">
-						<label>Primary Product Interest</label>
-						<select required>
-							<option value="" disabled selected>Select Product Line...</option>
-							<option value="bulk-pepper">Bulk Industrial Pepper (10kg Boxes) </option>
-							<option value="retail-pepper">Retail Pepper Canisters (24 Cans) </option>
-							<option value="flours">Specialty Agricultural Flours (500g/1kg) </option>
-							<option value="noodles">Traditional Rice Noodles </option>
-							<option value="custom">Custom Sourcing / Other</option>
-						</select>
-					</div>
+		<div class="form-group">
+			<label>Primary Product Interest</label>
+			<select name="Product Interest" required>
+				<option value="" disabled selected>Select Product Line...</option>
+				<option value="Bulk Industrial Pepper (10kg Boxes)">Bulk Industrial Pepper (10kg Boxes)</option>
+				<option value="Retail Pepper Canisters (24 Cans)">Retail Pepper Canisters (24 Cans)</option>
+				<option value="Specialty Agricultural Flours (500g/1kg)">Specialty Agricultural Flours (500g/1kg)</option>
+				<option value="Traditional Rice Noodles">Traditional Rice Noodles</option>
+				<option value="Custom Sourcing / Other">Custom Sourcing / Other</option>
+			</select>
+		</div>
 
-					<div class="form-group">
-						<label>Inquiry Type</label>
-						<select required>
-							<option value="" disabled selected>Select Inquiry Type...</option>
-							<option value="sample">Wholesale Sample Pack Request</option>
-							<option value="pricing">Official AUD Price List</option>
-							<option value="contract">Forward Supply Agreement</option>
-							<option value="general">General Business Inquiry</option>
-						</select>
-					</div>
+		<div class="form-group">
+			<label>Inquiry Type</label>
+			<select name="Inquiry Type" required>
+				<option value="" disabled selected>Select Inquiry Type...</option>
+				<option value="Wholesale Sample Pack Request">Wholesale Sample Pack Request</option>
+				<option value="Official AUD Price List">Official AUD Price List</option>
+				<option value="Forward Supply Agreement">Forward Supply Agreement</option>
+				<option value="General Business Inquiry">General Business Inquiry</option>
+			</select>
+		</div>
 
-					<button type="submit" class="submit-btn-glow">
-						<span>🚀 Submit Commercial Inquiry</span>
-					</button>
-				</form>
+		<button type="submit" class="submit-btn-glow" id="submitBtn">
+			<span>🚀 Submit Commercial Inquiry</span>
+		</button>
+		
+		<p id="formStatus" style="display:none; margin-top:15px; font-weight:700; text-align:center;"></p>
+	</form>
+</div>
 			</div>
 
 		</div>
@@ -240,6 +243,35 @@
 			function closeMenu() { nav.classList.remove("is-open"); btn.classList.remove("active"); }
 			document.querySelectorAll('#main-nav a').forEach(link => { link.addEventListener('click', closeMenu); });
 			document.addEventListener('click', (e) => { if (!nav.contains(e.target) && !btn.contains(e.target)) closeMenu(); });
+			
+			const scriptURL = 'https://script.google.com/macros/s/AKfycbwqxF9RnU8lQF9KPdhpGk8pSd_QVUs088C1BROfscwl6byHjp7W3HqZ3I6P22d5HCH1/exec'; // Replace with your copied URL Deployment ID "AKfycbwqxF9RnU8lQF9KPdhpGk8pSd_QVUs088C1BROfscwl6byHjp7W3HqZ3I6P22d5HCH1"
+const form = document.getElementById('wholesaleForm');
+const statusText = document.getElementById('formStatus');
+const submitBtn = document.getElementById('submitBtn');
+
+form.addEventListener('submit', e => {
+	e.preventDefault();
+	submitBtn.disabled = true;
+	submitBtn.innerText = 'Sending...';
+
+	fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+		.then(response => {
+			statusText.style.display = 'block';
+			statusText.style.color = '#EA580C';
+			statusText.innerText = 'Thank you! Your inquiry has been sent directly to our team.';
+			form.reset();
+			submitBtn.disabled = false;
+			submitBtn.innerHTML = '<span>🚀 Submit Commercial Inquiry</span>';
+		})
+		.catch(error => {
+			statusText.style.display = 'block';
+			statusText.style.color = '#C8102E';
+			statusText.innerText = 'Something went wrong. Please try again.';
+			submitBtn.disabled = false;
+			submitBtn.innerHTML = '<span>🚀 Submit Commercial Inquiry</span>';
+		});
+});
+			
 		</script>
 	</body>
 </html>
