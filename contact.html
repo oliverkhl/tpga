@@ -73,6 +73,12 @@
 		<h3>Request Wholesale Quote</h3>
 		<p class="form-subtext">Fill out your details for pricing & sample dispatch.</p>
 
+		<!-- HONEYPOT FIELD (Spam Protection - Invisible to humans) -->
+		<div style="display:none !important;" aria-hidden="true">
+			<label>Leave this field empty</label>
+			<input type="text" name="website_hp" id="website_hp" tabindex="-1" autocomplete="off">
+		</div>
+
 		<div class="form-group">
 			<label>Full Name</label>
 			<input type="text" name="Full Name" placeholder="e.g. Sarah Jenkins" required>
@@ -118,10 +124,6 @@
 		<p id="formStatus" style="display:none; margin-top:15px; font-weight:700; text-align:center;"></p>
 	</form>
 </div>
-			</div>
-
-		</div>
-	</div>
 </section>
 
 			<!-- Certifications & Standards Slider -->
@@ -245,33 +247,43 @@
 			document.addEventListener('click', (e) => { if (!nav.contains(e.target) && !btn.contains(e.target)) closeMenu(); });
 			
 			const scriptURL = 'https://script.google.com/macros/s/AKfycbwqxF9RnU8lQF9KPdhpGk8pSd_QVUs088C1BROfscwl6byHjp7W3HqZ3I6P22d5HCH1/exec'; // Replace with your copied URL Deployment ID "AKfycbwqxF9RnU8lQF9KPdhpGk8pSd_QVUs088C1BROfscwl6byHjp7W3HqZ3I6P22d5HCH1"
-const form = document.getElementById('wholesaleForm');
-const statusText = document.getElementById('formStatus');
-const submitBtn = document.getElementById('submitBtn');
+			const form = document.getElementById('wholesaleForm');
+			const statusText = document.getElementById('formStatus');
+			const submitBtn = document.getElementById('submitBtn');
 
-form.addEventListener('submit', e => {
-	e.preventDefault();
-	submitBtn.disabled = true;
-	submitBtn.innerText = 'Sending...';
+			form.addEventListener('submit', e => {
+			e.preventDefault();
 
-	fetch(scriptURL, { method: 'POST', body: new FormData(form) })
-		.then(response => {
+			// 1. Client-Side Spam Check (Honeypot)
+			if (document.getElementById('website_hp').value !== '') {
+			// Silent rejection for bots
+			statusText.style.display = 'block';
+			statusText.style.color = '#EA580C';
+			statusText.innerText = 'Thank you! Your inquiry has been processed.';
+			form.reset();
+			return;
+			}
+
+			submitBtn.disabled = true;
+			submitBtn.innerText = 'Sending...';
+
+			fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+			.then(response => {
 			statusText.style.display = 'block';
 			statusText.style.color = '#EA580C';
 			statusText.innerText = 'Thank you! Your inquiry has been sent directly to our team.';
 			form.reset();
 			submitBtn.disabled = false;
 			submitBtn.innerHTML = '<span>🚀 Submit Commercial Inquiry</span>';
-		})
-		.catch(error => {
+			})
+			.catch(error => {
 			statusText.style.display = 'block';
 			statusText.style.color = '#C8102E';
 			statusText.innerText = 'Something went wrong. Please try again.';
 			submitBtn.disabled = false;
 			submitBtn.innerHTML = '<span>🚀 Submit Commercial Inquiry</span>';
-		});
-});
-			
+			});
+			});
 		</script>
 	</body>
 </html>
