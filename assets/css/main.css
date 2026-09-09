@@ -283,6 +283,17 @@ ul { list-style: none !important; }
     border: 1px solid rgba(234, 88, 12, 0.2);
 }
 
+
+.card-icon { 
+    font-size: 5rem; 
+    margin-bottom: 30px;
+    width: 130px; 
+    height: 130px; 
+    line-height: 130px; 
+    transition: 0.4s ease;
+}
+
+
 .card-icon-wrapper img { height: 90px; width: auto; pointer-events: none; }
 
 .service-card h4 {
