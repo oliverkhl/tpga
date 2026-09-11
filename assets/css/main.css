@@ -102,6 +102,39 @@ ul { list-style: none !important; }
 .image-logo { display: flex; align-items: center; transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important; will-change: transform; }
 .image-logo img { height: 78px; width: auto; pointer-events: none; }
 .image-logo:hover { transform: scale(1.08) !important; }
+:root {
+  --orange-start: #f29100; /* Warm gold/orange left */
+  --orange-end: #e25100;   /* Deep orange right */
+  --text-white: #ffffff;   /* Pure white text */
+  --bg-cream: #fdf8eb;     /* Off-white cream background */
+}
+
+/* Header background matching the cream canvas */
+header {
+  background-color: var(--bg-cream) !important;
+}
+
+/* Gold/Orange gradient applied to the main logo heading */
+.logo-text h1 {
+  font-size: 1.8rem !important;
+  background: linear-gradient(135deg, var(--orange-start), var(--orange-end)) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  text-transform: uppercase !important;
+  letter-spacing: 1px !important;
+  font-weight: 800 !important;
+  margin: 0 !important;
+  line-height: 1 !important;
+}
+
+/* White text for the secondary line on dark backgrounds, or solid orange for light backgrounds */
+.logo-text span {
+  font-size: 1rem !important;
+  color: var(--orange-end) !important;
+  font-weight: 600 !important;
+  display: block !important;
+  margin-top: 2px !important;
+}
 
 #main-nav { display: flex; align-items: center; }
 #main-nav a { 
