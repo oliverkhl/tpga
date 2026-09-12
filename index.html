@@ -4,17 +4,340 @@
 		<title>Two Parrots Group Australia | Cambodian Agricultural Importer & B2B Distributor</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<!-- Standard Favicon -->
 		<link rel="icon" type="image/png" href="images/favicon.png">
+		<style>
+			@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+
+			/* --- [1] COLOR PALETTE SYSTEM (UNIFIED BRANDING) --- */
+			* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+			body { background: #FDFBF7; color: #1F2937; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+			a { text-decoration: none !important; }
+			ul { list-style: none !important; }
+
+			/* SPA Page Switching Logic */
+			.page-view { display: none; }
+			.page-view.active-page { display: block; }
+
+			/* --- [2] HERITAGE ACKNOWLEDGMENT BAR --- */
+			.au-heritage-bar {
+				background: #1F2937;
+				color: #f1f5f9;
+				padding: 10px 0;
+				font-size: 0.85rem;
+				border-bottom: 2px solid #EA580C;
+			}
+			.au-heritage-bar .main-container {
+				display: flex;
+				align-items: center;
+				justify-content: flex-start;
+				gap: 15px;
+				flex-wrap: wrap;
+			}
+			.flag-container { display: flex; align-items: center; gap: 10px; }
+			.flag-item { font-size: 1.3rem; line-height: 1; }
+			.state-badge {
+				background: #4B5563;
+				color: #F59E0B;
+				border: 1px solid #F59E0B;
+				font-weight: 800;
+				font-size: 0.75rem;
+				padding: 2px 8px;
+				border-radius: 6px;
+				letter-spacing: 0.5px;
+			}
+			.aboriginal-flag-icon {
+				width: 26px; height: 18px;
+				position: relative; border-radius: 2px;
+				overflow: hidden; display: inline-block;
+				border: 1px solid rgba(255, 255, 255, 0.2);
+				box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+			}
+			.flag-top-black { position: absolute; top: 0; left: 0; width: 100%; height: 50%; background: #000000; }
+			.flag-bottom-red { position: absolute; bottom: 0; left: 0; width: 100%; height: 50%; background: #EA580C; }
+			.flag-sun-yellow {
+				position: absolute; top: 50%; left: 50%;
+				transform: translate(-50%, -50%);
+				width: 8px; height: 8px;
+				background: #F59E0B; border-radius: 50%; z-index: 2;
+			}
+			.country-ack { color: #cbd5e1; font-size: 0.8rem; font-weight: 500; }
+
+			/* --- [3] HEADER & NAVIGATION --- */
+			#header-fixed {
+				position: fixed; top: 0px; left: 0; width: 100%; height: 80px;
+				background: #ffffff; z-index: 10000;
+				border-bottom: 3px solid #4B5563; display: flex; align-items: center;
+			}
+			.main-container { max-width: 1200px; width: 90%; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+			.image-logo { display: flex; align-items: center; transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important; will-change: transform; cursor: pointer; }
+			.image-logo img { height: 78px; width: 80px; pointer-events: none; }
+			.image-logo:hover { transform: scale(1.08) !important; }
+
+			:root {
+			  --orange-start: #f29100;
+			  --orange-end: #e25100;
+			  --text-white: #ffffff;
+			  --bg-cream: #fdf8eb;
+			}
+
+			header { background-color: var(--bg-cream) !important; }
+			.logo-text h1 {
+			  font-size: 1.8rem !important;
+			  background: linear-gradient(135deg, var(--orange-start), var(--orange-end)) !important;
+			  -webkit-background-clip: text !important;
+			  -webkit-text-fill-color: transparent !important;
+			  text-transform: uppercase !important;
+			  letter-spacing: 1px !important;
+			  font-weight: 800 !important;
+			  margin: 0 !important;
+			  line-height: 1 !important;
+			}
+			.logo-text span {
+			  font-size: 1rem !important;
+			  color: var(--orange-end) !important;
+			  font-weight: 600 !important;
+			  display: block !important;
+			  margin-top: 2px !important;
+			}
+
+			#main-nav { display: flex; align-items: center; }
+			#main-nav a { 
+				color: #1F2937; font-weight: 600; text-decoration: none; 
+				margin-left: 15px; font-size: 0.95rem; padding: 10px 22px; 
+				border-radius: 50px; 
+				transition: 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+				will-change: transform; cursor: pointer;
+			}
+			#main-nav a:hover { 
+				transform: translateY(-2px) scale(1.05) !important; 
+				background: #4B5563; color: #F59E0B !important; 
+			}
+			.active-link { background: #FAF3E0; color: #EA580C !important; border: 1px solid #EA580C; }
+
+			/* --- [4] HERO BANNERS --- */
+			#page-wrapper { padding-top: 80px; }
+			#hero-banner, .support-desk-hero, .products-hero-banner, .biosecurity-hero-banner, .inner-page-hero, .page-banner {
+				min-height: 400px; display: flex; align-items: center; 
+				color: #1F2937 !important; padding: 80px 0 !important;
+				background: linear-gradient(135deg, #FDFBF7 0%, #FAF3E0 50%, #F5E6CA 100%) !important;
+			}
+			.hero-flex { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 60px; width: 100%; }
+			.hero-content h1, .products-hero-banner h1, .biosecurity-hero-banner h1, .inner-page-hero h1, .page-banner h1 { 
+				font-size: 2.8rem; line-height: 1.15; margin-bottom: 20px; font-weight: 800; color: #1F2937 !important; text-shadow: none !important;
+			}
+			.hero-slogan, .products-hero-banner p, .biosecurity-hero-banner p, .inner-page-hero p, .page-banner p { 
+				font-size: 1.15rem; color: #4B5563 !important; line-height: 1.6; margin-bottom: 40px; max-width: 680px; 
+			}
+			.badge { 
+				background: rgba(245, 158, 11, 0.15); color: #D97706; padding: 6px 16px; 
+				border-radius: 50px; font-size: 0.85rem; font-weight: 800; text-transform: uppercase; 
+				margin-bottom: 20px; border: 1px solid #F59E0B; display: inline-block; 
+			}
+			.hero-btn.big-btn { 
+				display: inline-block; padding: 22px 60px; 
+				background: linear-gradient(135deg, #F59E0B 0%, #EA580C 100%); 
+				color: #ffffff !important; text-decoration: none; border-radius: 100px; 
+				font-size: 1.6rem; font-weight: 800; 
+				transition: 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+				will-change: transform; box-shadow: 0 10px 25px rgba(234, 88, 12, 0.3); cursor: pointer;
+			}
+			.hero-btn:hover { 
+				background: #4B5563 !important; color: #ffffff !important; 
+				transform: translateY(-6px) scale(1.05) !important; 
+				box-shadow: 0 15px 35px rgba(75, 85, 99, 0.3); 
+			}
+			.hero-image { flex: 0 0 45%; display: flex; justify-content: center; align-items: center; }
+			.hero-image img { 
+				max-width: 550px; width: 100%; height: auto; border-radius: 20px; 
+				box-shadow: 0 25px 50px rgba(0,0,0,0.08); border: 2px solid rgba(245, 158, 11, 0.3);
+				transition: 0.6s cubic-bezier(0.165, 0.84, 0.44, 1) !important;
+			}
+			.hero-image img:hover { transform: scale(1.05) translateY(-8px) !important; }
+
+			/* --- [5] PRODUCT FILTERS & CARDS --- */
+			.filter-tab-container {
+				display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;
+				margin: 40px auto 20px auto; position: relative; z-index: 10; max-width: 1000px; padding: 0 20px;
+			}
+			.filter-btn {
+				background: #ffffff; color: #002147; border: 2px solid #002147;
+				padding: 12px 26px; border-radius: 50px; font-weight: 700; font-size: 0.95rem;
+				cursor: pointer; transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+			}
+			.filter-btn:hover, .filter-btn.active {
+				background: #C8102E; color: #ffffff; border-color: #C8102E;
+				transform: translateY(-3px); box-shadow: 0 8px 20px rgba(200, 16, 46, 0.3);
+			}
+			.product-card-modern {
+				background: #ffffff; border-radius: 24px; padding: 30px;
+				border: 1px solid rgba(0, 33, 71, 0.08); box-shadow: 0 10px 30px rgba(0, 33, 71, 0.05);
+				transition: all 0.4s ease; display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden;
+			}
+			.product-card-modern:hover { transform: translateY(-10px); box-shadow: 0 20px 45px rgba(0, 33, 71, 0.12); border-color: #FFCC00; }
+			.card-badge {
+				position: absolute; top: 15px; right: 15px; background: #f1f5f9; color: #002147;
+				font-size: 0.75rem; font-weight: 800; padding: 4px 12px; border-radius: 50px; text-transform: uppercase; letter-spacing: 0.5px;
+			}
+			.card-badge.gold { background: #fffbe6; color: #b45309; border: 1px solid #fde68a; }
+			.product-icon-box {
+				width: 80px; height: 80px; border-radius: 20px; background: #f8fafc;
+				display: flex; align-items: center; justify-content: center; font-size: 2.8rem; margin-bottom: 20px; border: 1px solid rgba(0, 33, 71, 0.05);
+			}
+			.product-icon-box img { height: 90px; width: auto; transition: 0.3s ease; }
+			.product-icon-box img:hover { transform: scale(1.1) translateY(-4px) !important; }
+			.product-title { font-size: 1.35rem; font-weight: 800; color: #002147; margin-bottom: 8px; }
+			.product-specs-list { margin: 15px 0; font-size: 0.9rem; color: #475569; line-height: 1.6; }
+			.product-specs-list li { margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+			.price-tag { font-size: 1.25rem; font-weight: 800; color: #C8102E; margin-top: 10px; }
+			.quote-btn-small {
+				display: block; width: 100%; text-align: center; padding: 12px; background: #002147;
+				color: #ffffff !important; border-radius: 50px; font-weight: 700; font-size: 0.9rem; margin-top: 15px; transition: 0.3s ease; cursor: pointer;
+			}
+			.quote-btn-small:hover { background: #C8102E; transform: scale(1.02); }
+
+			/* --- [6] LOGO SLIDER --- */
+			.logo-slider { background: #ffffff; padding: 35px 0; overflow: hidden; border-bottom: 1px solid #e2e8f0; white-space: nowrap; }
+			.slider-track { display: flex; align-items: center; animation: scroll 40s linear infinite; width: max-content; }
+			.logo-slider:hover .slider-track { animation-play-state: paused; }
+			.text-logo { font-size: 1.8rem; font-weight: 800; margin: 0 50px; transition: 0.4s; display: inline-block; opacity: 0.7; }
+			.text-logo:hover { opacity: 1; transform: scale(1.15); }
+			.unifi { color: #4B5563 !important; } 
+			.cisco { color: #EA580C !important; letter-spacing: 2px; border-top: 3px solid #EA580C; }
+			.sophos { color: #F59E0B !important; font-style: italic; background: #1F2937; padding: 2px 8px; border-radius: 4px; }
+			.draytek { color: #4B5563 !important; font-weight: 700; }
+			.tplink { color: #EA580C !important; text-transform: lowercase; }
+			.netgear { color: #F59E0B !important; font-weight: 800; background: #111827; padding: 2px 8px; }
+			.telstra { color: #4B5563 !important; font-style: italic; }
+			@keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+			/* --- [7] SERVICE & ABOUT CARDS --- */
+			.services-section { padding: 80px 0; background: #FDFBF7; }
+			.services-grid { display: grid; grid-template-columns: 1fr; gap: 30px; width: 90%; max-width: 1200px; margin: 0 auto; }
+			.service-card { 
+				background: #ffffff; border-radius: 35px; padding: 40px 30px; text-align: center; 
+				border: 1px solid rgba(75, 85, 99, 0.1); box-shadow: 0 15px 40px rgba(0, 0, 0, 0.03); 
+				transition: 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); position: relative; overflow: hidden;
+			}
+			.card-icon-wrapper { 
+				font-size: 4rem; margin: 0 auto 20px auto; display: flex; align-items: center; justify-content: center;
+				background: #FAF3E0; width: 100px; height: 100px; border-radius: 24px; transition: 0.4s ease;
+				border: 1px solid rgba(234, 88, 12, 0.2);
+			}
+			.card-icon-wrapper img { height: 70px; width: auto; pointer-events: none; }
+			.service-card h4 { font-size: 1.4rem; font-weight: 800; margin-bottom: 15px; color: #1F2937; }
+			.service-card p { font-size: 1rem; line-height: 1.6; color: #4B5563; }
+			.service-card:hover { transform: translateY(-10px); border-color: #EA580C; box-shadow: 0 30px 60px rgba(234, 88, 12, 0.12); }
+
+			.team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 25px; margin-top: 30px; }
+			.team-card { background: #ffffff; padding: 35px 25px; border-radius: 20px; border: 1px solid rgba(0, 33, 71, 0.08); text-align: center; box-shadow: 0 10px 25px rgba(0,33,71,0.04); transition: 0.3s ease; }
+			.team-card:hover { transform: translateY(-5px); border-color: #C8102E; box-shadow: 0 15px 35px rgba(200,16,46,0.1); }
+			.au-executive-card { background: #ffffff; padding: 40px 30px; border-radius: 24px; border: 1px solid rgba(0, 33, 71, 0.12); text-align: center; box-shadow: 0 12px 30px rgba(0,33,71,0.06); transition: 0.3s ease; }
+			.au-executive-card:hover { transform: translateY(-6px); border-color: #FFCC00; box-shadow: 0 18px 40px rgba(0, 33, 71, 0.15); }
+			.testimonial-card { background: linear-gradient(135deg, #002147 0%, #00152e 100%); color: #ffffff; padding: 50px 40px; border-radius: 30px; margin-top: 50px; text-align: center; border: 1px solid rgba(255,204,0,0.3); box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
+			.about-profile-card { background: #ffffff; padding: 30px; border-radius: 24px; border: 1px solid #e2e8f0; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+			.profile-icon { display: flex; justify-content: center; align-items: center; gap: 10px; margin-bottom: 15px; }
+			.profile-icon img { height: 45px; width: auto; }
+			.profile-divider { height: 2px; background: #e2e8f0; margin: 15px 0; }
+			.profile-stats { text-align: left; font-size: 0.9rem; line-height: 1.8; color: #475569; }
+			.profile-stats span { font-weight: 700; color: #002147; }
+
+			/* --- [8] BIOSECURITY TABLE & CARDS --- */
+			.qa-section-title { font-size: 2rem; color: #002147; margin-bottom: 25px; font-weight: 800; }
+			.qa-card-modern { background: #ffffff; border-radius: 24px; padding: 40px; border: 1px solid rgba(0, 33, 71, 0.08); box-shadow: 0 10px 30px rgba(0, 33, 71, 0.05); transition: all 0.4s ease; }
+			.qa-card-modern:hover { transform: translateY(-5px); box-shadow: 0 20px 45px rgba(0, 33, 71, 0.1); border-color: #C8102E; }
+			.qa-badge { display: inline-block; background: #fffbe6; color: #b45309; border: 1px solid #fde68a; font-size: 0.8rem; font-weight: 800; padding: 6px 14px; border-radius: 50px; text-transform: uppercase; margin-bottom: 15px; }
+			.spec-table { width: 100%; border-collapse: collapse; margin-top: 20px; background: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.04); }
+			.spec-table th, .spec-table td { padding: 16px 20px; text-align: left; border-bottom: 1px solid #e2e8f0; }
+			.spec-table th { background: #002147; color: #ffffff; font-weight: 700; }
+			.spec-table tr:hover { background: #f8fafc; }
+
+			/* --- [9] CONTACT FORM & ACTION ROW --- */
+			.hero-action-row { display: flex; flex-wrap: wrap; gap: 15px; margin-top: 35px; }
+			.action-btn {
+				display: flex; align-items: center; gap: 12px; padding: 12px 20px; border-radius: 16px;
+				background: rgba(255, 255, 255, 0.7); border: 1px solid rgba(107, 114, 128, 0.2); color: #1F2937 !important;
+				transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); backdrop-filter: blur(10px); cursor: pointer;
+			}
+			.action-btn:hover { transform: translateY(-4px); background: #EA580C; border-color: #EA580C; box-shadow: 0 10px 25px rgba(234, 88, 12, 0.25); }
+			.action-btn:hover .btn-text small, .action-btn:hover .btn-text strong { color: #ffffff !important; }
+			.btn-icon { font-size: 1.5rem; }
+			.btn-text { display: flex; flex-direction: column; text-align: left; }
+			.btn-text small { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.5px; color: #6B7280; }
+			.btn-text strong { font-size: 0.95rem; font-weight: 800; color: #1F2937; }
+			.glass-form-container { flex: 0 0 460px; max-width: 100%; background: #ffffff; border: 1px solid rgba(75, 85, 99, 0.1); padding: 40px; border-radius: 28px; box-shadow: 0 25px 60px rgba(0, 0, 0, 0.08); }
+			.support-form-modern h3 { color: #1F2937; font-size: 1.6rem; font-weight: 800; margin-bottom: 4px; text-align: left; }
+			.form-subtext { color: #6B7280; font-size: 0.88rem; margin-bottom: 25px; text-align: left; }
+			.form-group { margin-bottom: 18px; text-align: left; }
+			.form-group label { display: block; font-size: 0.8rem; font-weight: 700; color: #1F2937; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+			.form-group input, .form-group select {
+				width: 100%; padding: 14px 18px; border-radius: 12px; border: 1.5px solid #cbd5e1;
+				background: #FDFBF7; font-size: 0.95rem; color: #0f172a; outline: none; transition: all 0.3s ease; font-family: inherit;
+			}
+			.form-group input:focus, .form-group select:focus { border-color: #EA580C; background: #ffffff; box-shadow: 0 0 0 4px rgba(234, 88, 12, 0.1); }
+			.submit-btn-glow {
+				width: 100%; padding: 18px; margin-top: 10px; border: none; border-radius: 50px;
+				background: linear-gradient(135deg, #F59E0B 0%, #EA580C 100%); color: #ffffff !important;
+				font-size: 1.05rem; font-weight: 800; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 10px 25px rgba(234, 88, 12, 0.3);
+			}
+			.submit-btn-glow:hover { background: #4B5563; color: #ffffff !important; transform: translateY(-2px); box-shadow: 0 15px 30px rgba(75, 85, 99, 0.3); }
+
+			/* --- [10] FOOTER --- */
+			#modern-footer { background: #1F2937; color: #cbd5e1; padding: 60px 0 30px 0; border-top: 4px solid #EA580C; }
+			.footer-grid { display: grid; grid-template-columns: 1fr; gap: 40px; }
+			.footer-logo { height: 80px; margin-bottom: 20px; }
+			.footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 25px; margin-top: 30px; text-align: center; font-size: 0.8rem; color: #94a3b8; }
+			.footer-col h4 { color: #F59E0B; margin-bottom: 20px; }
+			.footer-col a { color: #cbd5e1 !important; transition: 0.3s; display: inline-block; cursor: pointer; }
+			.footer-col a:hover { color: #F59E0B !important; transform: translateX(5px); }
+
+			/* --- [11] RESPONSIVE BREAKPOINTS --- */
+			@media screen and (min-width: 981px) {
+				.hero-flex { flex-direction: row; text-align: left; justify-content: space-between; gap: 10px; }
+				.hero-content { flex: 0 0 55%; }
+				.hero-image { flex: 0 0 40%; }
+				.hero-content h1 { font-size: 3.5rem; }
+				.services-grid { grid-template-columns: repeat(3, 1fr) !important; }
+				.footer-grid { grid-template-columns: 2fr 1fr 1fr !important; }
+			}
+			@media screen and (max-width: 980px) {
+				#header-fixed { top: 0px; }
+				#page-wrapper { padding-top: 10px; }
+				.menu-toggle { display: flex; flex-direction: column; justify-content: space-between; width: 30px; height: 21px; background: transparent; border: none; z-index: 10001; cursor: pointer; }
+				.menu-toggle .bar { width: 100%; height: 3px; background-color: #1F2937; border-radius: 10px; transition: 0.3s; }
+				#main-nav { position: fixed; top: 80px; left: 0; width: 100%; background: #ffffff; flex-direction: column; display: none; z-index: 9999; border-bottom: 2px solid #e2e8f0; }
+				#main-nav.is-open { display: flex !important; }
+				#main-nav a { width: 100%; text-align: center; margin: 0; border-bottom: 1px solid #f1f5f9; padding: 15px 0; border-radius: 0; }
+				.glass-form-container { width: 100%; flex: 1 1 auto; padding: 30px 20px; }
+				.hero-action-row { justify-content: center; }
+				.spec-table { display: block; overflow-x: auto; }
+			}
+		</style>
 	</head>
 	<body ontouchstart=""> 
 		<div id="page-wrapper">
 
-			<!-- Header -->
+			<!-- Global Australian Cultural Acknowledgment Header Bar -->
+			<div class="au-heritage-bar">
+				<div class="main-container">
+					<div class="flag-container">
+						<span class="flag-item" title="Australian Flag">🇦🇺</span>
+						<span class="state-badge">VIC</span>
+						<div class="aboriginal-flag-icon" title="Australian Aboriginal Flag">
+							<span class="flag-top-black"></span>
+							<span class="flag-sun-yellow"></span>
+							<span class="flag-bottom-red"></span>
+						</div>
+					</div>
+					<p class="country-ack">
+						Proudly Australian Owned & Operated | Based in Noble Park North, Victoria. We acknowledge the Traditional Custodians of Country throughout Australia.
+					</p>
+				</div>
+			</div>
+
+			<!-- Fixed Navigation Header -->
 			<header id="header-fixed">
 				<div class="main-container">
-					<a href="index.html" class="image-logo">
+					<a onclick="navigateTo('home')" class="image-logo">
 						<img src="images/logo.png" alt="Two Parrots Group Australia Logo">
 						<div class="logo-text">
 							<h1> Two Parrots</h1>
@@ -27,109 +350,948 @@
 						<span class="bar"></span>
 					</button>
 					<nav id="main-nav">
-						<a href="index.html" class="active-link">Home</a>
-						<a href="products.html">Products</a>
-						<a href="compliance.html">Biosecurity & QA</a>
-						<a href="about.html">About Us</a>
-						<a href="contact.html">Contact Us</a>
+						<a onclick="navigateTo('home')" id="nav-home" class="active-link">Home</a>
+						<a onclick="navigateTo('products')" id="nav-products">Products</a>
+						<a onclick="navigateTo('compliance')" id="nav-compliance">Biosecurity & QA</a>
+						<a onclick="navigateTo('about')" id="nav-about">About Us</a>
+						<a onclick="navigateTo('contact')" id="nav-contact">Contact Us</a>
 					</nav>
 				</div>
 			</header>
 
-			<section id="hero-banner">
-				<div class="main-container">
-					<div class="hero-flex">
-						<div class="hero-content">
-							<div class="badge">🇦🇺 Victoria | Direct Agricultural Import & B2B Supply</div>
-							<h1>Premium Origin Cambodian Imports</h1>
-							<p class="hero-slogan">Direct commercial importer of steam-sterilized Kampot black & white pepper, specialty flours, and artisanal rice noodles sourced directly from Two Parrots Trading Solutions Co., Ltd .</p>
-							<div class="hero-btn-wrapper">
-								<a href="tel:0468829988" class="hero-btn big-btn">📦 Request Sample Pack</a>
+			<!-- ==========================================
+				 1. HOME VIEW
+			========================================== -->
+			<main id="view-home" class="page-view active-page">
+				<section id="hero-banner">
+					<div class="main-container">
+						<div class="hero-flex">
+							<div class="hero-content">
+								<div class="badge">🇦🇺 Victoria | Direct Agricultural Import & B2B Supply</div>
+								<h1>Premium Origin Cambodian Imports</h1>
+								<p class="hero-slogan">Direct commercial importer of steam-sterilized Kampot black & white pepper, specialty flours, and artisanal rice noodles sourced directly from Two Parrots Trading Solutions Co., Ltd.</p>
+								<div class="hero-btn-wrapper">
+									<a onclick="navigateTo('contact')" class="hero-btn big-btn">📦 Request Sample Pack</a>
+								</div>
+							</div>
+							<div class="hero-image">
+								<img src="images/banner.png" class="scalable-hero" alt="Two Parrots Agricultural Imports">
 							</div>
 						</div>
-						<div class="hero-image">
-							<img src="images/banner.png" class="scalable-hero" alt="Two Parrots Agricultural Imports">
+					</div>
+				</section>
+
+				<section class="logo-slider">
+					<div class="slider-track">
+						<span class="text-logo unifi">GMP<span>Certified</span></span>
+						<span class="text-logo cisco">HACCP</span>
+						<span class="text-logo sophos">Kampot Pepper GI</span>
+						<span class="text-logo draytek">DAFF Approved</span>
+						<span class="text-logo tplink">BICON Compliant</span>
+						<span class="text-logo netgear">Single Origin</span>
+						<span class="text-logo telstra">Inclusive Business</span>
+						<span class="text-logo unifi">GMP<span>Certified</span></span>
+						<span class="text-logo cisco">HACCP</span>
+						<span class="text-logo sophos">Kampot Pepper GI</span>
+					</div>
+				</section>
+
+				<section class="services-section">
+					<div class="main-container">
+						<div class="services-grid">
+							<div class="service-card">
+								<div class="card-icon-wrapper"><img src="images/1.png" alt="Black & White Pepper"></div>
+								<h4>Kampot Black & White Pepper</h4>
+								<p>Whole, crushed, and fine-ground pepper (550–630 g/l density) packed in 10kg industrial boxes or 80g retail cans.</p>
+							</div>
+							<div class="service-card">
+								<div class="card-icon-wrapper"><img src="images/2.png" alt="Specialty Agricultural Flours"></div>
+								<h4>Specialty Agricultural Flours</h4>
+								<p>Premium 500g/1kg retail packs of finest rice flour, glutinous rice flour, tapioca starch, and tempura pre-mixes.</p>
+							</div>
+							<div class="service-card">
+								<div class="card-icon-wrapper"><img src="images/3.png" alt="Traditional Rice Noodles"></div>
+								<h4>Traditional Rice Noodles</h4>
+								<p>Authentic, high-tensile dried rice sticks manufactured under strict sanitary matrices for Asian grocery networks.</p>
+							</div>
+							<div class="service-card">
+								<div class="card-icon-wrapper">🛡️</div>
+								<h4>DAFF Biosecurity Compliant</h4>
+								<p>All spice and flour lines undergo origin steam sterilization and complete phytosanitary auditing prior to port entry.</p>
+							</div>
+							<div class="service-card">
+								<div class="card-icon-wrapper">🏭</div>
+								<h4>Industrial B2B Supply</h4>
+								<p>High-volume bulk supply agreements for commercial food processors, spice blenders, and bakeries across Australia.</p>
+							</div>
+							<div class="service-card">
+								<div class="card-icon-wrapper">🤝</div>
+								<h4>Victorian Distribution Hub</h4>
+								<p>Direct domestic fulfillment out of Victoria (ACN 699 476 107) with predictable local billing and stock stability.</p>
+							</div>
 						</div>
 					</div>
-				</div>
-			</section>
+				</section>
+			</main>
 
-			<section class="logo-slider">
-				<div class="slider-track">
-					<span class="text-logo unifi">GMP<span>Certified</span></span>
-					<span class="text-logo cisco">HACCP</span>
-					<span class="text-logo sophos">Kampot Pepper GI</span>
-					<span class="text-logo draytek">DAFF Approved</span>
-					<span class="text-logo tplink">BICON Compliant</span>
-					<span class="text-logo netgear">Single Origin</span>
-					<span class="text-logo telstra">Inclusive Business</span>
-					<span class="text-logo unifi">GMP<span>Certified</span></span>
-					<span class="text-logo cisco">HACCP</span>
-					<span class="text-logo sophos">Kampot Pepper GI</span>
-				</div>
-			</section>
-
-			<section class="services-section">
-				<div class="main-container">
-					<div class="services-grid">
-						<div class="service-card">
-							<div class="card-icon-wrapper"><img src="images/1.png" alt="Black & White Pepper"></div>
-							<h4>Kampot Black & White Pepper</h4>
-							<p>Whole, crushed, and fine-ground pepper (550–630 g/l density) packed in 10kg industrial boxes or 80g retail cans .</p>
-						</div>
-						<div class="service-card">
-							<div class="card-icon-wrapper"><img src="images/2.png" alt="Specialty Agricultural Flours"></div>
-							<h4>Specialty Agricultural Flours</h4>
-							<p>Premium 500g/1kg retail packs of finest rice flour, glutinous rice flour, tapioca starch, and tempura pre-mixes .</p>
-						</div>
-						<div class="service-card">
-							<div class="card-icon-wrapper"><img src="images/3.png" alt="Traditional Rice Noodles"></div>
-							<h4>Traditional Rice Noodles</h4>
-							<p>Authentic, high-tensile dried rice sticks manufactured under strict sanitary matrices for Asian grocery networks .</p>
-						</div>
-						<div class="service-card">
-							<div class="card-icon-wrapper">🛡️</div>
-							<h4>DAFF Biosecurity Compliant</h4>
-							<p>All spice and flour lines undergo origin steam sterilization and complete phytosanitary auditing prior to port entry .</p>
-						</div>
-						<div class="service-card">
-							<div class="card-icon-wrapper">🏭</div>
-							<h4>Industrial B2B Supply</h4>
-							<p>High-volume bulk supply agreements for commercial food processors, spice blenders, and bakeries across Australia .</p>
-						</div>
-						<div class="service-card">
-							<div class="card-icon-wrapper">🤝</div>
-							<h4>Victorian Distribution Hub</h4>
-							<p>Direct domestic fulfillment out of Victoria (ACN 699 476 107) with predictable local billing and stock stability.</p>
+			<!-- ==========================================
+				 2. PRODUCTS VIEW
+			========================================== -->
+			<main id="view-products" class="page-view">
+				<section id="hero-banner">
+					<div class="main-container">
+						<div class="hero-flex">
+							<div class="hero-content">
+								<div class="badge">🇦🇺 Origin Cambodian Imports</div>
+								<h1>Premium Agricultural Product Catalog</h1>
+								<p class="hero-slogan">GMP & HACCP certified agricultural lines imported directly from Two Parrots Trading Solutions Co., Ltd. Certified steam-sterilized spices and pure agricultural starches.</p>
+							</div>					
+							<div class="hero-image">
+								<img src="images/products banner.JPG" class="scalable-hero" alt="Two Parrots Agricultural Imports">
+							</div>
 						</div>
 					</div>
-				</div>
-			</section>
+				</section>
 
+				<div class="filter-tab-container">
+					<button class="filter-btn active" onclick="filterProducts(event, 'all')">All Products</button>
+					<button class="filter-btn" onclick="filterProducts(event, 'flours')">🌾 Agricultural Flours</button>
+					<button class="filter-btn" onclick="filterProducts(event, 'bulk-pepper')">🌿 Bulk Industrial Pepper</button>
+					<button class="filter-btn" onclick="filterProducts(event, 'retail-pepper')">🫙 Retail Canisters</button>
+				</div>
+
+				<section class="services-section" style="padding-top: 20px;">
+					<div class="main-container">
+						<div class="services-grid" id="product-grid">
+							
+							<!-- === FLOURS === -->
+							<div class="product-card-modern" data-category="flours">
+								<span class="card-badge gold">Retail Pack</span>
+								<div>
+									<div class="product-icon-box"><img src="images/p-01.png" alt="Finest Rice Flour"></div>
+									<h3 class="product-title">Finest Rice Flour (500g)</h3>
+									<ul class="product-specs-list">
+										<li>📦 <strong>Packaging:</strong> 20 Pkgs (10kg) / Box</li>
+										<li>✨ Fine-milled, pure Cambodian rice starch</li>
+										<li>🌾 Ideal for gluten-free baking & CPG manufacturing</li>
+									</ul>
+								</div>
+								<div>
+									<div class="price-tag">AUD $12.10 <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ Box</span></div>
+									<a onclick="navigateTo('contact')" class="quote-btn-small">Request Wholesale Sample</a>
+								</div>
+							</div>
+
+							<div class="product-card-modern" data-category="flours">
+								<span class="card-badge gold">Retail Pack</span>
+								<div>
+									<div class="product-icon-box"><img src="images/p-02.png" alt="Glutinous Rice Flour"></div>
+									<h3 class="product-title">Glutinous Rice Flour (500g)</h3>
+									<ul class="product-specs-list">
+										<li>📦 <strong>Packaging:</strong> 20 Pkgs (10kg) / Box</li>
+										<li>✨ Premium high-sticky starch formulation</li>
+										<li>🥟 Essential for Asian bakery & dumplings</li>
+									</ul>
+								</div>
+								<div>
+									<div class="price-tag">AUD $18.60 <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ Box</span></div>
+									<a onclick="navigateTo('contact')" class="quote-btn-small">Request Wholesale Sample</a>
+								</div>
+							</div>
+
+							<div class="product-card-modern" data-category="flours">
+								<span class="card-badge">Industrial & Retail</span>
+								<div>
+									<div class="product-icon-box"><img src="images/p-03.png" alt="Tapioca Flour"></div>
+									<h3 class="product-title">Tapioca Flour (500g)</h3>
+									<ul class="product-specs-list">
+										<li>📦 <strong>Packaging:</strong> 20 Pkgs (10kg) / Box</li>
+										<li>✨ High-clarity native tapioca starch</li>
+										<li>🧪 Perfect thickener for commercial kitchens</li>
+									</ul>
+								</div>
+								<div>
+									<div class="price-tag">AUD $13.95 <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ Box</span></div>
+									<a onclick="navigateTo('contact')" class="quote-btn-small">Request Wholesale Sample</a>
+								</div>
+							</div>
+
+							<div class="product-card-modern" data-category="flours">
+								<span class="card-badge gold">Pre-Mix</span>
+								<div>
+									<div class="product-icon-box"><img src="images/p-04.png" alt="Specialty Pancake Flour"></div>
+									<h3 class="product-title">Specialty Pancake Flour (500g)</h3>
+									<ul class="product-specs-list">
+										<li>📦 <strong>Packaging:</strong> 20 Pkgs (10kg) / Box</li>
+										<li>✨ Authentic Cambodian recipe pre-mix</li>
+										<li>🍳 Fast-prep for foodservice & grocery</li>
+									</ul>
+								</div>
+								<div>
+									<div class="price-tag">AUD $37.25 <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ Box</span></div>
+									<a onclick="navigateTo('contact')" class="quote-btn-small">Request Wholesale Sample</a>
+								</div>
+							</div>
+
+							<div class="product-card-modern" data-category="flours">
+								<span class="card-badge gold">Popular</span>
+								<div>
+									<div class="product-icon-box"><img src="images/p-05.png" alt="Crispy Tempura Flour"></div>
+									<h3 class="product-title">Crispy Tempura Flour</h3>
+									<ul class="product-specs-list">
+										<li>📦 <strong>Formats:</strong> 1000g (10kg/Box) & 150g (60 pcs/Box)</li>
+										<li>✨ High-crunch batter for seafood & veggies</li>
+										<li>🥢 Formulated for restaurant hospitality</li>
+									</ul>
+								</div>
+								<div>
+									<div class="price-tag">AUD $18.60 – $32.10 <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ Box</span></div>
+									<a onclick="navigateTo('contact')" class="quote-btn-small">Request Wholesale Sample</a>
+								</div>
+							</div>
+
+							<div class="product-card-modern" data-category="flours">
+								<span class="card-badge gold">Specialty</span>
+								<div>
+									<div class="product-icon-box"><img src="images/p-06.png" alt="Fried Banana Flour"></div>
+									<h3 class="product-title">Fried Banana Flour (500g)</h3>
+									<ul class="product-specs-list">
+										<li>📦 <strong>Packaging:</strong> 20 Pkgs (10kg) / Box</li>
+										<li>✨ Traditional crispy dessert batter mix</li>
+										<li>🍨 High margin retail & street-food favorite</li>
+									</ul>
+								</div>
+								<div>
+									<div class="price-tag">AUD $43.75 <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ Box</span></div>
+									<a onclick="navigateTo('contact')" class="quote-btn-small">Request Wholesale Sample</a>
+								</div>
+							</div>
+
+							<!-- === BULK PEPPER === -->
+							<div class="product-card-modern" data-category="bulk-pepper">
+								<span class="card-badge">10kg Bulk Box</span>
+								<div>
+									<div class="product-icon-box"><img src="images/p-07.png" alt="Whole Black Pepper"></div>
+									<h3 class="product-title">Whole Black Pepper (1000g/500g)</h3>
+									<ul class="product-specs-list">
+										<li>🔬 <strong>Specs:</strong> Density 550 g/l | Size ≥ 4mm</li>
+										<li>💨 Steam-sterilized round peppercorns</li>
+										<li>⚙️ Moisture ≤ 12% | Foreign Matter 0.00%</li>
+									</ul>
+								</div>
+								<div>
+									<div class="price-tag">AUD $126.00 <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ 10kg Box</span></div>
+									<a onclick="navigateTo('contact')" class="quote-btn-small">Request Bulk Spec Sheet</a>
+								</div>
+							</div>
+
+							<div class="product-card-modern" data-category="bulk-pepper">
+								<span class="card-badge">10kg Bulk Box</span>
+								<div>
+									<div class="product-icon-box"><img src="images/p-08.png" alt="Crushed Black Pepper"></div>
+									<h3 class="product-title">Crushed Black Pepper</h3>
+									<ul class="product-specs-list">
+										<li>🔬 <strong>Specs:</strong> 10–20 Mesh Granulation</li>
+										<li>🥩 Perfect coarse cut for meat rubs & sauces</li>
+										<li>⚙️ Steam sterilized & sorted</li>
+									</ul>
+								</div>
+								<div>
+									<div class="price-tag">AUD $133.00 <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ 10kg Box</span></div>
+									<a onclick="navigateTo('contact')" class="quote-btn-small">Request Bulk Spec Sheet</a>
+								</div>
+							</div>
+
+							<div class="product-card-modern" data-category="bulk-pepper">
+								<span class="card-badge">10kg Bulk Box</span>
+								<div>
+									<div class="product-icon-box"><img src="images/p-09.png" alt="Ground Black Pepper"></div>
+									<h3 class="product-title">Ground Black Pepper (40 Mesh)</h3>
+									<ul class="product-specs-list">
+										<li>🔬 <strong>Specs:</strong> 40 Fine Mesh Granulation</li>
+										<li>🏭 Industrial grade for commercial formulations</li>
+										<li>⚙️ Steam sterilized | Moisture ≤ 12%</li>
+									</ul>
+								</div>
+								<div>
+									<div class="price-tag">AUD $133.00 <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ 10kg Box</span></div>
+									<a onclick="navigateTo('contact')" class="quote-btn-small">Request Bulk Spec Sheet</a>
+								</div>
+							</div>
+
+							<div class="product-card-modern" data-category="bulk-pepper">
+								<span class="card-badge">10kg Bulk Box</span>
+								<div>
+									<div class="product-icon-box"><img src="images/p-10.png" alt="Whole White Pepper"></div>
+									<h3 class="product-title">Whole White Pepper (1000g/500g)</h3>
+									<ul class="product-specs-list">
+										<li>🔬 <strong>Specs:</strong> High Density 630 g/l | Size ≥ 4mm</li>
+										<li>✨ Clean aroma & high volatile oil content</li>
+										<li>⚙️ Steam sterilized whole peppercorns</li>
+									</ul>
+								</div>
+								<div>
+									<div class="price-tag">AUD $168.00 <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ 10kg Box</span></div>
+									<a onclick="navigateTo('contact')" class="quote-btn-small">Request Bulk Spec Sheet</a>
+								</div>
+							</div>
+
+							<div class="product-card-modern" data-category="bulk-pepper">
+								<span class="card-badge">10kg Bulk Box</span>
+								<div>
+									<div class="product-icon-box"><img src="images/p-11.png" alt="Ground White Pepper"></div>
+									<h3 class="product-title">Ground White Pepper (60 Mesh)</h3>
+									<ul class="product-specs-list">
+										<li>🔬 <strong>Specs:</strong> 60 Micro Mesh Fine Powder</li>
+										<li>🍲 Tailored for white sauces & fine cuisine</li>
+										<li>⚙️ Steam sterilized | Moisture ≤ 12%</li>
+									</ul>
+								</div>
+								<div>
+									<div class="price-tag">AUD $175.00 <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ 10kg Box</span></div>
+									<a onclick="navigateTo('contact')" class="quote-btn-small">Request Bulk Spec Sheet</a>
+								</div>
+							</div>
+
+							<!-- === RETAIL PEPPER CANISTERS === -->
+							<div class="product-card-modern" data-category="retail-pepper">
+								<span class="card-badge gold">24 Cans / Box</span>
+								<div>
+									<div class="product-icon-box"><img src="images/p-12.png" alt="Fine Ground Black Pepper"></div>
+									<h3 class="product-title">Fine Ground Black Pepper (80g)</h3>
+									<ul class="product-specs-list">
+										<li>📦 <strong>Package:</strong> 24 Cans / Outer Box</li>
+										<li>✨ 40 Mesh fine ground in display canisters</li>
+										<li>🛒 Ready for grocery & supermarket shelves</li>
+									</ul>
+								</div>
+								<div>
+									<div class="price-tag">AUD $48.00 <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ Box (24 Cans)</span></div>
+									<a onclick="navigateTo('contact')" class="quote-btn-small">Request Retail Sample</a>
+								</div>
+							</div>
+
+							<div class="product-card-modern" data-category="retail-pepper">
+								<span class="card-badge gold">24 Cans / Box</span>
+								<div>
+									<div class="product-icon-box"><img src="images/p-13.png" alt="Coarse Ground Black Pepper"></div>
+									<h3 class="product-title">Coarse Ground Black Pepper (80g)</h3>
+									<ul class="product-specs-list">
+										<li>📦 <strong>Package:</strong> 24 Cans / Outer Box</li>
+										<li>✨ 10–20 Mesh coarse ground spice canisters</li>
+										<li>🛒 High margin retail tabletop product</li>
+									</ul>
+								</div>
+								<div>
+									<div class="price-tag">AUD $48.00 <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ Box (24 Cans)</span></div>
+									<a onclick="navigateTo('contact')" class="quote-btn-small">Request Retail Sample</a>
+								</div>
+							</div>
+
+							<div class="product-card-modern" data-category="retail-pepper">
+								<span class="card-badge gold">24 Cans / Box</span>
+								<div>
+									<div class="product-icon-box"><img src="images/p-14.png" alt="Fine Ground White Pepper"></div>
+									<h3 class="product-title">Fine Ground White Pepper (80g)</h3>
+									<ul class="product-specs-list">
+										<li>📦 <strong>Package:</strong> 24 Cans / Outer Box</li>
+										<li>✨ 40 Mesh fine white pepper canister</li>
+										<li>🛒 Modern sealed packaging for fresh flavor</li>
+									</ul>
+								</div>
+								<div>
+									<div class="price-tag">AUD $48.00 <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ Box (24 Cans)</span></div>
+									<a onclick="navigateTo('contact')" class="quote-btn-small">Request Retail Sample</a>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</section>
+			</main>
+
+			<!-- ==========================================
+				 3. BIOSECURITY & QA VIEW
+			========================================== -->
+			<main id="view-compliance" class="page-view">
+				<section id="hero-banner">
+					<div class="main-container">
+						<div class="hero-flex">
+							<div class="hero-content">
+								<div class="badge">🇦🇺 DAFF & BICON Compliant Import Matrix</div>
+								<h1>Biosecurity & Quality Assurance</h1>
+								<p class="hero-slogan">Direct farm-to-wharf traceability, origin steam sterilization, and complete Australian biosecurity pre-clearance protocols for agricultural imports.</p>
+							</div>						
+							<div class="hero-image">
+								<img src="images/bio&Assur.jpg" class="scalable-hero" alt="Two Parrots Agricultural Imports">
+							</div>
+						</div>
+					</div>
+				</section>
+
+				<section class="services-section" style="padding: 30px 0;">
+					<div class="main-container" style="flex-direction: column; gap: 60px;">
+
+						<!-- Section 1: Core Biosecurity Pillars -->
+						<div>
+							<h2 class="qa-section-title">🛡️ Core Biosecurity & Compliance Pillars</h2>
+							<div class="services-grid">
+								<div class="qa-card-modern">
+									<span class="qa-badge">GMP & HACCP Certified</span>
+									<h3 style="color:#002147; font-size:1.4rem; margin-bottom:12px;">Standardized Processing</h3>
+									<p style="color:#475569; line-height:1.6;">All pepper and flour lines are processed in standardized Cambodian facilities certified under international GMP and HACCP quality standards.</p>
+								</div>
+
+								<div class="qa-card-modern">
+									<span class="qa-badge">Pure Origin Assurance</span>
+									<h3 style="color:#002147; font-size:1.4rem; margin-bottom:12px;">Steam Sterilization</h3>
+									<p style="color:#475569; line-height:1.6;">Spices undergo advanced steam sterilization treatment to eliminate biological pathogens while preserving essential volatile oils and aroma.</p>
+								</div>
+
+								<div class="qa-card-modern">
+									<span class="qa-badge">DAFF Clearance Ready</span>
+									<h3 style="color:#002147; font-size:1.4rem; margin-bottom:12px;">Pre-Arrival Lodgement</h3>
+									<p style="color:#475569; line-height:1.6;">Shipments are pre-lodged with Australian Border Force (ABF) and DAFF via BICON protocols to guarantee smooth entry into Port of Melbourne.</p>
+								</div>
+							</div>
+						</div>
+
+						<!-- Section 2: Technical Quality Standards Table -->
+						<div style="width: 100%;">
+							<h2 class="qa-section-title">🔬 Origin Quality Specifications</h2>
+							<p style="color:#475569; margin-bottom: 20px;">Strict quality control measures executed before export from Phnom Penh, Cambodia:</p>
+
+							<table class="spec-table">
+								<thead>
+									<tr>
+										<th>Product Vertical</th>
+										<th>Parameter / Density</th>
+										<th>Moisture Content</th>
+										<th>Foreign Matter</th>
+										<th>Processing Technology</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td><strong>Whole Black Pepper</strong></td>
+										<td>550 g/l | Size ≥ 4mm</td>
+										<td>≤ 12%</td>
+										<td>0.00%</td>
+										<td>Cleaning, grading, steam sterilizer & automated packing</td>
+									</tr>
+									<tr>
+										<td><strong>Crushed Black Pepper</strong></td>
+										<td>10–20 Mesh</td>
+										<td>≤ 12%</td>
+										<td>0.00%</td>
+										<td>Grinding & peeling line, steam sterilizer</td>
+									</tr>
+									<tr>
+										<td><strong>Ground Black Pepper</strong></td>
+										<td>40 Mesh Fine</td>
+										<td>≤ 12%</td>
+										<td>0.00%</td>
+										<td>Cleaned, dried, micro-sorted & steam sterilized</td>
+									</tr>
+									<tr>
+										<td><strong>Whole White Pepper</strong></td>
+										<td>630 g/l | Size ≥ 4mm</td>
+										<td>≤ 12%</td>
+										<td>0.00%</td>
+										<td>Peeling line, grading, steam sterilizer</td>
+									</tr>
+									<tr>
+										<td><strong>Ground White Pepper</strong></td>
+										<td>60 Micro Mesh</td>
+										<td>≤ 12%</td>
+										<td>0.00%</td>
+										<td>Ultra-fine grinding, steam sterilizer</td>
+									</tr>
+									<tr>
+										<td><strong>Specialty Flours</strong></td>
+										<td>Pure milled starches</td>
+										<td>Controlled Commercial Standard</td>
+										<td>0.00%</td>
+										<td>HACCP sanitary screening & retail barrier seal</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+
+						<!-- Section 3: Documentation Checklist -->
+						<div class="qa-card-modern" style="background: linear-gradient(135deg, #002147 0%, #00152e 100%); color:#ffffff;">
+							<h3 style="color:#FFCC00; font-size:1.6rem; margin-bottom:15px;">📋 Mandatory Import Documentation Included</h3>
+							<p style="color:#e2e8f0; line-height:1.6; margin-bottom:25px;">Every container shipped to Two Parrots Group Australia Pty Ltd is issued with complete documentation to satisfy Australian customs and food security standards:</p>
+							<div style="display:flex; flex-wrap:wrap; gap:15px;">
+								<span style="background:rgba(255,255,255,0.1); padding:8px 16px; border-radius:30px; border:1px solid rgba(255,255,255,0.2);">✅ Official Phytosanitary Certificate</span>
+								<span style="background:rgba(255,255,255,0.1); padding:8px 16px; border-radius:30px; border:1px solid rgba(255,255,255,0.2);">✅ Steam Sterilization Certificate</span>
+								<span style="background:rgba(255,255,255,0.1); padding:8px 16px; border-radius:30px; border:1px solid rgba(255,255,255,0.2);">✅ Certificate of Origin (Cambodia)</span>
+								<span style="background:rgba(255,255,255,0.1); padding:8px 16px; border-radius:30px; border:1px solid rgba(255,255,255,0.2);">✅ GMP / HACCP Factory Audit</span>
+							</div>
+						</div>
+
+					</div>
+				</section>
+			</main>
+
+			<!-- ==========================================
+				 4. ABOUT US VIEW
+			========================================== -->
+			<main id="view-about" class="page-view">
+				<section id="hero-banner">
+					<div class="main-container">
+						<div class="hero-flex">
+							<div class="hero-content">
+								<div class="badge">20+ Years Sourcing Heritage</div>
+								<h1>Ethical Origin.<br>Export Ready Reliability.</h1>
+								<p class="hero-slogan">Backed by 20 years of professional agribusiness experience from our Cambodian founding entity, Two Parrots Group Australia Pty Ltd bridges the gap between smallholder farming networks and Australian procurement teams.</p>
+							</div>
+
+							<div class="about-profile-card">
+								<div class="profile-icon">
+									<a onclick="navigateTo('home')" class="image-logo">
+										<img src="images/logo.png" alt="Two Parrots Group Australia Logo">
+										<div class="card-icon" style="font-size:2rem; margin:0 5px;">🤝</div>
+										<img src="images/logo2.png" alt="Two Parrots Origin Logo">
+									</a>
+								</div>
+								<h3>Two Parrots Group Australia</h3>
+								<p>Backed by Origin Founders</p>
+								<div class="profile-divider"></div>
+								<ul class="profile-stats">
+									<li><span>ACN:</span> 699 476 107</li>
+									<li><span>State:</span> Victoria, Australia</li>
+									<li><span>Origin HQ:</span> Phnom Penh, Cambodia</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</section>
+
+				<section class="logo-slider">
+					<div class="slider-track">
+						<span class="text-logo unifi">GMP<span>Certified</span></span>
+						<span class="text-logo cisco">HACCP</span>
+						<span class="text-logo sophos">Kampot Pepper GI</span>
+						<span class="text-logo draytek">DAFF Approved</span>
+						<span class="text-logo tplink">BICON Compliant</span>
+						<span class="text-logo netgear">Single Origin</span>
+						<span class="text-logo unifi">GMP<span>Certified</span></span>
+						<span class="text-logo cisco">HACCP</span>
+					</div>
+				</section>
+
+				<!-- Vision, Mission & Core Values Section -->
+				<section class="services-section" style="padding: 80px 0; background: #ffffff;">
+					<div class="main-container" style="flex-direction: column; gap: 50px;">
+						
+						<!-- Vision & Mission Callouts -->
+						<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; width: 100%;">
+							<div style="background: #f8fafc; padding: 40px; border-radius: 24px; border-left: 6px solid #002147;">
+								<h3 style="color: #002147; font-size: 1.5rem; margin-bottom: 12px; font-weight: 800;">👁️ Our Vision</h3>
+								<p style="color: #475569; line-height: 1.7; font-size: 1.05rem;">
+									To be a leading, trusted, and ethical agribusiness partner driving sustainable growth for farmers, partners, and consumers.
+								</p>
+							</div>
+
+							<div style="background: #f8fafc; padding: 40px; border-radius: 24px; border-left: 6px solid #C8102E;">
+								<h3 style="color: #C8102E; font-size: 1.5rem; margin-bottom: 12px; font-weight: 800;">🎯 Our Mission</h3>
+								<p style="color: #475569; line-height: 1.7; font-size: 1.05rem;">
+									To build sustainable agricultural value chains delivering high-quality and traceable products while promoting environmental and social responsibility.
+								</p>
+							</div>
+						</div>
+
+						<!-- Core Values Grid -->
+						<div style="width: 100%; text-align: center; margin-top: 20px;">
+							<h2 style="font-size: 2.2rem; color: #002147; font-weight: 800; margin-bottom: 15px;">Our Core Values</h2>
+							<p style="color: #475569; margin-bottom: 40px;">Professional & Trustworthy in every transaction.</p>
+
+							<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px;">
+								<div style="background:#ecfdf5; padding:25px; border-radius:20px; border:1px solid #10b981;">
+									<h4 style="color:#064e3b; margin-bottom:8px;">Integrity</h4>
+									<p style="font-size:0.85rem; color:#047857;">Building professional trust through honesty and transparency.</p>
+								</div>
+								<div style="background:#fef3c7; padding:25px; border-radius:20px; border:1px solid #f59e0b;">
+									<h4 style="color:#92400e; margin-bottom:8px;">Innovation</h4>
+									<p style="font-size:0.85rem; color:#b45309;">Constantly improving solutions to meet market demands.</p>
+								</div>
+								<div style="background:#eff6ff; padding:25px; border-radius:20px; border:1px solid #3b82f6;">
+									<h4 style="color:#1e40af; margin-bottom:8px;">Quality</h4>
+									<p style="font-size:0.85rem; color:#1d4ed8;">Maintaining highest product and service standards.</p>
+								</div>
+								<div style="background:#f0fdf4; padding:25px; border-radius:20px; border:1px solid #22c55e;">
+									<h4 style="color:#15803d; margin-bottom:8px;">Sustainability</h4>
+									<p style="font-size:0.85rem; color:#166534;">Ensuring economic, social, and environmental responsibility.</p>
+								</div>
+								<div style="background:#fdf2f8; padding:25px; border-radius:20px; border:1px solid #ec4899;">
+									<h4 style="color:#9d174d; margin-bottom:8px;">Partnership</h4>
+									<p style="font-size:0.85rem; color:#be185d;">Growing together with farmers, suppliers, and customers.</p>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</section>
+
+				<!-- Australian Leadership Team -->
+				<section class="services-section" style="padding: 80px 0; background: #f1f5f9;">
+					<div class="main-container" style="flex-direction: column; gap: 40px; text-align: center;">
+						<div>
+							<div class="state-badge" style="display:inline-block; margin-bottom:12px;">🇦🇺 Executive Directorate</div>
+							<h2 style="font-size: 2.2rem; color: #002147; font-weight: 800; margin-bottom: 12px;">Australian Leadership Team</h2>
+							<p style="color: #475569; max-width: 700px; margin: 0 auto;">Directing domestic market expansion, corporate governance, cross-border import strategy, and 3PL distribution networks from Victoria.</p>
+						</div>
+
+						<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; width: 100%; margin-top: 10px;">
+							<div class="au-executive-card">
+								<div style="font-size: 3rem; margin-bottom: 15px;">👨‍💼</div>
+								<h3 style="color:#002147; font-size:1.4rem; margin-bottom:4px; font-weight:800;">Kim Heng LY</h3>
+								<p style="color:#C8102E; font-weight:800; font-size:0.95rem; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:15px;">Managing Director</p>
+								<div style="height:2px; background:#e2e8f0; width:50px; margin:0 auto 20px auto;"></div>
+								<p style="color:#475569; font-size:0.95rem; line-height:1.7; text-align:left;">
+									Specializes in strategic trade expansion, international cross-border logistics, market penetration, and establishing robust supply channels connecting Cambodian producers with Australian B2B distribution and commercial food networks.
+								</p>
+							</div>
+
+							<div class="au-executive-card">
+								<div style="font-size: 3rem; margin-bottom: 15px;">👩‍💼</div>
+								<h3 style="color:#002147; font-size:1.4rem; margin-bottom:4px; font-weight:800;">Chhingleang Loy</h3>
+								<p style="color:#C8102E; font-weight:800; font-size:0.95rem; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:15px;">Operations Manager</p>
+								<div style="height:2px; background:#e2e8f0; width:50px; margin:0 auto 20px auto;"></div>
+								<p style="color:#475569; font-size:0.95rem; line-height:1.7; text-align:left;">
+									Spearheads end-to-end operational execution, human resources management, localized Victorian 3PL fulfillment, regulatory administration, and day-to-day workflow optimizations across our domestic supply infrastructure.
+								</p>
+							</div>
+						</div>
+					</div>
+				</section>
+
+				<!-- Origin Story & Business Model Section -->
+				<section class="services-section" style="padding: 80px 0; background: #ffffff;">
+					<div class="main-container" style="flex-direction: column; gap: 60px;">
+						
+						<div style="max-width: 900px; margin: 0 auto; text-align: left;">
+							<h2 style="font-size: 2.2rem; color: #002147; margin-bottom: 20px; font-weight: 800;">About Two Parrots Sourcing & Origin</h2>
+							<p style="font-size: 1.1rem; line-height: 1.8; color: #475569; margin-bottom: 25px;">
+								Two Parrots Trading Solutions is a social agribusiness committed to building sustainable and inclusive value chains in Cambodia. We connect farmers, producers, and markets through innovative production, processing, sourcing, and trading solutions that ensure quality and traceability from farm to market.
+							</p>
+							<p style="font-size: 1.1rem; line-height: 1.8; color: #475569; margin-bottom: 25px;">
+								With <strong>20 years of agri-food experience</strong>, Two Parrots bridges smallholder farmers, local partners, and international buyers through a transparent, fair-trade, and sustainability-driven approach that creates shared value for all. We work across the value chain—from farm-level sourcing and processing coordination to quality control and shipment readiness—so buyers can purchase with confidence.
+							</p>
+
+							<h3 style="font-size: 1.6rem; color: #002147; margin: 40px 0 15px 0; font-weight: 800;">From Origin to Shipment: How We Work</h3>
+							<p style="font-size: 1.05rem; line-height: 1.7; color: #475569;">
+								We organize supply with clear specifications, lot-level traceability, and practical quality checks aligned with buyer requirements. Our team supports sampling, documentation, packing formats, and shipment coordination. The result is an export-ready supply process designed to reduce risk, improve consistency, and strengthen long-term sourcing programs.
+							</p>
+						</div>
+
+						<div class="services-grid">
+							<div class="service-card">
+								<div class="card-icon-wrapper">🤝</div>
+								<h4>Inclusive Business</h4>
+								<p>We partner directly with smallholder farmers, cooperatives, unions, and SMEs to promote sustainable agriculture and green investment in Cambodia.</p>
+							</div>
+
+							<div class="service-card">
+								<div class="card-icon-wrapper">🛡️</div>
+								<h4>Quality & Safety</h4>
+								<p>We focus on unique products committed to local and international certifications (GMP, HACCP, GAP, Organic) to ensure full traceability and gain buyer confidence.</p>
+							</div>
+
+							<div class="service-card">
+								<div class="card-icon-wrapper">🌱</div>
+								<h4>Sustainability & ESG</h4>
+								<p>Our operations prioritize green investments, sustainable farming development, eco-friendly packaging, fair pay, and ESG/CSR compliance.</p>
+							</div>
+						</div>
+
+						<!-- Origin Leadership Team -->
+						<div style="width: 100%; text-align: center; margin-top: 20px;">
+							<h2 style="font-size: 2rem; color: #002147; font-weight: 800; margin-bottom: 10px;">Origin Leadership Team</h2>
+							<p style="color: #475569; margin-bottom: 30px;">Directing sourcing, processing quality, and global trade development from Phnom Penh, Cambodia.</p>
+
+							<div class="team-grid">
+								<div class="team-card">
+									<div style="font-size: 2.5rem; margin-bottom: 10px;">👤</div>
+									<h4 style="color:#002147; font-size:1.1rem; margin-bottom:4px;">Mr. Try Senhoeun</h4>
+									<p style="font-size:0.85rem; color:#C8102E; font-weight:700; margin-bottom:8px;">Founder & Chairman</p>
+									<p style="font-size:0.85rem; color:#64748b; line-height:1.5;">Extensive experience in agribusiness, supply chain development, and building sustainable market linkages.</p>
+								</div>
+
+								<div class="team-card">
+									<div style="font-size: 2.5rem; margin-bottom: 10px;">👩‍💼</div>
+									<h4 style="color:#002147; font-size:1.1rem; margin-bottom:4px;">Mrs. To Sony</h4>
+									<p style="font-size:0.85rem; color:#C8102E; font-weight:700; margin-bottom:8px;">Founder & CEO</p>
+									<p style="font-size:0.85rem; color:#64748b; line-height:1.5;">Leads sustainable production, marketing, and export strategies while empowering local farmers.</p>
+								</div>
+
+								<div class="team-card">
+									<div style="font-size: 2.5rem; margin-bottom: 10px;">👨‍💼</div>
+									<h4 style="color:#002147; font-size:1.1rem; margin-bottom:4px;">Mr. Noun Tum</h4>
+									<p style="font-size:0.85rem; color:#C8102E; font-weight:700; margin-bottom:8px;">Managing Director</p>
+									<p style="font-size:0.85rem; color:#64748b; line-height:1.5;">Specializes in trade strategy, market development, and connecting local producers with international buyers.</p>
+								</div>
+
+								<div class="team-card">
+									<div style="font-size: 2.5rem; margin-bottom: 10px;">👩‍🔬</div>
+									<h4 style="color:#002147; font-size:1.1rem; margin-bottom:4px;">Ms. Heng Socheata</h4>
+									<p style="font-size:0.85rem; color:#C8102E; font-weight:700; margin-bottom:8px;">Operations Manager</p>
+									<p style="font-size:0.85rem; color:#64748b; line-height:1.5;">Oversees daily production, supply chain efficiency, product quality control, and timely delivery.</p>
+								</div>
+							</div>
+						</div>
+
+						<!-- Origin Operations Structure -->
+						<div style="width: 100%; text-align: center; margin-top: 20px;">
+							<h2 style="font-size: 2rem; color: #002147; font-weight: 800;">Cross-Functional Operations Team</h2>
+							<p style="color: #475569; margin-bottom: 30px;">Supporting responsive service for international procurement teams.</p>
+
+							<div class="team-grid">
+								<div class="team-card">
+									<div style="font-size: 2.5rem; margin-bottom: 10px;">🌾</div>
+									<h4 style="color:#002147; font-size:1.1rem; margin-bottom:8px;">Sourcing & Farmer Partnerships</h4>
+									<p style="font-size:0.88rem; color:#64748b;">Origin relationships and supply planning.</p>
+								</div>
+
+								<div class="team-card">
+									<div style="font-size: 2.5rem; margin-bottom: 10px;">🔬</div>
+									<h4 style="color:#002147; font-size:1.1rem; margin-bottom:8px;">Quality & Specifications</h4>
+									<p style="font-size:0.88rem; color:#64748b;">Lot checks, sampling support, and documentation.</p>
+								</div>
+
+								<div class="team-card">
+									<div style="font-size: 2.5rem; margin-bottom: 10px;">📦</div>
+									<h4 style="color:#002147; font-size:1.1rem; margin-bottom:8px;">Processing & Packing</h4>
+									<p style="font-size:0.88rem; color:#64748b;">Packing formats, labeling, and export readiness.</p>
+								</div>
+
+								<div class="team-card">
+									<div style="font-size: 2.5rem; margin-bottom: 10px;">🌐</div>
+									<h4 style="color:#002147; font-size:1.1rem; margin-bottom:8px;">Logistics & Customer Support</h4>
+									<p style="font-size:0.88rem; color:#64748b;">Shipment coordination and buyer communication.</p>
+								</div>
+							</div>
+						</div>
+
+						<!-- Testimonial -->
+						<div class="testimonial-card">
+							<div style="font-size: 2rem; color: #FFCC00; margin-bottom: 15px;">★★★★★</div>
+							<blockquote style="font-size: 1.25rem; font-style: italic; line-height: 1.7; color: #f8fafc; max-width: 800px; margin: 0 auto 20px auto;">
+								“Two Parrots provided clear specifications, responsive communication, and export-ready documentation. Sampling and shipment coordination were handled professionally from start to finish.”
+							</blockquote>
+							<p style="color: #FFCC00; font-weight: 800; font-size: 1.05rem;">Procurement Manager — Spices & Nuts Importer</p>
+							<p style="color: #94a3b8; font-size: 0.85rem;">International Buyer (Confidential)</p>
+						</div>
+
+					</div>
+				</section>
+			</main>
+
+			<!-- ==========================================
+				 5. CONTACT US VIEW
+			========================================== -->
+			<main id="view-contact" class="page-view">
+				<section id="hero-banner" class="support-desk-hero">
+					<div class="main-container">
+						<div class="hero-flex">
+							
+							<!-- Left Column -->
+							<div class="hero-content">
+								<div class="badge">Direct Commercial Desk</div>
+								<h1>Let's Discuss Your<br>Import Requirements.</h1>
+								<p class="hero-slogan">Get in touch with our Victorian commercial team to request product samples, bulk spec sheets, or custom B2B distribution agreements.</p>
+								
+								<div class="hero-action-row">
+									<a href="tel:0468829988" class="action-btn call-btn">
+										<span class="btn-icon">📞</span>
+										<div class="btn-text">
+											<small>Call Direct</small>
+											<strong>0468 829 988</strong>
+										</div>
+									</a>
+									<a href="mailto:info@twoparrotsgroup.com.au" class="action-btn email-btn">
+										<span class="btn-icon">✉️</span>
+										<div class="btn-text">
+											<small>Email Us</small>
+											<strong>info@twoparrotsgroup.com.au</strong>
+										</div>
+									</a>
+									<a onclick="navigateTo('products')" class="action-btn catalog-btn">
+										<span class="btn-icon">📦</span>
+										<div class="btn-text">
+											<small>Explore</small>
+											<strong>Product Catalog</strong>
+										</div>
+									</a>
+								</div>
+							</div>
+
+							<!-- Right Column: Wholesale Form -->
+							<div class="glass-form-container">
+								<form class="support-form-modern" id="wholesaleForm">
+									<h3>Request Wholesale Quote</h3>
+									<p class="form-subtext">Fill out your details for pricing & sample dispatch.</p>
+
+									<!-- HONEYPOT FIELD -->
+									<div style="display:none !important;" aria-hidden="true">
+										<label>Leave this field empty</label>
+										<input type="text" name="website_hp" id="website_hp" tabindex="-1" autocomplete="off">
+									</div>
+
+									<div class="form-group">
+										<label>Full Name</label>
+										<input type="text" name="Full Name" placeholder="e.g. Sarah Jenkins" required>
+									</div>
+
+									<div class="form-group">
+										<label>Company / Business Name</label>
+										<input type="text" name="Company Name" placeholder="e.g. Pacific Food Imports" required>
+									</div>
+
+									<div class="form-group">
+										<label>Email Address</label>
+										<input type="email" name="Email Address" placeholder="name@company.com.au" required>
+									</div>
+
+									<div class="form-group">
+										<label>Primary Product Interest</label>
+										<select name="Product Interest" required>
+											<option value="" disabled selected>Select Product Line...</option>
+											<option value="Bulk Industrial Pepper (10kg Boxes)">Bulk Industrial Pepper (10kg Boxes)</option>
+											<option value="Retail Pepper Canisters (24 Cans)">Retail Pepper Canisters (24 Cans)</option>
+											<option value="Specialty Agricultural Flours (500g/1kg)">Specialty Agricultural Flours (500g/1kg)</option>
+											<option value="Traditional Rice Noodles">Traditional Rice Noodles</option>
+											<option value="Custom Sourcing / Other">Custom Sourcing / Other</option>
+										</select>
+									</div>
+
+									<div class="form-group">
+										<label>Inquiry Type</label>
+										<select name="Inquiry Type" required>
+											<option value="" disabled selected>Select Inquiry Type...</option>
+											<option value="Wholesale Sample Pack Request">Wholesale Sample Pack Request</option>
+											<option value="Official AUD Price List">Official AUD Price List</option>
+											<option value="Forward Supply Agreement">Forward Supply Agreement</option>
+											<option value="General Business Inquiry">General Business Inquiry</option>
+										</select>
+									</div>
+
+									<!-- HUMAN VERIFICATION BOX -->
+									<div class="form-group" style="margin-top: 20px; background: #FAF3E0; padding: 12px 16px; border-radius: 12px; border: 1px solid #F59E0B; display: flex; align-items: center; gap: 12px;">
+										<input type="checkbox" id="human_check" style="width: 20px; height: 20px; accent-color: #EA580C; cursor: pointer;" required>
+										<label for="human_check" style="margin-bottom: 0; font-size: 0.9rem; color: #1F2937; cursor: pointer; text-transform: none; font-weight: 600;">
+											I agree for Two Parrots Group Australia to contact me.
+										</label>
+									</div>
+
+									<button type="submit" class="submit-btn-glow" id="submitBtn">
+										<span>🚀 Submit Commercial Inquiry</span>
+									</button>
+									
+									<p id="formStatus" style="display:none; margin-top:15px; font-weight:700; text-align:center;"></p>
+								</form>
+							</div>
+
+						</div>
+					</div>
+				</section>
+
+				<section class="logo-slider">
+					<div class="slider-track">
+						<span class="text-logo unifi">GMP<span>Certified</span></span>
+						<span class="text-logo cisco">HACCP</span>
+						<span class="text-logo sophos">Kampot Pepper GI</span>
+						<span class="text-logo draytek">DAFF Approved</span>
+						<span class="text-logo tplink">BICON Compliant</span>
+						<span class="text-logo netgear">Single Origin</span>
+						<span class="text-logo unifi">GMP<span>Certified</span></span>
+						<span class="text-logo cisco">HACCP</span>
+					</div>
+				</section>
+
+				<!-- Contact Details Grid -->
+				<section class="services-section" style="padding: 80px 0; background: #ffffff;">
+					<div class="main-container" style="flex-direction: column; gap: 50px;">
+						
+						<div style="text-align: center;">
+							<h2 style="font-size: 2.2rem; color: #002147; font-weight: 800; margin-bottom: 12px;">Get In Touch</h2>
+							<p style="color: #475569;">Reach out directly to our Australian headquarters or origin operational desk.</p>
+						</div>
+
+						<div class="services-grid">
+							
+							<!-- Australian HQ -->
+							<div class="service-card" style="text-align: left; padding: 40px 30px;">
+								<div class="card-icon-wrapper" style="font-size: 3.5rem; margin:0 0 25px 0;">🇦🇺</div>
+								<h4 style="color: #002147; font-size: 1.4rem; margin-bottom: 10px;">Australian Headquarters</h4>
+								<p style="color: #C8102E; font-weight: 700; font-size: 0.9rem; margin-bottom: 15px;">Two Parrots Group Australia Pty Ltd</p>
+								<ul style="color: #475569; font-size: 0.95rem; line-height: 1.8;">
+									<li><strong>ACN:</strong> 699 476 107</li>
+									<li><strong>Address:</strong> 1/57 Elonera Rd Noble Park North VIC 3174</li>
+									<li><strong>Phone:</strong> <a href="tel:0468829988" style="color: #002147; font-weight: 700;">0468 829 988</a></li>
+									<li><strong>Email:</strong> <a href="mailto:info@twoparrotsgroup.com.au" style="color: #002147; font-weight: 700;">info@twoparrotsgroup.com.au</a></li>
+								</ul>
+							</div>
+
+							<!-- Director Desk -->
+							<div class="service-card" style="text-align: left; padding: 40px 30px;">
+								<div class="card-icon-wrapper" style="font-size: 3.5rem; margin:0 0 25px 0;">👨‍💼</div>
+								<h4 style="color: #002147; font-size: 1.4rem; margin-bottom: 10px;">Executive Leadership</h4>
+								<p style="color: #C8102E; font-weight: 700; font-size: 0.9rem; margin-bottom: 15px;">Victoria Directorate Desk</p>
+								<ul style="color: #475569; font-size: 0.95rem; line-height: 1.8;">
+									<li><strong>Managing Director:</strong> Kim Heng LY</li>
+									<li><strong>Operations Manager:</strong> Chhingleang Loy</li>
+									<li><strong>Focus:</strong> B2B Trade Strategy & 3PL Distribution</li>
+									<li><strong>State of Registration:</strong> Victoria, Australia</li>
+								</ul>
+							</div>
+
+							<!-- Origin HQ -->
+							<div class="service-card" style="text-align: left; padding: 40px 30px;">
+								<div class="card-icon-wrapper" style="font-size: 3.5rem; margin:0 0 25px 0;">🇰🇭</div>
+								<h4 style="color: #002147; font-size: 1.4rem; margin-bottom: 10px;">Cambodian Origin HQ</h4>
+								<p style="color: #C8102E; font-weight: 700; font-size: 0.9rem; margin-bottom: 15px;">Two Parrots Trading Solutions Co., Ltd</p>
+								<ul style="color: #475569; font-size: 0.95rem; line-height: 1.8;">
+									<li><strong>Address:</strong> N.1159, National Road No.2, Prek Ta Nu Village, Chak Angrae Leu, Mean Chey, Phnom Penh</li>
+									<li><strong>Managing Director:</strong> Mr. Noun Tum</li>
+									<li><strong>Phone/WhatsApp:</strong> +855 12 628 988</li>
+									<li><strong>Email:</strong> tum@two-parrots.com</li>
+								</ul>
+							</div>
+
+						</div>
+
+					</div>
+				</section>
+			</main>
+
+			<!-- Global Footer -->
 			<footer id="modern-footer">
 				<div class="main-container">
 					<div class="footer-grid">
 						<div class="footer-col brand-col">
 							<img src="images/logo.png" alt="Two Parrots Group Australia Logo" class="footer-logo">
-							<p>Exclusive Australian importer and B2B distributor of premium agricultural products from Two Parrots Trading Solutions Co., Ltd (Cambodia) .</p>
-							<div class="footer-badges">
-								<span class="license-badge">ACN: 699 476 107</span>
+							<p>Exclusive Australian importer and B2B distributor of premium agricultural products from Two Parrots Trading Solutions Co., Ltd (Cambodia).</p>
+							<div class="footer-badges" style="margin-top:15px;">
+								<span class="state-badge">ACN: 699 476 107</span>
 							</div>
 						</div>
 
 						<div class="footer-col">
 							<h4>Quick Links</h4>
-							<ul class="footer-links">
-								<li><a href="products.html">Product Catalog</a></li>
-								<li><a href="compliance.html">Biosecurity & QA</a></li>
-								<li><a href="about.html">About Us</a></li>
-								<li><a href="contact.html">Contact Us</a></li>
+							<ul class="footer-links" style="line-height:2.2;">
+								<li><a onclick="navigateTo('home')">Home</a></li>
+								<li><a onclick="navigateTo('products')">Product Catalog</a></li>
+								<li><a onclick="navigateTo('compliance')">Biosecurity & QA</a></li>
+								<li><a onclick="navigateTo('about')">About Us</a></li>
+								<li><a onclick="navigateTo('contact')">Contact Us</a></li>
 							</ul>
 						</div>
 
 						<div class="footer-col">
 							<h4>Get In Touch</h4>
-							<ul class="contact-list">
+							<ul class="contact-list" style="line-height:2.2;">
 								<li><a href="tel:0468829988"><span>📞</span> 0468 829 988</a></li>
 								<li><a href="mailto:info@twoparrotsgroup.com.au"><span>✉️</span> info@twoparrotsgroup.com.au</a></li>
 								<li><span>📍</span> 1/57 Elonera Rd Noble Park North VIC 3174</li>
@@ -147,14 +1309,127 @@
 
 		</div>
 
+		<!-- Single-Page Application & Form Scripts -->
 		<script>
+			// SPA Navigation Routing Logic
+			function navigateTo(pageId) {
+				// Hide all pages
+				const pages = document.querySelectorAll('.page-view');
+				pages.forEach(p => p.classList.remove('active-page'));
+
+				// Remove active status from header links
+				const navLinks = document.querySelectorAll('#main-nav a');
+				navLinks.forEach(link => link.classList.remove('active-link'));
+
+				// Show target page
+				const targetPage = document.getElementById('view-' + pageId);
+				if (targetPage) {
+					targetPage.classList.add('active-page');
+				}
+
+				// Active current link in navbar
+				const activeNavLink = document.getElementById('nav-' + pageId);
+				if (activeNavLink) {
+					activeNavLink.classList.add('active-link');
+				}
+
+				// Close mobile menu if open & scroll top
+				closeMenu();
+				window.scrollTo({ top: 0, behavior: 'smooth' });
+			}
+
+			// Mobile Navigation Toggle
 			const nav = document.getElementById("main-nav");
 			const btn = document.getElementById("menuBtn");
-			function toggleMobileMenu(e) { e.stopPropagation(); nav.classList.toggle("is-open"); btn.classList.toggle("active"); }
-			function closeMenu() { nav.classList.remove("is-open"); btn.classList.remove("active"); }
-			document.querySelectorAll('#main-nav a').forEach(link => { link.addEventListener('click', closeMenu); });
-			document.addEventListener('click', (e) => { if (!nav.contains(e.target) && !btn.contains(e.target)) closeMenu(); });
-			window.addEventListener('scroll', () => { if (nav.classList.contains("is-open")) closeMenu(); }, { passive: true });
+
+			function toggleMobileMenu(e) {
+				e.stopPropagation();
+				nav.classList.toggle("is-open");
+				btn.classList.toggle("active");
+			}
+
+			function closeMenu() {
+				nav.classList.remove("is-open");
+				btn.classList.remove("active");
+			}
+
+			document.addEventListener('click', (e) => {
+				if (!nav.contains(e.target) && !btn.contains(e.target)) {
+					closeMenu();
+				}
+			});
+
+			window.addEventListener('scroll', () => {
+				if (nav.classList.contains("is-open")) {
+					closeMenu();
+				}
+			}, { passive: true });
+
+			// Product Category Filter
+			function filterProducts(event, category) {
+				const buttons = document.querySelectorAll('.filter-btn');
+				buttons.forEach(b => b.classList.remove('active'));
+				if(event && event.target) {
+					event.target.classList.add('active');
+				}
+
+				const cards = document.querySelectorAll('.product-card-modern');
+				cards.forEach(card => {
+					if (category === 'all' || card.getAttribute('data-category') === category) {
+						card.style.display = 'flex';
+					} else {
+						card.style.display = 'none';
+					}
+				});
+			}
+
+			// Contact Form Handler
+			const scriptURL = 'https://script.google.com/macros/s/AKfycbwqxF9RnU8lQF9KPdhpGk8pSd_QVUs088C1BROfscwl6byHjp7W3HqZ3I6P22d5HCH1/exec';
+			const form = document.getElementById('wholesaleForm');
+			const statusText = document.getElementById('formStatus');
+			const submitBtn = document.getElementById('submitBtn');
+
+			if (form) {
+				form.addEventListener('submit', e => {
+					e.preventDefault();
+
+					const isHuman = document.getElementById('human_check').checked;
+					if (!isHuman) {
+						statusText.style.display = 'block';
+						statusText.style.color = '#C8102E';
+						statusText.innerText = 'Please check the human verification box before submitting.';
+						return;
+					}
+
+					if (document.getElementById('website_hp').value !== '') {
+						statusText.style.display = 'block';
+						statusText.style.color = '#EA580C';
+						statusText.innerText = 'Thank you! Your inquiry has been processed.';
+						form.reset();
+						return;
+					}
+
+					submitBtn.disabled = true;
+					submitBtn.innerText = 'Sending...';
+
+					fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+						.then(response => {
+							statusText.style.display = 'block';
+							statusText.style.color = '#EA580C';
+							statusText.innerText = 'Thank you! Your inquiry has been sent directly to our team.';
+							form.reset();
+							submitBtn.disabled = false;
+							submitBtn.innerHTML = '<span>🚀 Submit Commercial Inquiry</span>';
+						})
+						.catch(error => {
+							statusText.style.display = 'block';
+							statusText.style.color = '#C8102E';
+							statusText.innerText = 'Something went wrong. Please try again.';
+							submitBtn.disabled = false;
+							submitBtn.innerHTML = '<span>🚀 Submit Commercial Inquiry</span>';
+						});
+				});
+			}
 		</script>
 	</body>
 </html>
