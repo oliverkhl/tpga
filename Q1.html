@@ -55,6 +55,16 @@
             font-weight: 500;
         }
 
+        /* Hide spin buttons on numeric inputs for cleaner look */
+        input[type=number]::-webkit-inner-spin-button, 
+        input[type=number]::-webkit-outer-spin-button { 
+            -webkit-appearance: none; 
+            margin: 0; 
+        }
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+
         @media print {
             body {
                 background-color: #ffffff !important;
@@ -145,7 +155,7 @@
                         <button onclick="setLanguage('en')" id="lang-btn-en" class="px-2.5 py-1 text-xs rounded font-bold transition bg-gold-500 text-slate-900">EN</button>
                         <button onclick="setLanguage('km')" id="lang-btn-km" class="px-2.5 py-1 text-xs rounded font-bold transition text-slate-300 hover:text-white">KM</button>
                         <button onclick="setLanguage('fr')" id="lang-btn-fr" class="px-2.5 py-1 text-xs rounded font-bold transition text-slate-300 hover:text-white">FR</button>
-                        <button onclick="setLanguage('zh')" id="lang-btn-zh" class="px-2.5 py-1 text-xs rounded font-bold transition text-slate-300 hover:text-white">CH</button>
+                        <button onclick="setLanguage('zh')" id="lang-btn-zh" class="px-2.5 py-1 text-xs rounded font-bold transition text-slate-300 hover:text-white">ZH</button>
                     </div>
 
                     <!-- Print Button -->
@@ -189,7 +199,7 @@
                         </p>
                         <p class="text-xs text-slate-300 flex items-center gap-2">
                             <i class="fa-solid fa-phone text-gold-400 w-4"></i>
-                            <span>+61 (03) 9000 0000</span>
+                            <span>+61 (04) 468 829 988</span>
                         </p>
                     </div>
 
@@ -295,7 +305,7 @@
             </div>
 
             <!-- 3. MAIN PRODUCT QUOTATION TABLE -->
-            <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-200 mb-8">
+            <div class="bg-white rounded-xl shadow-md overflow-hidden border-2 border-slate-300 mb-8">
                 <div class="bg-slate-900 px-6 py-4 flex flex-wrap justify-between items-center gap-4">
                     <div>
                         <h2 data-i18n="tbl_title" class="text-base font-bold text-white tracking-wide uppercase">Landed Cost Quotation & Benchmark Schedule</h2>
@@ -314,31 +324,32 @@
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse">
                         <thead>
-                            <tr class="bg-slate-800 text-slate-200 text-xs uppercase font-semibold tracking-wider border-b border-slate-700">
-                                <th class="py-3 px-2 text-center w-[3%] border-r border-slate-700">N°</th>
-                                <th data-i18n="th_prod_desc" class="py-3 px-3 w-[22%] border-r border-slate-700">Product Description</th>
-                                <th class="py-3 px-3 w-[13%] border-r border-slate-700 text-right">
-                                    <span data-i18n="th_fob_price">Price Pcs Before Delivery</span>
-                                    <span class="block text-[10px] text-gold-400 normal-case font-normal">(FOB USD & AUD)</span>
+                            <tr class="bg-slate-800 text-slate-200 text-xs uppercase font-semibold tracking-wider border-b-2 border-slate-900">
+                                <th class="py-3 px-2 text-center w-[3%] border-r-2 border-slate-700">N°</th>
+                                <th data-i18n="th_prod_desc" class="py-3 px-3 w-[22%] border-r-2 border-slate-700">Product Description</th>
+                                <!-- INTERACTIVE FOB CTN USD PRICE COLUMN HEADER -->
+                                <th class="py-3 px-3 w-[16%] border-r-2 border-slate-700 text-right">
+                                    <span data-i18n="th_fob_price">CTN Price Before Delivery</span>
+                                    <span class="block text-[10px] text-gold-400 normal-case font-normal">(Adjustable CTN USD → Auto PCS USD/AUD)</span>
                                 </th>
-                                <th class="py-3 px-3 w-[25%] border-r border-slate-700 bg-slate-850">
+                                <th class="py-3 px-3 w-[24%] border-r-2 border-slate-700 bg-slate-850">
                                     <div data-i18n="th_total_cost" class="text-gold-400 font-bold">Total Cost of Each Pcs</div>
                                     <span data-i18n="th_itemized_note" class="block text-[9px] text-slate-400 normal-case font-normal leading-tight">
                                         Itemized: Landed Cost | FOB | Ocean Freight | Port & Customs | Local Transp | Selling Price @ Margin
                                     </span>
                                 </th>
-                                <th class="py-3 px-3 w-[18%] border-r border-slate-700">
+                                <th class="py-3 px-3 w-[17%] border-r-2 border-slate-700">
                                     <span data-i18n="th_asian_bench">Asian Market Comparison</span>
                                     <span class="block text-[10px] text-slate-400 normal-case font-normal">(Thai, Viet, Asian Benchmarks)</span>
                                 </th>
-                                <th class="py-3 px-3 w-[19%]">
+                                <th class="py-3 px-3 w-[18%]">
                                     <span data-i18n="th_aus_bench">Australian Supermarket Price</span>
                                     <span class="block text-[10px] text-slate-400 normal-case font-normal">(Coles / Woolworths Benchmarks)</span>
                                 </th>
                             </tr>
                         </thead>
-                        <tbody id="product-table-body" class="divide-y divide-slate-200 text-xs">
-                            <!-- JS renders 30 products here -->
+                        <tbody id="product-table-body" class="text-xs">
+                            <!-- JS renders 30 products here with bold row borders -->
                         </tbody>
                     </table>
                 </div>
@@ -396,7 +407,7 @@
 
     </div>
 
-    <!-- SCRIPT FOR PASSWORD, I18N DICTIONARY & CALCULATION ENGINE -->
+    <!-- SCRIPT FOR PASSWORD, I18N DICTIONARY, CTN PRICE EDITING & CALCULATION ENGINE -->
     <script>
         // --- MULTI-LANGUAGE I18N DICTIONARY ---
         let currentLang = 'en';
@@ -449,7 +460,7 @@
                 lbl_active: "Active",
                 lbl_upcoming: "Upcoming",
                 th_prod_desc: "Product Description",
-                th_fob_price: "Price Pcs Before Delivery",
+                th_fob_price: "CTN Price Before Delivery",
                 th_total_cost: "Total Cost of Each Pcs",
                 th_itemized_note: "Itemized: Landed Cost | FOB | Ocean Freight | Port & Customs | Local Transp | Selling Price @ Margin",
                 th_asian_bench: "Asian Market Comparison",
@@ -516,7 +527,7 @@
                 lbl_active: "សកម្ម",
                 lbl_upcoming: "ជិតចេញលក់",
                 th_prod_desc: "ការបរិយាយផលិតផល",
-                th_fob_price: "តម្លៃមុនពេលដឹកជញ្ជូន",
+                th_fob_price: "តម្លៃមួយកេសមុនពេលដឹក",
                 th_total_cost: "ថ្លៃដើមសរុបក្នុងមួយដប/កញ្ចប់",
                 th_itemized_note: "លម្អិត៖ ថ្លៃដើមនាំចូល | FOB | ដឹកតាមសមុទ្រ | ពន្ធគយ និងកំពង់ផែ | ដឹកក្នុងស្រុក | តម្លៃលក់តាមចំណេញ",
                 th_asian_bench: "ការប្រៀបធៀបទីផ្សារអាស៊ី",
@@ -582,7 +593,7 @@
                 lbl_active: "Actifs",
                 lbl_upcoming: "À venir",
                 th_prod_desc: "Description du produit",
-                th_fob_price: "Prix unitaire avant livraison",
+                th_fob_price: "Prix par Carton avant livraison",
                 th_total_cost: "Coût total de chaque pièce",
                 th_itemized_note: "Détaillé: Coût rendu | FOB | Fret maritime | Port & Douane | Transp. local | Prix de vente @ Marge",
                 th_asian_bench: "Comparaison du marché asiatique",
@@ -648,9 +659,9 @@
                 lbl_active: "在售",
                 lbl_upcoming: "即将上市",
                 th_prod_desc: "产品描述",
-                th_fob_price: "发货前单价",
+                th_fob_price: "每箱发货前单价 (CTN)",
                 th_total_cost: "每件产品总成本",
-                th_itemized_note: "明细: 到岸成本 | FOB | 海运费 | 港口与海关 | 本地运输 | 目标利润率售价",
+                th_itemized_note: "明细: 到岸成本 | FOB | 海运费 | Port & Customs | Local Transp | Selling Price @ Margin",
                 th_asian_bench: "亚洲市场标杆对比",
                 th_aus_bench: "澳大利亚超市零售价标杆",
                 tb_title: "实时到岸成本重算引擎",
@@ -728,7 +739,14 @@
             }
         }
 
-        // --- 30 PRODUCT DATASET WITH TRANSLATED NAMES ---
+        // --- Helper function to extract PCS per CTN from spec string ---
+        function getPcsPerCtn(specStr) {
+            // Match pattern like "20 Pcs", "12 Cans", "10 Bags", "60 Pcs", "24 Pcs"
+            const match = specStr.match(/(\d+)\s*(Pcs|Cans|Bags)/i);
+            return match ? parseInt(match[1], 10) : 1;
+        }
+
+        // --- 30 PRODUCT DATASET WITH DYNAMIC CTN & PCS CALCULATIONS ---
         const productsData = [
             // --- 25 ACTIVE PRODUCTS ---
             {
@@ -1303,6 +1321,42 @@
             };
         }
 
+        // Handle Individual Product CTN USD Price Update directly in table
+        function updateProductCtnUsd(productId, newCtnUsd) {
+            const parsedCtnVal = parseFloat(newCtnUsd);
+            const product = productsData.find(p => p.id === productId);
+            
+            if (product && !isNaN(parsedCtnVal) && parsedCtnVal >= 0) {
+                const pcsPerCtn = getPcsPerCtn(product.spec);
+                const computedPcsUsd = parsedCtnVal / pcsPerCtn;
+                product.fobUsd = computedPcsUsd;
+                
+                // Get current toolbar inputs
+                const fx = parseFloat(document.getElementById('input-fx').value) || 0.6620;
+                const oceanFreightUsd = parseFloat(document.getElementById('input-freight').value) || 1650;
+                const localCartageAud = parseFloat(document.getElementById('input-cartage').value) || 750;
+                const marginPercent = parseFloat(document.getElementById('input-margin').value) || 50;
+
+                const calc = calculateProductCosts(product, fx, oceanFreightUsd, localCartageAud, marginPercent);
+
+                // Update dynamic values in table row without rebuilding or losing input focus
+                const pcsUsdEl = document.getElementById(`pcs-usd-${productId}`);
+                if (pcsUsdEl) pcsUsdEl.innerText = `$${computedPcsUsd.toFixed(2)} USD`;
+
+                const pcsAudEl = document.getElementById(`pcs-aud-${productId}`);
+                if (pcsAudEl) pcsAudEl.innerText = `$${calc.fobAud.toFixed(2)} AUD`;
+
+                const landedCostEl = document.getElementById(`landed-cost-${productId}`);
+                if (landedCostEl) landedCostEl.innerText = `$${calc.landedCostAud.toFixed(2)}`;
+
+                const itemizedFobEl = document.getElementById(`item-fob-${productId}`);
+                if (itemizedFobEl) itemizedFobEl.innerText = `$${calc.fobAud.toFixed(2)}`;
+
+                const sellingPriceEl = document.getElementById(`selling-price-${productId}`);
+                if (sellingPriceEl) sellingPriceEl.innerText = `$${calc.sellingPriceAud.toFixed(2)}`;
+            }
+        }
+
         // Render Function
         function renderTable() {
             const fx = parseFloat(document.getElementById('input-fx').value) || 0.6620;
@@ -1323,40 +1377,63 @@
                 const calc = calculateProductCosts(p, fx, oceanFreightUsd, localCartageAud, marginPercent);
                 const isUpcoming = p.status === 'Upcoming';
                 const displayName = p.name[currentLang] || p.name.en;
+                const pcsPerCtn = getPcsPerCtn(p.spec);
+                const ctnUsdVal = p.fobUsd * pcsPerCtn;
 
                 const tr = document.createElement('tr');
-                tr.className = `hover:bg-slate-50 transition ${isUpcoming ? 'bg-amber-50/40' : (idx % 2 === 0 ? 'bg-white' : 'bg-slate-50/50')}`;
+                tr.id = `product-row-${p.id}`;
+                // BOLD ROW BORDER APPLIED HERE (border-b-2 border-slate-300)
+                tr.className = `hover:bg-slate-100/80 transition border-b-2 border-slate-300 ${isUpcoming ? 'bg-amber-50/50' : (idx % 2 === 0 ? 'bg-white' : 'bg-slate-50/70')}`;
 
                 tr.innerHTML = `
-                    <td class="py-3 px-2 text-center font-bold text-slate-500 border-r border-slate-200">
+                    <td class="py-3 px-2 text-center font-bold text-slate-500 border-r-2 border-slate-200">
                         ${p.id}
                     </td>
-                    <td class="py-3 px-3 border-r border-slate-200">
+                    <td class="py-3 px-3 border-r-2 border-slate-200">
                         <div class="flex items-center gap-1.5 mb-0.5">
                             <span class="font-bold text-slate-900">${displayName}</span>
                             ${isUpcoming ? '<span class="bg-amber-500 text-white text-[9px] font-bold px-1.5 py-0.2 rounded">NOV 2026</span>' : ''}
                         </div>
                         <div class="text-slate-600 text-[11px] font-khmer mb-1">${p.nameKhmer}</div>
                         <div class="flex items-center gap-2 text-[10px] text-slate-500">
-                            <span class="bg-slate-100 border border-slate-200 px-1.5 py-0.5 rounded">
+                            <span class="bg-slate-100 border border-slate-200 px-1.5 py-0.5 rounded font-medium">
                                 <i class="fa-solid fa-weight-hanging text-gold-600 mr-1"></i>${p.spec}
                             </span>
                             <span class="text-slate-400">(${p.pcsPer20ft.toLocaleString()} pcs/20ft)</span>
                         </div>
                     </td>
-                    <td class="py-3 px-3 border-r border-slate-200 text-right font-mono">
-                        <div class="font-bold text-slate-900 text-sm">$${p.fobUsd.toFixed(2)} USD</div>
-                        <div class="text-slate-500 text-[11px]">$${calc.fobAud.toFixed(2)} AUD</div>
+                    
+                    <!-- COLUMN 3: ADJUSTABLE CTN USD INPUT + AUTO PCS USD & AUD DISPLAY -->
+                    <td class="py-3 px-3 border-r-2 border-slate-200 text-right font-mono">
+                        <div class="flex items-center justify-end gap-1 mb-1">
+                            <span class="text-xs text-slate-500 font-bold">$</span>
+                            <input type="number" step="0.10" min="0" value="${ctnUsdVal.toFixed(2)}" 
+                                oninput="updateProductCtnUsd(${p.id}, this.value)"
+                                class="bg-slate-100 hover:bg-white border border-slate-300 focus:border-gold-500 focus:bg-white text-slate-900 font-bold text-sm rounded px-2 py-0.5 text-right w-20 focus:outline-none transition shadow-sm"
+                                title="Click or type to adjust USD CTN price">
+                            <span class="text-[10px] text-gold-600 font-bold font-sans">USD/CTN</span>
+                        </div>
+                        <div class="text-[10px] text-slate-600 space-y-0.5">
+                            <div class="flex justify-between items-center gap-2">
+                                <span class="text-slate-400 font-sans">Pcs USD:</span>
+                                <strong id="pcs-usd-${p.id}" class="text-slate-800">$${p.fobUsd.toFixed(2)} USD</strong>
+                            </div>
+                            <div class="flex justify-between items-center gap-2">
+                                <span class="text-slate-400 font-sans">Pcs AUD:</span>
+                                <strong id="pcs-aud-${p.id}" class="text-slate-700">$${calc.fobAud.toFixed(2)} AUD</strong>
+                            </div>
+                        </div>
                     </td>
-                    <td class="py-3 px-3 border-r border-slate-200 bg-slate-50/80 font-mono">
+
+                    <td class="py-3 px-3 border-r-2 border-slate-200 bg-slate-50/80 font-mono">
                         <div class="flex justify-between items-center border-b border-slate-200 pb-1 mb-1">
                             <span class="text-slate-700 font-bold text-xs uppercase">${t.lbl_landed_cost_aud}</span>
-                            <span class="text-slate-900 font-black text-sm">$${calc.landedCostAud.toFixed(2)}</span>
+                            <span id="landed-cost-${p.id}" class="text-slate-900 font-black text-sm">$${calc.landedCostAud.toFixed(2)}</span>
                         </div>
                         <div class="space-y-0.5 text-[10px] text-slate-600 border-b border-dashed border-slate-200 pb-1 mb-1">
                             <div class="flex justify-between">
                                 <span class="text-slate-500">${t.lbl_fob_aud}</span>
-                                <span>$${calc.fobAud.toFixed(2)}</span>
+                                <span id="item-fob-${p.id}">$${calc.fobAud.toFixed(2)}</span>
                             </div>
                             <div class="flex justify-between">
                                 <span class="text-slate-500">${t.lbl_ocean_aud}</span>
@@ -1373,10 +1450,10 @@
                         </div>
                         <div class="flex justify-between items-center bg-gold-50 border border-gold-200 p-1 rounded">
                             <span class="text-gold-800 font-bold text-[10px]">${t.lbl_selling_price} ${marginPercent}%:</span>
-                            <span class="text-gold-700 font-bold text-xs">$${calc.sellingPriceAud.toFixed(2)}</span>
+                            <span id="selling-price-${p.id}" class="text-gold-700 font-bold text-xs">$${calc.sellingPriceAud.toFixed(2)}</span>
                         </div>
                     </td>
-                    <td class="py-3 px-3 border-r border-slate-200">
+                    <td class="py-3 px-3 border-r-2 border-slate-200">
                         <div class="text-slate-800 font-medium text-xs mb-1">${p.asianComp}</div>
                         <div>
                             <span class="source-badge bg-amber-100 text-amber-800 border border-amber-300">
@@ -1402,7 +1479,7 @@
             renderTable();
         }
 
-        // Live Event Listeners
+        // Live Event Listeners for Bottom Toolbar
         document.getElementById('input-fx').addEventListener('input', renderTable);
         document.getElementById('input-freight').addEventListener('input', renderTable);
         document.getElementById('input-cartage').addEventListener('input', renderTable);
