@@ -339,12 +339,12 @@
                                     </span>
                                 </th>
                                 <th class="py-3 px-3 w-[20%] border-r-2 border-slate-700">
-                                    <span data-i18n="th_asian_bench">Asian Market Comparisons</span>
-                                    <span class="block text-[10px] text-slate-400 normal-case font-normal">(Normalized Weight Equivalent Price)</span>
+                                    <span data-i18n="th_asian_bench">Ethnic & Asian Market Comparisons</span>
+                                    <span class="block text-[10px] text-slate-400 normal-case font-normal">(Asian, Indian, Nepalese, Sri Lankan)</span>
                                 </th>
                                 <th class="py-3 px-3 w-[20%]">
                                     <span data-i18n="th_aus_bench">Australian Supermarket Prices</span>
-                                    <span class="block text-[10px] text-slate-400 normal-case font-normal">(Normalized Weight Equivalent Price)</span>
+                                    <span class="block text-[10px] text-slate-400 normal-case font-normal">(Coles, Woolworths, ALDI, IGA)</span>
                                 </th>
                             </tr>
                         </thead>
@@ -463,7 +463,7 @@
                 th_fob_price: "CTN Price Before Delivery",
                 th_total_cost: "Total Cost of Each Pcs",
                 th_itemized_note: "Itemized: Landed Cost | FOB | Ocean Freight | Port & Customs | Local Transp | Selling Price @ Margin",
-                th_asian_bench: "Asian Market Comparisons",
+                th_asian_bench: "Ethnic & Asian Market Comparisons",
                 th_aus_bench: "Australian Supermarket Prices",
                 tb_title: "Live Landed Cost Recalculation Engine",
                 tb_desc: "Adjust freight variables & margin percentage to compute live costings",
@@ -530,7 +530,7 @@
                 th_fob_price: "តម្លៃមួយកេសមុនពេលដឹក",
                 th_total_cost: "ថ្លៃដើមសរុបក្នុងមួយដប/កញ្ចប់",
                 th_itemized_note: "លម្អិត៖ ថ្លៃដើមនាំចូល | FOB | ដឹកតាមសមុទ្រ | ពន្ធគយ និងកំពង់ផែ | ដឹកក្នុងស្រុក | តម្លៃលក់តាមចំណេញ",
-                th_asian_bench: "ការប្រៀបធៀបទីផ្សារអាស៊ី",
+                th_asian_bench: "ការប្រៀបធៀបទីផ្សារអាស៊ី និងអាស៊ីខាងត្បូង",
                 th_aus_bench: "តម្លៃផ្សារទំនើបអូស្ត្រាលី",
                 tb_title: "ប្រព័ន្ធគណនាថ្លៃដើមនាំចូលផ្ទាល់",
                 tb_desc: "កែប្រែប្រៀបប្រែប្រួលថ្លៃដឹកជញ្ជូន និងភាគរយចំណេញដើម្បីគណនាភ្លាមៗ",
@@ -596,7 +596,7 @@
                 th_fob_price: "Prix par Carton avant livraison",
                 th_total_cost: "Coût total de chaque pièce",
                 th_itemized_note: "Détaillé: Coût rendu | FOB | Fret maritime | Port & Douane | Transp. local | Prix de vente @ Marge",
-                th_asian_bench: "Comparaisons du marché asiatique",
+                th_asian_bench: "Comparaisons du marché asiatique & ethnique",
                 th_aus_bench: "Prix des supermarchés australiens",
                 tb_title: "Calculateur de coût rendu en direct",
                 tb_desc: "Ajustez les variables de fret et le pourcentage de marge pour calculer les coûts en direct",
@@ -662,8 +662,8 @@
                 th_fob_price: "每箱发货前单价 (CTN)",
                 th_total_cost: "每件产品总成本",
                 th_itemized_note: "明细: 到岸成本 | FOB | 海运费 | Port & Customs | Local Transp | Selling Price @ Margin",
-                th_asian_bench: "亚洲市场标杆对比",
-                th_aus_bench: "澳大利亚超市零售价标杆",
+                th_asian_bench: "族群及亚洲超市标杆对比",
+                th_aus_bench: "澳大利亚主流超市标杆",
                 tb_title: "实时到岸成本重算引擎",
                 tb_desc: "调整运费变量和目标利润率以计算实时成本",
                 lbl_fx: "汇率 (AUD/USD)",
@@ -719,6 +719,9 @@
                     modal.style.display = 'none';
                 }, 300);
                 content.classList.remove('blur-xl', 'pointer-events-none', 'select-none');
+
+                // Trigger live json fetch upon unlock
+                loadLatestPrices();
             } else {
                 errorMsg.classList.remove('hidden');
                 document.getElementById('password-input').classList.add('border-red-500');
@@ -745,9 +748,8 @@
             return match ? parseInt(match[1], 10) : 1;
         }
 
-        // --- 30 PRODUCT DATASET WITH WEIGHT SPECIFICATIONS & COMPETITOR PROPORTIONAL PRICES ---
+        // --- EXPANDED 30 PRODUCT DATASET INCLUDING ASIAN, INDIAN, NEPALESE, SRI LANKAN, ALDI, WOOLWORTHS & COLES ---
         const productsData = [
-            // --- 25 ACTIVE PRODUCTS ---
             {
                 id: 1,
                 status: 'Active',
@@ -759,11 +761,15 @@
                 pcsPer20ft: 20000,
                 asianComps: [
                     { brand: 'Erawan Rice Flour', weightG: 500, priceAud: 2.20, source: 'Src: KFL Asian Grocery Springvale' },
-                    { brand: 'Cock Brand Rice Flour', weightG: 500, priceAud: 2.10, source: 'Src: Minh Phat Market Richmond' }
+                    { brand: 'Cock Brand Rice Flour', weightG: 500, priceAud: 2.10, source: 'Src: Minh Phat Market Richmond' },
+                    { brand: 'Anil Fine Rice Flour', weightG: 500, priceAud: 2.45, source: 'Src: DesiKart Indian Grocery' },
+                    { brand: 'Harischandra Rice Flour', weightG: 500, priceAud: 2.60, source: 'Src: Lankan Groceries Melbourne' },
+                    { brand: 'Maneely Rice Flour', weightG: 1000, priceAud: 4.20, source: 'Src: Nepsay Nepalese Mart' }
                 ],
                 ausComps: [
                     { brand: 'McKenzie\'s Rice Flour', weightG: 500, priceAud: 3.50, source: 'Src: Coles Online AU (Melb)' },
-                    { brand: 'Anchor Rice Flour', weightG: 500, priceAud: 3.40, source: 'Src: Woolworths Supermarkets VIC' }
+                    { brand: 'Anchor Rice Flour', weightG: 500, priceAud: 3.40, source: 'Src: Woolworths Supermarkets VIC' },
+                    { brand: 'Has No Wheat Rice Flour', weightG: 500, priceAud: 2.99, source: 'Src: ALDI Australia' }
                 ]
             },
             {
@@ -777,7 +783,8 @@
                 pcsPer20ft: 20000,
                 asianComps: [
                     { brand: 'Erawan Glutinous Flour', weightG: 500, priceAud: 2.50, source: 'Src: Minh Phat Market Richmond' },
-                    { brand: 'Three Rings Glutinous', weightG: 500, priceAud: 2.40, source: 'Src: Asia Grocery Online AU' }
+                    { brand: 'Three Rings Glutinous', weightG: 500, priceAud: 2.40, source: 'Src: Asia Grocery Online AU' },
+                    { brand: 'Heera Sticky Rice Flour', weightG: 500, priceAud: 2.80, source: 'Src: Radhe Indian Grocery' }
                 ],
                 ausComps: [
                     { brand: 'Cock Brand Glutinous', weightG: 500, priceAud: 3.20, source: 'Src: Woolworths Supermarkets VIC' },
@@ -795,7 +802,9 @@
                 pcsPer20ft: 20000,
                 asianComps: [
                     { brand: 'Cock Brand Tapioca Starch', weightG: 500, priceAud: 2.10, source: 'Src: Asia Grocery Online AU' },
-                    { brand: 'Panda Tapioca Flour', weightG: 500, priceAud: 1.95, source: 'Src: KFL Asian Grocery Springvale' }
+                    { brand: 'Panda Tapioca Flour', weightG: 500, priceAud: 1.95, source: 'Src: KFL Asian Grocery Springvale' },
+                    { brand: 'Swagat Tapioca Flour', weightG: 500, priceAud: 2.30, source: 'Src: Spice World Indian Mart' },
+                    { brand: 'Elephant House Tapioca', weightG: 500, priceAud: 2.40, source: 'Src: Ceylon Supermarket VIC' }
                 ],
                 ausComps: [
                     { brand: 'McKenzie\'s Tapioca Flour', weightG: 375, priceAud: 2.80, source: 'Src: Coles Online AU (Melb)' },
@@ -813,7 +822,8 @@
                 pcsPer20ft: 20000,
                 asianComps: [
                     { brand: 'Bot Banh Xeo Pancake Mix', weightG: 500, priceAud: 3.80, source: 'Src: KFL Asian Grocery Springvale' },
-                    { brand: 'Vinh Thuan Pancake Mix', weightG: 500, priceAud: 3.60, source: 'Src: Minh Phat Market Richmond' }
+                    { brand: 'Vinh Thuan Pancake Mix', weightG: 500, priceAud: 3.60, source: 'Src: Minh Phat Market Richmond' },
+                    { brand: 'Gits Dosa Pancake Mix', weightG: 500, priceAud: 3.90, source: 'Src: India Gate Supermarket' }
                 ],
                 ausComps: [
                     { brand: 'Greens Original Pancake Mix', weightG: 375, priceAud: 3.20, source: 'Src: Woolworths Supermarkets VIC' },
@@ -831,7 +841,9 @@
                 pcsPer20ft: 10000,
                 asianComps: [
                     { brand: 'Gogi Tempura Batter Mix', weightG: 500, priceAud: 2.80, source: 'Src: Minh Phat Market Richmond' },
-                    { brand: 'Showwa Tempura Flour', weightG: 1000, priceAud: 5.20, source: 'Src: Asia Grocery Online AU' }
+                    { brand: 'Showwa Tempura Flour', weightG: 1000, priceAud: 5.20, source: 'Src: Asia Grocery Online AU' },
+                    { brand: 'L3 Bajji / Bonda Batter Mix', weightG: 500, priceAud: 3.10, source: 'Src: DesiKart Indian Grocery' },
+                    { brand: 'Ceylon Crispy Fry Flour', weightG: 1000, priceAud: 5.50, source: 'Src: Lankan Groceries Melbourne' }
                 ],
                 ausComps: [
                     { brand: 'White Wings Tempura Batter', weightG: 300, priceAud: 3.50, source: 'Src: Coles Online AU (Melb)' },
@@ -885,11 +897,14 @@
                 pcsPer20ft: 18000,
                 asianComps: [
                     { brand: 'Thai Whole Black Peppercorn', weightG: 100, priceAud: 6.50, source: 'Src: Minh Phat Market Richmond' },
-                    { brand: 'Cock Brand Whole Pepper', weightG: 100, priceAud: 6.20, source: 'Src: Asia Grocery Online AU' }
+                    { brand: 'Cock Brand Whole Pepper', weightG: 100, priceAud: 6.20, source: 'Src: Asia Grocery Online AU' },
+                    { brand: 'MD Black Peppercorns', weightG: 100, priceAud: 6.80, source: 'Src: Lankan Groceries Melbourne' },
+                    { brand: 'Deep Whole Black Pepper', weightG: 100, priceAud: 5.90, source: 'Src: India Gate Supermarket' }
                 ],
                 ausComps: [
                     { brand: 'Hoyts Whole Black Peppercorn', weightG: 100, priceAud: 6.20, source: 'Src: Woolworths Supermarkets VIC' },
-                    { brand: 'MasterFoods Black Peppercorn', weightG: 100, priceAud: 7.10, source: 'Src: Coles Online AU (Melb)' }
+                    { brand: 'MasterFoods Black Peppercorn', weightG: 100, priceAud: 7.10, source: 'Src: Coles Online AU (Melb)' },
+                    { brand: 'Stonemill Whole Peppercorns', weightG: 100, priceAud: 4.99, source: 'Src: ALDI Australia' }
                 ]
             },
             {
@@ -993,7 +1008,9 @@
                 pcsPer20ft: 10000,
                 asianComps: [
                     { brand: 'VN Premium Whole Pepper', weightG: 1000, priceAud: 22.00, source: 'Src: Asia Grocery Online AU' },
-                    { brand: 'Erawan Whole Pepper', weightG: 1000, priceAud: 21.50, source: 'Src: KFL Asian Grocery Springvale' }
+                    { brand: 'Erawan Whole Pepper', weightG: 1000, priceAud: 21.50, source: 'Src: KFL Asian Grocery Springvale' },
+                    { brand: 'Deep Black Peppercorns Bulk', weightG: 1000, priceAud: 23.90, source: 'Src: Radhe Indian Grocery' },
+                    { brand: 'MD Sri Lankan Peppercorn Bulk', weightG: 1000, priceAud: 24.50, source: 'Src: Ceylon Supermarket VIC' }
                 ],
                 ausComps: [
                     { brand: 'MasterFoods Peppercorns Bulk', weightG: 1000, priceAud: 28.50, source: 'Src: Woolworths Supermarkets VIC' },
@@ -1211,7 +1228,8 @@
                 pcsPer20ft: 18000,
                 asianComps: [
                     { brand: 'Mama Instant Rice Noodle Pack', weightG: 100, priceAud: 2.20, source: 'Src: Minh Phat Market Richmond' },
-                    { brand: 'Wai Wai Rice Noodle', weightG: 100, priceAud: 1.90, source: 'Src: KFL Asian Grocery Springvale' }
+                    { brand: 'Wai Wai Rice Noodle', weightG: 100, priceAud: 1.90, source: 'Src: KFL Asian Grocery Springvale' },
+                    { brand: 'Maggi Fusian Noodles', weightG: 100, priceAud: 2.10, source: 'Src: DesiKart Indian Grocery' }
                 ],
                 ausComps: [
                     { brand: 'Trident Instant Rice Noodle Bowl', weightG: 100, priceAud: 2.80, source: 'Src: Woolworths Supermarkets VIC' },
@@ -1480,35 +1498,34 @@
         function recalculateAll() {
             renderTable();
         }
-		
-		// Function to fetch prices.json and update productsData on page load
-			async function loadLatestPrices() {
-			try {
-        // Prevent browser caching by appending timestamp parameter Date.now()
-			const response = await fetch('./prices.json?t=' + Date.now());
-			if (!response.ok) throw new Error('Could not load prices.json');
 
-			const data = await response.json();
+        // Async function to load prices.json before rendering
+        async function loadLatestPrices() {
+            try {
+                // Prevent browser caching by appending timestamp parameter Date.now()
+                const response = await fetch('./prices.json?t=' + Date.now());
+                if (!response.ok) throw new Error('Could not load prices.json');
 
-			if (data && data.competitors) {
-				productsData.forEach(product => {
-					const compUpdate = data.competitors[product.id];
-					if (compUpdate) {
-						if (compUpdate.asianComps) product.asianComps = compUpdate.asianComps;
-						if (compUpdate.ausComps) product.ausComps = compUpdate.ausComps;
-						}
-				});
-			}
+                const data = await response.json();
 
-			console.log('Prices updated successfully from prices.json. Last update:', data.lastUpdated);
-			} catch (err) {
-			console.warn('Using default local pricing fallback:', err);
-			} finally {
-        // Render table after applying latest JSON prices
-				renderTable();
-				}
-			}
+                if (data && data.competitors) {
+                    productsData.forEach(product => {
+                        const compUpdate = data.competitors[product.id];
+                        if (compUpdate) {
+                            if (compUpdate.asianComps) product.asianComps = compUpdate.asianComps;
+                            if (compUpdate.ausComps) product.ausComps = compUpdate.ausComps;
+                        }
+                    });
+                }
 
+                console.log('Prices updated successfully from prices.json. Last update:', data.lastUpdated);
+            } catch (err) {
+                console.warn('Using default local pricing fallback:', err);
+            } finally {
+                // Render table after applying latest JSON prices
+                renderTable();
+            }
+        }
 
         // Live Event Listeners for Bottom Toolbar
         document.getElementById('input-fx').addEventListener('input', renderTable);
@@ -1516,10 +1533,10 @@
         document.getElementById('input-cartage').addEventListener('input', renderTable);
         document.getElementById('input-margin').addEventListener('input', renderTable);
 
-		// Replace window.onload in your HTML script with this:
-		window.onload = function() {
-			loadLatestPrices();
-		};		
+        // Fetch latest prices and render on load
+        window.onload = function() {
+            loadLatestPrices();
+        };
     </script>
 </body>
 </html>
