@@ -46,10 +46,6 @@
             background: linear-gradient(135deg, #D4AF37 0%, #C59B27 100%);
         }
 
-        .gold-border-gradient {
-            border-image: linear-gradient(to right, #D4AF37, #C59B27) 1;
-        }
-
         .source-badge {
             font-size: 0.65rem;
             line-height: 0.85rem;
@@ -106,26 +102,26 @@
                 <div class="w-14 h-14 bg-gold-500/10 rounded-full border border-gold-500/30 flex items-center justify-center mx-auto mb-3">
                     <i class="fa-solid fa-lock text-gold-400 text-2xl"></i>
                 </div>
-                <h2 class="text-xl font-bold text-white tracking-wide">Restricted Access</h2>
-                <p class="text-xs text-slate-400 mt-1">Please enter the security password to view the Landed Cost Quotation & Analytics.</p>
+                <h2 data-i18n="modal_title" class="text-xl font-bold text-white tracking-wide">Restricted Access</h2>
+                <p data-i18n="modal_desc" class="text-xs text-slate-400 mt-1">Please enter the security password to view the Landed Cost Quotation & Analytics.</p>
             </div>
             
             <form id="password-form" onsubmit="unlockPage(event)">
                 <div class="mb-5">
-                    <label class="block text-xs uppercase font-semibold text-gold-400 mb-1.5 tracking-wider">Enter Password</label>
+                    <label data-i18n="modal_label" class="block text-xs uppercase font-semibold text-gold-400 mb-1.5 tracking-wider">Enter Password</label>
                     <div class="relative">
                         <input type="password" id="password-input" placeholder="••••••••" autofocus class="w-full bg-slate-800 border border-slate-700 focus:border-gold-500 rounded-lg px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none transition">
                         <button type="button" onclick="togglePasswordVisibility()" class="absolute right-3 top-2.5 text-slate-400 hover:text-gold-400 text-sm">
                             <i id="eye-icon" class="fa-solid fa-eye"></i>
                         </button>
                     </div>
-                    <p id="password-error" class="text-red-400 text-xs mt-2 hidden flex items-center gap-1">
+                    <p id="password-error" data-i18n="modal_error" class="text-red-400 text-xs mt-2 hidden flex items-center gap-1">
                         <i class="fa-solid fa-circle-exclamation"></i> Incorrect password. Please try again.
                     </p>
                 </div>
                 
                 <button type="submit" class="w-full py-2.5 gold-gradient hover:opacity-90 text-slate-900 font-bold rounded-lg shadow transition text-sm flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-key"></i> Unlock Dashboard
+                    <i class="fa-solid fa-key"></i> <span data-i18n="modal_btn">Unlock Dashboard</span>
                 </button>
             </form>
         </div>
@@ -136,16 +132,25 @@
 
         <!-- Header Navigation Bar -->
         <header class="bg-slate-900 text-white shadow-md no-print border-b-2 border-gold-500">
-            <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center">
-                <div class="flex items-center space-x-3">
-                    <div>
-                        <h1 class="text-lg font-bold text-white tracking-wide">TWO PARROTS GROUP AUSTRALIA</h1>
-                        <p class="text-xs text-gold-400">Import & Distribution Landed Cost Intelligence</p>
-                    </div>
+            <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center gap-4">
+                <div>
+                    <!-- Company Title ALWAYS in English -->
+                    <h1 class="text-lg font-bold text-white tracking-wide">TWO PARROTS GROUP AUSTRALIA</h1>
+                    <p data-i18n="header_sub" class="text-xs text-gold-400">Import & Distribution Landed Cost Intelligence</p>
                 </div>
+
                 <div class="flex items-center space-x-3">
+                    <!-- LANGUAGE SELECTOR BUTTONS -->
+                    <div class="flex items-center bg-slate-800 p-1 rounded-lg border border-slate-700 space-x-1">
+                        <button onclick="setLanguage('en')" id="lang-btn-en" class="px-2.5 py-1 text-xs rounded font-bold transition bg-gold-500 text-slate-900">EN</button>
+                        <button onclick="setLanguage('km')" id="lang-btn-km" class="px-2.5 py-1 text-xs rounded font-bold transition text-slate-300 hover:text-white">KM</button>
+                        <button onclick="setLanguage('fr')" id="lang-btn-fr" class="px-2.5 py-1 text-xs rounded font-bold transition text-slate-300 hover:text-white">FR</button>
+                        <button onclick="setLanguage('zh')" id="lang-btn-zh" class="px-2.5 py-1 text-xs rounded font-bold transition text-slate-300 hover:text-white">CH</button>
+                    </div>
+
+                    <!-- Print Button -->
                     <button onclick="window.print()" class="px-4 py-2 bg-gold-500 hover:bg-gold-600 text-slate-900 font-semibold rounded-lg shadow transition flex items-center gap-2 text-sm">
-                        <i class="fa-solid fa-print"></i> Print A4 Quotation
+                        <i class="fa-solid fa-print"></i> <span data-i18n="btn_print">Print A4 Quotation</span>
                     </button>
                 </div>
             </div>
@@ -153,12 +158,12 @@
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
 
-            <!-- 1. HEADER BOX -->
+            <!-- 1. HEADER BOX (BUSINESS DETAILS LOCKED IN ENGLISH) -->
             <div class="bg-slate-900 text-white rounded-xl shadow-lg p-6 mb-6 border-l-4 border-gold-500 relative overflow-hidden">
                 <div class="absolute top-0 right-0 transform translate-x-4 -translate-y-4 w-32 h-32 bg-gold-500 opacity-10 rounded-full blur-2xl"></div>
                 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
-                    <!-- Company & Management -->
+                    <!-- Company & Management (ENGLISH LOCKED) -->
                     <div class="border-b md:border-b-0 md:border-r border-slate-700 pb-4 md:pb-0 md:pr-4">
                         <div class="flex items-center space-x-2 text-gold-400 font-bold text-lg mb-1">
                             <i class="fa-solid fa-building"></i>
@@ -171,9 +176,9 @@
                         </p>
                     </div>
 
-                    <!-- Contact & Web -->
+                    <!-- Contact & Web Portal (ENGLISH LOCKED) -->
                     <div class="border-b md:border-b-0 md:border-r border-slate-700 pb-4 md:pb-0 md:pr-4">
-                        <h3 class="text-xs uppercase font-semibold text-slate-400 tracking-wider mb-2">Contact & Web Portal</h3>
+                        <h3 data-i18n="card_contact_title" class="text-xs uppercase font-semibold text-slate-400 tracking-wider mb-2">Contact & Web Portal</h3>
                         <p class="text-xs text-slate-300 mb-1.5 flex items-center gap-2">
                             <i class="fa-solid fa-globe text-gold-400 w-4"></i>
                             <a href="https://twoparrotsgroup.com.au" target="_blank" class="hover:underline text-gold-400">twoparrotsgroup.com.au</a>
@@ -188,20 +193,20 @@
                         </p>
                     </div>
 
-                    <!-- Logistics & Port Specs -->
+                    <!-- Logistics & Port Specs (ENGLISH LOCKED SPECIFICS) -->
                     <div>
-                        <h3 class="text-xs uppercase font-semibold text-slate-400 tracking-wider mb-2">Import / Logistics Terminal</h3>
+                        <h3 data-i18n="card_logistics_title" class="text-xs uppercase font-semibold text-slate-400 tracking-wider mb-2">Import / Logistics Terminal</h3>
                         <p class="text-xs text-slate-300 mb-1.5 flex items-center gap-2">
                             <i class="fa-solid fa-ship text-gold-400 w-4"></i>
-                            <span><strong>Discharge Port:</strong> Melbourne Swanson Dock / DP World</span>
+                            <span><strong data-i18n="lbl_discharge_port">Discharge Port:</strong> Melbourne Swanson Dock / DP World</span>
                         </p>
                         <p class="text-xs text-slate-300 mb-1.5 flex items-center gap-2">
                             <i class="fa-solid fa-box text-gold-400 w-4"></i>
-                            <span><strong>Standard Unit:</strong> 20ft FCL Container</span>
+                            <span><strong data-i18n="lbl_standard_unit">Standard Unit:</strong> 20ft FCL Container</span>
                         </p>
                         <p class="text-xs text-slate-300 flex items-center gap-2">
                             <i class="fa-solid fa-calendar-check text-gold-400 w-4"></i>
-                            <span><strong>Effective Date:</strong> October 2026</span>
+                            <span><strong data-i18n="lbl_effective_date">Effective Date:</strong> October 2026</span>
                         </p>
                     </div>
                 </div>
@@ -213,16 +218,16 @@
                 <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200 hover:shadow-md transition">
                     <div class="flex items-center justify-between mb-3 border-b border-slate-100 pb-2">
                         <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
-                            <i class="fa-solid fa-file-invoice-dollar text-gold-600"></i> Customs Clearance Schedule
+                            <i class="fa-solid fa-file-invoice-dollar text-gold-600"></i> <span data-i18n="card1_title">Customs Clearance Schedule</span>
                         </h3>
-                        <span class="bg-gold-100 text-gold-700 text-xs font-semibold px-2 py-0.5 rounded">Fixed Charges</span>
+                        <span data-i18n="tag_fixed_charges" class="bg-gold-100 text-gold-700 text-xs font-semibold px-2 py-0.5 rounded">Fixed Charges</span>
                     </div>
                     <ul class="text-xs text-slate-600 space-y-1.5">
-                        <li class="flex justify-between"><span>Customs Clearance Fee:</span> <strong class="text-slate-800">$185.00 + GST</strong></li>
-                        <li class="flex justify-between"><span>Quarantine Entry Fee:</span> <strong class="text-slate-800">$35.00 + GST</strong></li>
-                        <li class="flex justify-between"><span>Verification / IFIP Fee:</span> <strong class="text-slate-800">$35.00 + GST</strong></li>
+                        <li class="flex justify-between"><span data-i18n="lbl_customs_fee">Customs Clearance Fee:</span> <strong class="text-slate-800">$185.00 + GST</strong></li>
+                        <li class="flex justify-between"><span data-i18n="lbl_quarantine_fee">Quarantine Entry Fee:</span> <strong class="text-slate-800">$35.00 + GST</strong></li>
+                        <li class="flex justify-between"><span data-i18n="lbl_verification_fee">Verification / IFIP Fee:</span> <strong class="text-slate-800">$35.00 + GST</strong></li>
                         <li class="flex justify-between border-t border-dashed border-slate-200 pt-1">
-                            <span class="text-slate-500">Min. Quarantine Charge:</span> <strong class="text-slate-700">$42.00 AUD</strong>
+                            <span data-i18n="lbl_min_quarantine" class="text-slate-500">Min. Quarantine Charge:</span> <strong class="text-slate-700">$42.00 AUD</strong>
                         </li>
                     </ul>
                 </div>
@@ -231,16 +236,16 @@
                 <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200 hover:shadow-md transition">
                     <div class="flex items-center justify-between mb-3 border-b border-slate-100 pb-2">
                         <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
-                            <i class="fa-solid fa-truck-ramp-box text-gold-600"></i> Freight Baseline (20ft FCL)
+                            <i class="fa-solid fa-truck-ramp-box text-gold-600"></i> <span data-i18n="card2_title">Freight Baseline (20ft FCL)</span>
                         </h3>
-                        <span class="bg-slate-100 text-slate-700 text-xs font-semibold px-2 py-0.5 rounded">Route Metrics</span>
+                        <span data-i18n="tag_route_metrics" class="bg-slate-100 text-slate-700 text-xs font-semibold px-2 py-0.5 rounded">Route Metrics</span>
                     </div>
                     <ul class="text-xs text-slate-600 space-y-1.5">
-                        <li class="flex justify-between"><span>Origin - Destination:</span> <strong class="text-slate-800">Sihanoukville → Melb</strong></li>
-                        <li class="flex justify-between"><span>Baseline Ocean Freight:</span> <strong class="text-gold-700 font-bold" id="card-ocean-freight">$1,650.00 USD</strong></li>
-                        <li class="flex justify-between"><span>VIC Local Cartage:</span> <strong class="text-slate-800" id="card-local-cartage">$750.00 AUD</strong></li>
+                        <li class="flex justify-between"><span data-i18n="lbl_route">Origin - Destination:</span> <strong class="text-slate-800">Sihanoukville → Melb</strong></li>
+                        <li class="flex justify-between"><span data-i18n="lbl_ocean_freight">Baseline Ocean Freight:</span> <strong class="text-gold-700 font-bold" id="card-ocean-freight">$1,650.00 USD</strong></li>
+                        <li class="flex justify-between"><span data-i18n="lbl_cartage">VIC Local Cartage:</span> <strong class="text-slate-800" id="card-local-cartage">$750.00 AUD</strong></li>
                         <li class="flex justify-between border-t border-dashed border-slate-200 pt-1">
-                            <span>Benchmark FX Rate:</span> <strong class="text-slate-700" id="card-fx-rate">0.6620 AUD/USD</strong>
+                            <span data-i18n="lbl_fx_rate">Benchmark FX Rate:</span> <strong class="text-slate-700" id="card-fx-rate">0.6620 AUD/USD</strong>
                         </li>
                     </ul>
                 </div>
@@ -249,40 +254,40 @@
                 <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200 hover:shadow-md transition">
                     <div class="flex items-center justify-between mb-2.5 border-b border-slate-100 pb-2">
                         <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
-                            <i class="fa-solid fa-clipboard-check text-gold-600"></i> Compliance & Requirements
+                            <i class="fa-solid fa-clipboard-check text-gold-600"></i> <span data-i18n="card3_title">Compliance & Requirements</span>
                         </h3>
-                        <span class="bg-emerald-50 text-emerald-700 text-xs font-semibold px-2 py-0.5 rounded">Customs & Biosecurity</span>
+                        <span data-i18n="tag_biosecurity" class="bg-emerald-50 text-emerald-700 text-xs font-semibold px-2 py-0.5 rounded">Customs & Biosecurity</span>
                     </div>
                     
                     <div class="space-y-2.5 text-xs">
                         <!-- Documents required from Supplier -->
                         <div>
-                            <h4 class="font-bold text-slate-800 text-[11px] uppercase tracking-wider mb-1 text-gold-700 flex items-center gap-1">
+                            <h4 data-i18n="hdr_supplier_docs" class="font-bold text-slate-800 text-[11px] uppercase tracking-wider mb-1 text-gold-700 flex items-center gap-1">
                                 <i class="fa-solid fa-file-export text-gold-600"></i> Supplier Required Documents
                             </h4>
                             <ul class="grid grid-cols-2 gap-x-2 gap-y-0.5 text-[11px] text-slate-700">
-                                <li class="flex items-center gap-1"><i class="fa-solid fa-circle-check text-emerald-500 text-[9px]"></i> Bill of Lading</li>
-                                <li class="flex items-center gap-1"><i class="fa-solid fa-circle-check text-emerald-500 text-[9px]"></i> Commercial Invoice</li>
-                                <li class="flex items-center gap-1"><i class="fa-solid fa-circle-check text-emerald-500 text-[9px]"></i> Packing List</li>
-                                <li class="flex items-center gap-1"><i class="fa-solid fa-circle-check text-emerald-500 text-[9px]"></i> Packing Declaration</li>
-                                <li class="flex items-center gap-1"><i class="fa-solid fa-circle-check text-emerald-500 text-[9px]"></i> Manufacturer Declaration</li>
-                                <li class="flex items-center gap-1"><i class="fa-solid fa-circle-check text-emerald-500 text-[9px]"></i> FTA (Free Trade)</li>
-                                <li class="flex items-center gap-1"><i class="fa-solid fa-circle-check text-emerald-500 text-[9px]"></i> Phytosanitary Cert.</li>
-                                <li class="flex items-center gap-1"><i class="fa-solid fa-circle-check text-emerald-500 text-[9px]"></i> Fumigation Cert.</li>
+                                <li class="flex items-center gap-1"><i class="fa-solid fa-circle-check text-emerald-500 text-[9px]"></i> <span data-i18n="doc_bol">Bill of Lading</span></li>
+                                <li class="flex items-center gap-1"><i class="fa-solid fa-circle-check text-emerald-500 text-[9px]"></i> <span data-i18n="doc_inv">Commercial Invoice</span></li>
+                                <li class="flex items-center gap-1"><i class="fa-solid fa-circle-check text-emerald-500 text-[9px]"></i> <span data-i18n="doc_pack">Packing List</span></li>
+                                <li class="flex items-center gap-1"><i class="fa-solid fa-circle-check text-emerald-500 text-[9px]"></i> <span data-i18n="doc_pack_dec">Packing Declaration</span></li>
+                                <li class="flex items-center gap-1"><i class="fa-solid fa-circle-check text-emerald-500 text-[9px]"></i> <span data-i18n="doc_mfg_dec">Manufacturer Declaration</span></li>
+                                <li class="flex items-center gap-1"><i class="fa-solid fa-circle-check text-emerald-500 text-[9px]"></i> <span data-i18n="doc_fta">FTA (Free Trade)</span></li>
+                                <li class="flex items-center gap-1"><i class="fa-solid fa-circle-check text-emerald-500 text-[9px]"></i> <span data-i18n="doc_phyto">Phytosanitary Cert.</span></li>
+                                <li class="flex items-center gap-1"><i class="fa-solid fa-circle-check text-emerald-500 text-[9px]"></i> <span data-i18n="doc_fumi">Fumigation Cert.</span></li>
                             </ul>
                         </div>
 
                         <!-- Documents required from Importer -->
                         <div class="border-t border-slate-100 pt-1.5">
-                            <h4 class="font-bold text-slate-800 text-[11px] uppercase tracking-wider mb-1 text-gold-700 flex items-center gap-1">
+                            <h4 data-i18n="hdr_importer_docs" class="font-bold text-slate-800 text-[11px] uppercase tracking-wider mb-1 text-gold-700 flex items-center gap-1">
                                 <i class="fa-solid fa-file-import text-gold-600"></i> Importer Required Documents
                             </h4>
                             <ul class="grid grid-cols-2 gap-x-2 gap-y-0.5 text-[11px] text-slate-700">
-                                <li class="flex items-center gap-1"><i class="fa-solid fa-circle-check text-blue-500 text-[9px]"></i> LOA (Template Attached)</li>
-                                <li class="flex items-center gap-1"><i class="fa-solid fa-circle-check text-blue-500 text-[9px]"></i> Photo ID</li>
-                                <li class="flex items-center gap-1"><i class="fa-solid fa-circle-check text-blue-500 text-[9px]"></i> EMPP (Proof Payment)</li>
-                                <li class="flex items-center gap-1"><i class="fa-solid fa-circle-check text-blue-500 text-[9px]"></i> ASIC Document (ABN)</li>
-                                <li class="flex items-center gap-1 col-span-2"><i class="fa-solid fa-circle-check text-blue-500 text-[9px]"></i> ASIC Statement (Director Names)</li>
+                                <li class="flex items-center gap-1"><i class="fa-solid fa-circle-check text-blue-500 text-[9px]"></i> <span data-i18n="doc_loa">LOA (Template Attached)</span></li>
+                                <li class="flex items-center gap-1"><i class="fa-solid fa-circle-check text-blue-500 text-[9px]"></i> <span data-i18n="doc_id">Photo ID</span></li>
+                                <li class="flex items-center gap-1"><i class="fa-solid fa-circle-check text-blue-500 text-[9px]"></i> <span data-i18n="doc_empp">EMPP (Proof Payment)</span></li>
+                                <li class="flex items-center gap-1"><i class="fa-solid fa-circle-check text-blue-500 text-[9px]"></i> <span data-i18n="doc_asic_abn">ASIC Document (ABN)</span></li>
+                                <li class="flex items-center gap-1 col-span-2"><i class="fa-solid fa-circle-check text-blue-500 text-[9px]"></i> <span data-i18n="doc_asic_stmt">ASIC Statement (Director Names)</span></li>
                             </ul>
                         </div>
                     </div>
@@ -293,15 +298,15 @@
             <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-200 mb-8">
                 <div class="bg-slate-900 px-6 py-4 flex flex-wrap justify-between items-center gap-4">
                     <div>
-                        <h2 class="text-base font-bold text-white tracking-wide uppercase">Landed Cost Quotation & Benchmark Schedule</h2>
-                        <p class="text-xs text-gold-400">Rearranged per Two Parrots Quotation (25 Active Products + 5 Upcoming Nov 2026 Launch)</p>
+                        <h2 data-i18n="tbl_title" class="text-base font-bold text-white tracking-wide uppercase">Landed Cost Quotation & Benchmark Schedule</h2>
+                        <p data-i18n="tbl_subtitle" class="text-xs text-gold-400">Rearranged per Two Parrots Quotation (25 Active Products + 5 Upcoming Nov 2026 Launch)</p>
                     </div>
                     <div class="flex items-center space-x-2 text-xs">
                         <span class="px-2.5 py-1 bg-slate-800 text-slate-300 rounded border border-slate-700">
-                            <i class="fa-solid fa-tag text-gold-400 mr-1"></i> Active: <strong>25</strong>
+                            <i class="fa-solid fa-tag text-gold-400 mr-1"></i> <span data-i18n="lbl_active">Active</span>: <strong>25</strong>
                         </span>
                         <span class="px-2.5 py-1 bg-gold-500/20 text-gold-400 rounded border border-gold-500/40">
-                            <i class="fa-solid fa-rocket mr-1"></i> Upcoming: <strong>5</strong>
+                            <i class="fa-solid fa-rocket mr-1"></i> <span data-i18n="lbl_upcoming">Upcoming</span>: <strong>5</strong>
                         </span>
                     </div>
                 </div>
@@ -311,23 +316,23 @@
                         <thead>
                             <tr class="bg-slate-800 text-slate-200 text-xs uppercase font-semibold tracking-wider border-b border-slate-700">
                                 <th class="py-3 px-2 text-center w-[3%] border-r border-slate-700">N°</th>
-                                <th class="py-3 px-3 w-[22%] border-r border-slate-700">Product Description</th>
+                                <th data-i18n="th_prod_desc" class="py-3 px-3 w-[22%] border-r border-slate-700">Product Description</th>
                                 <th class="py-3 px-3 w-[13%] border-r border-slate-700 text-right">
-                                    Price Pcs Before Delivery
+                                    <span data-i18n="th_fob_price">Price Pcs Before Delivery</span>
                                     <span class="block text-[10px] text-gold-400 normal-case font-normal">(FOB USD & AUD)</span>
                                 </th>
                                 <th class="py-3 px-3 w-[25%] border-r border-slate-700 bg-slate-850">
-                                    <div class="text-gold-400 font-bold">Total Cost of Each Pcs</div>
-                                    <span class="block text-[9px] text-slate-400 normal-case font-normal leading-tight">
+                                    <div data-i18n="th_total_cost" class="text-gold-400 font-bold">Total Cost of Each Pcs</div>
+                                    <span data-i18n="th_itemized_note" class="block text-[9px] text-slate-400 normal-case font-normal leading-tight">
                                         Itemized: Landed Cost | FOB | Ocean Freight | Port & Customs | Local Transp | Selling Price @ Margin
                                     </span>
                                 </th>
                                 <th class="py-3 px-3 w-[18%] border-r border-slate-700">
-                                    Asian Market Comparison
+                                    <span data-i18n="th_asian_bench">Asian Market Comparison</span>
                                     <span class="block text-[10px] text-slate-400 normal-case font-normal">(Thai, Viet, Asian Benchmarks)</span>
                                 </th>
                                 <th class="py-3 px-3 w-[19%]">
-                                    Australian Supermarket Price
+                                    <span data-i18n="th_aus_bench">Australian Supermarket Price</span>
                                     <span class="block text-[10px] text-slate-400 normal-case font-normal">(Coles / Woolworths Benchmarks)</span>
                                 </th>
                             </tr>
@@ -349,33 +354,33 @@
                         <i class="fa-solid fa-calculator text-lg"></i>
                     </div>
                     <div>
-                        <h3 class="font-bold text-sm text-white">Live Landed Cost Recalculation Engine</h3>
-                        <p class="text-[11px] text-slate-400">Adjust freight variables & margin percentage to compute live costings</p>
+                        <h3 data-i18n="tb_title" class="font-bold text-sm text-white">Live Landed Cost Recalculation Engine</h3>
+                        <p data-i18n="tb_desc" class="text-[11px] text-slate-400">Adjust freight variables & margin percentage to compute live costings</p>
                     </div>
                 </div>
 
                 <div class="flex flex-wrap items-center gap-4">
                     <!-- FX Rate -->
                     <div class="flex flex-col">
-                        <label class="text-[10px] text-gold-400 uppercase font-semibold mb-0.5">FX Rate (AUD/USD)</label>
+                        <label data-i18n="lbl_fx" class="text-[10px] text-gold-400 uppercase font-semibold mb-0.5">FX Rate (AUD/USD)</label>
                         <input type="number" id="input-fx" value="0.6620" step="0.005" min="0.1" class="bg-slate-800 border border-slate-700 text-white rounded px-2.5 py-1 text-xs w-24 text-right focus:outline-none focus:border-gold-500">
                     </div>
 
                     <!-- 20ft Ocean Freight -->
                     <div class="flex flex-col">
-                        <label class="text-[10px] text-gold-400 uppercase font-semibold mb-0.5">20ft Freight (USD)</label>
+                        <label data-i18n="lbl_freight" class="text-[10px] text-gold-400 uppercase font-semibold mb-0.5">20ft Freight (USD)</label>
                         <input type="number" id="input-freight" value="1650" step="25" min="0" class="bg-slate-800 border border-slate-700 text-white rounded px-2.5 py-1 text-xs w-28 text-right focus:outline-none focus:border-gold-500">
                     </div>
 
                     <!-- Vic Cartage -->
                     <div class="flex flex-col">
-                        <label class="text-[10px] text-gold-400 uppercase font-semibold mb-0.5">VIC Cartage (AUD)</label>
+                        <label data-i18n="lbl_cartage_tb" class="text-[10px] text-gold-400 uppercase font-semibold mb-0.5">VIC Cartage (AUD)</label>
                         <input type="number" id="input-cartage" value="750" step="25" min="0" class="bg-slate-800 border border-slate-700 text-white rounded px-2.5 py-1 text-xs w-28 text-right focus:outline-none focus:border-gold-500">
                     </div>
 
                     <!-- Target Margin % -->
                     <div class="flex flex-col">
-                        <label class="text-[10px] text-gold-400 uppercase font-semibold mb-0.5">Target Margin (%)</label>
+                        <label data-i18n="lbl_margin" class="text-[10px] text-gold-400 uppercase font-semibold mb-0.5">Target Margin (%)</label>
                         <div class="relative">
                             <input type="number" id="input-margin" value="50" step="1" min="0" max="95" class="bg-slate-800 border border-gold-500 text-gold-400 font-bold rounded px-2.5 py-1 text-xs w-24 text-right focus:outline-none pr-5">
                             <span class="absolute right-2 top-1 text-xs text-gold-400">%</span>
@@ -383,7 +388,7 @@
                     </div>
 
                     <button id="btn-recalculate" onclick="recalculateAll()" class="mt-3 sm:mt-0 px-4 py-2 gold-gradient hover:opacity-90 text-slate-900 font-bold rounded shadow transition text-xs flex items-center gap-1.5">
-                        <i class="fa-solid fa-arrows-rotate"></i> Recalculate
+                        <i class="fa-solid fa-arrows-rotate"></i> <span data-i18n="btn_recalc">Recalculate</span>
                     </button>
                 </div>
             </div>
@@ -391,8 +396,304 @@
 
     </div>
 
-    <!-- SCRIPT FOR PASSWORD PROTECTION & CALCULATION ENGINE -->
+    <!-- SCRIPT FOR PASSWORD, I18N DICTIONARY & CALCULATION ENGINE -->
     <script>
+        // --- MULTI-LANGUAGE I18N DICTIONARY ---
+        let currentLang = 'en';
+
+        const translations = {
+            en: {
+                modal_title: "Restricted Access",
+                modal_desc: "Please enter the security password to view the Landed Cost Quotation & Analytics.",
+                modal_label: "Enter Password",
+                modal_error: "Incorrect password. Please try again.",
+                modal_btn: "Unlock Dashboard",
+                header_sub: "Import & Distribution Landed Cost Intelligence",
+                btn_print: "Print A4 Quotation",
+                card_contact_title: "Contact & Web Portal",
+                card_logistics_title: "Import / Logistics Terminal",
+                lbl_discharge_port: "Discharge Port:",
+                lbl_standard_unit: "Standard Unit:",
+                lbl_effective_date: "Effective Date:",
+                card1_title: "Customs Clearance Schedule",
+                tag_fixed_charges: "Fixed Charges",
+                lbl_customs_fee: "Customs Clearance Fee:",
+                lbl_quarantine_fee: "Quarantine Entry Fee:",
+                lbl_verification_fee: "Verification / IFIP Fee:",
+                lbl_min_quarantine: "Min. Quarantine Charge:",
+                card2_title: "Freight Baseline (20ft FCL)",
+                tag_route_metrics: "Route Metrics",
+                lbl_route: "Origin - Destination:",
+                lbl_ocean_freight: "Baseline Ocean Freight:",
+                lbl_cartage: "VIC Local Cartage:",
+                lbl_fx_rate: "Benchmark FX Rate:",
+                card3_title: "Compliance & Requirements",
+                tag_biosecurity: "Customs & Biosecurity",
+                hdr_supplier_docs: "Supplier Required Documents",
+                hdr_importer_docs: "Importer Required Documents",
+                doc_bol: "Bill of Lading",
+                doc_inv: "Commercial Invoice",
+                doc_pack: "Packing List",
+                doc_pack_dec: "Packing Declaration",
+                doc_mfg_dec: "Manufacturer Declaration",
+                doc_fta: "FTA (Free Trade)",
+                doc_phyto: "Phytosanitary Cert.",
+                doc_fumi: "Fumigation Cert.",
+                doc_loa: "LOA (Template Attached)",
+                doc_id: "Photo ID",
+                doc_empp: "EMPP (Proof Payment)",
+                doc_asic_abn: "ASIC Document (ABN)",
+                doc_asic_stmt: "ASIC Statement (Director Names)",
+                tbl_title: "Landed Cost Quotation & Benchmark Schedule",
+                tbl_subtitle: "Rearranged per Two Parrots Quotation (25 Active Products + 5 Upcoming Nov 2026 Launch)",
+                lbl_active: "Active",
+                lbl_upcoming: "Upcoming",
+                th_prod_desc: "Product Description",
+                th_fob_price: "Price Pcs Before Delivery",
+                th_total_cost: "Total Cost of Each Pcs",
+                th_itemized_note: "Itemized: Landed Cost | FOB | Ocean Freight | Port & Customs | Local Transp | Selling Price @ Margin",
+                th_asian_bench: "Asian Market Comparison",
+                th_aus_bench: "Australian Supermarket Price",
+                tb_title: "Live Landed Cost Recalculation Engine",
+                tb_desc: "Adjust freight variables & margin percentage to compute live costings",
+                lbl_fx: "FX Rate (AUD/USD)",
+                lbl_freight: "20ft Freight (USD)",
+                lbl_cartage_tb: "VIC Cartage (AUD)",
+                lbl_margin: "Target Margin (%)",
+                btn_recalc: "Recalculate",
+                // Table Cell Labels
+                lbl_landed_cost_aud: "Landed Cost AUD:",
+                lbl_fob_aud: "FOB AUD:",
+                lbl_ocean_aud: "Ocean Freight AUD:",
+                lbl_customs_aud: "Customs & Port AUD:",
+                lbl_local_aud: "Local Transport AUD:",
+                lbl_selling_price: "Selling Price @"
+            },
+            km: {
+                modal_title: "ការចូលប្រើប្រាស់ត្រូវបានកំណត់",
+                modal_desc: "សូមបញ្ចូលពាក្យសម្ងាត់សុវត្ថិភាពដើម្បីមើលសម្រង់តម្លៃដើម និងការវិភាគ។",
+                modal_label: "បញ្ចូលពាក្យសម្ងាត់",
+                modal_error: "ពាក្យសម្ងាត់មិនត្រឹមត្រូវ។ សូមព្យាយាមម្តងទៀត។",
+                modal_btn: "បើកផ្ទាំងគ្រប់គ្រង",
+                header_sub: "ព័ត៌មានវិភាគថ្លៃដើមនាំចូល និងចែករំលែក",
+                btn_print: "បោះពុម្ពសម្រង់តម្លៃ A4",
+                card_contact_title: "ទំនាក់ទំនង និងវេបសាយ",
+                card_logistics_title: "ស្ថានីយនាំចូល / ឡូជីស្ទិក",
+                lbl_discharge_port: "កំពង់ផែនាំចុះ:",
+                lbl_standard_unit: "ទំហំស្តង់ដារ:",
+                lbl_effective_date: "កាលបរិច្ឆេទអនុវត្ត:",
+                card1_title: "កាលវិភាគបង់ពន្ធគយ",
+                tag_fixed_charges: "កម្រៃថេរ",
+                lbl_customs_fee: "កម្រៃរត់ការគយ:",
+                lbl_quarantine_fee: "កម្រៃពិនិត្យភូតគាមអនាម័យ:",
+                lbl_verification_fee: "កម្រៃផ្ទៀងផ្ទាត់ / IFIP:",
+                lbl_min_quarantine: "កម្រៃអប្បបរមាភូតគាមអនាម័យ:",
+                card2_title: "មូលដ្ឋានតម្លៃដឹកជញ្ជូន (២០ហ្វ៊ីត)",
+                tag_route_metrics: "សូចនាករផ្លូវដឹកជញ្ជូន",
+                lbl_route: "ប្រភពដើម - គោលដៅ:",
+                lbl_ocean_freight: "ថ្លៃដឹកតាមផ្លូវសមុទ្រដើម:",
+                lbl_cartage: "ថ្លៃដឹកក្នុងស្រុក VIC:",
+                lbl_fx_rate: "អត្រាប្តូរប្រាក់គោល:",
+                card3_title: "អនុលោមភាព និងតម្រូវការ",
+                tag_biosecurity: "គយ និងជីវសុវត្ថិភាព",
+                hdr_supplier_docs: "ឯកសារតម្រូវពីអ្នកផ្គត់ផ្គង់",
+                hdr_importer_docs: "ឯកសារតម្រូវពីអ្នកនាំចូល",
+                doc_bol: "លិខិតដឹកជញ្ជូន (Bill of Lading)",
+                doc_inv: "វិក្កយបត្រពាណិជ្ជកម្ម",
+                doc_pack: "បញ្ជីវេចខ្ចប់",
+                doc_pack_dec: "លិខិតប្រកាសការវេចខ្ចប់",
+                doc_mfg_dec: "លិខិតប្រកាសពីរោងចក្រ",
+                doc_fta: "កិច្ចព្រមព្រៀងពាណិជ្ជកម្មសេរី (FTA)",
+                doc_phyto: "វិញ្ញាបនបត្រភូតគាមអនាម័យ",
+                doc_fumi: "វិញ្ញាបនបត្របាញ់ថ្នាំសម្លាប់មេរោគ",
+                doc_loa: "លិខិតប្រគល់សិទ្ធិ (LOA)",
+                doc_id: "អត្តសញ្ញាណប័ណ្ណមានរូបថត",
+                doc_empp: "ភស្តុតាងនៃការទូទាត់ប្រាក់ (EMPP)",
+                doc_asic_abn: "ឯកសារ ASIC សម្រាប់ ABN",
+                doc_asic_stmt: "របាយការណ៍ ASIC (ឈ្មោះនាយក)",
+                tbl_title: "តារាងសម្រង់តម្លៃដើមនាំចូល និងការប្រៀបធៀប",
+                tbl_subtitle: "រៀបចំឡើងវិញតាមសម្រង់តម្លៃ Two Parrots (២៥ ផលិតផលសកម្ម + ៥ ផលិតផលថ្មី)",
+                lbl_active: "សកម្ម",
+                lbl_upcoming: "ជិតចេញលក់",
+                th_prod_desc: "ការបរិយាយផលិតផល",
+                th_fob_price: "តម្លៃមុនពេលដឹកជញ្ជូន",
+                th_total_cost: "ថ្លៃដើមសរុបក្នុងមួយដប/កញ្ចប់",
+                th_itemized_note: "លម្អិត៖ ថ្លៃដើមនាំចូល | FOB | ដឹកតាមសមុទ្រ | ពន្ធគយ និងកំពង់ផែ | ដឹកក្នុងស្រុក | តម្លៃលក់តាមចំណេញ",
+                th_asian_bench: "ការប្រៀបធៀបទីផ្សារអាស៊ី",
+                th_aus_bench: "តម្លៃផ្សារទំនើបអូស្ត្រាលី",
+                tb_title: "ប្រព័ន្ធគណនាថ្លៃដើមនាំចូលផ្ទាល់",
+                tb_desc: "កែប្រែប្រៀបប្រែប្រួលថ្លៃដឹកជញ្ជូន និងភាគរយចំណេញដើម្បីគណនាភ្លាមៗ",
+                lbl_fx: "អត្រាប្តូរប្រាក់ (AUD/USD)",
+                lbl_freight: "ថ្លៃកុងតឺន័រ ២០ហ្វ៊ីត (USD)",
+                lbl_cartage_tb: "ថ្លៃដឹក VIC (AUD)",
+                lbl_margin: "គោលដៅភាគរយចំណេញ (%)",
+                btn_recalc: "គណនាឡើងវិញ",
+                lbl_landed_cost_aud: "ថ្លៃដើមនាំចូល AUD:",
+                lbl_fob_aud: "FOB AUD:",
+                lbl_ocean_aud: "ថ្លៃដឹកសមុទ្រ AUD:",
+                lbl_customs_aud: "ថ្លៃគយ និងកំពង់ផែ AUD:",
+                lbl_local_aud: "ថ្លៃដឹកក្នុងស្រុក AUD:",
+                lbl_selling_price: "តម្លៃលក់ប្រកាស @"
+            },
+            fr: {
+                modal_title: "Accès Restreint",
+                modal_desc: "Veuillez saisir le mot de passe de sécurité pour afficher le devis des coûts rendus et les analyses.",
+                modal_label: "Entrer le mot de passe",
+                modal_error: "Mot de passe incorrect. Veuillez réessayer.",
+                modal_btn: "Déverrouiller le tableau de bord",
+                header_sub: "Intelligence du coût de revient à destination & distribution",
+                btn_print: "Imprimer devis A4",
+                card_contact_title: "Contact & Portail Web",
+                card_logistics_title: "Terminal d'importation / Logistique",
+                lbl_discharge_port: "Port de déchargement:",
+                lbl_standard_unit: "Unité standard:",
+                lbl_effective_date: "Date d'effet:",
+                card1_title: "Barème de dédouanement",
+                tag_fixed_charges: "Frais Fixes",
+                lbl_customs_fee: "Frais de dédouanement:",
+                lbl_quarantine_fee: "Frais d'entrée en quarantaine:",
+                lbl_verification_fee: "Frais de vérification / IFIP:",
+                lbl_min_quarantine: "Frais min. de quarantaine:",
+                card2_title: "Base de fret (Conteneur 20 pieds)",
+                tag_route_metrics: "Métriques d'itinéraire",
+                lbl_route: "Origine - Destination:",
+                lbl_ocean_freight: "Fret maritime de base:",
+                lbl_cartage: "Camionnage local VIC:",
+                lbl_fx_rate: "Taux de change de référence:",
+                card3_title: "Conformité & Exigences",
+                tag_biosecurity: "Douanes & Biosécurité",
+                hdr_supplier_docs: "Documents requis du fournisseur",
+                hdr_importer_docs: "Documents requis de l'importateur",
+                doc_bol: "Connaissement (Bill of Lading)",
+                doc_inv: "Facture commerciale",
+                doc_pack: "Liste de colisage",
+                doc_pack_dec: "Déclaration de colisage",
+                doc_mfg_dec: "Déclaration du fabricant",
+                doc_fta: "ALE (Accord de libre-échange)",
+                doc_phyto: "Certificat phytosanitaire",
+                doc_fumi: "Certificat de fumigation",
+                doc_loa: "LOA (Modèle ci-joint)",
+                doc_id: "Pièce d'identité avec photo",
+                doc_empp: "EMPP (Preuve de paiement)",
+                doc_asic_abn: "Document ASIC (ABN)",
+                doc_asic_stmt: "Déclaration ASIC (Noms des directeurs)",
+                tbl_title: "Devis des coûts rendus & Tableau comparatif",
+                tbl_subtitle: "Réorganisé selon le devis Two Parrots (25 produits actifs + 5 nouveaux nov. 2026)",
+                lbl_active: "Actifs",
+                lbl_upcoming: "À venir",
+                th_prod_desc: "Description du produit",
+                th_fob_price: "Prix unitaire avant livraison",
+                th_total_cost: "Coût total de chaque pièce",
+                th_itemized_note: "Détaillé: Coût rendu | FOB | Fret maritime | Port & Douane | Transp. local | Prix de vente @ Marge",
+                th_asian_bench: "Comparaison du marché asiatique",
+                th_aus_bench: "Prix des supermarchés australiens",
+                tb_title: "Calculateur de coût rendu en direct",
+                tb_desc: "Ajustez les variables de fret et le pourcentage de marge pour calculer les coûts en direct",
+                lbl_fx: "Taux de change (AUD/USD)",
+                lbl_freight: "Fret 20 pieds (USD)",
+                lbl_cartage_tb: "Camionnage VIC (AUD)",
+                lbl_margin: "Marge cible (%)",
+                btn_recalc: "Recalculer",
+                lbl_landed_cost_aud: "Coût rendu AUD:",
+                lbl_fob_aud: "FOB AUD:",
+                lbl_ocean_aud: "Fret maritime AUD:",
+                lbl_customs_aud: "Douane & Port AUD:",
+                lbl_local_aud: "Transport local AUD:",
+                lbl_selling_price: "Prix de vente @"
+            },
+            zh: {
+                modal_title: "受限访问",
+                modal_desc: "请输入安全密码以查看到岸成本报价和分析数据。",
+                modal_label: "输入密码",
+                modal_error: "密码不正确，请重试。",
+                modal_btn: "解锁控制面板",
+                header_sub: "进口与分销到岸成本情报",
+                btn_print: "打印 A4 报价单",
+                card_contact_title: "联系方式与网站",
+                card_logistics_title: "进口 / 物流枢纽",
+                lbl_discharge_port: "卸货港:",
+                lbl_standard_unit: "标准集装箱:",
+                lbl_effective_date: "生效日期:",
+                card1_title: "清关费用明细表",
+                tag_fixed_charges: "固定费用",
+                lbl_customs_fee: "报关清关费:",
+                lbl_quarantine_fee: "检疫申报费:",
+                lbl_verification_fee: "查验 / IFIP 费:",
+                lbl_min_quarantine: "最低检疫收费:",
+                card2_title: "集装箱运费基准 (20尺)",
+                tag_route_metrics: "航线指标",
+                lbl_route: "始发地 - 目的地:",
+                lbl_ocean_freight: "基线海运费:",
+                lbl_cartage: "VIC 本地陆运费:",
+                lbl_fx_rate: "基准汇率:",
+                card3_title: "合规与要求",
+                tag_biosecurity: "海关与生物安全",
+                hdr_supplier_docs: "供应商所需文件",
+                hdr_importer_docs: "进口商所需文件",
+                doc_bol: "海运提单 (Bill of Lading)",
+                doc_inv: "商业发票",
+                doc_pack: "装箱单",
+                doc_pack_dec: "包装声明",
+                doc_mfg_dec: "制造商声明",
+                doc_fta: "自由贸易协定 (FTA)",
+                doc_phyto: "植物检疫证书",
+                doc_fumi: "熏蒸证书",
+                doc_loa: "授权委托书 (LOA)",
+                doc_id: "带照片身份证明",
+                doc_empp: "付款凭证 (EMPP)",
+                doc_asic_abn: "ASIC 公司注册文件 (ABN)",
+                doc_asic_stmt: "ASIC 董事名单声明",
+                tbl_title: "到岸成本报价与市场标杆对照表",
+                tbl_subtitle: "根据 Two Parrots 报价单重新排列（25 个在售产品 + 5 个 2026 年 11 月新品）",
+                lbl_active: "在售",
+                lbl_upcoming: "即将上市",
+                th_prod_desc: "产品描述",
+                th_fob_price: "发货前单价",
+                th_total_cost: "每件产品总成本",
+                th_itemized_note: "明细: 到岸成本 | FOB | 海运费 | 港口与海关 | 本地运输 | 目标利润率售价",
+                th_asian_bench: "亚洲市场标杆对比",
+                th_aus_bench: "澳大利亚超市零售价标杆",
+                tb_title: "实时到岸成本重算引擎",
+                tb_desc: "调整运费变量和目标利润率以计算实时成本",
+                lbl_fx: "汇率 (AUD/USD)",
+                lbl_freight: "20尺柜海运费 (USD)",
+                lbl_cartage_tb: "VIC 拖车费 (AUD)",
+                lbl_margin: "目标利润率 (%)",
+                btn_recalc: "重新计算",
+                lbl_landed_cost_aud: "到岸成本 AUD:",
+                lbl_fob_aud: "FOB 离岸价 AUD:",
+                lbl_ocean_aud: "海运费 AUD:",
+                lbl_customs_aud: "海关及港口费 AUD:",
+                lbl_local_aud: "本地陆运费 AUD:",
+                lbl_selling_price: "建议售价 @"
+            }
+        };
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            
+            // Update active button styles
+            ['en', 'km', 'fr', 'zh'].forEach(l => {
+                const btn = document.getElementById(`lang-btn-${l}`);
+                if (l === lang) {
+                    btn.className = "px-2.5 py-1 text-xs rounded font-bold transition bg-gold-500 text-slate-900 shadow";
+                } else {
+                    btn.className = "px-2.5 py-1 text-xs rounded font-bold transition text-slate-300 hover:text-white";
+                }
+            });
+
+            // Update all DOM elements with data-i18n attribute
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    el.innerText = translations[lang][key];
+                }
+            });
+
+            // Re-render table with translated names
+            renderTable();
+        }
+
         // --- PASSWORD PROTECTION LOGIC ---
         function unlockPage(e) {
             if (e) e.preventDefault();
@@ -427,13 +728,18 @@
             }
         }
 
-        // --- 30 PRODUCT DATASET ---
+        // --- 30 PRODUCT DATASET WITH TRANSLATED NAMES ---
         const productsData = [
             // --- 25 ACTIVE PRODUCTS ---
             {
                 id: 1,
                 status: 'Active',
-                nameEng: 'Finest Rice Flour 500g',
+                name: {
+                    en: 'Finest Rice Flour 500g',
+                    km: 'ម្សៅអង្ករខ្សាយ ៥០០ក្រាម',
+                    fr: 'Farine de riz fine 500g',
+                    zh: '优质大米粉 500g'
+                },
                 nameKhmer: 'ម្សៅអង្ករខ្សាយ ៥០០ក្រាម',
                 spec: '500g Bag / 20 Pcs (10kg/CTN)',
                 fobUsd: 0.36,
@@ -446,7 +752,12 @@
             {
                 id: 2,
                 status: 'Active',
-                nameEng: 'Glutinous Rice Flour 500g',
+                name: {
+                    en: 'Glutinous Rice Flour 500g',
+                    km: 'ម្សៅអង្ករដំណើប ៥០០ក្រាម',
+                    fr: 'Farine de riz glutineux 500g',
+                    zh: '水磨糯米粉 500g'
+                },
                 nameKhmer: 'ម្សៅអង្ករដំណើប ៥០០ក្រាម',
                 spec: '500g Bag / 20 Pcs (10kg/CTN)',
                 fobUsd: 0.58,
@@ -459,7 +770,12 @@
             {
                 id: 3,
                 status: 'Active',
-                nameEng: 'Tapioca Flour 500g',
+                name: {
+                    en: 'Tapioca Flour 500g',
+                    km: 'ម្សៅឆា ៥០០ក្រាម',
+                    fr: 'Farine de tapioca 500g',
+                    zh: '木薯淀粉 / 生粉 500g'
+                },
                 nameKhmer: 'ម្សៅឆា ៥០០ក្រាម',
                 spec: '500g Bag / 20 Pcs (10kg/CTN)',
                 fobUsd: 0.44,
@@ -472,7 +788,12 @@
             {
                 id: 4,
                 status: 'Active',
-                nameEng: 'Pancake Flour (Banh Xeo) 500g',
+                name: {
+                    en: 'Pancake Flour (Banh Xeo) 500g',
+                    km: 'ម្សៅបាញ់ឆែវ ៥០០ក្រាម',
+                    fr: 'Farine pour crêpes asiatiques 500g',
+                    zh: '柬式/越式煎饼粉 (Banh Xeo) 500g'
+                },
                 nameKhmer: 'ម្សៅបាញ់ឆែវ ៥០០ក្រាម',
                 spec: '500g Bag / 20 Pcs (10kg/CTN)',
                 fobUsd: 0.90,
@@ -485,7 +806,12 @@
             {
                 id: 5,
                 status: 'Active',
-                nameEng: 'Crispy Tempura Flour 1000g',
+                name: {
+                    en: 'Crispy Tempura Flour 1000g',
+                    km: 'ម្សៅបំពងស្រួយ ១០០០ក្រាម',
+                    fr: 'Farine à tempura croustillante 1000g',
+                    zh: '香酥天妇罗炸粉 1000g'
+                },
                 nameKhmer: 'ម្សៅបំពងស្រួយ ១០០០ក្រាម',
                 spec: '1000g Bag / 10 Pcs (10kg/CTN)',
                 fobUsd: 1.25,
@@ -498,7 +824,12 @@
             {
                 id: 6,
                 status: 'Active',
-                nameEng: 'Crispy Tempura Flour 150g',
+                name: {
+                    en: 'Crispy Tempura Flour 150g',
+                    km: 'ម្សៅបំពងស្រួយ ១៥០ក្រាម',
+                    fr: 'Farine à tempura croustillante 150g',
+                    zh: '香酥天妇罗炸粉 150g'
+                },
                 nameKhmer: 'ម្សៅបំពងស្រួយ ១៥០ក្រាម',
                 spec: '150g Bag / 60 Pcs (6x10pcs/CTN)',
                 fobUsd: 0.39,
@@ -511,7 +842,12 @@
             {
                 id: 7,
                 status: 'Active',
-                nameEng: 'Fried Banana Flour 500g',
+                name: {
+                    en: 'Fried Banana Flour 500g',
+                    km: 'ម្សៅចេកចៀន ៥០០ក្រាម',
+                    fr: 'Farine pour bananes frites 500g',
+                    zh: '炸香蕉专用脆粉 500g'
+                },
                 nameKhmer: 'ម្សៅចេកចៀន ៥០០ក្រាម',
                 spec: '500g Bag / 20 Pcs (10kg/CTN)',
                 fobUsd: 1.60,
@@ -524,7 +860,12 @@
             {
                 id: 8,
                 status: 'Active',
-                nameEng: 'Black Pepper Whole 120g',
+                name: {
+                    en: 'Black Pepper Whole 120g',
+                    km: 'ម្រេចខ្មៅគ្រាប់មូល ១២០ក្រាម',
+                    fr: 'Poivre noir entier 120g',
+                    zh: '整粒黑胡椒粒 120g'
+                },
                 nameKhmer: 'ម្រេចខ្មៅគ្រាប់មូល ១២០ក្រាម',
                 spec: '120g Can / 12 Cans/CTN',
                 fobUsd: 3.63,
@@ -537,7 +878,12 @@
             {
                 id: 9,
                 status: 'Active',
-                nameEng: 'Fine Ground Black Pepper 80g',
+                name: {
+                    en: 'Fine Ground Black Pepper 80g',
+                    km: 'ម្រេចខ្មៅម៉ដ្ឋ ៨០ក្រាម',
+                    fr: 'Poivre noir moulu fin 80g',
+                    zh: '细磨黑胡椒粉 80g'
+                },
                 nameKhmer: 'ម្រេចខ្មៅម៉ដ្ឋ ៨០ក្រាម',
                 spec: '80g Can / 20 Cans/CTN',
                 fobUsd: 1.43,
@@ -550,7 +896,12 @@
             {
                 id: 10,
                 status: 'Active',
-                nameEng: 'Coarse Ground Black Pepper 80g',
+                name: {
+                    en: 'Coarse Ground Black Pepper 80g',
+                    km: 'ម្រេចខ្មៅចម្រៀក ៨០ក្រាម',
+                    fr: 'Poivre noir concassé 80g',
+                    zh: '粗磨黑胡椒碎 80g'
+                },
                 nameKhmer: 'ម្រេចខ្មៅចម្រៀក ៨០ក្រាម',
                 spec: '80g Can / 20 Cans/CTN',
                 fobUsd: 1.43,
@@ -563,7 +914,12 @@
             {
                 id: 11,
                 status: 'Active',
-                nameEng: 'Fine Ground White Pepper 80g',
+                name: {
+                    en: 'Fine Ground White Pepper 80g',
+                    km: 'ម្រេចសចម្រៀក ៨០ក្រាម',
+                    fr: 'Poivre blanc moulu fin 80g',
+                    zh: '细磨白胡椒粉 80g'
+                },
                 nameKhmer: 'ម្រេចសចម្រៀក ៨០ក្រាម',
                 spec: '80g Can / 20 Cans/CTN',
                 fobUsd: 1.43,
@@ -576,7 +932,12 @@
             {
                 id: 12,
                 status: 'Active',
-                nameEng: 'Coarse Ground Black Pepper 650g',
+                name: {
+                    en: 'Coarse Ground Black Pepper 650g',
+                    km: 'ម្រេចខ្មៅចម្រៀក ៦៥០ក្រាម',
+                    fr: 'Poivre noir concassé 650g',
+                    zh: '粗磨黑胡椒碎 650g (餐饮罐装)'
+                },
                 nameKhmer: 'ម្រេចខ្មៅចម្រៀក ៦៥០ក្រាម',
                 spec: '650g Can / 6 Cans/CTN',
                 fobUsd: 7.46,
@@ -589,7 +950,12 @@
             {
                 id: 13,
                 status: 'Active',
-                nameEng: 'Fine Ground Black Pepper 650g',
+                name: {
+                    en: 'Fine Ground Black Pepper 650g',
+                    km: 'ម្រេចខ្មៅម៉ដ្ឋ ៦៥០ក្រាម',
+                    fr: 'Poivre noir moulu fin 650g',
+                    zh: '细磨黑胡椒粉 650g (餐饮罐装)'
+                },
                 nameKhmer: 'ម្រេចខ្មៅម៉ដ្ឋ ៦៥០ក្រាម',
                 spec: '650g Can / 6 Cans/CTN',
                 fobUsd: 7.46,
@@ -602,7 +968,12 @@
             {
                 id: 14,
                 status: 'Active',
-                nameEng: 'Black Pepper Whole 1000g',
+                name: {
+                    en: 'Black Pepper Whole 1000g',
+                    km: 'ម្រេចខ្មៅគ្រាប់មូល ១០០០ក្រាម',
+                    fr: 'Poivre noir entier 1000g',
+                    zh: '整粒黑胡椒粒 1000g (大包装)'
+                },
                 nameKhmer: 'ម្រេចខ្មៅគ្រាប់មូល ១០០០ក្រាម',
                 spec: '1000g Bag / 10 Bags (10kg/CTN)',
                 fobUsd: 9.07,
@@ -615,7 +986,12 @@
             {
                 id: 15,
                 status: 'Active',
-                nameEng: 'Black Pepper Whole 500g',
+                name: {
+                    en: 'Black Pepper Whole 500g',
+                    km: 'ម្រេចខ្មៅគ្រាប់មូល ៥០០ក្រាម',
+                    fr: 'Poivre noir entier 500g',
+                    zh: '整粒黑胡椒粒 500g'
+                },
                 nameKhmer: 'ម្រេចខ្មៅគ្រាប់មូល ៥០០ក្រាម',
                 spec: '500g Bag / 20 Bags (10kg/CTN)',
                 fobUsd: 4.60,
@@ -628,7 +1004,12 @@
             {
                 id: 16,
                 status: 'Active',
-                nameEng: 'Crushed Black Pepper (10-20 Mesh) 1000g',
+                name: {
+                    en: 'Crushed Black Pepper (10-20 Mesh) 1000g',
+                    km: 'ម្រេចខ្មៅចម្រៀកកំរិត 10-20 ម៉េស ១០០០ក្រាម',
+                    fr: 'Poivre noir concassé (10-20 Mesh) 1000g',
+                    zh: '黑胡椒碎 (10-20目) 1000g'
+                },
                 nameKhmer: 'ម្រេចខ្មៅចម្រៀកកំរិត 10-20 ម៉េស ១០០០ក្រាម',
                 spec: '1000g Bag / 10 Bags (10kg/CTN)',
                 fobUsd: 9.46,
@@ -641,7 +1022,12 @@
             {
                 id: 17,
                 status: 'Active',
-                nameEng: 'Crushed Black Pepper (10-20 Mesh) 500g',
+                name: {
+                    en: 'Crushed Black Pepper (10-20 Mesh) 500g',
+                    km: 'ម្រេចខ្មៅចម្រៀកកំរិត 10-20 ម៉េស ៥០០ក្រាម',
+                    fr: 'Poivre noir concassé (10-20 Mesh) 500g',
+                    zh: '黑胡椒碎 (10-20目) 500g'
+                },
                 nameKhmer: 'ម្រេចខ្មៅចម្រៀកកំរិត 10-20 ម៉េស ៥០០ក្រាម',
                 spec: '500g Bag / 20 Bags (10kg/CTN)',
                 fobUsd: 4.79,
@@ -654,7 +1040,12 @@
             {
                 id: 18,
                 status: 'Active',
-                nameEng: 'Fine Ground Black Pepper (40 Mesh) 1000g',
+                name: {
+                    en: 'Fine Ground Black Pepper (40 Mesh) 1000g',
+                    km: 'ម្រេចខ្មៅម៉ដ្ឋកំរិត 40 ម៉េស ១០០០ក្រាម',
+                    fr: 'Poivre noir moulu fin (40 Mesh) 1000g',
+                    zh: '细磨黑胡椒粉 (40目) 1000g'
+                },
                 nameKhmer: 'ម្រេចខ្មៅម៉ដ្ឋកំរិត 40 ម៉េស ១០០០ក្រាម',
                 spec: '1000g Bag / 10 Bags (10kg/CTN)',
                 fobUsd: 9.46,
@@ -667,7 +1058,12 @@
             {
                 id: 19,
                 status: 'Active',
-                nameEng: 'Fine Ground Black Pepper (40 Mesh) 500g',
+                name: {
+                    en: 'Fine Ground Black Pepper (40 Mesh) 500g',
+                    km: 'ម្រេចខ្មៅម៉ដ្ឋកំរិត 40 ម៉េស ៥០០ក្រាម',
+                    fr: 'Poivre noir moulu fin (40 Mesh) 500g',
+                    zh: '细磨黑胡椒粉 (40目) 500g'
+                },
                 nameKhmer: 'ម្រេចខ្មៅម៉ដ្ឋកំរិត 40 ម៉េស ៥០០ក្រាម',
                 spec: '500g Bag / 20 Bags (10kg/CTN)',
                 fobUsd: 4.78,
@@ -680,7 +1076,12 @@
             {
                 id: 20,
                 status: 'Active',
-                nameEng: 'Black Pepper Whole 200g',
+                name: {
+                    en: 'Black Pepper Whole 200g',
+                    km: 'ម្រេចខ្មៅគ្រាប់មូល ២០០ក្រាម',
+                    fr: 'Poivre noir entier 200g',
+                    zh: '整粒黑胡椒粒 200g (罐装)'
+                },
                 nameKhmer: 'ម្រេចខ្មៅគ្រាប់មូល ២០០ក្រាម',
                 spec: '200g Can / 12 Cans/CTN',
                 fobUsd: 2.68,
@@ -693,7 +1094,12 @@
             {
                 id: 21,
                 status: 'Active',
-                nameEng: 'Coarse Ground Black Pepper 250g',
+                name: {
+                    en: 'Coarse Ground Black Pepper 250g',
+                    km: 'ម្រេចខ្មៅចម្រៀក ២៥០ក្រាម',
+                    fr: 'Poivre noir concassé 250g',
+                    zh: '粗磨黑胡椒碎 250g (罐装)'
+                },
                 nameKhmer: 'ម្រេចខ្មៅចម្រៀក ២៥០ក្រាម',
                 spec: '250g Can / 12 Cans/CTN',
                 fobUsd: 3.37,
@@ -706,7 +1112,12 @@
             {
                 id: 22,
                 status: 'Active',
-                nameEng: 'Fine Ground Black Pepper 250g',
+                name: {
+                    en: 'Fine Ground Black Pepper 250g',
+                    km: 'ម្រេចខ្មៅម៉ដ្ឋ ២៥០ក្រាម',
+                    fr: 'Poivre noir moulu fin 250g',
+                    zh: '细磨黑胡椒粉 250g (罐装)'
+                },
                 nameKhmer: 'ម្រេចខ្មៅម៉ដ្ឋ ២៥០ក្រាម',
                 spec: '250g Can / 12 Cans/CTN',
                 fobUsd: 3.37,
@@ -719,7 +1130,12 @@
             {
                 id: 23,
                 status: 'Active',
-                nameEng: 'Black Pepper Whole 350g',
+                name: {
+                    en: 'Black Pepper Whole 350g',
+                    km: 'ម្រេចខ្មៅគ្រាប់មូល ៣៥០ក្រាម',
+                    fr: 'Poivre noir entier 350g',
+                    zh: '整粒黑胡椒粒 350g (罐装)'
+                },
                 nameKhmer: 'ម្រេចខ្មៅគ្រាប់មូល ៣៥០ក្រាម',
                 spec: '350g Can / 12 Cans/CTN',
                 fobUsd: 3.59,
@@ -732,7 +1148,12 @@
             {
                 id: 24,
                 status: 'Active',
-                nameEng: 'Coarse Ground Black Pepper 360g',
+                name: {
+                    en: 'Coarse Ground Black Pepper 360g',
+                    km: 'ម្រេចខ្មៅចម្រៀក ៣៦០ក្រាម',
+                    fr: 'Poivre noir concassé 360g',
+                    zh: '粗磨黑胡椒碎 360g (罐装)'
+                },
                 nameKhmer: 'ម្រេចខ្មៅចម្រៀក ៣៦០ក្រាម',
                 spec: '360g Can / 12 Cans/CTN',
                 fobUsd: 4.06,
@@ -745,7 +1166,12 @@
             {
                 id: 25,
                 status: 'Active',
-                nameEng: 'Fine Ground Black Pepper 360g',
+                name: {
+                    en: 'Fine Ground Black Pepper 360g',
+                    km: 'ម្រេចខ្មៅម៉ដ្ឋ ៣៦០ក្រាម',
+                    fr: 'Poivre noir moulu fin 360g',
+                    zh: '细磨黑胡椒粉 360g (罐装)'
+                },
                 nameKhmer: 'ម្រេចខ្មៅម៉ដ្ឋ ៣៦០ក្រាម',
                 spec: '360g Can / 12 Cans/CTN',
                 fobUsd: 3.89,
@@ -756,11 +1182,16 @@
                 ausSource: 'Src: Coles Online AU (Melb)'
             },
 
-            // --- 5 UPCOMING PRODUCTS (NOV 2026 LAUNCH) ---
+            // --- 5 UPCOMING PRODUCTS ---
             {
                 id: 26,
                 status: 'Upcoming',
-                nameEng: 'Instant Rice Stir-Fry Noodle 100g',
+                name: {
+                    en: 'Instant Rice Stir-Fry Noodle 100g',
+                    km: 'មីគោក ១០០ក្រាម',
+                    fr: 'Nouilles de riz sautées instantanées 100g',
+                    zh: '即食干炒米粉 100g'
+                },
                 nameKhmer: 'មីគោក ១០០ក្រាម',
                 spec: '100g Box / 24 Pcs per CTN',
                 fobUsd: 0.85,
@@ -773,7 +1204,12 @@
             {
                 id: 27,
                 status: 'Upcoming',
-                nameEng: 'Crispy Rice Cake Flour 500g',
+                name: {
+                    en: 'Crispy Rice Cake Flour 500g',
+                    km: 'ម្សៅនំគ្រក់ ៥០០ក្រាម',
+                    fr: 'Farine pour gâteau de riz croustillant 500g',
+                    zh: '柬式香脆米饼粉 (Nom Krok) 500g'
+                },
                 nameKhmer: 'ម្សៅនំគ្រក់ ៥០០ក្រាម',
                 spec: '500g Bag / 20 Pcs (10kg/CTN)',
                 fobUsd: 0.95,
@@ -786,7 +1222,12 @@
             {
                 id: 28,
                 status: 'Upcoming',
-                nameEng: 'Chinese Doughnuts Flour 500g',
+                name: {
+                    en: 'Chinese Doughnuts Flour 500g',
+                    km: 'ម្សៅនំឆា ៥០០ក្រាម',
+                    fr: 'Farine pour beignets chinois (Youtiao) 500g',
+                    zh: '油条专用预拌粉 500g'
+                },
                 nameKhmer: 'ម្សៅនំឆា ៥០០ក្រាម',
                 spec: '500g Bag / 20 Pcs (10kg/CTN)',
                 fobUsd: 0.90,
@@ -799,7 +1240,12 @@
             {
                 id: 29,
                 status: 'Upcoming',
-                nameEng: 'Waffle Flour 500g',
+                name: {
+                    en: 'Waffle Flour 500g',
+                    km: 'ម្សៅពុម្ព ៥០០ក្រាម',
+                    fr: 'Farine pour gaufres asiatiques 500g',
+                    zh: '东南亚华夫饼/格仔饼预拌粉 500g'
+                },
                 nameKhmer: 'ម្សៅពុម្ព ៥០០ក្រាម',
                 spec: '500g Bag / 20 Pcs (10kg/CTN)',
                 fobUsd: 1.10,
@@ -812,7 +1258,12 @@
             {
                 id: 30,
                 status: 'Upcoming',
-                nameEng: 'Steamed Rice Cake Flour 500g',
+                name: {
+                    en: 'Steamed Rice Cake Flour 500g',
+                    km: 'ម្សៅនំអាកោ ៥០០ក្រាម',
+                    fr: 'Farine pour gâteau de riz à la vapeur 500g',
+                    zh: '蒸米糕粉 (Nom Ako) 500g'
+                },
                 nameKhmer: 'ម្សៅនំអាកោ ៥០០ក្រាម',
                 spec: '500g Bag / 20 Pcs (10kg/CTN)',
                 fobUsd: 0.85,
@@ -866,9 +1317,12 @@
             const tbody = document.getElementById('product-table-body');
             tbody.innerHTML = '';
 
+            const t = translations[currentLang];
+
             productsData.forEach((p, idx) => {
                 const calc = calculateProductCosts(p, fx, oceanFreightUsd, localCartageAud, marginPercent);
                 const isUpcoming = p.status === 'Upcoming';
+                const displayName = p.name[currentLang] || p.name.en;
 
                 const tr = document.createElement('tr');
                 tr.className = `hover:bg-slate-50 transition ${isUpcoming ? 'bg-amber-50/40' : (idx % 2 === 0 ? 'bg-white' : 'bg-slate-50/50')}`;
@@ -879,7 +1333,7 @@
                     </td>
                     <td class="py-3 px-3 border-r border-slate-200">
                         <div class="flex items-center gap-1.5 mb-0.5">
-                            <span class="font-bold text-slate-900">${p.nameEng}</span>
+                            <span class="font-bold text-slate-900">${displayName}</span>
                             ${isUpcoming ? '<span class="bg-amber-500 text-white text-[9px] font-bold px-1.5 py-0.2 rounded">NOV 2026</span>' : ''}
                         </div>
                         <div class="text-slate-600 text-[11px] font-khmer mb-1">${p.nameKhmer}</div>
@@ -896,29 +1350,29 @@
                     </td>
                     <td class="py-3 px-3 border-r border-slate-200 bg-slate-50/80 font-mono">
                         <div class="flex justify-between items-center border-b border-slate-200 pb-1 mb-1">
-                            <span class="text-slate-700 font-bold text-xs uppercase">Landed Cost AUD:</span>
+                            <span class="text-slate-700 font-bold text-xs uppercase">${t.lbl_landed_cost_aud}</span>
                             <span class="text-slate-900 font-black text-sm">$${calc.landedCostAud.toFixed(2)}</span>
                         </div>
                         <div class="space-y-0.5 text-[10px] text-slate-600 border-b border-dashed border-slate-200 pb-1 mb-1">
                             <div class="flex justify-between">
-                                <span class="text-slate-500">FOB AUD:</span>
+                                <span class="text-slate-500">${t.lbl_fob_aud}</span>
                                 <span>$${calc.fobAud.toFixed(2)}</span>
                             </div>
                             <div class="flex justify-between">
-                                <span class="text-slate-500">Ocean Freight AUD:</span>
+                                <span class="text-slate-500">${t.lbl_ocean_aud}</span>
                                 <span>$${calc.freightAudPerPc.toFixed(3)}</span>
                             </div>
                             <div class="flex justify-between">
-                                <span class="text-slate-500">Customs & Port AUD:</span>
+                                <span class="text-slate-500">${t.lbl_customs_aud}</span>
                                 <span>$${calc.customsAudPerPc.toFixed(3)}</span>
                             </div>
                             <div class="flex justify-between">
-                                <span class="text-slate-500">Local Transport AUD:</span>
+                                <span class="text-slate-500">${t.lbl_local_aud}</span>
                                 <span>$${calc.cartageAudPerPc.toFixed(3)}</span>
                             </div>
                         </div>
                         <div class="flex justify-between items-center bg-gold-50 border border-gold-200 p-1 rounded">
-                            <span class="text-gold-800 font-bold text-[10px]">Selling Price @ ${marginPercent}%:</span>
+                            <span class="text-gold-800 font-bold text-[10px]">${t.lbl_selling_price} ${marginPercent}%:</span>
                             <span class="text-gold-700 font-bold text-xs">$${calc.sellingPriceAud.toFixed(2)}</span>
                         </div>
                     </td>
