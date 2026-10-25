@@ -5,7 +5,8 @@ JSON_FILE = "prices.json"
 
 def fetch_latest_competitor_data():
     """
-    Background job that queries live competitor prices and updates prices.json.
+    Background python script that updates prices.json with latest competitor benchmarks
+    including Costco Wholesale Australia.
     """
     data = {
         "lastUpdated": datetime.utcnow().isoformat() + "Z",
@@ -21,19 +22,8 @@ def fetch_latest_competitor_data():
                 "ausComps": [
                     { "brand": "McKenzie's Rice Flour", "weightG": 500, "priceAud": 3.50, "source": "Src: Coles Online AU (Melb)" },
                     { "brand": "Anchor Rice Flour", "weightG": 500, "priceAud": 3.40, "source": "Src: Woolworths Supermarkets VIC" },
-                    { "brand": "Has No Wheat Rice Flour", "weightG": 500, "priceAud": 2.99, "source": "Src: ALDI Australia" }
-                ]
-            },
-            "5": {
-                "asianComps": [
-                    { "brand": "Gogi Tempura Batter Mix", "weightG": 500, "priceAud": 2.80, "source": "Src: Minh Phat Market Richmond" },
-                    { "brand": "Showwa Tempura Flour", "weightG": 1000, "priceAud": 5.20, "source": "Src: Asia Grocery Online AU" },
-                    { "brand": "L3 Bajji / Bonda Batter Mix", "weightG": 500, "priceAud": 3.10, "source": "Src: DesiKart Indian Grocery" },
-                    { "brand": "Ceylon Crispy Fry Flour", "weightG": 1000, "priceAud": 5.50, "source": "Src: Lankan Groceries Melbourne" }
-                ],
-                "ausComps": [
-                    { "brand": "White Wings Tempura Batter", "weightG": 300, "priceAud": 3.50, "source": "Src: Coles Online AU (Melb)" },
-                    { "brand": "Knorr Crispy Tempura Mix", "weightG": 500, "priceAud": 4.80, "source": "Src: Woolworths Supermarkets VIC" }
+                    { "brand": "Has No Wheat Rice Flour", "weightG": 500, "priceAud": 2.99, "source": "Src: ALDI Australia" },
+                    { "brand": "Kirkland White Rice Flour Bulk", "weightG": 2000, "priceAud": 8.99, "source": "Src: Costco Wholesale AU" }
                 ]
             },
             "8": {
@@ -46,7 +36,8 @@ def fetch_latest_competitor_data():
                 "ausComps": [
                     { "brand": "Hoyts Whole Black Peppercorn", "weightG": 100, "priceAud": 6.20, "source": "Src: Woolworths Supermarkets VIC" },
                     { "brand": "MasterFoods Black Peppercorn", "weightG": 100, "priceAud": 7.10, "source": "Src: Coles Online AU (Melb)" },
-                    { "brand": "Stonemill Whole Peppercorns", "weightG": 100, "priceAud": 4.99, "source": "Src: ALDI Australia" }
+                    { "brand": "Stonemill Whole Peppercorns", "weightG": 100, "priceAud": 4.99, "source": "Src: ALDI Australia" },
+                    { "brand": "Kirkland Signature Black Peppercorn", "weightG": 357, "priceAud": 18.89, "source": "Src: Costco Wholesale AU" }
                 ]
             }
         }
