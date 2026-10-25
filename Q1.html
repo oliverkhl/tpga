@@ -97,279 +97,339 @@
         }
     </style>
 </head>
-<body class="min-h-screen pb-32">
+<body class="min-h-screen pb-32 relative">
 
-    <!-- Header Navigation Bar (Screen Only - Logo Removed) -->
-    <header class="bg-slate-900 text-white shadow-md no-print border-b-2 border-gold-500">
-        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center">
-            <div class="flex items-center space-x-3">
-                <div>
-                    <h1 class="text-lg font-bold text-white tracking-wide">TWO PARROTS GROUP AUSTRALIA</h1>
-                    <p class="text-xs text-gold-400">Import & Distribution Landed Cost Intelligence</p>
+    <!-- PASSWORD MODAL OVERLAY -->
+    <div id="password-modal" class="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/70 backdrop-blur-md p-4 transition-opacity duration-300 no-print">
+        <div class="bg-slate-900 border-2 border-gold-500 text-white rounded-2xl shadow-2xl p-6 sm:p-8 max-w-md w-full relative">
+            <div class="text-center mb-6">
+                <div class="w-14 h-14 bg-gold-500/10 rounded-full border border-gold-500/30 flex items-center justify-center mx-auto mb-3">
+                    <i class="fa-solid fa-lock text-gold-400 text-2xl"></i>
                 </div>
+                <h2 class="text-xl font-bold text-white tracking-wide">Restricted Access</h2>
+                <p class="text-xs text-slate-400 mt-1">Please enter the security password to view the Landed Cost Quotation & Analytics.</p>
             </div>
-            <div class="flex items-center space-x-3">
-                <button onclick="window.print()" class="px-4 py-2 bg-gold-500 hover:bg-gold-600 text-slate-900 font-semibold rounded-lg shadow transition flex items-center gap-2 text-sm">
-                    <i class="fa-solid fa-print"></i> Print A4 Quotation
-                </button>
-            </div>
-        </div>
-    </header>
-
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
-
-        <!-- 1. HEADER BOX -->
-        <div class="bg-slate-900 text-white rounded-xl shadow-lg p-6 mb-6 border-l-4 border-gold-500 relative overflow-hidden">
-            <div class="absolute top-0 right-0 transform translate-x-4 -translate-y-4 w-32 h-32 bg-gold-500 opacity-10 rounded-full blur-2xl"></div>
             
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
-                <!-- Company & Management -->
-                <div class="border-b md:border-b-0 md:border-r border-slate-700 pb-4 md:pb-0 md:pr-4">
-                    <div class="flex items-center space-x-2 text-gold-400 font-bold text-lg mb-1">
-                        <i class="fa-solid fa-building"></i>
-                        <span>Two Parrots Group Australia</span>
+            <form id="password-form" onsubmit="unlockPage(event)">
+                <div class="mb-5">
+                    <label class="block text-xs uppercase font-semibold text-gold-400 mb-1.5 tracking-wider">Enter Password</label>
+                    <div class="relative">
+                        <input type="password" id="password-input" placeholder="••••••••" autofocus class="w-full bg-slate-800 border border-slate-700 focus:border-gold-500 rounded-lg px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none transition">
+                        <button type="button" onclick="togglePasswordVisibility()" class="absolute right-3 top-2.5 text-slate-400 hover:text-gold-400 text-sm">
+                            <i id="eye-icon" class="fa-solid fa-eye"></i>
+                        </button>
                     </div>
-                    <p class="text-sm text-slate-300 mb-1"><span class="text-slate-400">Managing Director:</span> <strong class="text-white">Kim Heng Ly</strong></p>
-                    <p class="text-xs text-slate-400 flex items-start gap-1">
-                        <i class="fa-solid fa-location-dot mt-0.5 text-gold-500"></i>
-                        <span>1/57 Elonera Rd, Noble Park North VIC 3174, Australia</span>
+                    <p id="password-error" class="text-red-400 text-xs mt-2 hidden flex items-center gap-1">
+                        <i class="fa-solid fa-circle-exclamation"></i> Incorrect password. Please try again.
                     </p>
-                </div>
-
-                <!-- Contact & Web -->
-                <div class="border-b md:border-b-0 md:border-r border-slate-700 pb-4 md:pb-0 md:pr-4">
-                    <h3 class="text-xs uppercase font-semibold text-slate-400 tracking-wider mb-2">Contact & Web Portal</h3>
-                    <p class="text-xs text-slate-300 mb-1.5 flex items-center gap-2">
-                        <i class="fa-solid fa-globe text-gold-400 w-4"></i>
-                        <a href="https://twoparrotsgroup.com.au" target="_blank" class="hover:underline text-gold-400">twoparrotsgroup.com.au</a>
-                    </p>
-                    <p class="text-xs text-slate-300 mb-1.5 flex items-center gap-2">
-                        <i class="fa-solid fa-envelope text-gold-400 w-4"></i>
-                        <a href="mailto:info@twoparrotsgroup.com.au" class="hover:underline">info@twoparrotsgroup.com.au</a>
-                    </p>
-                    <p class="text-xs text-slate-300 flex items-center gap-2">
-                        <i class="fa-solid fa-phone text-gold-400 w-4"></i>
-                        <span>+61 (03) 9000 0000</span>
-                    </p>
-                </div>
-
-                <!-- Logistics & Port Specs -->
-                <div>
-                    <h3 class="text-xs uppercase font-semibold text-slate-400 tracking-wider mb-2">Import / Logistics Terminal</h3>
-                    <p class="text-xs text-slate-300 mb-1.5 flex items-center gap-2">
-                        <i class="fa-solid fa-ship text-gold-400 w-4"></i>
-                        <span><strong>Discharge Port:</strong> Melbourne Swanson Dock / DP World</span>
-                    </p>
-                    <p class="text-xs text-slate-300 mb-1.5 flex items-center gap-2">
-                        <i class="fa-solid fa-box text-gold-400 w-4"></i>
-                        <span><strong>Standard Unit:</strong> 20ft FCL Container</span>
-                    </p>
-                    <p class="text-xs text-slate-300 flex items-center gap-2">
-                        <i class="fa-solid fa-calendar-check text-gold-400 w-4"></i>
-                        <span><strong>Effective Date:</strong> October 2026</span>
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <!-- 2. SUMMARY CARDS -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-6">
-            <!-- Card 1: Customs Clearance Schedule -->
-            <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200 hover:shadow-md transition">
-                <div class="flex items-center justify-between mb-3 border-b border-slate-100 pb-2">
-                    <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
-                        <i class="fa-solid fa-file-invoice-dollar text-gold-600"></i> Customs Clearance Schedule
-                    </h3>
-                    <span class="bg-gold-100 text-gold-700 text-xs font-semibold px-2 py-0.5 rounded">Fixed Charges</span>
-                </div>
-                <ul class="text-xs text-slate-600 space-y-1.5">
-                    <li class="flex justify-between"><span>Customs Clearance Fee:</span> <strong class="text-slate-800">$185.00 + GST</strong></li>
-                    <li class="flex justify-between"><span>Quarantine Entry Fee:</span> <strong class="text-slate-800">$35.00 + GST</strong></li>
-                    <li class="flex justify-between"><span>Verification / IFIP Fee:</span> <strong class="text-slate-800">$35.00 + GST</strong></li>
-                    <li class="flex justify-between border-t border-dashed border-slate-200 pt-1">
-                        <span class="text-slate-500">Min. Quarantine Charge:</span> <strong class="text-slate-700">$42.00 AUD</strong>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- Card 2: Container Freight Baseline -->
-            <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200 hover:shadow-md transition">
-                <div class="flex items-center justify-between mb-3 border-b border-slate-100 pb-2">
-                    <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
-                        <i class="fa-solid fa-truck-ramp-box text-gold-600"></i> Freight Baseline (20ft FCL)
-                    </h3>
-                    <span class="bg-slate-100 text-slate-700 text-xs font-semibold px-2 py-0.5 rounded">Route Metrics</span>
-                </div>
-                <ul class="text-xs text-slate-600 space-y-1.5">
-                    <li class="flex justify-between"><span>Origin - Destination:</span> <strong class="text-slate-800">Sihanoukville → Melb</strong></li>
-                    <li class="flex justify-between"><span>Baseline Ocean Freight:</span> <strong class="text-gold-700 font-bold" id="card-ocean-freight">$1,650.00 USD</strong></li>
-                    <li class="flex justify-between"><span>VIC Local Cartage:</span> <strong class="text-slate-800" id="card-local-cartage">$750.00 AUD</strong></li>
-                    <li class="flex justify-between border-t border-dashed border-slate-200 pt-1">
-                        <span>Benchmark FX Rate:</span> <strong class="text-slate-700" id="card-fx-rate">0.6620 AUD/USD</strong>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- Card 3: Detailed Compliance & Requirements -->
-            <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200 hover:shadow-md transition">
-                <div class="flex items-center justify-between mb-2.5 border-b border-slate-100 pb-2">
-                    <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
-                        <i class="fa-solid fa-clipboard-check text-gold-600"></i> Compliance & Requirements
-                    </h3>
-                    <span class="bg-emerald-50 text-emerald-700 text-xs font-semibold px-2 py-0.5 rounded">Customs & Biosecurity</span>
                 </div>
                 
-                <div class="space-y-2.5 text-xs">
-                    <!-- Documents required from Supplier -->
-                    <div>
-                        <h4 class="font-bold text-slate-800 text-[11px] uppercase tracking-wider mb-1 text-gold-700 flex items-center gap-1">
-                            <i class="fa-solid fa-file-export text-gold-600"></i> Supplier Required Documents
-                        </h4>
-                        <ul class="grid grid-cols-2 gap-x-2 gap-y-0.5 text-[11px] text-slate-700">
-                            <li class="flex items-center gap-1"><i class="fa-solid fa-circle-check text-emerald-500 text-[9px]"></i> Bill of Lading</li>
-                            <li class="flex items-center gap-1"><i class="fa-solid fa-circle-check text-emerald-500 text-[9px]"></i> Commercial Invoice</li>
-                            <li class="flex items-center gap-1"><i class="fa-solid fa-circle-check text-emerald-500 text-[9px]"></i> Packing List</li>
-                            <li class="flex items-center gap-1"><i class="fa-solid fa-circle-check text-emerald-500 text-[9px]"></i> Packing Declaration</li>
-                            <li class="flex items-center gap-1"><i class="fa-solid fa-circle-check text-emerald-500 text-[9px]"></i> Manufacturer Declaration</li>
-                            <li class="flex items-center gap-1"><i class="fa-solid fa-circle-check text-emerald-500 text-[9px]"></i> FTA (Free Trade)</li>
-                            <li class="flex items-center gap-1"><i class="fa-solid fa-circle-check text-emerald-500 text-[9px]"></i> Phytosanitary Cert.</li>
-                            <li class="flex items-center gap-1"><i class="fa-solid fa-circle-check text-emerald-500 text-[9px]"></i> Fumigation Cert.</li>
-                        </ul>
-                    </div>
-
-                    <!-- Documents required from Importer -->
-                    <div class="border-t border-slate-100 pt-1.5">
-                        <h4 class="font-bold text-slate-800 text-[11px] uppercase tracking-wider mb-1 text-gold-700 flex items-center gap-1">
-                            <i class="fa-solid fa-file-import text-gold-600"></i> Importer Required Documents
-                        </h4>
-                        <ul class="grid grid-cols-2 gap-x-2 gap-y-0.5 text-[11px] text-slate-700">
-                            <li class="flex items-center gap-1"><i class="fa-solid fa-circle-check text-blue-500 text-[9px]"></i> LOA (Template Attached)</li>
-                            <li class="flex items-center gap-1"><i class="fa-solid fa-circle-check text-blue-500 text-[9px]"></i> Photo ID</li>
-                            <li class="flex items-center gap-1"><i class="fa-solid fa-circle-check text-blue-500 text-[9px]"></i> EMPP (Proof Payment)</li>
-                            <li class="flex items-center gap-1"><i class="fa-solid fa-circle-check text-blue-500 text-[9px]"></i> ASIC Document (ABN)</li>
-                            <li class="flex items-center gap-1 col-span-2"><i class="fa-solid fa-circle-check text-blue-500 text-[9px]"></i> ASIC Statement (Director Names)</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 3. MAIN PRODUCT QUOTATION TABLE -->
-        <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-200 mb-8">
-            <div class="bg-slate-900 px-6 py-4 flex flex-wrap justify-between items-center gap-4">
-                <div>
-                    <h2 class="text-base font-bold text-white tracking-wide uppercase">Landed Cost Quotation & Benchmark Schedule</h2>
-                    <p class="text-xs text-gold-400">Rearranged per Two Parrots Quotation (25 Active Products + 5 Upcoming Nov 2026 Launch)</p>
-                </div>
-                <div class="flex items-center space-x-2 text-xs">
-                    <span class="px-2.5 py-1 bg-slate-800 text-slate-300 rounded border border-slate-700">
-                        <i class="fa-solid fa-tag text-gold-400 mr-1"></i> Active: <strong>25</strong>
-                    </span>
-                    <span class="px-2.5 py-1 bg-gold-500/20 text-gold-400 rounded border border-gold-500/40">
-                        <i class="fa-solid fa-rocket mr-1"></i> Upcoming: <strong>5</strong>
-                    </span>
-                </div>
-            </div>
-
-            <div class="overflow-x-auto">
-                <table class="w-full text-left border-collapse">
-                    <thead>
-                        <tr class="bg-slate-800 text-slate-200 text-xs uppercase font-semibold tracking-wider border-b border-slate-700">
-                            <!-- Col 1: N° (3%) -->
-                            <th class="py-3 px-2 text-center w-[3%] border-r border-slate-700">N°</th>
-                            
-                            <!-- Col 2: Product Description (22%) -->
-                            <th class="py-3 px-3 w-[22%] border-r border-slate-700">Product Description</th>
-                            
-                            <!-- Col 3: Price Pcs Before Delivery (13%) -->
-                            <th class="py-3 px-3 w-[13%] border-r border-slate-700 text-right">
-                                Price Pcs Before Delivery
-                                <span class="block text-[10px] text-gold-400 normal-case font-normal">(FOB USD & AUD)</span>
-                            </th>
-                            
-                            <!-- Col 4: Total Cost of Each Pcs (25%) -->
-                            <th class="py-3 px-3 w-[25%] border-r border-slate-700 bg-slate-850">
-                                <div class="text-gold-400 font-bold">Total Cost of Each Pcs</div>
-                                <span class="block text-[9px] text-slate-400 normal-case font-normal leading-tight">
-                                    Itemized: Landed Cost | FOB | Ocean Freight | Port & Customs | Local Transp | Selling Price @ Margin
-                                </span>
-                            </th>
-                            
-                            <!-- Col 5: Asian Market Comparison Brand (18%) -->
-                            <th class="py-3 px-3 w-[18%] border-r border-slate-700">
-                                Asian Market Comparison
-                                <span class="block text-[10px] text-slate-400 normal-case font-normal">(Thai, Viet, Asian Benchmarks)</span>
-                            </th>
-                            
-                            <!-- Col 6: Australian Supermarket Price (19%) -->
-                            <th class="py-3 px-3 w-[19%]">
-                                Australian Supermarket Price
-                                <span class="block text-[10px] text-slate-400 normal-case font-normal">(Coles / Woolworths Benchmarks)</span>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody id="product-table-body" class="divide-y divide-slate-200 text-xs">
-                        <!-- JS renders 30 rearranged products here -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-    </div>
-
-    <!-- 4. FLOATING LANDED COST ENGINE TOOLBAR -->
-    <div class="fixed bottom-0 left-0 right-0 bg-slate-900 border-t-2 border-gold-500 shadow-2xl p-4 text-white z-50 no-print">
-        <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4">
-            <div class="flex items-center space-x-3">
-                <div class="p-2 bg-gold-500 text-slate-900 rounded-lg">
-                    <i class="fa-solid fa-calculator text-lg"></i>
-                </div>
-                <div>
-                    <h3 class="font-bold text-sm text-white">Live Landed Cost Recalculation Engine</h3>
-                    <p class="text-[11px] text-slate-400">Adjust freight variables & margin percentage to compute live costings</p>
-                </div>
-            </div>
-
-            <div class="flex flex-wrap items-center gap-4">
-                <!-- FX Rate -->
-                <div class="flex flex-col">
-                    <label class="text-[10px] text-gold-400 uppercase font-semibold mb-0.5">FX Rate (AUD/USD)</label>
-                    <input type="number" id="input-fx" value="0.6620" step="0.005" min="0.1" class="bg-slate-800 border border-slate-700 text-white rounded px-2.5 py-1 text-xs w-24 text-right focus:outline-none focus:border-gold-500">
-                </div>
-
-                <!-- 20ft Ocean Freight -->
-                <div class="flex flex-col">
-                    <label class="text-[10px] text-gold-400 uppercase font-semibold mb-0.5">20ft Freight (USD)</label>
-                    <input type="number" id="input-freight" value="1650" step="25" min="0" class="bg-slate-800 border border-slate-700 text-white rounded px-2.5 py-1 text-xs w-28 text-right focus:outline-none focus:border-gold-500">
-                </div>
-
-                <!-- Vic Cartage -->
-                <div class="flex flex-col">
-                    <label class="text-[10px] text-gold-400 uppercase font-semibold mb-0.5">VIC Cartage (AUD)</label>
-                    <input type="number" id="input-cartage" value="750" step="25" min="0" class="bg-slate-800 border border-slate-700 text-white rounded px-2.5 py-1 text-xs w-28 text-right focus:outline-none focus:border-gold-500">
-                </div>
-
-                <!-- Target Margin % -->
-                <div class="flex flex-col">
-                    <label class="text-[10px] text-gold-400 uppercase font-semibold mb-0.5">Target Margin (%)</label>
-                    <div class="relative">
-                        <input type="number" id="input-margin" value="50" step="1" min="0" max="95" class="bg-slate-800 border border-gold-500 text-gold-400 font-bold rounded px-2.5 py-1 text-xs w-24 text-right focus:outline-none pr-5">
-                        <span class="absolute right-2 top-1 text-xs text-gold-400">%</span>
-                    </div>
-                </div>
-
-                <button id="btn-recalculate" onclick="recalculateAll()" class="mt-3 sm:mt-0 px-4 py-2 gold-gradient hover:opacity-90 text-slate-900 font-bold rounded shadow transition text-xs flex items-center gap-1.5">
-                    <i class="fa-solid fa-arrows-rotate"></i> Recalculate
+                <button type="submit" class="w-full py-2.5 gold-gradient hover:opacity-90 text-slate-900 font-bold rounded-lg shadow transition text-sm flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-key"></i> Unlock Dashboard
                 </button>
-            </div>
+            </form>
         </div>
     </div>
 
-    <!-- PRODUCT DATA & CALCULATION ENGINE SCRIPT -->
+    <!-- MAIN PAGE WRAPPER WITH BLUR STATE ON LOAD -->
+    <div id="page-content" class="filter blur-xl pointer-events-none select-none transition-all duration-500">
+
+        <!-- Header Navigation Bar -->
+        <header class="bg-slate-900 text-white shadow-md no-print border-b-2 border-gold-500">
+            <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <div>
+                        <h1 class="text-lg font-bold text-white tracking-wide">TWO PARROTS GROUP AUSTRALIA</h1>
+                        <p class="text-xs text-gold-400">Import & Distribution Landed Cost Intelligence</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <button onclick="window.print()" class="px-4 py-2 bg-gold-500 hover:bg-gold-600 text-slate-900 font-semibold rounded-lg shadow transition flex items-center gap-2 text-sm">
+                        <i class="fa-solid fa-print"></i> Print A4 Quotation
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+
+            <!-- 1. HEADER BOX -->
+            <div class="bg-slate-900 text-white rounded-xl shadow-lg p-6 mb-6 border-l-4 border-gold-500 relative overflow-hidden">
+                <div class="absolute top-0 right-0 transform translate-x-4 -translate-y-4 w-32 h-32 bg-gold-500 opacity-10 rounded-full blur-2xl"></div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
+                    <!-- Company & Management -->
+                    <div class="border-b md:border-b-0 md:border-r border-slate-700 pb-4 md:pb-0 md:pr-4">
+                        <div class="flex items-center space-x-2 text-gold-400 font-bold text-lg mb-1">
+                            <i class="fa-solid fa-building"></i>
+                            <span>Two Parrots Group Australia</span>
+                        </div>
+                        <p class="text-sm text-slate-300 mb-1"><span class="text-slate-400">Managing Director:</span> <strong class="text-white">Kim Heng Ly</strong></p>
+                        <p class="text-xs text-slate-400 flex items-start gap-1">
+                            <i class="fa-solid fa-location-dot mt-0.5 text-gold-500"></i>
+                            <span>1/57 Elonera Rd, Noble Park North VIC 3174, Australia</span>
+                        </p>
+                    </div>
+
+                    <!-- Contact & Web -->
+                    <div class="border-b md:border-b-0 md:border-r border-slate-700 pb-4 md:pb-0 md:pr-4">
+                        <h3 class="text-xs uppercase font-semibold text-slate-400 tracking-wider mb-2">Contact & Web Portal</h3>
+                        <p class="text-xs text-slate-300 mb-1.5 flex items-center gap-2">
+                            <i class="fa-solid fa-globe text-gold-400 w-4"></i>
+                            <a href="https://twoparrotsgroup.com.au" target="_blank" class="hover:underline text-gold-400">twoparrotsgroup.com.au</a>
+                        </p>
+                        <p class="text-xs text-slate-300 mb-1.5 flex items-center gap-2">
+                            <i class="fa-solid fa-envelope text-gold-400 w-4"></i>
+                            <a href="mailto:info@twoparrotsgroup.com.au" class="hover:underline">info@twoparrotsgroup.com.au</a>
+                        </p>
+                        <p class="text-xs text-slate-300 flex items-center gap-2">
+                            <i class="fa-solid fa-phone text-gold-400 w-4"></i>
+                            <span>+61 (03) 9000 0000</span>
+                        </p>
+                    </div>
+
+                    <!-- Logistics & Port Specs -->
+                    <div>
+                        <h3 class="text-xs uppercase font-semibold text-slate-400 tracking-wider mb-2">Import / Logistics Terminal</h3>
+                        <p class="text-xs text-slate-300 mb-1.5 flex items-center gap-2">
+                            <i class="fa-solid fa-ship text-gold-400 w-4"></i>
+                            <span><strong>Discharge Port:</strong> Melbourne Swanson Dock / DP World</span>
+                        </p>
+                        <p class="text-xs text-slate-300 mb-1.5 flex items-center gap-2">
+                            <i class="fa-solid fa-box text-gold-400 w-4"></i>
+                            <span><strong>Standard Unit:</strong> 20ft FCL Container</span>
+                        </p>
+                        <p class="text-xs text-slate-300 flex items-center gap-2">
+                            <i class="fa-solid fa-calendar-check text-gold-400 w-4"></i>
+                            <span><strong>Effective Date:</strong> October 2026</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. SUMMARY CARDS -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-6">
+                <!-- Card 1: Customs Clearance Schedule -->
+                <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200 hover:shadow-md transition">
+                    <div class="flex items-center justify-between mb-3 border-b border-slate-100 pb-2">
+                        <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                            <i class="fa-solid fa-file-invoice-dollar text-gold-600"></i> Customs Clearance Schedule
+                        </h3>
+                        <span class="bg-gold-100 text-gold-700 text-xs font-semibold px-2 py-0.5 rounded">Fixed Charges</span>
+                    </div>
+                    <ul class="text-xs text-slate-600 space-y-1.5">
+                        <li class="flex justify-between"><span>Customs Clearance Fee:</span> <strong class="text-slate-800">$185.00 + GST</strong></li>
+                        <li class="flex justify-between"><span>Quarantine Entry Fee:</span> <strong class="text-slate-800">$35.00 + GST</strong></li>
+                        <li class="flex justify-between"><span>Verification / IFIP Fee:</span> <strong class="text-slate-800">$35.00 + GST</strong></li>
+                        <li class="flex justify-between border-t border-dashed border-slate-200 pt-1">
+                            <span class="text-slate-500">Min. Quarantine Charge:</span> <strong class="text-slate-700">$42.00 AUD</strong>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Card 2: Container Freight Baseline -->
+                <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200 hover:shadow-md transition">
+                    <div class="flex items-center justify-between mb-3 border-b border-slate-100 pb-2">
+                        <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                            <i class="fa-solid fa-truck-ramp-box text-gold-600"></i> Freight Baseline (20ft FCL)
+                        </h3>
+                        <span class="bg-slate-100 text-slate-700 text-xs font-semibold px-2 py-0.5 rounded">Route Metrics</span>
+                    </div>
+                    <ul class="text-xs text-slate-600 space-y-1.5">
+                        <li class="flex justify-between"><span>Origin - Destination:</span> <strong class="text-slate-800">Sihanoukville → Melb</strong></li>
+                        <li class="flex justify-between"><span>Baseline Ocean Freight:</span> <strong class="text-gold-700 font-bold" id="card-ocean-freight">$1,650.00 USD</strong></li>
+                        <li class="flex justify-between"><span>VIC Local Cartage:</span> <strong class="text-slate-800" id="card-local-cartage">$750.00 AUD</strong></li>
+                        <li class="flex justify-between border-t border-dashed border-slate-200 pt-1">
+                            <span>Benchmark FX Rate:</span> <strong class="text-slate-700" id="card-fx-rate">0.6620 AUD/USD</strong>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Card 3: Detailed Compliance & Requirements -->
+                <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200 hover:shadow-md transition">
+                    <div class="flex items-center justify-between mb-2.5 border-b border-slate-100 pb-2">
+                        <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                            <i class="fa-solid fa-clipboard-check text-gold-600"></i> Compliance & Requirements
+                        </h3>
+                        <span class="bg-emerald-50 text-emerald-700 text-xs font-semibold px-2 py-0.5 rounded">Customs & Biosecurity</span>
+                    </div>
+                    
+                    <div class="space-y-2.5 text-xs">
+                        <!-- Documents required from Supplier -->
+                        <div>
+                            <h4 class="font-bold text-slate-800 text-[11px] uppercase tracking-wider mb-1 text-gold-700 flex items-center gap-1">
+                                <i class="fa-solid fa-file-export text-gold-600"></i> Supplier Required Documents
+                            </h4>
+                            <ul class="grid grid-cols-2 gap-x-2 gap-y-0.5 text-[11px] text-slate-700">
+                                <li class="flex items-center gap-1"><i class="fa-solid fa-circle-check text-emerald-500 text-[9px]"></i> Bill of Lading</li>
+                                <li class="flex items-center gap-1"><i class="fa-solid fa-circle-check text-emerald-500 text-[9px]"></i> Commercial Invoice</li>
+                                <li class="flex items-center gap-1"><i class="fa-solid fa-circle-check text-emerald-500 text-[9px]"></i> Packing List</li>
+                                <li class="flex items-center gap-1"><i class="fa-solid fa-circle-check text-emerald-500 text-[9px]"></i> Packing Declaration</li>
+                                <li class="flex items-center gap-1"><i class="fa-solid fa-circle-check text-emerald-500 text-[9px]"></i> Manufacturer Declaration</li>
+                                <li class="flex items-center gap-1"><i class="fa-solid fa-circle-check text-emerald-500 text-[9px]"></i> FTA (Free Trade)</li>
+                                <li class="flex items-center gap-1"><i class="fa-solid fa-circle-check text-emerald-500 text-[9px]"></i> Phytosanitary Cert.</li>
+                                <li class="flex items-center gap-1"><i class="fa-solid fa-circle-check text-emerald-500 text-[9px]"></i> Fumigation Cert.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Documents required from Importer -->
+                        <div class="border-t border-slate-100 pt-1.5">
+                            <h4 class="font-bold text-slate-800 text-[11px] uppercase tracking-wider mb-1 text-gold-700 flex items-center gap-1">
+                                <i class="fa-solid fa-file-import text-gold-600"></i> Importer Required Documents
+                            </h4>
+                            <ul class="grid grid-cols-2 gap-x-2 gap-y-0.5 text-[11px] text-slate-700">
+                                <li class="flex items-center gap-1"><i class="fa-solid fa-circle-check text-blue-500 text-[9px]"></i> LOA (Template Attached)</li>
+                                <li class="flex items-center gap-1"><i class="fa-solid fa-circle-check text-blue-500 text-[9px]"></i> Photo ID</li>
+                                <li class="flex items-center gap-1"><i class="fa-solid fa-circle-check text-blue-500 text-[9px]"></i> EMPP (Proof Payment)</li>
+                                <li class="flex items-center gap-1"><i class="fa-solid fa-circle-check text-blue-500 text-[9px]"></i> ASIC Document (ABN)</li>
+                                <li class="flex items-center gap-1 col-span-2"><i class="fa-solid fa-circle-check text-blue-500 text-[9px]"></i> ASIC Statement (Director Names)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. MAIN PRODUCT QUOTATION TABLE -->
+            <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-200 mb-8">
+                <div class="bg-slate-900 px-6 py-4 flex flex-wrap justify-between items-center gap-4">
+                    <div>
+                        <h2 class="text-base font-bold text-white tracking-wide uppercase">Landed Cost Quotation & Benchmark Schedule</h2>
+                        <p class="text-xs text-gold-400">Rearranged per Two Parrots Quotation (25 Active Products + 5 Upcoming Nov 2026 Launch)</p>
+                    </div>
+                    <div class="flex items-center space-x-2 text-xs">
+                        <span class="px-2.5 py-1 bg-slate-800 text-slate-300 rounded border border-slate-700">
+                            <i class="fa-solid fa-tag text-gold-400 mr-1"></i> Active: <strong>25</strong>
+                        </span>
+                        <span class="px-2.5 py-1 bg-gold-500/20 text-gold-400 rounded border border-gold-500/40">
+                            <i class="fa-solid fa-rocket mr-1"></i> Upcoming: <strong>5</strong>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-slate-800 text-slate-200 text-xs uppercase font-semibold tracking-wider border-b border-slate-700">
+                                <th class="py-3 px-2 text-center w-[3%] border-r border-slate-700">N°</th>
+                                <th class="py-3 px-3 w-[22%] border-r border-slate-700">Product Description</th>
+                                <th class="py-3 px-3 w-[13%] border-r border-slate-700 text-right">
+                                    Price Pcs Before Delivery
+                                    <span class="block text-[10px] text-gold-400 normal-case font-normal">(FOB USD & AUD)</span>
+                                </th>
+                                <th class="py-3 px-3 w-[25%] border-r border-slate-700 bg-slate-850">
+                                    <div class="text-gold-400 font-bold">Total Cost of Each Pcs</div>
+                                    <span class="block text-[9px] text-slate-400 normal-case font-normal leading-tight">
+                                        Itemized: Landed Cost | FOB | Ocean Freight | Port & Customs | Local Transp | Selling Price @ Margin
+                                    </span>
+                                </th>
+                                <th class="py-3 px-3 w-[18%] border-r border-slate-700">
+                                    Asian Market Comparison
+                                    <span class="block text-[10px] text-slate-400 normal-case font-normal">(Thai, Viet, Asian Benchmarks)</span>
+                                </th>
+                                <th class="py-3 px-3 w-[19%]">
+                                    Australian Supermarket Price
+                                    <span class="block text-[10px] text-slate-400 normal-case font-normal">(Coles / Woolworths Benchmarks)</span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="product-table-body" class="divide-y divide-slate-200 text-xs">
+                            <!-- JS renders 30 products here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- 4. FLOATING LANDED COST ENGINE TOOLBAR -->
+        <div class="fixed bottom-0 left-0 right-0 bg-slate-900 border-t-2 border-gold-500 shadow-2xl p-4 text-white z-50 no-print">
+            <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4">
+                <div class="flex items-center space-x-3">
+                    <div class="p-2 bg-gold-500 text-slate-900 rounded-lg">
+                        <i class="fa-solid fa-calculator text-lg"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-sm text-white">Live Landed Cost Recalculation Engine</h3>
+                        <p class="text-[11px] text-slate-400">Adjust freight variables & margin percentage to compute live costings</p>
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap items-center gap-4">
+                    <!-- FX Rate -->
+                    <div class="flex flex-col">
+                        <label class="text-[10px] text-gold-400 uppercase font-semibold mb-0.5">FX Rate (AUD/USD)</label>
+                        <input type="number" id="input-fx" value="0.6620" step="0.005" min="0.1" class="bg-slate-800 border border-slate-700 text-white rounded px-2.5 py-1 text-xs w-24 text-right focus:outline-none focus:border-gold-500">
+                    </div>
+
+                    <!-- 20ft Ocean Freight -->
+                    <div class="flex flex-col">
+                        <label class="text-[10px] text-gold-400 uppercase font-semibold mb-0.5">20ft Freight (USD)</label>
+                        <input type="number" id="input-freight" value="1650" step="25" min="0" class="bg-slate-800 border border-slate-700 text-white rounded px-2.5 py-1 text-xs w-28 text-right focus:outline-none focus:border-gold-500">
+                    </div>
+
+                    <!-- Vic Cartage -->
+                    <div class="flex flex-col">
+                        <label class="text-[10px] text-gold-400 uppercase font-semibold mb-0.5">VIC Cartage (AUD)</label>
+                        <input type="number" id="input-cartage" value="750" step="25" min="0" class="bg-slate-800 border border-slate-700 text-white rounded px-2.5 py-1 text-xs w-28 text-right focus:outline-none focus:border-gold-500">
+                    </div>
+
+                    <!-- Target Margin % -->
+                    <div class="flex flex-col">
+                        <label class="text-[10px] text-gold-400 uppercase font-semibold mb-0.5">Target Margin (%)</label>
+                        <div class="relative">
+                            <input type="number" id="input-margin" value="50" step="1" min="0" max="95" class="bg-slate-800 border border-gold-500 text-gold-400 font-bold rounded px-2.5 py-1 text-xs w-24 text-right focus:outline-none pr-5">
+                            <span class="absolute right-2 top-1 text-xs text-gold-400">%</span>
+                        </div>
+                    </div>
+
+                    <button id="btn-recalculate" onclick="recalculateAll()" class="mt-3 sm:mt-0 px-4 py-2 gold-gradient hover:opacity-90 text-slate-900 font-bold rounded shadow transition text-xs flex items-center gap-1.5">
+                        <i class="fa-solid fa-arrows-rotate"></i> Recalculate
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- SCRIPT FOR PASSWORD PROTECTION & CALCULATION ENGINE -->
     <script>
-        // 30 Rearranged Products Exactly Matching Two Parrots Quotation Schedule
+        // --- PASSWORD PROTECTION LOGIC ---
+        function unlockPage(e) {
+            if (e) e.preventDefault();
+            const inputVal = document.getElementById('password-input').value;
+            const errorMsg = document.getElementById('password-error');
+            const modal = document.getElementById('password-modal');
+            const content = document.getElementById('page-content');
+
+            if (inputVal === 'twoparrots') {
+                modal.classList.add('opacity-0', 'pointer-events-none');
+                setTimeout(() => {
+                    modal.style.display = 'none';
+                }, 300);
+                content.classList.remove('blur-xl', 'pointer-events-none', 'select-none');
+            } else {
+                errorMsg.classList.remove('hidden');
+                document.getElementById('password-input').classList.add('border-red-500');
+            }
+        }
+
+        function togglePasswordVisibility() {
+            const input = document.getElementById('password-input');
+            const icon = document.getElementById('eye-icon');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+
+        // --- 30 PRODUCT DATASET ---
         const productsData = [
-            // --- 25 ACTIVE PRODUCTS (REARRANGED ACCORDING TO QUOTATION PDF) ---
+            // --- 25 ACTIVE PRODUCTS ---
             {
                 id: 1,
                 status: 'Active',
@@ -696,7 +756,7 @@
                 ausSource: 'Src: Coles Online AU (Melb)'
             },
 
-            // --- 5 UPCOMING PRODUCTS (NOV 2026 LAUNCH FROM QUOTATION REMARKS) ---
+            // --- 5 UPCOMING PRODUCTS (NOV 2026 LAUNCH) ---
             {
                 id: 26,
                 status: 'Upcoming',
@@ -773,23 +833,12 @@
 
         // Calculation Function
         function calculateProductCosts(product, fx, oceanFreightUsd, localCartageAud, marginPercent) {
-            // 1. FOB AUD
             const fobAud = product.fobUsd / fx;
-
-            // 2. Freight AUD per pc
             const oceanFreightAudTotal = oceanFreightUsd / fx;
             const freightAudPerPc = oceanFreightAudTotal / product.pcsPer20ft;
-
-            // 3. Port & Customs AUD per pc
             const customsAudPerPc = TOTAL_FIXED_CUSTOMS_AUD / product.pcsPer20ft;
-
-            // 4. Local Transport AUD per pc
             const cartageAudPerPc = localCartageAud / product.pcsPer20ft;
-
-            // 5. Total Landed Cost AUD
             const landedCostAud = fobAud + freightAudPerPc + customsAudPerPc + cartageAudPerPc;
-
-            // 6. Selling Price at Margin % = Landed Cost / (1 - Margin%)
             const marginDecimal = marginPercent / 100;
             const sellingPriceAud = marginDecimal < 1 ? landedCostAud / (1 - marginDecimal) : landedCostAud;
 
@@ -810,7 +859,6 @@
             const localCartageAud = parseFloat(document.getElementById('input-cartage').value) || 750;
             const marginPercent = parseFloat(document.getElementById('input-margin').value) || 50;
 
-            // Update Summary Card Indicators
             document.getElementById('card-fx-rate').innerText = fx.toFixed(4) + ' AUD/USD';
             document.getElementById('card-ocean-freight').innerText = '$' + oceanFreightUsd.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' USD';
             document.getElementById('card-local-cartage').innerText = '$' + localCartageAud.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' AUD';
@@ -826,12 +874,9 @@
                 tr.className = `hover:bg-slate-50 transition ${isUpcoming ? 'bg-amber-50/40' : (idx % 2 === 0 ? 'bg-white' : 'bg-slate-50/50')}`;
 
                 tr.innerHTML = `
-                    <!-- Col 1: N° -->
                     <td class="py-3 px-2 text-center font-bold text-slate-500 border-r border-slate-200">
                         ${p.id}
                     </td>
-
-                    <!-- Col 2: Product Description -->
                     <td class="py-3 px-3 border-r border-slate-200">
                         <div class="flex items-center gap-1.5 mb-0.5">
                             <span class="font-bold text-slate-900">${p.nameEng}</span>
@@ -845,14 +890,10 @@
                             <span class="text-slate-400">(${p.pcsPer20ft.toLocaleString()} pcs/20ft)</span>
                         </div>
                     </td>
-
-                    <!-- Col 3: Price Pcs Before Delivery (FOB) -->
                     <td class="py-3 px-3 border-r border-slate-200 text-right font-mono">
                         <div class="font-bold text-slate-900 text-sm">$${p.fobUsd.toFixed(2)} USD</div>
                         <div class="text-slate-500 text-[11px]">$${calc.fobAud.toFixed(2)} AUD</div>
                     </td>
-
-                    <!-- Col 4: Total Cost of Each Pcs (Itemized Breakdown) -->
                     <td class="py-3 px-3 border-r border-slate-200 bg-slate-50/80 font-mono">
                         <div class="flex justify-between items-center border-b border-slate-200 pb-1 mb-1">
                             <span class="text-slate-700 font-bold text-xs uppercase">Landed Cost AUD:</span>
@@ -881,8 +922,6 @@
                             <span class="text-gold-700 font-bold text-xs">$${calc.sellingPriceAud.toFixed(2)}</span>
                         </div>
                     </td>
-
-                    <!-- Col 5: Asian Market Comparison Brand -->
                     <td class="py-3 px-3 border-r border-slate-200">
                         <div class="text-slate-800 font-medium text-xs mb-1">${p.asianComp}</div>
                         <div>
@@ -891,8 +930,6 @@
                             </span>
                         </div>
                     </td>
-
-                    <!-- Col 6: Australian Supermarket Price -->
                     <td class="py-3 px-3">
                         <div class="text-slate-800 font-medium text-xs mb-1">${p.ausComp}</div>
                         <div>
@@ -911,13 +948,12 @@
             renderTable();
         }
 
-        // Auto recalculate on keyup/change for real-time interactivity
+        // Live Event Listeners
         document.getElementById('input-fx').addEventListener('input', renderTable);
         document.getElementById('input-freight').addEventListener('input', renderTable);
         document.getElementById('input-cartage').addEventListener('input', renderTable);
         document.getElementById('input-margin').addEventListener('input', renderTable);
 
-        // Initial render on page load
         window.onload = function() {
             renderTable();
         };
