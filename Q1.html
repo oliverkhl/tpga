@@ -150,12 +150,12 @@
                 </div>
 
                 <div class="flex items-center space-x-3">
-                    <!-- LANGUAGE SELECTOR BUTTONS -->
+                    <!-- LANGUAGE SELECTOR BUTTONS (MINI FLAGS ONLY) -->
                     <div class="flex items-center bg-slate-800 p-1 rounded-lg border border-slate-700 space-x-1">
-                        <button onclick="setLanguage('en')" id="lang-btn-en" class="px-2.5 py-1 text-xs rounded font-bold transition bg-gold-500 text-slate-900">EN</button>
-                        <button onclick="setLanguage('km')" id="lang-btn-km" class="px-2.5 py-1 text-xs rounded font-bold transition text-slate-300 hover:text-white">KM</button>
-                        <button onclick="setLanguage('fr')" id="lang-btn-fr" class="px-2.5 py-1 text-xs rounded font-bold transition text-slate-300 hover:text-white">FR</button>
-                        <button onclick="setLanguage('zh')" id="lang-btn-zh" class="px-2.5 py-1 text-xs rounded font-bold transition text-slate-300 hover:text-white">ZH</button>
+                        <button onclick="setLanguage('en')" id="lang-btn-en" title="English" class="px-2.5 py-1 text-base rounded transition bg-gold-500/20 border border-gold-500">🇬🇧</button>
+                        <button onclick="setLanguage('km')" id="lang-btn-km" title="Khmer" class="px-2.5 py-1 text-base rounded transition opacity-60 hover:opacity-100">🇰🇭</button>
+                        <button onclick="setLanguage('fr')" id="lang-btn-fr" title="French" class="px-2.5 py-1 text-base rounded transition opacity-60 hover:opacity-100">🇫🇷</button>
+                        <button onclick="setLanguage('zh')" id="lang-btn-zh" title="Chinese" class="px-2.5 py-1 text-base rounded transition opacity-60 hover:opacity-100">🇨🇳</button>
                     </div>
 
                     <!-- Print Button -->
@@ -199,7 +199,7 @@
                         </p>
                         <p class="text-xs text-slate-300 flex items-center gap-2">
                             <i class="fa-solid fa-phone text-gold-400 w-4"></i>
-                            <span>+61 (04) 468 829 988</span>
+                            <span>+61 (03) 9000 0000</span>
                         </p>
                     </div>
 
@@ -326,30 +326,30 @@
                         <thead>
                             <tr class="bg-slate-800 text-slate-200 text-xs uppercase font-semibold tracking-wider border-b-2 border-slate-900">
                                 <th class="py-3 px-2 text-center w-[3%] border-r-2 border-slate-700">N°</th>
-                                <th data-i18n="th_prod_desc" class="py-3 px-3 w-[22%] border-r-2 border-slate-700">Product Description</th>
+                                <th data-i18n="th_prod_desc" class="py-3 px-3 w-[20%] border-r-2 border-slate-700">Product Description</th>
                                 <!-- INTERACTIVE FOB CTN USD PRICE COLUMN HEADER -->
-                                <th class="py-3 px-3 w-[16%] border-r-2 border-slate-700 text-right">
+                                <th class="py-3 px-3 w-[15%] border-r-2 border-slate-700 text-right">
                                     <span data-i18n="th_fob_price">CTN Price Before Delivery</span>
                                     <span class="block text-[10px] text-gold-400 normal-case font-normal">(Adjustable CTN USD → Auto PCS USD/AUD)</span>
                                 </th>
-                                <th class="py-3 px-3 w-[24%] border-r-2 border-slate-700 bg-slate-850">
+                                <th class="py-3 px-3 w-[22%] border-r-2 border-slate-700 bg-slate-850">
                                     <div data-i18n="th_total_cost" class="text-gold-400 font-bold">Total Cost of Each Pcs</div>
                                     <span data-i18n="th_itemized_note" class="block text-[9px] text-slate-400 normal-case font-normal leading-tight">
                                         Itemized: Landed Cost | FOB | Ocean Freight | Port & Customs | Local Transp | Selling Price @ Margin
                                     </span>
                                 </th>
-                                <th class="py-3 px-3 w-[17%] border-r-2 border-slate-700">
-                                    <span data-i18n="th_asian_bench">Asian Market Comparison</span>
-                                    <span class="block text-[10px] text-slate-400 normal-case font-normal">(Thai, Viet, Asian Benchmarks)</span>
+                                <th class="py-3 px-3 w-[20%] border-r-2 border-slate-700">
+                                    <span data-i18n="th_asian_bench">Asian Market Comparisons</span>
+                                    <span class="block text-[10px] text-slate-400 normal-case font-normal">(Normalized Weight Equivalent Price)</span>
                                 </th>
-                                <th class="py-3 px-3 w-[18%]">
-                                    <span data-i18n="th_aus_bench">Australian Supermarket Price</span>
-                                    <span class="block text-[10px] text-slate-400 normal-case font-normal">(Coles / Woolworths Benchmarks)</span>
+                                <th class="py-3 px-3 w-[20%]">
+                                    <span data-i18n="th_aus_bench">Australian Supermarket Prices</span>
+                                    <span class="block text-[10px] text-slate-400 normal-case font-normal">(Normalized Weight Equivalent Price)</span>
                                 </th>
                             </tr>
                         </thead>
                         <tbody id="product-table-body" class="text-xs">
-                            <!-- JS renders 30 products here with bold row borders -->
+                            <!-- JS renders 30 products here with weight-normalized price badges -->
                         </tbody>
                     </table>
                 </div>
@@ -463,8 +463,8 @@
                 th_fob_price: "CTN Price Before Delivery",
                 th_total_cost: "Total Cost of Each Pcs",
                 th_itemized_note: "Itemized: Landed Cost | FOB | Ocean Freight | Port & Customs | Local Transp | Selling Price @ Margin",
-                th_asian_bench: "Asian Market Comparison",
-                th_aus_bench: "Australian Supermarket Price",
+                th_asian_bench: "Asian Market Comparisons",
+                th_aus_bench: "Australian Supermarket Prices",
                 tb_title: "Live Landed Cost Recalculation Engine",
                 tb_desc: "Adjust freight variables & margin percentage to compute live costings",
                 lbl_fx: "FX Rate (AUD/USD)",
@@ -596,7 +596,7 @@
                 th_fob_price: "Prix par Carton avant livraison",
                 th_total_cost: "Coût total de chaque pièce",
                 th_itemized_note: "Détaillé: Coût rendu | FOB | Fret maritime | Port & Douane | Transp. local | Prix de vente @ Marge",
-                th_asian_bench: "Comparaison du marché asiatique",
+                th_asian_bench: "Comparaisons du marché asiatique",
                 th_aus_bench: "Prix des supermarchés australiens",
                 tb_title: "Calculateur de coût rendu en direct",
                 tb_desc: "Ajustez les variables de fret et le pourcentage de marge pour calculer les coûts en direct",
@@ -683,13 +683,13 @@
         function setLanguage(lang) {
             currentLang = lang;
             
-            // Update active button styles
+            // Update active mini flag button styles
             ['en', 'km', 'fr', 'zh'].forEach(l => {
                 const btn = document.getElementById(`lang-btn-${l}`);
                 if (l === lang) {
-                    btn.className = "px-2.5 py-1 text-xs rounded font-bold transition bg-gold-500 text-slate-900 shadow";
+                    btn.className = "px-2.5 py-1 text-base rounded transition bg-gold-500/20 border border-gold-500 shadow";
                 } else {
-                    btn.className = "px-2.5 py-1 text-xs rounded font-bold transition text-slate-300 hover:text-white";
+                    btn.className = "px-2.5 py-1 text-base rounded transition opacity-60 hover:opacity-100";
                 }
             });
 
@@ -741,555 +741,554 @@
 
         // --- Helper function to extract PCS per CTN from spec string ---
         function getPcsPerCtn(specStr) {
-            // Match pattern like "20 Pcs", "12 Cans", "10 Bags", "60 Pcs", "24 Pcs"
             const match = specStr.match(/(\d+)\s*(Pcs|Cans|Bags)/i);
             return match ? parseInt(match[1], 10) : 1;
         }
 
-        // --- 30 PRODUCT DATASET WITH DYNAMIC CTN & PCS CALCULATIONS ---
+        // --- 30 PRODUCT DATASET WITH WEIGHT SPECIFICATIONS & COMPETITOR PROPORTIONAL PRICES ---
         const productsData = [
             // --- 25 ACTIVE PRODUCTS ---
             {
                 id: 1,
                 status: 'Active',
-                name: {
-                    en: 'Finest Rice Flour 500g',
-                    km: 'ម្សៅអង្ករខ្សាយ ៥០០ក្រាម',
-                    fr: 'Farine de riz fine 500g',
-                    zh: '优质大米粉 500g'
-                },
+                weightG: 500,
+                name: { en: 'Finest Rice Flour 500g', km: 'ម្សៅអង្ករខ្សាយ ៥០០ក្រាម', fr: 'Farine de riz fine 500g', zh: '优质大米粉 500g' },
                 nameKhmer: 'ម្សៅអង្ករខ្សាយ ៥០០ក្រាម',
                 spec: '500g Bag / 20 Pcs (10kg/CTN)',
                 fobUsd: 0.36,
                 pcsPer20ft: 20000,
-                asianComp: 'Erawan Rice Flour 500g ($2.20 - $4.40/kg)',
-                asianSource: 'Src: KFL Asian Grocery Springvale',
-                ausComp: 'McKenzie\'s Rice Flour 500g ($3.50 - $7.00/kg)',
-                ausSource: 'Src: Coles Online AU (Melb)'
+                asianComps: [
+                    { brand: 'Erawan Rice Flour', weightG: 500, priceAud: 2.20, source: 'Src: KFL Asian Grocery Springvale' },
+                    { brand: 'Cock Brand Rice Flour', weightG: 500, priceAud: 2.10, source: 'Src: Minh Phat Market Richmond' }
+                ],
+                ausComps: [
+                    { brand: 'McKenzie\'s Rice Flour', weightG: 500, priceAud: 3.50, source: 'Src: Coles Online AU (Melb)' },
+                    { brand: 'Anchor Rice Flour', weightG: 500, priceAud: 3.40, source: 'Src: Woolworths Supermarkets VIC' }
+                ]
             },
             {
                 id: 2,
                 status: 'Active',
-                name: {
-                    en: 'Glutinous Rice Flour 500g',
-                    km: 'ម្សៅអង្ករដំណើប ៥០០ក្រាម',
-                    fr: 'Farine de riz glutineux 500g',
-                    zh: '水磨糯米粉 500g'
-                },
+                weightG: 500,
+                name: { en: 'Glutinous Rice Flour 500g', km: 'ម្សៅអង្ករដំណើប ៥០០ក្រាម', fr: 'Farine de riz glutineux 500g', zh: '水磨糯米粉 500g' },
                 nameKhmer: 'ម្សៅអង្ករដំណើប ៥០០ក្រាម',
                 spec: '500g Bag / 20 Pcs (10kg/CTN)',
                 fobUsd: 0.58,
                 pcsPer20ft: 20000,
-                asianComp: 'Erawan Glutinous Rice Flour 500g ($2.50 - $5.00/kg)',
-                asianSource: 'Src: Minh Phat Market Richmond',
-                ausComp: 'Cock Brand Glutinous Flour 500g ($3.20 - $6.40/kg)',
-                ausSource: 'Src: Woolworths Supermarkets VIC'
+                asianComps: [
+                    { brand: 'Erawan Glutinous Flour', weightG: 500, priceAud: 2.50, source: 'Src: Minh Phat Market Richmond' },
+                    { brand: 'Three Rings Glutinous', weightG: 500, priceAud: 2.40, source: 'Src: Asia Grocery Online AU' }
+                ],
+                ausComps: [
+                    { brand: 'Cock Brand Glutinous', weightG: 500, priceAud: 3.20, source: 'Src: Woolworths Supermarkets VIC' },
+                    { brand: 'McKenzie\'s Glutinous', weightG: 500, priceAud: 3.60, source: 'Src: Coles Online AU (Melb)' }
+                ]
             },
             {
                 id: 3,
                 status: 'Active',
-                name: {
-                    en: 'Tapioca Flour 500g',
-                    km: 'ម្សៅឆា ៥០០ក្រាម',
-                    fr: 'Farine de tapioca 500g',
-                    zh: '木薯淀粉 / 生粉 500g'
-                },
+                weightG: 500,
+                name: { en: 'Tapioca Flour 500g', km: 'ម្សៅឆា ៥០០ក្រាម', fr: 'Farine de tapioca 500g', zh: '木薯淀粉 / 生粉 500g' },
                 nameKhmer: 'ម្សៅឆា ៥០០ក្រាម',
                 spec: '500g Bag / 20 Pcs (10kg/CTN)',
                 fobUsd: 0.44,
                 pcsPer20ft: 20000,
-                asianComp: 'Cock Brand Tapioca Starch 500g ($2.10 - $4.20/kg)',
-                asianSource: 'Src: Asia Grocery Online AU',
-                ausComp: 'McKenzie\'s Tapioca Flour 375g ($2.80 - $7.46/kg)',
-                ausSource: 'Src: Coles Online AU (Melb)'
+                asianComps: [
+                    { brand: 'Cock Brand Tapioca Starch', weightG: 500, priceAud: 2.10, source: 'Src: Asia Grocery Online AU' },
+                    { brand: 'Panda Tapioca Flour', weightG: 500, priceAud: 1.95, source: 'Src: KFL Asian Grocery Springvale' }
+                ],
+                ausComps: [
+                    { brand: 'McKenzie\'s Tapioca Flour', weightG: 375, priceAud: 2.80, source: 'Src: Coles Online AU (Melb)' },
+                    { brand: 'Lotus Tapioca Flour', weightG: 500, priceAud: 3.10, source: 'Src: Woolworths Supermarkets VIC' }
+                ]
             },
             {
                 id: 4,
                 status: 'Active',
-                name: {
-                    en: 'Pancake Flour (Banh Xeo) 500g',
-                    km: 'ម្សៅបាញ់ឆែវ ៥០០ក្រាម',
-                    fr: 'Farine pour crêpes asiatiques 500g',
-                    zh: '柬式/越式煎饼粉 (Banh Xeo) 500g'
-                },
+                weightG: 500,
+                name: { en: 'Pancake Flour (Banh Xeo) 500g', km: 'ម្សៅបាញ់ឆែវ ៥០០ក្រាម', fr: 'Farine pour crêpes asiatiques 500g', zh: '柬式/越式煎饼粉 (Banh Xeo) 500g' },
                 nameKhmer: 'ម្សៅបាញ់ឆែវ ៥០០ក្រាម',
                 spec: '500g Bag / 20 Pcs (10kg/CTN)',
                 fobUsd: 0.90,
                 pcsPer20ft: 20000,
-                asianComp: 'Bot Banh Xeo Pancake Mix 500g ($3.80 - $7.60/kg)',
-                asianSource: 'Src: KFL Asian Grocery Springvale',
-                ausComp: 'Greens Original Pancake Mix 375g ($3.20 - $8.53/kg)',
-                ausSource: 'Src: Woolworths Supermarkets VIC'
+                asianComps: [
+                    { brand: 'Bot Banh Xeo Pancake Mix', weightG: 500, priceAud: 3.80, source: 'Src: KFL Asian Grocery Springvale' },
+                    { brand: 'Vinh Thuan Pancake Mix', weightG: 500, priceAud: 3.60, source: 'Src: Minh Phat Market Richmond' }
+                ],
+                ausComps: [
+                    { brand: 'Greens Original Pancake Mix', weightG: 375, priceAud: 3.20, source: 'Src: Woolworths Supermarkets VIC' },
+                    { brand: 'White Wings Pancake Shake', weightG: 325, priceAud: 3.50, source: 'Src: Coles Online AU (Melb)' }
+                ]
             },
             {
                 id: 5,
                 status: 'Active',
-                name: {
-                    en: 'Crispy Tempura Flour 1000g',
-                    km: 'ម្សៅបំពងស្រួយ ១០០០ក្រាម',
-                    fr: 'Farine à tempura croustillante 1000g',
-                    zh: '香酥天妇罗炸粉 1000g'
-                },
+                weightG: 1000,
+                name: { en: 'Crispy Tempura Flour 1000g', km: 'ម្សៅបំពងស្រួយ ១០០០ក្រាម', fr: 'Farine à tempura croustillante 1000g', zh: '香酥天妇罗炸粉 1000g' },
                 nameKhmer: 'ម្សៅបំពងស្រួយ ១០០០ក្រាម',
                 spec: '1000g Bag / 10 Pcs (10kg/CTN)',
                 fobUsd: 1.25,
                 pcsPer20ft: 10000,
-                asianComp: 'Gogi Tempura Batter Mix 500g ($2.80 - $5.60/kg)',
-                asianSource: 'Src: Minh Phat Market Richmond',
-                ausComp: 'White Wings Tempura Batter 300g ($3.50 - $11.66/kg)',
-                ausSource: 'Src: Coles Online AU (Melb)'
+                asianComps: [
+                    { brand: 'Gogi Tempura Batter Mix', weightG: 500, priceAud: 2.80, source: 'Src: Minh Phat Market Richmond' },
+                    { brand: 'Showwa Tempura Flour', weightG: 1000, priceAud: 5.20, source: 'Src: Asia Grocery Online AU' }
+                ],
+                ausComps: [
+                    { brand: 'White Wings Tempura Batter', weightG: 300, priceAud: 3.50, source: 'Src: Coles Online AU (Melb)' },
+                    { brand: 'Knorr Crispy Tempura Mix', weightG: 500, priceAud: 4.80, source: 'Src: Woolworths Supermarkets VIC' }
+                ]
             },
             {
                 id: 6,
                 status: 'Active',
-                name: {
-                    en: 'Crispy Tempura Flour 150g',
-                    km: 'ម្សៅបំពងស្រួយ ១៥០ក្រាម',
-                    fr: 'Farine à tempura croustillante 150g',
-                    zh: '香酥天妇罗炸粉 150g'
-                },
+                weightG: 150,
+                name: { en: 'Crispy Tempura Flour 150g', km: 'ម្សៅបំពងស្រួយ ១៥០ក្រាម', fr: 'Farine à tempura croustillante 150g', zh: '香酥天妇罗炸粉 150g' },
                 nameKhmer: 'ម្សៅបំពងស្រួយ ១៥០ក្រាម',
                 spec: '150g Bag / 60 Pcs (6x10pcs/CTN)',
                 fobUsd: 0.39,
                 pcsPer20ft: 60000,
-                asianComp: 'Gogi Crispy Batter Pack 150g ($1.60 - $10.66/kg)',
-                asianSource: 'Src: KFL Asian Grocery Springvale',
-                ausComp: 'Knorr Crispy Seasoned Coating 150g ($2.50 - $16.66/kg)',
-                ausSource: 'Src: Woolworths Supermarkets VIC'
+                asianComps: [
+                    { brand: 'Gogi Crispy Batter Pack', weightG: 150, priceAud: 1.60, source: 'Src: KFL Asian Grocery Springvale' },
+                    { brand: 'Aroma Crispy Coating', weightG: 150, priceAud: 1.50, source: 'Src: Minh Phat Market Richmond' }
+                ],
+                ausComps: [
+                    { brand: 'Knorr Crispy Seasoned', weightG: 150, priceAud: 2.50, source: 'Src: Woolworths Supermarkets VIC' },
+                    { brand: 'MasterFoods Seasoned Batter', weightG: 150, priceAud: 2.80, source: 'Src: Coles Online AU (Melb)' }
+                ]
             },
             {
                 id: 7,
                 status: 'Active',
-                name: {
-                    en: 'Fried Banana Flour 500g',
-                    km: 'ម្សៅចេកចៀន ៥០០ក្រាម',
-                    fr: 'Farine pour bananes frites 500g',
-                    zh: '炸香蕉专用脆粉 500g'
-                },
+                weightG: 500,
+                name: { en: 'Fried Banana Flour 500g', km: 'ម្សៅចេកចៀន ៥០០ក្រាម', fr: 'Farine pour bananes frites 500g', zh: '炸香蕉专用脆粉 500g' },
                 nameKhmer: 'ម្សៅចេកចៀន ៥០០ក្រាម',
                 spec: '500g Bag / 20 Pcs (10kg/CTN)',
                 fobUsd: 1.60,
                 pcsPer20ft: 20000,
-                asianComp: 'Bot Chien Chuoi Banana Mix 500g ($4.50 - $9.00/kg)',
-                asianSource: 'Src: Asia Grocery Online AU',
-                ausComp: 'Asian Specialty Dessert Batter 400g ($5.20 - $13.00/kg)',
-                ausSource: 'Src: Coles Online AU (Melb)'
+                asianComps: [
+                    { brand: 'Bot Chien Chuoi Banana Mix', weightG: 500, priceAud: 4.50, source: 'Src: Asia Grocery Online AU' },
+                    { brand: 'Thai Banana Fritter Mix', weightG: 500, priceAud: 4.20, source: 'Src: KFL Asian Grocery Springvale' }
+                ],
+                ausComps: [
+                    { brand: 'Asian Specialty Dessert Batter', weightG: 400, priceAud: 5.20, source: 'Src: Coles Online AU (Melb)' },
+                    { brand: 'Golden Fry Sweet Batter', weightG: 400, priceAud: 4.90, source: 'Src: Woolworths Supermarkets VIC' }
+                ]
             },
             {
                 id: 8,
                 status: 'Active',
-                name: {
-                    en: 'Black Pepper Whole 120g',
-                    km: 'ម្រេចខ្មៅគ្រាប់មូល ១២០ក្រាម',
-                    fr: 'Poivre noir entier 120g',
-                    zh: '整粒黑胡椒粒 120g'
-                },
+                weightG: 120,
+                name: { en: 'Black Pepper Whole 120g', km: 'ម្រេចខ្មៅគ្រាប់មូល ១២០ក្រាម', fr: 'Poivre noir entier 120g', zh: '整粒黑胡椒粒 120g' },
                 nameKhmer: 'ម្រេចខ្មៅគ្រាប់មូល ១២០ក្រាម',
                 spec: '120g Can / 12 Cans/CTN',
                 fobUsd: 3.63,
                 pcsPer20ft: 18000,
-                asianComp: 'Thai Whole Black Peppercorn 100g ($6.50 - $65.00/kg)',
-                asianSource: 'Src: Minh Phat Market Richmond',
-                ausComp: 'Hoyts Whole Black Peppercorn 100g ($6.20 - $62.00/kg)',
-                ausSource: 'Src: Woolworths Supermarkets VIC'
+                asianComps: [
+                    { brand: 'Thai Whole Black Peppercorn', weightG: 100, priceAud: 6.50, source: 'Src: Minh Phat Market Richmond' },
+                    { brand: 'Cock Brand Whole Pepper', weightG: 100, priceAud: 6.20, source: 'Src: Asia Grocery Online AU' }
+                ],
+                ausComps: [
+                    { brand: 'Hoyts Whole Black Peppercorn', weightG: 100, priceAud: 6.20, source: 'Src: Woolworths Supermarkets VIC' },
+                    { brand: 'MasterFoods Black Peppercorn', weightG: 100, priceAud: 7.10, source: 'Src: Coles Online AU (Melb)' }
+                ]
             },
             {
                 id: 9,
                 status: 'Active',
-                name: {
-                    en: 'Fine Ground Black Pepper 80g',
-                    km: 'ម្រេចខ្មៅម៉ដ្ឋ ៨០ក្រាម',
-                    fr: 'Poivre noir moulu fin 80g',
-                    zh: '细磨黑胡椒粉 80g'
-                },
+                weightG: 80,
+                name: { en: 'Fine Ground Black Pepper 80g', km: 'ម្រេចខ្មៅម៉ដ្ឋ ៨០ក្រាម', fr: 'Poivre noir moulu fin 80g', zh: '细磨黑胡椒粉 80g' },
                 nameKhmer: 'ម្រេចខ្មៅម៉ដ្ឋ ៨០ក្រាម',
                 spec: '80g Can / 20 Cans/CTN',
                 fobUsd: 1.43,
                 pcsPer20ft: 24000,
-                asianComp: 'Cock Brand Ground Black Pepper 80g ($3.80 - $47.50/kg)',
-                asianSource: 'Src: KFL Asian Grocery Springvale',
-                ausComp: 'Saxa Black Pepper Ground 50g ($3.90 - $78.00/kg)',
-                ausSource: 'Src: Coles Online AU (Melb)'
+                asianComps: [
+                    { brand: 'Cock Brand Ground Black Pepper', weightG: 80, priceAud: 3.80, source: 'Src: KFL Asian Grocery Springvale' },
+                    { brand: 'Thai Pure Black Pepper', weightG: 80, priceAud: 3.60, source: 'Src: Minh Phat Market Richmond' }
+                ],
+                ausComps: [
+                    { brand: 'Saxa Black Pepper Ground', weightG: 50, priceAud: 3.90, source: 'Src: Coles Online AU (Melb)' },
+                    { brand: 'McCormick Ground Black Pepper', weightG: 50, priceAud: 4.20, source: 'Src: Woolworths Supermarkets VIC' }
+                ]
             },
             {
                 id: 10,
                 status: 'Active',
-                name: {
-                    en: 'Coarse Ground Black Pepper 80g',
-                    km: 'ម្រេចខ្មៅចម្រៀក ៨០ក្រាម',
-                    fr: 'Poivre noir concassé 80g',
-                    zh: '粗磨黑胡椒碎 80g'
-                },
+                weightG: 80,
+                name: { en: 'Coarse Ground Black Pepper 80g', km: 'ម្រេចខ្មៅចម្រៀក ៨០ក្រាម', fr: 'Poivre noir concassé 80g', zh: '粗磨黑胡椒碎 80g' },
                 nameKhmer: 'ម្រេចខ្មៅចម្រៀក ៨០ក្រាម',
                 spec: '80g Can / 20 Cans/CTN',
                 fobUsd: 1.43,
                 pcsPer20ft: 24000,
-                asianComp: 'MasterFoods Cracked Black Pepper 50g ($4.50 - $90.00/kg)',
-                asianSource: 'Src: Asia Grocery Online AU',
-                ausComp: 'McCormick Cracked Black Pepper 40g ($4.20 - $105.00/kg)',
-                ausSource: 'Src: Woolworths Supermarkets VIC'
+                asianComps: [
+                    { brand: 'MasterFoods Cracked Pepper', weightG: 50, priceAud: 4.50, source: 'Src: Asia Grocery Online AU' },
+                    { brand: 'Cock Brand Cracked Pepper', weightG: 80, priceAud: 3.90, source: 'Src: KFL Asian Grocery Springvale' }
+                ],
+                ausComps: [
+                    { brand: 'McCormick Cracked Black Pepper', weightG: 40, priceAud: 4.20, source: 'Src: Woolworths Supermarkets VIC' },
+                    { brand: 'Hoyts Cracked Black Pepper', weightG: 50, priceAud: 3.80, source: 'Src: Coles Online AU (Melb)' }
+                ]
             },
             {
                 id: 11,
                 status: 'Active',
-                name: {
-                    en: 'Fine Ground White Pepper 80g',
-                    km: 'ម្រេចសចម្រៀក ៨០ក្រាម',
-                    fr: 'Poivre blanc moulu fin 80g',
-                    zh: '细磨白胡椒粉 80g'
-                },
+                weightG: 80,
+                name: { en: 'Fine Ground White Pepper 80g', km: 'ម្រេចសចម្រៀក ៨០ក្រាម', fr: 'Poivre blanc moulu fin 80g', zh: '细磨白胡椒粉 80g' },
                 nameKhmer: 'ម្រេចសចម្រៀក ៨០ក្រាម',
                 spec: '80g Can / 20 Cans/CTN',
                 fobUsd: 1.43,
                 pcsPer20ft: 24000,
-                asianComp: 'Cock Brand White Pepper Powder 100g ($5.80 - $58.00/kg)',
-                asianSource: 'Src: KFL Asian Grocery Springvale',
-                ausComp: 'Hoyts White Pepper Ground 100g ($6.20 - $62.00/kg)',
-                ausSource: 'Src: Coles Online AU (Melb)'
+                asianComps: [
+                    { brand: 'Cock Brand White Pepper Powder', weightG: 100, priceAud: 5.80, source: 'Src: KFL Asian Grocery Springvale' },
+                    { brand: 'Erawan White Pepper Powder', weightG: 80, priceAud: 5.20, source: 'Src: Minh Phat Market Richmond' }
+                ],
+                ausComps: [
+                    { brand: 'Hoyts White Pepper Ground', weightG: 100, priceAud: 6.20, source: 'Src: Coles Online AU (Melb)' },
+                    { brand: 'Saxa Ground White Pepper', weightG: 50, priceAud: 4.50, source: 'Src: Woolworths Supermarkets VIC' }
+                ]
             },
             {
                 id: 12,
                 status: 'Active',
-                name: {
-                    en: 'Coarse Ground Black Pepper 650g',
-                    km: 'ម្រេចខ្មៅចម្រៀក ៦៥០ក្រាម',
-                    fr: 'Poivre noir concassé 650g',
-                    zh: '粗磨黑胡椒碎 650g (餐饮罐装)'
-                },
+                weightG: 650,
+                name: { en: 'Coarse Ground Black Pepper 650g', km: 'ម្រេចខ្មៅចម្រៀក ៦៥០ក្រាម', fr: 'Poivre noir concassé 650g', zh: '粗磨黑胡椒碎 650g (餐饮罐装)' },
                 nameKhmer: 'ម្រេចខ្មៅចម្រៀក ៦៥០ក្រាម',
                 spec: '650g Can / 6 Cans/CTN',
                 fobUsd: 7.46,
                 pcsPer20ft: 9000,
-                asianComp: 'Chef Choice Coarse Black Pepper 500g ($16.50 - $33.00/kg)',
-                asianSource: 'Src: Minh Phat Market Richmond',
-                ausComp: 'MasterFoods Black Pepper Catering 500g ($18.90 - $37.80/kg)',
-                ausSource: 'Src: Woolworths Supermarkets VIC'
+                asianComps: [
+                    { brand: 'Chef Choice Coarse Pepper', weightG: 500, priceAud: 16.50, source: 'Src: Minh Phat Market Richmond' },
+                    { brand: 'Thai Catering Cracked Pepper', weightG: 600, priceAud: 18.20, source: 'Src: Asia Grocery Online AU' }
+                ],
+                ausComps: [
+                    { brand: 'MasterFoods Pepper Catering', weightG: 500, priceAud: 18.90, source: 'Src: Woolworths Supermarkets VIC' },
+                    { brand: 'McCormick Catering Cracked', weightG: 500, priceAud: 19.50, source: 'Src: Coles Online AU (Melb)' }
+                ]
             },
             {
                 id: 13,
                 status: 'Active',
-                name: {
-                    en: 'Fine Ground Black Pepper 650g',
-                    km: 'ម្រេចខ្មៅម៉ដ្ឋ ៦៥០ក្រាម',
-                    fr: 'Poivre noir moulu fin 650g',
-                    zh: '细磨黑胡椒粉 650g (餐饮罐装)'
-                },
+                weightG: 650,
+                name: { en: 'Fine Ground Black Pepper 650g', km: 'ម្រេចខ្មៅម៉ដ្ឋ ៦៥០ក្រាម', fr: 'Poivre noir moulu fin 650g', zh: '细磨黑胡椒粉 650g (餐饮罐装)' },
                 nameKhmer: 'ម្រេចខ្មៅម៉ដ្ឋ ៦៥០ក្រាម',
                 spec: '650g Can / 6 Cans/CTN',
                 fobUsd: 7.46,
                 pcsPer20ft: 9000,
-                asianComp: 'Thai Pure Fine Ground Black Pepper 500g ($15.80 - $31.60/kg)',
-                asianSource: 'Src: KFL Asian Grocery Springvale',
-                ausComp: 'Hoyts Catering Ground Black Pepper 500g ($17.50 - $35.00/kg)',
-                ausSource: 'Src: Coles Online AU (Melb)'
+                asianComps: [
+                    { brand: 'Thai Pure Ground Pepper', weightG: 500, priceAud: 15.80, source: 'Src: KFL Asian Grocery Springvale' },
+                    { brand: 'Cock Brand Fine Pepper', weightG: 600, priceAud: 17.50, source: 'Src: Minh Phat Market Richmond' }
+                ],
+                ausComps: [
+                    { brand: 'Hoyts Catering Ground Pepper', weightG: 500, priceAud: 17.50, source: 'Src: Coles Online AU (Melb)' },
+                    { brand: 'Saxa Fine Pepper Catering', weightG: 500, priceAud: 18.20, source: 'Src: Woolworths Supermarkets VIC' }
+                ]
             },
             {
                 id: 14,
                 status: 'Active',
-                name: {
-                    en: 'Black Pepper Whole 1000g',
-                    km: 'ម្រេចខ្មៅគ្រាប់មូល ១០០០ក្រាម',
-                    fr: 'Poivre noir entier 1000g',
-                    zh: '整粒黑胡椒粒 1000g (大包装)'
-                },
+                weightG: 1000,
+                name: { en: 'Black Pepper Whole 1000g', km: 'ម្រេចខ្មៅគ្រាប់មូល ១០០០ក្រាម', fr: 'Poivre noir entier 1000g', zh: '整粒黑胡椒粒 1000g (大包装)' },
                 nameKhmer: 'ម្រេចខ្មៅគ្រាប់មូល ១០០០ក្រាម',
                 spec: '1000g Bag / 10 Bags (10kg/CTN)',
                 fobUsd: 9.07,
                 pcsPer20ft: 10000,
-                asianComp: 'VN Premium Whole Black Pepper 1kg ($22.00 - $22.00/kg)',
-                asianSource: 'Src: Asia Grocery Online AU',
-                ausComp: 'MasterFoods Black Peppercorns Bulk 1kg ($28.50 - $28.50/kg)',
-                ausSource: 'Src: Woolworths Supermarkets VIC'
+                asianComps: [
+                    { brand: 'VN Premium Whole Pepper', weightG: 1000, priceAud: 22.00, source: 'Src: Asia Grocery Online AU' },
+                    { brand: 'Erawan Whole Pepper', weightG: 1000, priceAud: 21.50, source: 'Src: KFL Asian Grocery Springvale' }
+                ],
+                ausComps: [
+                    { brand: 'MasterFoods Peppercorns Bulk', weightG: 1000, priceAud: 28.50, source: 'Src: Woolworths Supermarkets VIC' },
+                    { brand: 'Hoyts Whole Pepper Bulk', weightG: 1000, priceAud: 26.80, source: 'Src: Coles Online AU (Melb)' }
+                ]
             },
             {
                 id: 15,
                 status: 'Active',
-                name: {
-                    en: 'Black Pepper Whole 500g',
-                    km: 'ម្រេចខ្មៅគ្រាប់មូល ៥០០ក្រាម',
-                    fr: 'Poivre noir entier 500g',
-                    zh: '整粒黑胡椒粒 500g'
-                },
+                weightG: 500,
+                name: { en: 'Black Pepper Whole 500g', km: 'ម្រេចខ្មៅគ្រាប់មូល ៥០០ក្រាម', fr: 'Poivre noir entier 500g', zh: '整粒黑胡椒粒 500g' },
                 nameKhmer: 'ម្រេចខ្មៅគ្រាប់មូល ៥០០ក្រាម',
                 spec: '500g Bag / 20 Bags (10kg/CTN)',
                 fobUsd: 4.60,
                 pcsPer20ft: 20000,
-                asianComp: 'Erawan Whole Black Peppercorn 500g ($12.50 - $25.00/kg)',
-                asianSource: 'Src: Minh Phat Market Richmond',
-                ausComp: 'Hoyts Black Peppercorn Pouch 500g ($14.80 - $29.60/kg)',
-                ausSource: 'Src: Coles Online AU (Melb)'
+                asianComps: [
+                    { brand: 'Erawan Whole Black Pepper', weightG: 500, priceAud: 12.50, source: 'Src: Minh Phat Market Richmond' },
+                    { brand: 'Cock Brand Whole Pepper', weightG: 500, priceAud: 11.90, source: 'Src: Asia Grocery Online AU' }
+                ],
+                ausComps: [
+                    { brand: 'Hoyts Black Peppercorn', weightG: 500, priceAud: 14.80, source: 'Src: Coles Online AU (Melb)' },
+                    { brand: 'McCormick Peppercorn Bag', weightG: 500, priceAud: 15.20, source: 'Src: Woolworths Supermarkets VIC' }
+                ]
             },
             {
                 id: 16,
                 status: 'Active',
-                name: {
-                    en: 'Crushed Black Pepper (10-20 Mesh) 1000g',
-                    km: 'ម្រេចខ្មៅចម្រៀកកំរិត 10-20 ម៉េស ១០០០ក្រាម',
-                    fr: 'Poivre noir concassé (10-20 Mesh) 1000g',
-                    zh: '黑胡椒碎 (10-20目) 1000g'
-                },
+                weightG: 1000,
+                name: { en: 'Crushed Black Pepper (10-20 Mesh) 1000g', km: 'ម្រេចខ្មៅចម្រៀកកំរិត 10-20 ម៉េស ១០០០ក្រាម', fr: 'Poivre noir concassé (10-20 Mesh) 1000g', zh: '黑胡椒碎 (10-20目) 1000g' },
                 nameKhmer: 'ម្រេចខ្មៅចម្រៀកកំរិត 10-20 ម៉េស ១០០០ក្រាម',
                 spec: '1000g Bag / 10 Bags (10kg/CTN)',
                 fobUsd: 9.46,
                 pcsPer20ft: 10000,
-                asianComp: 'VN Cracked Black Pepper Bulk 1kg ($24.00 - $24.00/kg)',
-                asianSource: 'Src: KFL Asian Grocery Springvale',
-                ausComp: 'McCormick Cracked Pepper Catering 1kg ($31.00 - $31.00/kg)',
-                ausSource: 'Src: Woolworths Supermarkets VIC'
+                asianComps: [
+                    { brand: 'VN Cracked Black Pepper', weightG: 1000, priceAud: 24.00, source: 'Src: KFL Asian Grocery Springvale' },
+                    { brand: 'Thai Chef Cracked Pepper', weightG: 1000, priceAud: 23.00, source: 'Src: Minh Phat Market Richmond' }
+                ],
+                ausComps: [
+                    { brand: 'McCormick Cracked Pepper', weightG: 1000, priceAud: 31.00, source: 'Src: Woolworths Supermarkets VIC' },
+                    { brand: 'MasterFoods Cracked Pepper', weightG: 1000, priceAud: 32.50, source: 'Src: Coles Online AU (Melb)' }
+                ]
             },
             {
                 id: 17,
                 status: 'Active',
-                name: {
-                    en: 'Crushed Black Pepper (10-20 Mesh) 500g',
-                    km: 'ម្រេចខ្មៅចម្រៀកកំរិត 10-20 ម៉េស ៥០០ក្រាម',
-                    fr: 'Poivre noir concassé (10-20 Mesh) 500g',
-                    zh: '黑胡椒碎 (10-20目) 500g'
-                },
+                weightG: 500,
+                name: { en: 'Crushed Black Pepper (10-20 Mesh) 500g', km: 'ម្រេចខ្មៅចម្រៀកកំរិត 10-20 ម៉េស ៥០០ក្រាម', fr: 'Poivre noir concassé (10-20 Mesh) 500g', zh: '黑胡椒碎 (10-20目) 500g' },
                 nameKhmer: 'ម្រេចខ្មៅចម្រៀកកំរិត 10-20 ម៉េស ៥០០ក្រាម',
                 spec: '500g Bag / 20 Bags (10kg/CTN)',
                 fobUsd: 4.79,
                 pcsPer20ft: 20000,
-                asianComp: 'Cock Brand Crushed Black Pepper 500g ($13.20 - $26.40/kg)',
-                asianSource: 'Src: Asia Grocery Online AU',
-                ausComp: 'MasterFoods Cracked Black Pepper 500g ($16.00 - $32.00/kg)',
-                ausSource: 'Src: Coles Online AU (Melb)'
+                asianComps: [
+                    { brand: 'Cock Brand Crushed Pepper', weightG: 500, priceAud: 13.20, source: 'Src: Asia Grocery Online AU' },
+                    { brand: 'Erawan Crushed Pepper', weightG: 500, priceAud: 12.80, source: 'Src: KFL Asian Grocery Springvale' }
+                ],
+                ausComps: [
+                    { brand: 'MasterFoods Cracked Pepper', weightG: 500, priceAud: 16.00, source: 'Src: Coles Online AU (Melb)' },
+                    { brand: 'Hoyts Cracked Black Pepper', weightG: 500, priceAud: 15.50, source: 'Src: Woolworths Supermarkets VIC' }
+                ]
             },
             {
                 id: 18,
                 status: 'Active',
-                name: {
-                    en: 'Fine Ground Black Pepper (40 Mesh) 1000g',
-                    km: 'ម្រេចខ្មៅម៉ដ្ឋកំរិត 40 ម៉េស ១០០០ក្រាម',
-                    fr: 'Poivre noir moulu fin (40 Mesh) 1000g',
-                    zh: '细磨黑胡椒粉 (40目) 1000g'
-                },
+                weightG: 1000,
+                name: { en: 'Fine Ground Black Pepper (40 Mesh) 1000g', km: 'ម្រេចខ្មៅម៉ដ្ឋកំរិត 40 ម៉េស ១០០០ក្រាម', fr: 'Poivre noir moulu fin (40 Mesh) 1000g', zh: '细磨黑胡椒粉 (40目) 1000g' },
                 nameKhmer: 'ម្រេចខ្មៅម៉ដ្ឋកំរិត 40 ម៉េស ១០០០ក្រាម',
                 spec: '1000g Bag / 10 Bags (10kg/CTN)',
                 fobUsd: 9.46,
                 pcsPer20ft: 10000,
-                asianComp: 'Thai Pure Black Pepper Powder 1kg ($23.50 - $23.50/kg)',
-                asianSource: 'Src: Minh Phat Market Richmond',
-                ausComp: 'Saxa Pure Ground Black Pepper 1kg ($29.90 - $29.90/kg)',
-                ausSource: 'Src: Woolworths Supermarkets VIC'
+                asianComps: [
+                    { brand: 'Thai Pure Pepper Powder', weightG: 1000, priceAud: 23.50, source: 'Src: Minh Phat Market Richmond' },
+                    { brand: 'Cock Brand Ground Pepper', weightG: 1000, priceAud: 22.90, source: 'Src: Asia Grocery Online AU' }
+                ],
+                ausComps: [
+                    { brand: 'Saxa Ground Black Pepper', weightG: 1000, priceAud: 29.90, source: 'Src: Woolworths Supermarkets VIC' },
+                    { brand: 'Hoyts Fine Ground Pepper', weightG: 1000, priceAud: 28.50, source: 'Src: Coles Online AU (Melb)' }
+                ]
             },
             {
                 id: 19,
                 status: 'Active',
-                name: {
-                    en: 'Fine Ground Black Pepper (40 Mesh) 500g',
-                    km: 'ម្រេចខ្មៅម៉ដ្ឋកំរិត 40 ម៉េស ៥០០ក្រាម',
-                    fr: 'Poivre noir moulu fin (40 Mesh) 500g',
-                    zh: '细磨黑胡椒粉 (40目) 500g'
-                },
+                weightG: 500,
+                name: { en: 'Fine Ground Black Pepper (40 Mesh) 500g', km: 'ម្រេចខ្មៅម៉ដ្ឋកំរិត 40 ម៉េស ៥០០ក្រាម', fr: 'Poivre noir moulu fin (40 Mesh) 500g', zh: '细磨黑胡椒粉 (40目) 500g' },
                 nameKhmer: 'ម្រេចខ្មៅម៉ដ្ឋកំរិត 40 ម៉េស ៥០០ក្រាម',
                 spec: '500g Bag / 20 Bags (10kg/CTN)',
                 fobUsd: 4.78,
                 pcsPer20ft: 20000,
-                asianComp: 'Cock Brand Fine Black Pepper 500g ($12.80 - $25.60/kg)',
-                asianSource: 'Src: KFL Asian Grocery Springvale',
-                ausComp: 'Hoyts Fine Black Pepper 500g ($15.20 - $30.40/kg)',
-                ausSource: 'Src: Coles Online AU (Melb)'
+                asianComps: [
+                    { brand: 'Cock Brand Fine Pepper', weightG: 500, priceAud: 12.80, source: 'Src: KFL Asian Grocery Springvale' },
+                    { brand: 'Erawan Fine Pepper', weightG: 500, priceAud: 12.20, source: 'Src: Minh Phat Market Richmond' }
+                ],
+                ausComps: [
+                    { brand: 'Hoyts Fine Black Pepper', weightG: 500, priceAud: 15.20, source: 'Src: Coles Online AU (Melb)' },
+                    { brand: 'Saxa Ground Pepper Bag', weightG: 500, priceAud: 14.90, source: 'Src: Woolworths Supermarkets VIC' }
+                ]
             },
             {
                 id: 20,
                 status: 'Active',
-                name: {
-                    en: 'Black Pepper Whole 200g',
-                    km: 'ម្រេចខ្មៅគ្រាប់មូល ២០០ក្រាម',
-                    fr: 'Poivre noir entier 200g',
-                    zh: '整粒黑胡椒粒 200g (罐装)'
-                },
+                weightG: 200,
+                name: { en: 'Black Pepper Whole 200g', km: 'ម្រេចខ្មៅគ្រាប់មូល ២០០ក្រាម', fr: 'Poivre noir entier 200g', zh: '整粒黑胡椒粒 200g (罐装)' },
                 nameKhmer: 'ម្រេចខ្មៅគ្រាប់មូល ២០០ក្រាម',
                 spec: '200g Can / 12 Cans/CTN',
                 fobUsd: 2.68,
                 pcsPer20ft: 14400,
-                asianComp: 'Thai Whole Black Pepper Can 200g ($7.20 - $36.00/kg)',
-                asianSource: 'Src: Asia Grocery Online AU',
-                ausComp: 'McCormick Black Peppercorn Can 200g ($8.50 - $42.50/kg)',
-                ausSource: 'Src: Woolworths Supermarkets VIC'
+                asianComps: [
+                    { brand: 'Thai Whole Pepper Can', weightG: 200, priceAud: 7.20, source: 'Src: Asia Grocery Online AU' },
+                    { brand: 'Cock Brand Peppercorn Can', weightG: 200, priceAud: 6.90, source: 'Src: KFL Asian Grocery Springvale' }
+                ],
+                ausComps: [
+                    { brand: 'McCormick Peppercorn Can', weightG: 200, priceAud: 8.50, source: 'Src: Woolworths Supermarkets VIC' },
+                    { brand: 'MasterFoods Peppercorn Shaker', weightG: 200, priceAud: 8.90, source: 'Src: Coles Online AU (Melb)' }
+                ]
             },
             {
                 id: 21,
                 status: 'Active',
-                name: {
-                    en: 'Coarse Ground Black Pepper 250g',
-                    km: 'ម្រេចខ្មៅចម្រៀក ២៥០ក្រាម',
-                    fr: 'Poivre noir concassé 250g',
-                    zh: '粗磨黑胡椒碎 250g (罐装)'
-                },
+                weightG: 250,
+                name: { en: 'Coarse Ground Black Pepper 250g', km: 'ម្រេចខ្មៅចម្រៀក ២៥០ក្រាម', fr: 'Poivre noir concassé 250g', zh: '粗磨黑胡椒碎 250g (罐装)' },
                 nameKhmer: 'ម្រេចខ្មៅចម្រៀក ២៥០ក្រាម',
                 spec: '250g Can / 12 Cans/CTN',
                 fobUsd: 3.37,
                 pcsPer20ft: 14400,
-                asianComp: 'Cock Brand Coarse Black Pepper 250g ($8.20 - $32.80/kg)',
-                asianSource: 'Src: Minh Phat Market Richmond',
-                ausComp: 'MasterFoods Cracked Pepper Shaker 250g ($9.80 - $39.20/kg)',
-                ausSource: 'Src: Coles Online AU (Melb)'
+                asianComps: [
+                    { brand: 'Cock Brand Coarse Pepper', weightG: 250, priceAud: 8.20, source: 'Src: Minh Phat Market Richmond' },
+                    { brand: 'Thai Chef Coarse Pepper', weightG: 250, priceAud: 7.90, source: 'Src: Asia Grocery Online AU' }
+                ],
+                ausComps: [
+                    { brand: 'MasterFoods Cracked Pepper', weightG: 250, priceAud: 9.80, source: 'Src: Coles Online AU (Melb)' },
+                    { brand: 'Hoyts Cracked Pepper Can', weightG: 250, priceAud: 9.20, source: 'Src: Woolworths Supermarkets VIC' }
+                ]
             },
             {
                 id: 22,
                 status: 'Active',
-                name: {
-                    en: 'Fine Ground Black Pepper 250g',
-                    km: 'ម្រេចខ្មៅម៉ដ្ឋ ២៥០ក្រាម',
-                    fr: 'Poivre noir moulu fin 250g',
-                    zh: '细磨黑胡椒粉 250g (罐装)'
-                },
+                weightG: 250,
+                name: { en: 'Fine Ground Black Pepper 250g', km: 'ម្រេចខ្មៅម៉ដ្ឋ ២៥០ក្រាម', fr: 'Poivre noir moulu fin 250g', zh: '细磨黑胡椒粉 250g (罐装)' },
                 nameKhmer: 'ម្រេចខ្មៅម៉ដ្ឋ ២៥០ក្រាម',
                 spec: '250g Can / 12 Cans/CTN',
                 fobUsd: 3.37,
                 pcsPer20ft: 14400,
-                asianComp: 'Erawan Ground Black Pepper 250g ($8.00 - $32.00/kg)',
-                asianSource: 'Src: KFL Asian Grocery Springvale',
-                ausComp: 'Saxa Ground Black Pepper Shaker 250g ($9.50 - $38.00/kg)',
-                ausSource: 'Src: Woolworths Supermarkets VIC'
+                asianComps: [
+                    { brand: 'Erawan Ground Black Pepper', weightG: 250, priceAud: 8.00, source: 'Src: KFL Asian Grocery Springvale' },
+                    { brand: 'Cock Brand Fine Pepper', weightG: 250, priceAud: 7.80, source: 'Src: Minh Phat Market Richmond' }
+                ],
+                ausComps: [
+                    { brand: 'Saxa Pepper Shaker', weightG: 250, priceAud: 9.50, source: 'Src: Woolworths Supermarkets VIC' },
+                    { brand: 'McCormick Ground Pepper', weightG: 250, priceAud: 9.90, source: 'Src: Coles Online AU (Melb)' }
+                ]
             },
             {
                 id: 23,
                 status: 'Active',
-                name: {
-                    en: 'Black Pepper Whole 350g',
-                    km: 'ម្រេចខ្មៅគ្រាប់មូល ៣៥០ក្រាម',
-                    fr: 'Poivre noir entier 350g',
-                    zh: '整粒黑胡椒粒 350g (罐装)'
-                },
+                weightG: 350,
+                name: { en: 'Black Pepper Whole 350g', km: 'ម្រេចខ្មៅគ្រាប់មូល ៣៥០ក្រាម', fr: 'Poivre noir entier 350g', zh: '整粒黑胡椒粒 350g (罐装)' },
                 nameKhmer: 'ម្រេចខ្មៅគ្រាប់មូល ៣៥០ក្រាម',
                 spec: '350g Can / 12 Cans/CTN',
                 fobUsd: 3.59,
                 pcsPer20ft: 14400,
-                asianComp: 'Thai Whole Peppercorn Can 350g ($10.50 - $30.00/kg)',
-                asianSource: 'Src: Asia Grocery Online AU',
-                ausComp: 'Hoyts Peppercorns Can 350g ($12.20 - $34.85/kg)',
-                ausSource: 'Src: Coles Online AU (Melb)'
+                asianComps: [
+                    { brand: 'Thai Whole Peppercorn Can', weightG: 350, priceAud: 10.50, source: 'Src: Asia Grocery Online AU' },
+                    { brand: 'VN Whole Peppercorn Can', weightG: 350, priceAud: 10.00, source: 'Src: KFL Asian Grocery Springvale' }
+                ],
+                ausComps: [
+                    { brand: 'Hoyts Peppercorns Can', weightG: 350, priceAud: 12.20, source: 'Src: Coles Online AU (Melb)' },
+                    { brand: 'MasterFoods Peppercorns', weightG: 350, priceAud: 13.10, source: 'Src: Woolworths Supermarkets VIC' }
+                ]
             },
             {
                 id: 24,
                 status: 'Active',
-                name: {
-                    en: 'Coarse Ground Black Pepper 360g',
-                    km: 'ម្រេចខ្មៅចម្រៀក ៣៦០ក្រាម',
-                    fr: 'Poivre noir concassé 360g',
-                    zh: '粗磨黑胡椒碎 360g (罐装)'
-                },
+                weightG: 360,
+                name: { en: 'Coarse Ground Black Pepper 360g', km: 'ម្រេចខ្មៅចម្រៀក ៣៦០ក្រាម', fr: 'Poivre noir concassé 360g', zh: '粗磨黑胡椒碎 360g (罐装)' },
                 nameKhmer: 'ម្រេចខ្មៅចម្រៀក ៣៦០ក្រាម',
                 spec: '360g Can / 12 Cans/CTN',
                 fobUsd: 4.06,
                 pcsPer20ft: 14400,
-                asianComp: 'VN Cracked Black Pepper Can 360g ($11.80 - $32.77/kg)',
-                asianSource: 'Src: Minh Phat Market Richmond',
-                ausComp: 'MasterFoods Cracked Pepper Can 360g ($13.80 - $38.33/kg)',
-                ausSource: 'Src: Woolworths Supermarkets VIC'
+                asianComps: [
+                    { brand: 'VN Cracked Black Pepper Can', weightG: 360, priceAud: 11.80, source: 'Src: Minh Phat Market Richmond' },
+                    { brand: 'Cock Brand Cracked Pepper', weightG: 360, priceAud: 11.20, source: 'Src: Asia Grocery Online AU' }
+                ],
+                ausComps: [
+                    { brand: 'MasterFoods Cracked Pepper Can', weightG: 360, priceAud: 13.80, source: 'Src: Woolworths Supermarkets VIC' },
+                    { brand: 'McCormick Cracked Pepper Can', weightG: 360, priceAud: 14.20, source: 'Src: Coles Online AU (Melb)' }
+                ]
             },
             {
                 id: 25,
                 status: 'Active',
-                name: {
-                    en: 'Fine Ground Black Pepper 360g',
-                    km: 'ម្រេចខ្មៅម៉ដ្ឋ ៣៦០ក្រាម',
-                    fr: 'Poivre noir moulu fin 360g',
-                    zh: '细磨黑胡椒粉 360g (罐装)'
-                },
+                weightG: 360,
+                name: { en: 'Fine Ground Black Pepper 360g', km: 'ម្រេចខ្មៅម៉ដ្ឋ ៣៦០ក្រាម', fr: 'Poivre noir moulu fin 360g', zh: '细磨黑胡椒粉 360g (罐装)' },
                 nameKhmer: 'ម្រេចខ្មៅម៉ដ្ឋ ៣៦០ក្រាម',
                 spec: '360g Can / 12 Cans/CTN',
                 fobUsd: 3.89,
                 pcsPer20ft: 14400,
-                asianComp: 'Cock Brand Fine Pepper Can 360g ($11.20 - $31.11/kg)',
-                asianSource: 'Src: KFL Asian Grocery Springvale',
-                ausComp: 'Saxa Ground Black Pepper Can 360g ($13.50 - $37.50/kg)',
-                ausSource: 'Src: Coles Online AU (Melb)'
+                asianComps: [
+                    { brand: 'Cock Brand Fine Pepper Can', weightG: 360, priceAud: 11.20, source: 'Src: KFL Asian Grocery Springvale' },
+                    { brand: 'Erawan Fine Pepper Can', weightG: 360, priceAud: 10.80, source: 'Src: Minh Phat Market Richmond' }
+                ],
+                ausComps: [
+                    { brand: 'Saxa Ground Black Pepper Can', weightG: 360, priceAud: 13.50, source: 'Src: Coles Online AU (Melb)' },
+                    { brand: 'Hoyts Ground Pepper Can', weightG: 360, priceAud: 12.90, source: 'Src: Woolworths Supermarkets VIC' }
+                ]
             },
 
             // --- 5 UPCOMING PRODUCTS ---
             {
                 id: 26,
                 status: 'Upcoming',
-                name: {
-                    en: 'Instant Rice Stir-Fry Noodle 100g',
-                    km: 'មីគោក ១០០ក្រាម',
-                    fr: 'Nouilles de riz sautées instantanées 100g',
-                    zh: '即食干炒米粉 100g'
-                },
+                weightG: 100,
+                name: { en: 'Instant Rice Stir-Fry Noodle 100g', km: 'មីគោក ១០០ក្រាម', fr: 'Nouilles de riz sautées instantanées 100g', zh: '即食干炒米粉 100g' },
                 nameKhmer: 'មីគោក ១០០ក្រាម',
                 spec: '100g Box / 24 Pcs per CTN',
                 fobUsd: 0.85,
                 pcsPer20ft: 18000,
-                asianComp: 'Mama Instant Rice Noodle Pack 100g ($2.20 - $22.00/kg)',
-                asianSource: 'Src: Minh Phat Market Richmond',
-                ausComp: 'Trident Instant Rice Noodle Bowl 100g ($2.80 - $28.00/kg)',
-                ausSource: 'Src: Woolworths Supermarkets VIC'
+                asianComps: [
+                    { brand: 'Mama Instant Rice Noodle Pack', weightG: 100, priceAud: 2.20, source: 'Src: Minh Phat Market Richmond' },
+                    { brand: 'Wai Wai Rice Noodle', weightG: 100, priceAud: 1.90, source: 'Src: KFL Asian Grocery Springvale' }
+                ],
+                ausComps: [
+                    { brand: 'Trident Instant Rice Noodle Bowl', weightG: 100, priceAud: 2.80, source: 'Src: Woolworths Supermarkets VIC' },
+                    { brand: 'Suimin Noodle Cup', weightG: 100, priceAud: 2.50, source: 'Src: Coles Online AU (Melb)' }
+                ]
             },
             {
                 id: 27,
                 status: 'Upcoming',
-                name: {
-                    en: 'Crispy Rice Cake Flour 500g',
-                    km: 'ម្សៅនំគ្រក់ ៥០០ក្រាម',
-                    fr: 'Farine pour gâteau de riz croustillant 500g',
-                    zh: '柬式香脆米饼粉 (Nom Krok) 500g'
-                },
+                weightG: 500,
+                name: { en: 'Crispy Rice Cake Flour 500g', km: 'ម្សៅនំគ្រក់ ៥០០ក្រាម', fr: 'Farine pour gâteau de riz croustillant 500g', zh: '柬式香脆米饼粉 (Nom Krok) 500g' },
                 nameKhmer: 'ម្សៅនំគ្រក់ ៥០០ក្រាម',
                 spec: '500g Bag / 20 Pcs (10kg/CTN)',
                 fobUsd: 0.95,
                 pcsPer20ft: 20000,
-                asianComp: 'Bot Banh Khot Cake Flour 500g ($3.90 - $7.80/kg)',
-                asianSource: 'Src: KFL Asian Grocery Springvale',
-                ausComp: 'Asian Specialty Rice Cake Premix 500g ($4.80 - $9.60/kg)',
-                ausSource: 'Src: Coles Online AU (Melb)'
+                asianComps: [
+                    { brand: 'Bot Banh Khot Cake Flour', weightG: 500, priceAud: 3.90, source: 'Src: KFL Asian Grocery Springvale' },
+                    { brand: 'Vinh Thuan Rice Cake Premix', weightG: 500, priceAud: 3.70, source: 'Src: Asia Grocery Online AU' }
+                ],
+                ausComps: [
+                    { brand: 'Asian Specialty Rice Cake Premix', weightG: 500, priceAud: 4.80, source: 'Src: Coles Online AU (Melb)' },
+                    { brand: 'Lian How Rice Flour Premix', weightG: 500, priceAud: 4.50, source: 'Src: Woolworths Supermarkets VIC' }
+                ]
             },
             {
                 id: 28,
                 status: 'Upcoming',
-                name: {
-                    en: 'Chinese Doughnuts Flour 500g',
-                    km: 'ម្សៅនំឆា ៥០០ក្រាម',
-                    fr: 'Farine pour beignets chinois (Youtiao) 500g',
-                    zh: '油条专用预拌粉 500g'
-                },
+                weightG: 500,
+                name: { en: 'Chinese Doughnuts Flour 500g', km: 'ម្សៅនំឆា ៥០០ក្រាម', fr: 'Farine pour beignets chinois (Youtiao) 500g', zh: '油条专用预拌粉 500g' },
                 nameKhmer: 'ម្សៅនំឆា ៥០០ក្រាម',
                 spec: '500g Bag / 20 Pcs (10kg/CTN)',
                 fobUsd: 0.90,
                 pcsPer20ft: 20000,
-                asianComp: 'Youtiao Chinese Donut Premix 500g ($3.60 - $7.20/kg)',
-                asianSource: 'Src: Asia Grocery Online AU',
-                ausComp: 'Defiance Specialty Flour Mix 500g ($4.20 - $8.40/kg)',
-                ausSource: 'Src: Woolworths Supermarkets VIC'
+                asianComps: [
+                    { brand: 'Youtiao Chinese Donut Premix', weightG: 500, priceAud: 3.60, source: 'Src: Asia Grocery Online AU' },
+                    { brand: 'San Gaou Youtiao Mix', weightG: 500, priceAud: 3.40, source: 'Src: Minh Phat Market Richmond' }
+                ],
+                ausComps: [
+                    { brand: 'Defiance Specialty Flour Mix', weightG: 500, priceAud: 4.20, source: 'Src: Woolworths Supermarkets VIC' },
+                    { brand: 'Laucke Sweet Dough Premix', weightG: 500, priceAud: 4.60, source: 'Src: Coles Online AU (Melb)' }
+                ]
             },
             {
                 id: 29,
                 status: 'Upcoming',
-                name: {
-                    en: 'Waffle Flour 500g',
-                    km: 'ម្សៅពុម្ព ៥០០ក្រាម',
-                    fr: 'Farine pour gaufres asiatiques 500g',
-                    zh: '东南亚华夫饼/格仔饼预拌粉 500g'
-                },
+                weightG: 500,
+                name: { en: 'Waffle Flour 500g', km: 'ម្សៅពុម្ព ៥០០ក្រាម', fr: 'Farine pour gaufres asiatiques 500g', zh: '东南亚华夫饼/格仔饼预拌粉 500g' },
                 nameKhmer: 'ម្សៅពុម្ព ៥០០ក្រាម',
                 spec: '500g Bag / 20 Pcs (10kg/CTN)',
                 fobUsd: 1.10,
                 pcsPer20ft: 20000,
-                asianComp: 'Thai Pandan Waffle Premix 500g ($4.20 - $8.40/kg)',
-                asianSource: 'Src: Minh Phat Market Richmond',
-                ausComp: 'Greens Belgian Waffle Mix 400g ($4.50 - $11.25/kg)',
-                ausSource: 'Src: Coles Online AU (Melb)'
+                asianComps: [
+                    { brand: 'Thai Pandan Waffle Premix', weightG: 500, priceAud: 4.20, source: 'Src: Minh Phat Market Richmond' },
+                    { brand: 'Erawan Waffle Mix', weightG: 500, priceAud: 4.00, source: 'Src: KFL Asian Grocery Springvale' }
+                ],
+                ausComps: [
+                    { brand: 'Greens Belgian Waffle Mix', weightG: 400, priceAud: 4.50, source: 'Src: Coles Online AU (Melb)' },
+                    { brand: 'White Wings Waffle Mix', weightG: 400, priceAud: 4.80, source: 'Src: Woolworths Supermarkets VIC' }
+                ]
             },
             {
                 id: 30,
                 status: 'Upcoming',
-                name: {
-                    en: 'Steamed Rice Cake Flour 500g',
-                    km: 'ម្សៅនំអាកោ ៥០០ក្រាម',
-                    fr: 'Farine pour gâteau de riz à la vapeur 500g',
-                    zh: '蒸米糕粉 (Nom Ako) 500g'
-                },
+                weightG: 500,
+                name: { en: 'Steamed Rice Cake Flour 500g', km: 'ម្សៅនំអាកោ ៥០០ក្រាម', fr: 'Farine pour gâteau de riz à la vapeur 500g', zh: '蒸米糕粉 (Nom Ako) 500g' },
                 nameKhmer: 'ម្សៅនំអាកោ ៥០០ក្រាម',
                 spec: '500g Bag / 20 Pcs (10kg/CTN)',
                 fobUsd: 0.85,
                 pcsPer20ft: 20000,
-                asianComp: 'Bot Banh Bo Steamed Cake Flour 500g ($3.50 - $7.00/kg)',
-                asianSource: 'Src: KFL Asian Grocery Springvale',
-                ausComp: 'Asian Rice Cake Premix 500g ($4.20 - $8.40/kg)',
-                ausSource: 'Src: Woolworths Supermarkets VIC'
+                asianComps: [
+                    { brand: 'Bot Banh Bo Steamed Cake', weightG: 500, priceAud: 3.50, source: 'Src: KFL Asian Grocery Springvale' },
+                    { brand: 'Vinh Thuan Steamed Cake', weightG: 500, priceAud: 3.30, source: 'Src: Minh Phat Market Richmond' }
+                ],
+                ausComps: [
+                    { brand: 'Asian Rice Cake Premix', weightG: 500, priceAud: 4.20, source: 'Src: Woolworths Supermarkets VIC' },
+                    { brand: 'Lian How Steamed Cake Mix', weightG: 500, priceAud: 4.40, source: 'Src: Coles Online AU (Melb)' }
+                ]
             }
         ];
 
@@ -1331,30 +1330,40 @@
                 const computedPcsUsd = parsedCtnVal / pcsPerCtn;
                 product.fobUsd = computedPcsUsd;
                 
-                // Get current toolbar inputs
-                const fx = parseFloat(document.getElementById('input-fx').value) || 0.6620;
-                const oceanFreightUsd = parseFloat(document.getElementById('input-freight').value) || 1650;
-                const localCartageAud = parseFloat(document.getElementById('input-cartage').value) || 750;
-                const marginPercent = parseFloat(document.getElementById('input-margin').value) || 50;
-
-                const calc = calculateProductCosts(product, fx, oceanFreightUsd, localCartageAud, marginPercent);
-
-                // Update dynamic values in table row without rebuilding or losing input focus
-                const pcsUsdEl = document.getElementById(`pcs-usd-${productId}`);
-                if (pcsUsdEl) pcsUsdEl.innerText = `$${computedPcsUsd.toFixed(2)} USD`;
-
-                const pcsAudEl = document.getElementById(`pcs-aud-${productId}`);
-                if (pcsAudEl) pcsAudEl.innerText = `$${calc.fobAud.toFixed(2)} AUD`;
-
-                const landedCostEl = document.getElementById(`landed-cost-${productId}`);
-                if (landedCostEl) landedCostEl.innerText = `$${calc.landedCostAud.toFixed(2)}`;
-
-                const itemizedFobEl = document.getElementById(`item-fob-${productId}`);
-                if (itemizedFobEl) itemizedFobEl.innerText = `$${calc.fobAud.toFixed(2)}`;
-
-                const sellingPriceEl = document.getElementById(`selling-price-${productId}`);
-                if (sellingPriceEl) sellingPriceEl.innerText = `$${calc.sellingPriceAud.toFixed(2)}`;
+                // Refresh table to trigger recalculation and badge color updates
+                renderTable();
             }
+        }
+
+        // Helper to Generate Competitor HTML Block with Dynamic Color Badges BASED ON WEIGHT EQUIVALENT PRICE COMPARISON
+        function generateCompetitorHtml(compList, targetWeightG, sellingPriceAud, iconClass) {
+            return compList.map(comp => {
+                // Calculate weight proportional price equivalent to match Two Parrots' net package size
+                const equivPriceAud = (comp.priceAud / comp.weightG) * targetWeightG;
+                
+                // LIGHT GREEN if Two Parrots Selling Price AUD <= Competitor Equivalent AUD
+                // LIGHT RED if Two Parrots Selling Price AUD > Competitor Equivalent AUD
+                const isBetter = sellingPriceAud <= equivPriceAud;
+                const badgeClass = isBetter 
+                    ? 'bg-emerald-100 text-emerald-800 border-emerald-300' 
+                    : 'bg-rose-100 text-rose-800 border-rose-300';
+                
+                return `
+                    <div class="mb-2 last:mb-0 pb-1 border-b border-slate-100 last:border-b-0">
+                        <div class="text-slate-800 font-medium text-xs mb-0.5">
+                            ${comp.brand} ${comp.weightG}g ($${comp.priceAud.toFixed(2)}/pc)
+                        </div>
+                        <div class="flex items-center gap-1.5 flex-wrap">
+                            <span class="source-badge border ${badgeClass}">
+                                <i class="${iconClass} mr-0.5 text-[9px]"></i> ${comp.source}
+                            </span>
+                            <span class="text-[10px] text-slate-500 font-mono" title="Normalized price scaled to ${targetWeightG}g">
+                                [Eq: $${equivPriceAud.toFixed(2)}/${targetWeightG}g]
+                            </span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
         }
 
         // Render Function
@@ -1380,9 +1389,12 @@
                 const pcsPerCtn = getPcsPerCtn(p.spec);
                 const ctnUsdVal = p.fobUsd * pcsPerCtn;
 
+                // Weight-normalized color-coded comparison badges based on SELLING PRICE vs COMPETITOR EQUIVALENT
+                const asianCompHtml = generateCompetitorHtml(p.asianComps, p.weightG, calc.sellingPriceAud, 'fa-solid fa-store');
+                const ausCompHtml = generateCompetitorHtml(p.ausComps, p.weightG, calc.sellingPriceAud, 'fa-solid fa-cart-shopping');
+
                 const tr = document.createElement('tr');
                 tr.id = `product-row-${p.id}`;
-                // BOLD ROW BORDER APPLIED HERE (border-b-2 border-slate-300)
                 tr.className = `hover:bg-slate-100/80 transition border-b-2 border-slate-300 ${isUpcoming ? 'bg-amber-50/50' : (idx % 2 === 0 ? 'bg-white' : 'bg-slate-50/70')}`;
 
                 tr.innerHTML = `
@@ -1408,7 +1420,7 @@
                         <div class="flex items-center justify-end gap-1 mb-1">
                             <span class="text-xs text-slate-500 font-bold">$</span>
                             <input type="number" step="0.10" min="0" value="${ctnUsdVal.toFixed(2)}" 
-                                oninput="updateProductCtnUsd(${p.id}, this.value)"
+                                onchange="updateProductCtnUsd(${p.id}, this.value)"
                                 class="bg-slate-100 hover:bg-white border border-slate-300 focus:border-gold-500 focus:bg-white text-slate-900 font-bold text-sm rounded px-2 py-0.5 text-right w-20 focus:outline-none transition shadow-sm"
                                 title="Click or type to adjust USD CTN price">
                             <span class="text-[10px] text-gold-600 font-bold font-sans">USD/CTN</span>
@@ -1454,20 +1466,10 @@
                         </div>
                     </td>
                     <td class="py-3 px-3 border-r-2 border-slate-200">
-                        <div class="text-slate-800 font-medium text-xs mb-1">${p.asianComp}</div>
-                        <div>
-                            <span class="source-badge bg-amber-100 text-amber-800 border border-amber-300">
-                                <i class="fa-solid fa-store mr-0.5 text-[9px]"></i> ${p.asianSource}
-                            </span>
-                        </div>
+                        ${asianCompHtml}
                     </td>
                     <td class="py-3 px-3">
-                        <div class="text-slate-800 font-medium text-xs mb-1">${p.ausComp}</div>
-                        <div>
-                            <span class="source-badge bg-blue-100 text-blue-800 border border-blue-300">
-                                <i class="fa-solid fa-cart-shopping mr-0.5 text-[9px]"></i> ${p.ausSource}
-                            </span>
-                        </div>
+                        ${ausCompHtml}
                     </td>
                 `;
 
