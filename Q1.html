@@ -118,7 +118,7 @@
 
   <div class="main-container max-w-[1480px] mx-auto bg-white p-4 sm:p-8 rounded-2xl shadow-xl border border-slate-200">
     
-    <!-- EXECUTIVE HEADER (TEXT BRANDING ONLY - NO LOGO GRAPHIC) -->
+    <!-- EXECUTIVE HEADER -->
     <div class="bg-gradient-to-r from-theme-darkslate via-theme-slate to-theme-darkslate text-white p-6 sm:p-8 rounded-xl shadow-lg border-b-4 border-theme-gold mb-6">
       <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
         <div>
@@ -153,7 +153,7 @@
         </span>
       </div>
       <div class="flex flex-wrap items-center gap-4 text-slate-700 font-medium">
-        <p><strong>Ref:</strong> <span class="text-theme-goldhover font-extrabold">TPG-AU-2026-V13</span></p>
+        <p><strong>Ref:</strong> <span class="text-theme-goldhover font-extrabold">TPG-AU-2026-V14</span></p>
         <p><strong>Issue Date:</strong> 25-OCT-2026</p>
         <p><strong>Valid Until:</strong> 30-NOV-2026</p>
         <p><strong>Entry Port:</strong> <span class="text-theme-slate font-bold">Melbourne DP World Swanson Dock</span></p>
@@ -255,10 +255,10 @@
           <tr class="bg-theme-slate text-white font-black text-[11px] uppercase tracking-wider text-center border-b-2 border-theme-gold">
             <th class="p-2 w-[3%] border-slate-200">N°</th>
             <th class="p-2 text-left w-[20%] border-slate-200">Product Description</th>
-            <th class="p-2 text-center bg-theme-darkslate border-slate-200 w-[14%]">Price Pcs Before Delivery<br><span class="text-[9px] font-normal text-theme-gold">(FOB USD / AUD)</span></th>
-            <th class="p-2 text-left bg-theme-darkslate border-slate-200 text-theme-gold w-[25%]">Total Cost of Each Pcs<br><span class="text-[9px] font-normal text-white">(Itemized Landed Components + Selling Price)</span></th>
-            <th class="p-2 text-center bg-slate-800 border-slate-200 w-[19%]">Asian Market Comparison Brand<br><span class="text-[9px] font-normal text-slate-300">(Thai / VN / India)</span></th>
-            <th class="p-2 text-center bg-theme-darkslate border-slate-200 w-[19%]">Australian Supermarket Price<br><span class="text-[9px] font-normal text-theme-gold">(Coles / Woolworths)</span></th>
+            <th class="p-2 text-center bg-theme-darkslate border-slate-200 w-[14%]">Price Before Delivery<br><span class="text-[9px] font-normal text-theme-gold">(FOB USD / AUD)</span></th>
+            <th class="p-2 text-left bg-theme-darkslate border-slate-200 text-theme-gold w-[25%]">Total Cost Component Breakdown<br><span class="text-[9px] font-normal text-white">(Itemized Landed Allocations + Wholesale Selling Price)</span></th>
+            <th class="p-2 text-center bg-slate-800 border-slate-200 w-[19%]">Asian Market Comparison Brand<br><span class="text-[9px] font-normal text-amber-200">(Thai / VN / India / Indo / Phil)</span></th>
+            <th class="p-2 text-center bg-theme-darkslate border-slate-200 w-[19%]">Australian Supermarket Price<br><span class="text-[9px] font-normal text-theme-gold">(Coles / Woolworths Benchmarks)</span></th>
           </tr>
         </thead>
         <tbody id="mainProductsBody" class="divide-y divide-slate-200">
@@ -283,10 +283,10 @@
           <tr class="bg-theme-darkslate text-white font-black text-[11px] uppercase tracking-wider text-center border-b-2 border-theme-gold">
             <th class="p-2 w-[3%] border-slate-200">N°</th>
             <th class="p-2 text-left w-[20%] border-slate-200">Product Description</th>
-            <th class="p-2 text-center bg-slate-900 border-slate-200 w-[14%]">Price Pcs Before Delivery<br><span class="text-[9px] font-normal text-theme-gold">(FOB USD / AUD)</span></th>
-            <th class="p-2 text-left bg-theme-darkslate border-slate-200 text-theme-gold w-[25%]">Total Cost of Each Pcs<br><span class="text-[9px] font-normal text-white">(Itemized Landed Components + Selling Price)</span></th>
-            <th class="p-2 text-center bg-slate-800 border-slate-200 w-[19%]">Asian Market Comparison Brand<br><span class="text-[9px] font-normal text-slate-300">(Thai / VN / India)</span></th>
-            <th class="p-2 text-center bg-theme-darkslate border-slate-200 w-[19%]">Australian Supermarket Price<br><span class="text-[9px] font-normal text-theme-gold">(Coles / Woolworths)</span></th>
+            <th class="p-2 text-center bg-slate-900 border-slate-200 w-[14%]">Price Before Delivery<br><span class="text-[9px] font-normal text-theme-gold">(FOB USD / AUD)</span></th>
+            <th class="p-2 text-left bg-theme-darkslate border-slate-200 text-theme-gold w-[25%]">Total Cost Component Breakdown<br><span class="text-[9px] font-normal text-white">(Itemized Landed Allocations + Wholesale Selling Price)</span></th>
+            <th class="p-2 text-center bg-slate-800 border-slate-200 w-[19%]">Asian Market Comparison Brand<br><span class="text-[9px] font-normal text-amber-200">(Thai / VN / India / Indo / Phil)</span></th>
+            <th class="p-2 text-center bg-theme-darkslate border-slate-200 w-[19%]">Australian Supermarket Price<br><span class="text-[9px] font-normal text-theme-gold">(Coles / Woolworths Benchmarks)</span></th>
           </tr>
         </thead>
         <tbody id="upcomingProductsBody" class="divide-y divide-slate-200">
@@ -362,42 +362,42 @@
   </div>
 
   <script>
-    // Complete 25 active products catalog
+    // Complete 25 active products catalog with enriched Asian & Australian supermarket competitor details
     const mainProducts = [
-      { id: 1, nameEn: "Finest Rice Flour", nameKm: "ម្សៅអង្ករខ្សាយយ៉ាងល្អ", weight: "500g", pack: "500g x 50 Pcs/CTN", pcsPerCtn: 50, ctnPriceUSD: 18.00, feeMult: 1.0, ingredients: "100% Pure Cambodian Jasmine Rice Flour", asianBrand: "Erawan 3 Elephants", asianOrigin: "🇹🇭 Thai", asianPrice: "$2.10", auSupermarket: "McKenzie's / Coles", auPrice: "$2.40" },
-      { id: 2, nameEn: "Glutinous Rice Flour", nameKm: "ម្សៅអង្ករដំណើប", weight: "500g", pack: "500g x 50 Pcs/CTN", pcsPerCtn: 50, ctnPriceUSD: 19.50, feeMult: 1.0, ingredients: "100% Premium Cambodian Sticky Rice Flour", asianBrand: "Erawan Glutinous", asianOrigin: "🇹🇭 Thai", asianPrice: "$2.20", auSupermarket: "Cock Brand / Coles", auPrice: "$2.50" },
-      { id: 3, nameEn: "Tapioca Starch", nameKm: "ម្សៅដំឡូងមី", weight: "500g", pack: "500g x 50 Pcs/CTN", pcsPerCtn: 50, ctnPriceUSD: 16.50, feeMult: 1.0, ingredients: "Pure Tapioca Starch (Cassava Root)", asianBrand: "Vĩnh Thuận Tapioca", asianOrigin: "🇻🇳 Viet", asianPrice: "$1.90", auSupermarket: "McKenzie's Tapioca", auPrice: "$2.30" },
-      { id: 4, nameEn: "Pancake Flour Premix", nameKm: "ម្សៅនំគ្រក់/នំបាញ់ឆែវ", weight: "500g", pack: "500g x 30 Pcs/CTN", pcsPerCtn: 30, ctnPriceUSD: 21.00, feeMult: 1.0, ingredients: "Rice Flour, Turmeric, Coconut Powder, Spices", asianBrand: "Bánh Xèo Vĩnh Thuận", asianOrigin: "🇻🇳 Viet", asianPrice: "$3.00", auSupermarket: "White Wings Pancake", auPrice: "$3.50" },
-      { id: 5, nameEn: "Crispy Tempura Flour", nameKm: "ម្សៅបំពងស្រួយ", weight: "1000g", pack: "1000g x 20 Pcs/CTN", pcsPerCtn: 20, ctnPriceUSD: 22.00, feeMult: 1.0, ingredients: "Wheat Starch, Rice Flour, Baking Powder, Seasoning", asianBrand: "Gogi Tempura 1kg", asianOrigin: "🇹🇭 Thai", asianPrice: "$3.80", auSupermarket: "KanTong / Anchor", auPrice: "$4.50" },
-      { id: 6, nameEn: "Kampot Black Pepper Whole", nameKm: "ម្រេចខ្មៅគ្រាប់កំពត", weight: "100g", pack: "100g x 50 Cans/CTN", pcsPerCtn: 50, ctnPriceUSD: 85.00, feeMult: 0.8, ingredients: "100% PGI Kampot Whole Black Peppercorns", asianBrand: "MasterFoods Whole", asianOrigin: "🇹🇭 Thai", asianPrice: "$6.50", auSupermarket: "Saxa / Coles 100g", auPrice: "$7.80" },
-      { id: 7, nameEn: "Fine Ground Black Pepper", nameKm: "ម្រេចខ្មៅម៉ត់", weight: "80g", pack: "80g x 50 Cans/CTN", pcsPerCtn: 50, ctnPriceUSD: 45.00, feeMult: 0.8, ingredients: "100% Pure Fine Ground Black Pepper", asianBrand: "Eastern Ground Pepper", asianOrigin: "🇮🇳 India", asianPrice: "$3.50", auSupermarket: "Saxa Ground Pepper", auPrice: "$4.80" },
-      { id: 8, nameEn: "Coarse Ground Black Pepper", nameKm: "ម្រេចខ្មៅបុក", weight: "80g", pack: "80g x 50 Cans/CTN", pcsPerCtn: 50, ctnPriceUSD: 45.00, feeMult: 0.8, ingredients: "100% Pure Coarse Ground Black Pepper", asianBrand: "MDH Cracked Pepper", asianOrigin: "🇮🇳 India", asianPrice: "$3.50", auSupermarket: "MasterFoods Cracked", auPrice: "$4.90" },
-      { id: 9, nameEn: "Fine Ground White Pepper", nameKm: "ម្រេចសម៉ត់", weight: "80g", pack: "80g x 50 Cans/CTN", pcsPerCtn: 50, ctnPriceUSD: 52.00, feeMult: 0.8, ingredients: "100% Pure Fine Ground White Pepper", asianBrand: "Cock Brand White Pepper", asianOrigin: "🇹🇭 Thai", asianPrice: "$4.20", auSupermarket: "Saxa White Pepper", auPrice: "$5.20" },
-      { id: 10, nameEn: "Kampot White Pepper Whole", nameKm: "ម្រេចសគ្រាប់កំពត", weight: "100g", pack: "100g x 50 Cans/CTN", pcsPerCtn: 50, ctnPriceUSD: 95.00, feeMult: 0.8, ingredients: "100% Premium Kampot White Peppercorns", asianBrand: "Spice Islands White", asianOrigin: "🇹🇭 Thai", asianPrice: "$7.50", auSupermarket: "MasterFoods White", auPrice: "$8.90" },
-      { id: 11, nameEn: "Authentic Cambodian Fish Sauce", nameKm: "ទឹកត្រីកោះកុង", weight: "700ml", pack: "700ml x 12 Bottles/CTN", pcsPerCtn: 12, ctnPriceUSD: 16.80, feeMult: 1.2, ingredients: "Anchovy Extract 75%, Salt, Sugar", asianBrand: "Squid Brand Fish Sauce", asianOrigin: "🇹🇭 Thai", asianPrice: "$3.50", auSupermarket: "Megachef / Coles", auPrice: "$4.20" },
-      { id: 12, nameEn: "Premium Light Soy Sauce", nameKm: "ទឹកស៊ីអ៊ីវខាប់", weight: "500ml", pack: "500ml x 12 Bottles/CTN", pcsPerCtn: 12, ctnPriceUSD: 14.40, feeMult: 1.2, ingredients: "Water, Soybeans, Wheat, Salt, Sugar", asianBrand: "Healthy Boy Soy Sauce", asianOrigin: "🇹🇭 Thai", asianPrice: "$2.80", auSupermarket: "Lee Kum Kee / Woolies", auPrice: "$3.40" },
-      { id: 13, nameEn: "Dark Sweet Soy Sauce", nameKm: "ទឹកស៊ីអ៊ីវព្រែមៀម", weight: "500ml", pack: "500ml x 12 Bottles/CTN", pcsPerCtn: 12, ctnPriceUSD: 15.60, feeMult: 1.2, ingredients: "Soybeans, Molasses, Sugar, Salt", asianBrand: "ABC Sweet Soy Sauce", asianOrigin: "🇮🇩 Ind", asianPrice: "$3.20", auSupermarket: "Kikoman / Coles", auPrice: "$3.80" },
-      { id: 14, nameEn: "Cambodian Jasmine Rice", nameKm: "អង្ករផ្ការំដួល", weight: "5kg", pack: "5kg x 4 Bags/CTN", pcsPerCtn: 4, ctnPriceUSD: 24.00, feeMult: 1.5, ingredients: "100% Phka Rumduol Premium Cambodian Rice", asianBrand: "Royal Umbrella Rice", asianOrigin: "🇹🇭 Thai", asianPrice: "$14.50", auSupermarket: "SunRice Jasmine 5kg", auPrice: "$18.00" },
-      { id: 15, nameEn: "Kampong Speu Palm Sugar", nameKm: "ស្ករត្នោតកំពង់ស្ពឺ", weight: "500g", pack: "500g x 24 Tub/CTN", pcsPerCtn: 24, ctnPriceUSD: 28.80, feeMult: 1.0, ingredients: "100% Pure Kampong Speu Sap Palm Sugar", asianBrand: "Cock Brand Palm Sugar", asianOrigin: "🇹🇭 Thai", asianPrice: "$3.50", auSupermarket: "Chef's Choice Palm", auPrice: "$4.50" },
-      { id: 16, nameEn: "Roasted White Sesame Seeds", nameKm: "ល្ងសលីង", weight: "200g", pack: "200g x 30 Bags/CTN", pcsPerCtn: 30, ctnPriceUSD: 22.50, feeMult: 0.9, ingredients: "100% Cleaned Roasted Sesame Seeds", asianBrand: "Double Pagoda Sesame", asianOrigin: "🇹🇭 Thai", asianPrice: "$2.50", auSupermarket: "McKenzie's Sesame", auPrice: "$3.10" },
-      { id: 17, nameEn: "Crispy Fried Shallots", nameKm: "ខ្ទឹមក្រហមបំពង", weight: "250g", pack: "250g x 24 Cans/CTN", pcsPerCtn: 24, ctnPriceUSD: 31.20, feeMult: 1.0, ingredients: "Fresh Shallots 90%, Palm Oil 10%", asianBrand: "Cock Brand Shallots", asianOrigin: "🇹🇭 Thai", asianPrice: "$3.80", auSupermarket: "Asian Gourmet Shallots", auPrice: "$4.60" },
-      { id: 18, nameEn: "Crispy Fried Garlic", nameKm: "ខ្ទឹមសបំពង", weight: "250g", pack: "250g x 24 Cans/CTN", pcsPerCtn: 24, ctnPriceUSD: 28.80, feeMult: 1.0, ingredients: "Fresh Garlic 90%, Vegetable Oil 10%", asianBrand: "Erawan Fried Garlic", asianOrigin: "🇹🇭 Thai", asianPrice: "$3.60", auSupermarket: "MasterFoods Garlic", auPrice: "$4.40" },
-      { id: 19, nameEn: "Coconut Milk 17% Fat", nameKm: "ខ្ទិះដូង", weight: "400ml", pack: "400ml x 24 Cans/CTN", pcsPerCtn: 24, ctnPriceUSD: 19.20, feeMult: 1.1, ingredients: "Coconut Extract 82%, Water, Guar Gum", asianBrand: "Aroy-D Coconut Milk", asianOrigin: "🇹🇭 Thai", asianPrice: "$1.95", auSupermarket: "Pandora / Coles 400ml", auPrice: "$2.50" },
-      { id: 20, nameEn: "Rich Coconut Cream 22% Fat", nameKm: "ក្បាលខ្ទិះដូង", weight: "400ml", pack: "400ml x 24 Cans/CTN", pcsPerCtn: 24, ctnPriceUSD: 22.80, feeMult: 1.1, ingredients: "Coconut Extract 90%, Water, Stabilizer", asianBrand: "Kara Coconut Cream", asianOrigin: "🇮🇩 Ind", asianPrice: "$2.30", auSupermarket: "Ayam Coconut Cream", auPrice: "$2.90" },
-      { id: 21, nameEn: "Cambodian Prahok Paste", nameKm: "ប្រហុកសាច់ប្រឡាក់", weight: "400g", pack: "400g x 20 Jars/CTN", pcsPerCtn: 20, ctnPriceUSD: 42.00, feeMult: 1.1, ingredients: "Fermented Mudfish, Salt, Ground Rice", asianBrand: "Cock Brand Gourami", asianOrigin: "🇹🇭 Thai", asianPrice: "$5.50", auSupermarket: "Asian Specialty Imports", auPrice: "$6.80" },
-      { id: 22, nameEn: "Sour Tamarind Paste", nameKm: "ម្ជូរអំពិលទុំ", weight: "450g", pack: "450g x 24 Tub/CTN", pcsPerCtn: 24, ctnPriceUSD: 26.40, feeMult: 1.0, ingredients: "100% Seedless Tamarind Pulp & Salt", asianBrand: "Cock Tamarind Paste", asianOrigin: "🇹🇭 Thai", asianPrice: "$2.80", auSupermarket: "Tamicon / Coles", auPrice: "$3.60" },
-      { id: 23, nameEn: "Khmer Yellow Curry Powder", nameKm: "ម្សៅការីខែ្មរ", weight: "100g", pack: "100g x 50 Bags/CTN", pcsPerCtn: 50, ctnPriceUSD: 30.00, feeMult: 0.8, ingredients: "Turmeric, Lemongrass, Galangal, Garlic, Coriander", asianBrand: "WAH Curry Powder", asianOrigin: "🇲🇾 MY", asianPrice: "$1.80", auSupermarket: "Clive of India Curry", auPrice: "$2.60" },
-      { id: 24, nameEn: "Dried Red Chilli Flakes", nameKm: "ម្ទេសក្រហមបុក", weight: "250g", pack: "250g x 20 Bags/CTN", pcsPerCtn: 20, ctnPriceUSD: 22.00, feeMult: 0.9, ingredients: "100% Sundried Coarse Red Chilli Flakes", asianBrand: "TRS Chilli Flakes", asianOrigin: "🇮🇳 India", asianPrice: "$2.90", auSupermarket: "Hoyts Chilli Flakes", auPrice: "$3.80" },
-      { id: 25, nameEn: "Rice Paper Wrappers 22cm", nameKm: "នំប្រដាប់ឆែន", weight: "375g", pack: "375g x 30 Pcs/CTN", pcsPerCtn: 30, ctnPriceUSD: 28.50, feeMult: 1.0, ingredients: "Tapioca, Rice Flour, Water, Salt", asianBrand: "Three Ladies Brand", asianOrigin: "🇻🇳 Viet", asianPrice: "$2.40", auSupermarket: "Pandora Springroll", auPrice: "$3.20" }
+      { id: 1, nameEn: "Finest Rice Flour", nameKm: "ម្សៅអង្ករខ្សាយយ៉ាងល្អ", weight: "500g", pack: "500g x 50 Pcs/CTN", pcsPerCtn: 50, ctnPriceUSD: 18.00, feeMult: 1.0, ingredients: "100% Pure Cambodian Jasmine Rice Flour", asianBrand: "Erawan 3 Elephants 500g", asianOrigin: "🇹🇭 Thai", asianPrice: "$1.90 – $2.20", asianUnit: "($0.38/100g)", auSupermarket: "Coles / Erawan 500g", auPrice: "$2.40", auUnit: "($0.48/100g)" },
+      { id: 2, nameEn: "Glutinous Rice Flour", nameKm: "ម្សៅអង្ករដំណើប", weight: "500g", pack: "500g x 50 Pcs/CTN", pcsPerCtn: 50, ctnPriceUSD: 19.50, feeMult: 1.0, ingredients: "100% Premium Cambodian Sticky Rice Flour", asianBrand: "Erawan Green Elephant 500g", asianOrigin: "🇹🇭 Thai", asianPrice: "$2.00 – $2.30", asianUnit: "($0.42/100g)", auSupermarket: "Woolworths / Cock Brand 500g", auPrice: "$2.50", auUnit: "($0.50/100g)" },
+      { id: 3, nameEn: "Tapioca Starch", nameKm: "ម្សៅដំឡូងមី", weight: "500g", pack: "500g x 50 Pcs/CTN", pcsPerCtn: 50, ctnPriceUSD: 16.50, feeMult: 1.0, ingredients: "Pure Tapioca Starch (Cassava Root)", asianBrand: "Vĩnh Thuận Tapioca 500g", asianOrigin: "🇻🇳 Viet", asianPrice: "$1.80 – $2.10", asianUnit: "($0.38/100g)", auSupermarket: "Coles / McKenzie's 375g", auPrice: "$2.35", auUnit: "($0.63/100g)" },
+      { id: 4, nameEn: "Pancake Flour Premix", nameKm: "ម្សៅនំគ្រក់/នំបាញ់ឆែវ", weight: "500g", pack: "500g x 30 Pcs/CTN", pcsPerCtn: 30, ctnPriceUSD: 21.00, feeMult: 1.0, ingredients: "Rice Flour, Turmeric, Coconut Powder, Spices", asianBrand: "Bánh Xèo Vĩnh Thuận 500g", asianOrigin: "🇻🇳 Viet", asianPrice: "$2.80 – $3.20", asianUnit: "($0.60/100g)", auSupermarket: "Woolworths / White Wings 400g", auPrice: "$3.50", auUnit: "($0.88/100g)" },
+      { id: 5, nameEn: "Crispy Tempura Flour", nameKm: "ម្សៅបំពងស្រួយ", weight: "1000g", pack: "1000g x 20 Pcs/CTN", pcsPerCtn: 20, ctnPriceUSD: 22.00, feeMult: 1.0, ingredients: "Wheat Starch, Rice Flour, Baking Powder, Seasoning", asianBrand: "Gogi Tempura Batter 1kg", asianOrigin: "🇹🇭 Thai", asianPrice: "$3.50 – $3.90", asianUnit: "($0.37/100g)", auSupermarket: "Coles / KanTong Tempura 125g", auPrice: "$4.50", auUnit: "($3.60/100g)" },
+      { id: 6, nameEn: "Kampot Black Pepper Whole", nameKm: "ម្រេចខ្មៅគ្រាប់កំពត", weight: "100g", pack: "100g x 50 Cans/CTN", pcsPerCtn: 50, ctnPriceUSD: 85.00, feeMult: 0.8, ingredients: "100% PGI Kampot Whole Black Peppercorns", asianBrand: "MasterFoods Whole Black 100g", asianOrigin: "🇹🇭 Thai", asianPrice: "$6.20 – $6.80", asianUnit: "($6.50/100g)", auSupermarket: "Coles / Saxa Peppercorns 100g", auPrice: "$7.80", auUnit: "($7.80/100g)" },
+      { id: 7, nameEn: "Fine Ground Black Pepper", nameKm: "ម្រេចខ្មៅម៉ត់", weight: "80g", pack: "80g x 50 Cans/CTN", pcsPerCtn: 50, ctnPriceUSD: 45.00, feeMult: 0.8, ingredients: "100% Pure Fine Ground Black Pepper", asianBrand: "Eastern Ground Black 100g", asianOrigin: "🇮🇳 India", asianPrice: "$3.20 – $3.60", asianUnit: "($3.40/100g)", auSupermarket: "Woolworths / Saxa Black 80g", auPrice: "$4.80", auUnit: "($6.00/100g)" },
+      { id: 8, nameEn: "Coarse Ground Black Pepper", nameKm: "ម្រេចខ្មៅបុក", weight: "80g", pack: "80g x 50 Cans/CTN", pcsPerCtn: 50, ctnPriceUSD: 45.00, feeMult: 0.8, ingredients: "100% Pure Coarse Ground Black Pepper", asianBrand: "MDH Cracked Black 100g", asianOrigin: "🇮🇳 India", asianPrice: "$3.30 – $3.70", asianUnit: "($3.50/100g)", auSupermarket: "Coles / MasterFoods Cracked 80g", auPrice: "$4.90", auUnit: "($6.13/100g)" },
+      { id: 9, nameEn: "Fine Ground White Pepper", nameKm: "ម្រេចសម៉ត់", weight: "80g", pack: "80g x 50 Cans/CTN", pcsPerCtn: 50, ctnPriceUSD: 52.00, feeMult: 0.8, ingredients: "100% Pure Fine Ground White Pepper", asianBrand: "Cock Brand White Pepper 100g", asianOrigin: "🇹🇭 Thai", asianPrice: "$3.90 – $4.40", asianUnit: "($4.15/100g)", auSupermarket: "Woolworths / Saxa White 80g", auPrice: "$5.20", auUnit: "($6.50/100g)" },
+      { id: 10, nameEn: "Kampot White Pepper Whole", nameKm: "ម្រេចសគ្រាប់កំពត", weight: "100g", pack: "100g x 50 Cans/CTN", pcsPerCtn: 50, ctnPriceUSD: 95.00, feeMult: 0.8, ingredients: "100% Premium Kampot White Peppercorns", asianBrand: "Spice Islands White 100g", asianOrigin: "🇹🇭 Thai", asianPrice: "$7.20 – $7.90", asianUnit: "($7.55/100g)", auSupermarket: "Coles / MasterFoods White 100g", auPrice: "$8.90", auUnit: "($8.90/100g)" },
+      { id: 11, nameEn: "Authentic Cambodian Fish Sauce", nameKm: "ទឹកត្រីកោះកុង", weight: "700ml", pack: "700ml x 12 Bottles/CTN", pcsPerCtn: 12, ctnPriceUSD: 16.80, feeMult: 1.2, ingredients: "Anchovy Extract 75%, Salt, Sugar", asianBrand: "Squid Brand Fish Sauce 725ml", asianOrigin: "🇹🇭 Thai", asianPrice: "$3.20 – $3.60", asianUnit: "($0.47/100mL)", auSupermarket: "Coles / Megachef 200ml", auPrice: "$4.20", auUnit: "($2.10/100mL)" },
+      { id: 12, nameEn: "Premium Light Soy Sauce", nameKm: "ទឹកស៊ីអ៊ីវខាប់", weight: "500ml", pack: "500ml x 12 Bottles/CTN", pcsPerCtn: 12, ctnPriceUSD: 14.40, feeMult: 1.2, ingredients: "Water, Soybeans, Wheat, Salt, Sugar", asianBrand: "Healthy Boy Soy Sauce 700ml", asianOrigin: "🇹🇭 Thai", asianPrice: "$2.60 – $3.00", asianUnit: "($0.40/100mL)", auSupermarket: "Woolworths / Lee Kum Kee 500ml", auPrice: "$3.40", auUnit: "($0.68/100mL)" },
+      { id: 13, nameEn: "Dark Sweet Soy Sauce", nameKm: "ទឹកស៊ីអ៊ីវព្រែមៀម", weight: "500ml", pack: "500ml x 12 Bottles/CTN", pcsPerCtn: 12, ctnPriceUSD: 15.60, feeMult: 1.2, ingredients: "Soybeans, Molasses, Sugar, Salt", asianBrand: "ABC Sweet Soy Kecap 620ml", asianOrigin: "🇮🇩 Indo", asianPrice: "$3.00 – $3.50", asianUnit: "($0.52/100mL)", auSupermarket: "Coles / Kikkoman Sweet 250ml", auPrice: "$3.80", auUnit: "($1.52/100mL)" },
+      { id: 14, nameEn: "Cambodian Jasmine Rice", nameKm: "អង្ករផ្ការំដួល", weight: "5kg", pack: "5kg x 4 Bags/CTN", pcsPerCtn: 4, ctnPriceUSD: 24.00, feeMult: 1.5, ingredients: "100% Phka Rumduol Premium Cambodian Rice", asianBrand: "Royal Umbrella Jasmine 5kg", asianOrigin: "🇹🇭 Thai", asianPrice: "$13.50 – $15.00", asianUnit: "($2.85/kg)", auSupermarket: "Woolworths / SunRice Jasmine 5kg", auPrice: "$18.00", auUnit: "($3.60/kg)" },
+      { id: 15, nameEn: "Kampong Speu Palm Sugar", nameKm: "ស្ករត្នោតកំពង់ស្ពឺ", weight: "500g", pack: "500g x 24 Tub/CTN", pcsPerCtn: 24, ctnPriceUSD: 28.80, feeMult: 1.0, ingredients: "100% Pure Kampong Speu Sap Palm Sugar", asianBrand: "Cock Brand Palm Sugar 500g", asianOrigin: "🇹🇭 Thai", asianPrice: "$3.20 – $3.70", asianUnit: "($0.69/100g)", auSupermarket: "Coles / Chef's Choice 250g", auPrice: "$4.50", auUnit: "($1.80/100g)" },
+      { id: 16, nameEn: "Roasted White Sesame Seeds", nameKm: "ល្ងសលីង", weight: "200g", pack: "200g x 30 Bags/CTN", pcsPerCtn: 30, ctnPriceUSD: 22.50, feeMult: 0.9, ingredients: "100% Cleaned Roasted Sesame Seeds", asianBrand: "Double Pagoda Sesame 200g", asianOrigin: "🇹🇭 Thai", asianPrice: "$2.30 – $2.70", asianUnit: "($1.25/100g)", auSupermarket: "Woolworths / McKenzie's 100g", auPrice: "$3.10", auUnit: "($3.10/100g)" },
+      { id: 17, nameEn: "Crispy Fried Shallots", nameKm: "ខ្ទឹមក្រហមបំពង", weight: "250g", pack: "250g x 24 Cans/CTN", pcsPerCtn: 24, ctnPriceUSD: 31.20, feeMult: 1.0, ingredients: "Fresh Shallots 90%, Palm Oil 10%", asianBrand: "Cock Brand Shallots 250g", asianOrigin: "🇹🇭 Thai", asianPrice: "$3.50 – $4.00", asianUnit: "($1.50/100g)", auSupermarket: "Coles / Pandaroo Shallots 100g", auPrice: "$4.60", auUnit: "($4.60/100g)" },
+      { id: 18, nameEn: "Crispy Fried Garlic", nameKm: "ខ្ទឹមសបំពង", weight: "250g", pack: "250g x 24 Cans/CTN", pcsPerCtn: 24, ctnPriceUSD: 28.80, feeMult: 1.0, ingredients: "Fresh Garlic 90%, Vegetable Oil 10%", asianBrand: "Erawan Fried Garlic 250g", asianOrigin: "🇹🇭 Thai", asianPrice: "$3.40 – $3.80", asianUnit: "($1.44/100g)", auSupermarket: "Woolworths / Hoyts Garlic 100g", auPrice: "$4.40", auUnit: "($4.40/100g)" },
+      { id: 19, nameEn: "Coconut Milk 17% Fat", nameKm: "ខ្ទិះដូង", weight: "400ml", pack: "400ml x 24 Cans/CTN", pcsPerCtn: 24, ctnPriceUSD: 19.20, feeMult: 1.1, ingredients: "Coconut Extract 82%, Water, Guar Gum", asianBrand: "Aroy-D Coconut Milk 400ml", asianOrigin: "🇹🇭 Thai", asianPrice: "$1.80 – $2.10", asianUnit: "($0.49/100mL)", auSupermarket: "Coles / Ayam Coconut Milk 400ml", auPrice: "$2.50", auUnit: "($0.63/100mL)" },
+      { id: 20, nameEn: "Rich Coconut Cream 22% Fat", nameKm: "ក្បាលខ្ទិះដូង", weight: "400ml", pack: "400ml x 24 Cans/CTN", pcsPerCtn: 24, ctnPriceUSD: 22.80, feeMult: 1.1, ingredients: "Coconut Extract 90%, Water, Stabilizer", asianBrand: "Kara Coconut Cream 400ml", asianOrigin: "🇮🇩 Indo", asianPrice: "$2.10 – $2.50", asianUnit: "($0.58/100mL)", auSupermarket: "Woolworths / Ayam Cream 400ml", auPrice: "$2.90", auUnit: "($0.73/100mL)" },
+      { id: 21, nameEn: "Cambodian Prahok Paste", nameKm: "ប្រហុកសាច់ប្រឡាក់", weight: "400g", pack: "400g x 20 Jars/CTN", pcsPerCtn: 20, ctnPriceUSD: 42.00, feeMult: 1.1, ingredients: "Fermented Mudfish, Salt, Ground Rice", asianBrand: "Cock Brand Gourami Fish 454g", asianOrigin: "🇹🇭 Thai", asianPrice: "$5.20 – $5.80", asianUnit: "($1.21/100g)", auSupermarket: "Specialty Asian / Imports 400g", auPrice: "$6.80", auUnit: "($1.70/100g)" },
+      { id: 22, nameEn: "Sour Tamarind Paste", nameKm: "ម្ជូរអំពិលទុំ", weight: "450g", pack: "450g x 24 Tub/CTN", pcsPerCtn: 24, ctnPriceUSD: 26.40, feeMult: 1.0, ingredients: "100% Seedless Tamarind Pulp & Salt", asianBrand: "Cock Tamarind Paste 454g", asianOrigin: "🇹🇭 Thai", asianPrice: "$2.60 – $3.00", asianUnit: "($0.62/100g)", auSupermarket: "Coles / Tamicon Tamarind 200g", auPrice: "$3.60", auUnit: "($1.80/100g)" },
+      { id: 23, nameEn: "Khmer Yellow Curry Powder", nameKm: "ម្សៅការីខែ្មរ", weight: "100g", pack: "100g x 50 Bags/CTN", pcsPerCtn: 50, ctnPriceUSD: 30.00, feeMult: 0.8, ingredients: "Turmeric, Lemongrass, Galangal, Garlic, Coriander", asianBrand: "WAH Curry Powder 100g", asianOrigin: "🇲🇾 MY", asianPrice: "$1.60 – $2.00", asianUnit: "($1.80/100g)", auSupermarket: "Woolworths / Clive of India 50g", auPrice: "$2.60", auUnit: "($5.20/100g)" },
+      { id: 24, nameEn: "Dried Red Chilli Flakes", nameKm: "ម្ទេសក្រហមបុក", weight: "250g", pack: "250g x 20 Bags/CTN", pcsPerCtn: 20, ctnPriceUSD: 22.00, feeMult: 0.9, ingredients: "100% Sundried Coarse Red Chilli Flakes", asianBrand: "TRS Chilli Flakes 100g", asianOrigin: "🇮🇳 India", asianPrice: "$2.60 – $3.10", asianUnit: "($1.14/100g)", auSupermarket: "Coles / Hoyts Chilli Flakes 100g", auPrice: "$3.80", auUnit: "($3.80/100g)" },
+      { id: 25, nameEn: "Rice Paper Wrappers 22cm", nameKm: "នំប្រដាប់ឆែន", weight: "375g", pack: "375g x 30 Pcs/CTN", pcsPerCtn: 30, ctnPriceUSD: 28.50, feeMult: 1.0, ingredients: "Tapioca, Rice Flour, Water, Salt", asianBrand: "Three Ladies Wrappers 375g", asianOrigin: "🇻🇳 Viet", asianPrice: "$2.20 – $2.60", asianUnit: "($0.64/100g)", auSupermarket: "Woolworths / Pandaroo 375g", auPrice: "$3.20", auUnit: "($0.85/100g)" }
     ];
 
-    // 5 Upcoming products (Launch Nov 2026)
+    // 5 Upcoming products (Launch Nov 2026) with detailed competitor benchmarks
     const upcomingProducts = [
-      { id: 1, nameEn: "Organic Palm Sugar Blocks", nameKm: "ស្ករត្នោតដុំអូហ្គានិក", weight: "500g", pack: "500g x 20 Pcs/CTN", pcsPerCtn: 20, ctnPriceUSD: 32.00, feeMult: 1.0, ingredients: "100% Certified Organic Palm Nectar", asianBrand: "Organic Thai Palm", asianOrigin: "🇹🇭 Thai", asianPrice: "$3.80", auSupermarket: "Macro Organic / Coles", auPrice: "$4.90" },
-      { id: 2, nameEn: "Kampot Green Pepper in Brine", nameKm: "ម្រេចខៀវត្រាំទឹកអំបិល", weight: "200g", pack: "200g x 24 Jars/CTN", pcsPerCtn: 24, ctnPriceUSD: 48.00, feeMult: 0.9, ingredients: "Fresh Green Peppercorns, Salt, Water", asianBrand: "Gourmet Thai Brine", asianOrigin: "🇹🇭 Thai", asianPrice: "$5.20", auSupermarket: "Feather & Bone AU", auPrice: "$6.50" },
-      { id: 3, nameEn: "Rice Paper Wrappers 16cm", nameKm: "នំប្រដាប់តូច", weight: "300g", pack: "300g x 40 Pcs/CTN", pcsPerCtn: 40, ctnPriceUSD: 32.00, feeMult: 1.0, ingredients: "Tapioca, Rice Flour, Salt", asianBrand: "Bánh Tráng Bamboo", asianOrigin: "🇻🇳 Viet", asianPrice: "$2.10", auSupermarket: "Coles Asian Section", auPrice: "$2.80" },
-      { id: 4, nameEn: "Crispy Banana Chips Sweet", nameKm: "ចេកឆៃផ្អែម", weight: "150g", pack: "150g x 30 Bags/CTN", pcsPerCtn: 30, ctnPriceUSD: 24.00, feeMult: 1.0, ingredients: "Cambodian Cultivated Banana, Palm Oil, Sugar", asianBrand: "Siam Banana Crisps", asianOrigin: "🇹🇭 Thai", asianPrice: "$2.20", auSupermarket: "Woolworths Snacks", auPrice: "$2.90" },
-      { id: 5, nameEn: "Freeze-Dried Kaffir Lime Leaves", nameKm: "ស្លឹកក្រូចសើចសំងួត", weight: "30g", pack: "30g x 40 Bags/CTN", pcsPerCtn: 40, ctnPriceUSD: 36.00, feeMult: 0.7, ingredients: "100% Pure Kaffir Lime Leaves", asianBrand: "Herbal Thai Leaves", asianOrigin: "🇹🇭 Thai", asianPrice: "$2.80", auSupermarket: "Gourmet Garden AU", auPrice: "$3.50" }
+      { id: 1, nameEn: "Organic Palm Sugar Blocks", nameKm: "ស្ករត្នោតដុំអូហ្គានិក", weight: "500g", pack: "500g x 20 Pcs/CTN", pcsPerCtn: 20, ctnPriceUSD: 32.00, feeMult: 1.0, ingredients: "100% Certified Organic Palm Nectar", asianBrand: "Organic Thai Palm 500g", asianOrigin: "🇹🇭 Thai", asianPrice: "$3.50 – $4.00", asianUnit: "($0.75/100g)", auSupermarket: "Coles / Macro Organic 250g", auPrice: "$4.90", auUnit: "($1.96/100g)" },
+      { id: 2, nameEn: "Kampot Green Pepper Brine", nameKm: "ម្រេចខៀវត្រាំទឹកអំបិល", weight: "200g", pack: "200g x 24 Jars/CTN", pcsPerCtn: 24, ctnPriceUSD: 48.00, feeMult: 0.9, ingredients: "Fresh Green Peppercorns, Salt, Water", asianBrand: "Gourmet Thai Brine 200g", asianOrigin: "🇹🇭 Thai", asianPrice: "$4.90 – $5.50", asianUnit: "($2.60/100g)", auSupermarket: "Specialty / Feather & Bone 100g", auPrice: "$6.50", auUnit: "($6.50/100g)" },
+      { id: 3, nameEn: "Rice Paper Wrappers 16cm", nameKm: "នំប្រដាប់តូច", weight: "300g", pack: "300g x 40 Pcs/CTN", pcsPerCtn: 40, ctnPriceUSD: 32.00, feeMult: 1.0, ingredients: "Tapioca, Rice Flour, Salt", asianBrand: "Bánh Tráng Bamboo 300g", asianOrigin: "🇻🇳 Viet", asianPrice: "$1.90 – $2.30", asianUnit: "($0.70/100g)", auSupermarket: "Coles / Pandaroo Mini 200g", auPrice: "$2.80", auUnit: "($1.40/100g)" },
+      { id: 4, nameEn: "Crispy Banana Chips Sweet", nameKm: "ចេកឆៃផ្អែម", weight: "150g", pack: "150g x 30 Bags/CTN", pcsPerCtn: 30, ctnPriceUSD: 24.00, feeMult: 1.0, ingredients: "Cambodian Cultivated Banana, Palm Oil, Sugar", asianBrand: "Siam Banana Crisps 150g", asianOrigin: "🇹🇭 Thai", asianPrice: "$2.00 – $2.40", asianUnit: "($1.47/100g)", auSupermarket: "Woolworths / DJ&A Chips 100g", auPrice: "$2.90", auUnit: "($2.90/100g)" },
+      { id: 5, nameEn: "Freeze-Dried Kaffir Lime", nameKm: "ស្លឹកក្រូចសើចសំងួត", weight: "30g", pack: "30g x 40 Bags/CTN", pcsPerCtn: 40, ctnPriceUSD: 36.00, feeMult: 0.7, ingredients: "100% Pure Kaffir Lime Leaves", asianBrand: "Herbal Thai Leaves 30g", asianOrigin: "🇹🇭 Thai", asianPrice: "$2.50 – $3.00", asianUnit: "($9.16/100g)", auSupermarket: "Coles / Gourmet Garden 10g", auPrice: "$3.50", auUnit: "($35.00/100g)" }
     ];
 
     function recalculateFees() {
@@ -440,12 +440,12 @@
         const fobPcsUSD = item.ctnPriceUSD / item.pcsPerCtn;
         const fobPcsAUD = fobPcsUSD / fxAUDtoUSD;
 
-        // 2. Logistics Component Allocations per Piece
+        // 2. Logistics Component Allocations
         const freightPcsAUD = (oceanFreightPerCtnAUD * item.feeMult) / item.pcsPerCtn;
         const portBrokeragePcsAUD = (brokeragePerCtnAUD * item.feeMult) / item.pcsPerCtn;
         const localCartagePcsAUD = (cartagePerCtnAUD * item.feeMult) / item.pcsPerCtn;
 
-        // 3. Total Landed Cost per Piece
+        // 3. Total Landed Cost
         const landedPcsAUD = fobPcsAUD + freightPcsAUD + portBrokeragePcsAUD + localCartagePcsAUD;
         const landedPcsUSD = landedPcsAUD * fxAUDtoUSD;
 
@@ -489,14 +489,14 @@
             </div>
           </td>
 
-          <!-- Column 3: PRICE PCS BEFORE DELIVERY (14%) -->
+          <!-- Column 3: PRICE BEFORE DELIVERY (14%) -->
           <td class="p-2 text-center bg-slate-50 font-black text-slate-900 border-slate-200">
             <div class="text-[9px] text-slate-400 font-semibold uppercase">CTN $${item.ctnPriceUSD.toFixed(2)} USD</div>
             <div class="text-xs text-slate-900 font-black">FOB $${fobPcsUSD.toFixed(2)} USD</div>
             <div class="text-[10px] text-theme-goldhover font-extrabold">(A $${fobPcsAUD.toFixed(2)})</div>
           </td>
 
-          <!-- Column 4: TOTAL COST OF EACH PCS - RICH ITEMIZED FORMULA BREAKDOWN (25%) -->
+          <!-- Column 4: TOTAL COST COMPONENT BREAKDOWN (25%) -->
           <td class="p-2 text-left bg-amber-50/60 border-x-2 border-theme-gold text-[10px] leading-tight">
             <!-- Headline Base Landed Cost -->
             <div class="flex justify-between items-center border-b border-amber-300/80 pb-1 mb-1">
@@ -536,8 +536,9 @@
             <div class="flex items-center justify-center gap-1 mb-0.5">
               <span class="bg-slate-200 text-slate-800 font-extrabold text-[9px] px-1 py-0.5 rounded">${item.asianOrigin}</span>
             </div>
-            <div class="font-bold text-slate-900">${item.asianBrand}</div>
-            <div class="text-[10px] font-black text-amber-800">AU Est: ${item.asianPrice}</div>
+            <div class="font-extrabold text-slate-900">${item.asianBrand}</div>
+            <div class="text-[10px] font-black text-amber-900 mt-0.5">AU Est: ${item.asianPrice}</div>
+            <div class="text-[9px] font-bold text-slate-500">${item.asianUnit}</div>
           </td>
 
           <!-- Column 6: AUSTRALIAN SUPERMARKET PRICE (19%) -->
@@ -545,7 +546,8 @@
             <span class="inline-block bg-amber-100 text-amber-900 font-extrabold text-[9px] px-1.5 py-0.5 rounded mb-0.5 border border-amber-300">
               ${item.auSupermarket}
             </span>
-            <div class="text-[10px] font-black text-theme-darkslate">Retail: ${item.auPrice}</div>
+            <div class="text-[10px] font-black text-theme-darkslate mt-0.5">Retail: ${item.auPrice}</div>
+            <div class="text-[9px] font-bold text-slate-500">${item.auUnit}</div>
           </td>
         `;
 
