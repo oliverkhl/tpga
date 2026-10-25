@@ -1,563 +1,926 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Product Quotation & Landed Cost - Two Parrots Group Australia</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Battambang:wght@400;700&family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Two Parrots Group Australia - Landed Cost Quotation</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
             theme: {
-              slate: '#1E293B',
-              darkslate: '#0F172A',
-              charcoal: '#334155',
-              graybg: '#F8FAFC',
-              coolgray: '#F1F5F9',
-              bordergray: '#E2E8F0',
-              gold: '#D4AF37',
-              goldhover: '#C59B27',
-              goldlight: '#FEF08A',
-              goldglow: '#FEFCE8'
+                extend: {
+                    colors: {
+                        slate: {
+                            850: '#151f30',
+                            900: '#1E293B',
+                        },
+                        gold: {
+                            400: '#E6C655',
+                            500: '#D4AF37',
+                            600: '#C59B27',
+                            700: '#9B7817'
+                        },
+                        greybg: '#F4F5F7'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
             }
-          }
         }
-      }
-    }
-  </script>
-  <style>
-    body {
-      font-family: 'Inter', system-ui, -apple-system, sans-serif;
-      color: #0F172A;
-      background-color: #F8FAFC;
-    }
-    .khmer-font {
-      font-family: 'Battambang', cursive, sans-serif;
-    }
-    .serif-heading {
-      font-family: 'Playfair Display', Georgia, serif;
-    }
-    
-    /* Interactive Tooltip Styles */
-    .tooltip {
-      visibility: hidden;
-      opacity: 0;
-      transition: opacity 0.2s ease, visibility 0.2s ease;
-    }
-    .has-tooltip:hover .tooltip {
-      visibility: visible;
-      opacity: 1;
-    }
+    </script>
+    <style>
+        /* Custom Styles & Print CSS */
+        body {
+            background-color: #F4F5F7;
+            font-family: 'Inter', sans-serif;
+            color: #1E293B;
+        }
 
-    /* Standard Web Table Borders */
-    table th, table td {
-      border: 1px solid #E2E8F0;
-    }
+        .gold-gradient {
+            background: linear-gradient(135deg, #D4AF37 0%, #C59B27 100%);
+        }
 
-    /* Print & A4 Optimized Table Formatting */
-    @media print {
-      @page {
-        size: A4 portrait;
-        margin: 8mm;
-      }
-      body {
-        background-color: #ffffff !important;
-        color: #000000 !important;
-        padding: 0 !important;
-        margin: 0 !important;
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-      }
-      .no-print {
-        display: none !important;
-      }
-      .print-shadow-none {
-        box-shadow: none !important;
-        border: none !important;
-        padding: 0 !important;
-      }
-      
-      .main-container {
-        max-width: 100% !important;
-        width: 100% !important;
-        padding: 0 !important;
-        margin: 0 !important;
-      }
+        .gold-border-gradient {
+            border-image: linear-gradient(to right, #D4AF37, #C59B27) 1;
+        }
 
-      .a4-print-table {
-        width: 100% !important;
-        max-width: 100% !important;
-        table-layout: fixed !important;
-        border-collapse: collapse !important;
-        font-size: 7pt !important;
-      }
-      
-      .a4-print-table th, 
-      .a4-print-table td {
-        padding: 2.5px 2px !important;
-        word-wrap: break-word !important;
-        overflow-wrap: break-word !important;
-      }
+        .source-badge {
+            font-size: 0.65rem;
+            line-height: 0.85rem;
+            display: inline-block;
+            padding: 0.15rem 0.4rem;
+            border-radius: 0.25rem;
+            font-weight: 500;
+        }
 
-      tr {
-        page-break-inside: avoid !important;
-      }
-
-      .page-break-before {
-        page-break-before: always;
-      }
-    }
-  </style>
+        @media print {
+            body {
+                background-color: #ffffff !important;
+                color: #000000 !important;
+                font-size: 10px !important;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .page-break {
+                page-break-before: always;
+            }
+            .container {
+                max-width: 100% !important;
+                width: 100% !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+            .shadow-lg, .shadow-md, .shadow-sm {
+                box-shadow: none !important;
+            }
+            .border {
+                border-color: #cbd5e1 !important;
+            }
+            table {
+                width: 100% !important;
+                font-size: 9px !important;
+            }
+            th, td {
+                padding: 4px 6px !important;
+            }
+            @page {
+                size: A4 landscape;
+                margin: 0.8cm;
+            }
+        }
+    </style>
 </head>
-<body class="p-2 sm:p-6 min-h-screen pb-28">
+<body class="min-h-screen pb-32">
 
-  <div class="main-container max-w-[1480px] mx-auto bg-white p-4 sm:p-8 rounded-2xl shadow-xl border border-slate-200">
-    
-    <!-- EXECUTIVE HEADER -->
-    <div class="bg-gradient-to-r from-theme-darkslate via-theme-slate to-theme-darkslate text-white p-6 sm:p-8 rounded-xl shadow-lg border-b-4 border-theme-gold mb-6">
-      <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
-        <div>
-          <span class="bg-theme-gold text-theme-darkslate font-black px-3 py-1 rounded text-xs uppercase tracking-widest shadow-xs">
-            Official Import Quotation & Landed Cost Schedule
-          </span>
-          <h1 class="text-2xl sm:text-4xl font-black tracking-tight mt-2 serif-heading text-white">
-            TWO PARROTS GROUP AUSTRALIA
-          </h1>
-          <p class="text-sm text-amber-200/90 font-semibold tracking-wide mt-1">
-            Importers & Wholesale Distributors of Premium Cambodian Agricultural Produce
-          </p>
-        </div>
-
-        <div class="text-xs text-slate-200 leading-relaxed bg-slate-900/90 p-4 rounded-xl border border-theme-gold/40 shadow-inner min-w-[300px]">
-          <p class="flex justify-between border-b border-slate-800 pb-1 mb-1"><span class="text-theme-gold font-bold">Address:</span> <span>1/57 Elonera Rd, Noble Park North VIC 3174</span></p>
-          <p class="flex justify-between border-b border-slate-800 pb-1 mb-1"><span class="text-theme-gold font-bold">Managing Director:</span> <span class="font-bold text-white">Kim Heng Ly</span></p>
-          <p class="flex justify-between border-b border-slate-800 pb-1 mb-1"><span class="text-theme-gold font-bold">Email:</span> <span>info@twoparrotsgroup.com.au</span></p>
-          <p class="flex justify-between"><span class="text-theme-gold font-bold">Web:</span> <span class="text-amber-300 font-bold">twoparrotsgroup.com.au</span></p>
-        </div>
-      </div>
-    </div>
-
-    <!-- SUB-HEADER METADATA BAR -->
-    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-theme-coolgray p-4 rounded-xl border border-slate-200 mb-6 gap-3 text-xs">
-      <div>
-        <span class="bg-theme-slate text-theme-gold font-black px-2.5 py-1 rounded text-[10px] uppercase mr-2 border border-theme-gold/40">
-          DOCUMENT REF
-        </span>
-        <span class="font-extrabold text-theme-slate text-sm uppercase">
-          AUSTRALIAN LANDED COST & ITEMIZING FORMULA SCHEDULE
-        </span>
-      </div>
-      <div class="flex flex-wrap items-center gap-4 text-slate-700 font-medium">
-        <p><strong>Ref:</strong> <span class="text-theme-goldhover font-extrabold">TPG-AU-2026-V14</span></p>
-        <p><strong>Issue Date:</strong> 25-OCT-2026</p>
-        <p><strong>Valid Until:</strong> 30-NOV-2026</p>
-        <p><strong>Entry Port:</strong> <span class="text-theme-slate font-bold">Melbourne DP World Swanson Dock</span></p>
-      </div>
-    </div>
-
-    <!-- SUMMARY INFO CARDS (3 CARDS AT TOP) -->
-    <div class="mb-8 border border-slate-300 rounded-xl overflow-hidden shadow-xs bg-white">
-      <div class="bg-theme-slate text-white px-5 py-3 flex items-center justify-between border-b-2 border-theme-gold">
-        <h3 class="font-black uppercase tracking-wide text-xs sm:text-sm text-theme-gold flex items-center gap-2">
-          <span>Customs Clearance Schedule AU $ & Sea Freight Allocations</span>
-        </h3>
-        <span class="text-[10px] bg-theme-gold text-theme-darkslate font-black px-2.5 py-0.5 rounded uppercase">
-          Melbourne DP World Baseline
-        </span>
-      </div>
-
-      <div class="p-4 sm:p-5 bg-theme-coolgray/40 grid grid-cols-1 md:grid-cols-3 gap-5 text-xs">
-        <!-- Card 1: Customs Clearance Schedule AU $ -->
-        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-xs border-t-4 border-t-theme-gold">
-          <h4 class="font-black text-theme-slate uppercase mb-2 text-xs border-b border-slate-100 pb-1 flex justify-between">
-            <span>1. Customs Clearance Schedule AU $</span>
-            <span class="text-[10px] text-theme-goldhover">AUD ($)</span>
-          </h4>
-          <ul class="space-y-1 text-slate-700 text-[11px]">
-            <li class="flex justify-between"><span>Customs Clearance Fee:</span> <strong class="text-slate-900">$185.00 + GST</strong></li>
-            <li class="flex justify-between"><span>Quarantine Entry Processing:</span> <strong class="text-slate-900">$35.00 + GST</strong></li>
-            <li class="flex justify-between"><span>Verification Fee (100 Pt ID):</span> <strong class="text-slate-900">$35.00 + GST</strong></li>
-            <li class="flex justify-between"><span>Min Quarantine Charge:</span> <strong class="text-slate-900">$42.00</strong></li>
-            <li class="flex justify-between text-slate-500 italic text-[10px]"><span>Customs Duty Tariff:</span> <span>0% AANZFTA Duty Free</span></li>
-          </ul>
-        </div>
-
-        <!-- Card 2: Container Freight Baseline 20ft FCL -->
-        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-xs border-t-4 border-t-theme-gold">
-          <h4 class="font-black text-theme-slate uppercase mb-2 text-xs border-b border-slate-100 pb-1 flex justify-between">
-            <span>2. Container Freight Baseline 20ft FCL</span>
-            <span class="text-[10px] text-theme-goldhover">Estimates</span>
-          </h4>
-          <ul class="space-y-1 text-slate-700 text-[11px]">
-            <li class="flex justify-between"><span>20ft Ocean Freight:</span> <strong class="text-slate-900" id="cardSeaFreightUSD">$1,650.00 USD</strong></li>
-            <li class="flex justify-between"><span>Port DP World & Clearance:</span> <strong class="text-slate-900">$580.00 AUD</strong></li>
-            <li class="flex justify-between"><span>Vic Cartage & 3PL Unload:</span> <strong class="text-slate-900" id="cardLocalCartageAUD">$750.00 AUD</strong></li>
-            <li class="flex justify-between border-t border-slate-200 pt-1 mt-1 text-slate-800">
-              <span class="font-bold">Total Logistics AUD:</span> 
-              <strong id="cardTotalLogisticsAUD" class="text-theme-slate font-black">$4,282.48 AUD</strong>
-            </li>
-            <li class="flex justify-between text-slate-800">
-              <span class="font-bold">Target Wholesale Margin:</span> 
-              <span id="cardMarginVal" class="font-black text-theme-goldhover">50%</span>
-            </li>
-          </ul>
-        </div>
-
-        <!-- Card 3: Required Import Compliance Checklists -->
-        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-xs border-t-4 border-t-theme-gold">
-          <h4 class="font-black text-theme-slate uppercase mb-2 text-xs border-b border-slate-100 pb-1">
-            3. Required Import Compliance Checklists
-          </h4>
-          <div class="grid grid-cols-2 gap-2 text-[10px]">
-            <div>
-              <p class="font-black text-theme-goldhover uppercase mb-0.5">Supplier Docs:</p>
-              <ul class="list-disc pl-3 text-slate-600 space-y-0.5">
-                <li>Bill of Lading</li>
-                <li>Commercial Invoice</li>
-                <li>Packing List</li>
-                <li>Packing Declaration</li>
-                <li>AANZFTA Cert</li>
-                <li>Phytosanitary Cert</li>
-              </ul>
-            </div>
-            <div>
-              <p class="font-black text-theme-goldhover uppercase mb-0.5">Customs & Importer Setup:</p>
-              <ul class="list-disc pl-3 text-slate-600 space-y-0.5">
-                <li>Letter of Auth (LOA)</li>
-                <li>Photo ID Verification</li>
-                <li>EMPP Payment Proof</li>
-                <li>Company Reg / ABN</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- SECTION I: Active Products Catalog -->
-    <div class="mb-3 flex flex-wrap items-center justify-between gap-2">
-      <h2 class="text-base font-black uppercase text-theme-slate tracking-tight flex items-center gap-2 serif-heading">
-        <span class="w-3.5 h-3.5 bg-theme-gold rounded-full inline-block border-2 border-theme-slate"></span>
-        <span>I. Active Products Catalog (25 Items) — Multi-Line Landed Cost & Formula Breakdown</span>
-      </h2>
-      <span class="text-xs text-slate-500 font-semibold no-print">* Hover over product titles to inspect ingredients & tariff specs</span>
-    </div>
-
-    <!-- Main Products Table -->
-    <div class="overflow-x-auto mb-10 shadow-xs rounded-xl border border-slate-300 bg-white print-shadow-none">
-      <table id="mainProductsTable" class="a4-print-table w-full text-xs text-left border-collapse">
-        <thead>
-          <tr class="bg-theme-slate text-white font-black text-[11px] uppercase tracking-wider text-center border-b-2 border-theme-gold">
-            <th class="p-2 w-[3%] border-slate-200">N°</th>
-            <th class="p-2 text-left w-[20%] border-slate-200">Product Description</th>
-            <th class="p-2 text-center bg-theme-darkslate border-slate-200 w-[14%]">Price Before Delivery<br><span class="text-[9px] font-normal text-theme-gold">(FOB USD / AUD)</span></th>
-            <th class="p-2 text-left bg-theme-darkslate border-slate-200 text-theme-gold w-[25%]">Total Cost Component Breakdown<br><span class="text-[9px] font-normal text-white">(Itemized Landed Allocations + Wholesale Selling Price)</span></th>
-            <th class="p-2 text-center bg-slate-800 border-slate-200 w-[19%]">Asian Market Comparison Brand<br><span class="text-[9px] font-normal text-amber-200">(Thai / VN / India / Indo / Phil)</span></th>
-            <th class="p-2 text-center bg-theme-darkslate border-slate-200 w-[19%]">Australian Supermarket Price<br><span class="text-[9px] font-normal text-theme-gold">(Coles / Woolworths Benchmarks)</span></th>
-          </tr>
-        </thead>
-        <tbody id="mainProductsBody" class="divide-y divide-slate-200">
-          <!-- Populated by JavaScript -->
-        </tbody>
-      </table>
-    </div>
-
-    <!-- SECTION II: Upcoming Products Catalog -->
-    <div class="mb-3 flex flex-wrap items-center justify-between gap-2 page-break-before">
-      <h2 class="text-base font-black uppercase text-theme-slate tracking-tight flex items-center gap-2 serif-heading">
-        <span class="w-3.5 h-3.5 bg-theme-goldhover rounded-full inline-block border-2 border-theme-slate"></span>
-        <span>II. Upcoming Products Catalog (5 Items)</span>
-        <span class="bg-theme-gold text-theme-darkslate text-[10px] px-2.5 py-0.5 rounded-full font-black border border-theme-goldhover">Planned Launch: Nov 2026</span>
-      </h2>
-    </div>
-
-    <!-- Upcoming Table -->
-    <div class="overflow-x-auto mb-8 shadow-xs rounded-xl border border-slate-300 bg-white print-shadow-none">
-      <table id="upcomingTable" class="a4-print-table w-full text-xs text-left border-collapse">
-        <thead>
-          <tr class="bg-theme-darkslate text-white font-black text-[11px] uppercase tracking-wider text-center border-b-2 border-theme-gold">
-            <th class="p-2 w-[3%] border-slate-200">N°</th>
-            <th class="p-2 text-left w-[20%] border-slate-200">Product Description</th>
-            <th class="p-2 text-center bg-slate-900 border-slate-200 w-[14%]">Price Before Delivery<br><span class="text-[9px] font-normal text-theme-gold">(FOB USD / AUD)</span></th>
-            <th class="p-2 text-left bg-theme-darkslate border-slate-200 text-theme-gold w-[25%]">Total Cost Component Breakdown<br><span class="text-[9px] font-normal text-white">(Itemized Landed Allocations + Wholesale Selling Price)</span></th>
-            <th class="p-2 text-center bg-slate-800 border-slate-200 w-[19%]">Asian Market Comparison Brand<br><span class="text-[9px] font-normal text-amber-200">(Thai / VN / India / Indo / Phil)</span></th>
-            <th class="p-2 text-center bg-theme-darkslate border-slate-200 w-[19%]">Australian Supermarket Price<br><span class="text-[9px] font-normal text-theme-gold">(Coles / Woolworths Benchmarks)</span></th>
-          </tr>
-        </thead>
-        <tbody id="upcomingProductsBody" class="divide-y divide-slate-200">
-          <!-- Populated by JavaScript -->
-        </tbody>
-      </table>
-    </div>
-
-    <!-- Document Footer -->
-    <div class="pt-6 border-t-2 border-theme-gold flex flex-col sm:flex-row justify-between items-end gap-6 text-xs">
-      <div class="space-y-1">
-        <p class="font-extrabold text-theme-slate uppercase text-xs">Enterprise & Regulatory Details:</p>
-        <p class="text-slate-700"><strong>Entity:</strong> Two Parrots Group Australia Pty Ltd</p>
-        <p class="text-slate-700"><strong>HQ:</strong> 1/57 Elonera Rd, Noble Park North VIC 3174, Australia</p>
-        <p class="text-slate-700"><strong>Web:</strong> twoparrotsgroup.com.au | <strong>Email:</strong> info@twoparrotsgroup.com.au</p>
-      </div>
-
-      <div class="text-center min-w-[260px] border border-slate-300 rounded-xl p-3 bg-slate-50">
-        <p class="text-slate-500 font-bold mb-6 text-[10px] uppercase">For TWO PARROTS GROUP AUSTRALIA PTY LTD</p>
-        <div class="border-t border-slate-400 pt-1 font-black text-theme-slate text-sm serif-heading">
-          Kim Heng Ly
-        </div>
-        <p class="text-[10px] font-bold text-theme-goldhover uppercase mt-0.5">Managing Director</p>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- LANDED COST ENGINE CONTROL TOOLBAR -->
-  <div class="fixed bottom-3 left-1/2 -translate-x-1/2 w-[96%] max-w-[1380px] bg-theme-darkslate/95 backdrop-blur-md text-white p-3 rounded-2xl shadow-2xl border-2 border-theme-gold no-print z-50 flex flex-wrap items-center justify-between gap-3 text-xs">
-    <div class="flex items-center gap-2">
-      <div class="bg-theme-gold text-theme-darkslate px-2.5 py-1 rounded-lg font-black tracking-tight uppercase text-[10px]">
-        Engine
-      </div>
-      <div>
-        <p class="text-xs font-black text-theme-gold uppercase">Landed Cost Engine Control</p>
-        <p class="text-[9px] text-slate-300">Two Parrots Group Australia</p>
-      </div>
-    </div>
-
-    <!-- Dynamic Controls Toolbar Inputs -->
-    <div class="flex flex-wrap items-center gap-2">
-      <div class="bg-slate-800 px-2 py-1 rounded-lg border border-theme-gold/40">
-        <label for="fxRateInput" class="text-amber-200 font-bold block text-[9px]">FX Rate (AUD/USD):</label>
-        <input type="number" id="fxRateInput" value="0.662" step="0.001" oninput="recalculateFees()" class="w-16 px-1.5 py-0.5 bg-black/70 border border-theme-gold text-theme-gold rounded font-black text-center outline-none">
-      </div>
-
-      <div class="bg-slate-800 px-2 py-1 rounded-lg border border-theme-gold/40">
-        <label for="seaFreightUSD" class="text-amber-200 font-bold block text-[9px]">20ft Freight ($USD):</label>
-        <input type="number" id="seaFreightUSD" value="1650" step="50" oninput="recalculateFees()" class="w-16 px-1.5 py-0.5 bg-black/70 border border-theme-gold text-theme-gold rounded font-black text-center outline-none">
-      </div>
-
-      <div class="bg-slate-800 px-2 py-1 rounded-lg border border-theme-gold/40">
-        <label for="localCartageAUD" class="text-amber-200 font-bold block text-[9px]">Vic Cartage ($AUD):</label>
-        <input type="number" id="localCartageAUD" value="750" step="25" oninput="recalculateFees()" class="w-16 px-1.5 py-0.5 bg-black/70 border border-theme-gold text-theme-gold rounded font-black text-center outline-none">
-      </div>
-
-      <div class="bg-slate-800 px-2 py-1 rounded-lg border border-amber-400">
-        <label for="marginInput" class="text-amber-300 font-extrabold block text-[9px]">Margin (%):</label>
-        <input type="number" id="marginInput" value="50" step="1" min="0" max="300" oninput="recalculateFees()" class="w-16 px-1.5 py-0.5 bg-amber-950/80 border border-amber-400 text-amber-300 rounded font-black text-center outline-none">
-      </div>
-
-      <div class="bg-slate-800 px-2 py-1 rounded-lg border border-theme-gold/40">
-        <label for="containerCap" class="text-amber-200 font-bold block text-[9px]">Container Cap (CTN):</label>
-        <input type="number" id="containerCap" value="900" step="50" oninput="recalculateFees()" class="w-16 px-1.5 py-0.5 bg-black/70 border border-theme-gold text-theme-gold rounded font-black text-center outline-none">
-      </div>
-
-      <button onclick="window.print()" class="bg-gradient-to-r from-amber-300 via-theme-gold to-amber-500 hover:from-amber-400 hover:to-amber-600 text-theme-darkslate font-black px-3.5 py-2 rounded-xl shadow-lg transition flex items-center gap-1.5 text-xs ml-1 border border-white/30">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
-        Print Quotation
-      </button>
-    </div>
-  </div>
-
-  <script>
-    // Complete 25 active products catalog with enriched Asian & Australian supermarket competitor details
-    const mainProducts = [
-      { id: 1, nameEn: "Finest Rice Flour", nameKm: "ម្សៅអង្ករខ្សាយយ៉ាងល្អ", weight: "500g", pack: "500g x 50 Pcs/CTN", pcsPerCtn: 50, ctnPriceUSD: 18.00, feeMult: 1.0, ingredients: "100% Pure Cambodian Jasmine Rice Flour", asianBrand: "Erawan 3 Elephants 500g", asianOrigin: "🇹🇭 Thai", asianPrice: "$1.90 – $2.20", asianUnit: "($0.38/100g)", auSupermarket: "Coles / Erawan 500g", auPrice: "$2.40", auUnit: "($0.48/100g)" },
-      { id: 2, nameEn: "Glutinous Rice Flour", nameKm: "ម្សៅអង្ករដំណើប", weight: "500g", pack: "500g x 50 Pcs/CTN", pcsPerCtn: 50, ctnPriceUSD: 19.50, feeMult: 1.0, ingredients: "100% Premium Cambodian Sticky Rice Flour", asianBrand: "Erawan Green Elephant 500g", asianOrigin: "🇹🇭 Thai", asianPrice: "$2.00 – $2.30", asianUnit: "($0.42/100g)", auSupermarket: "Woolworths / Cock Brand 500g", auPrice: "$2.50", auUnit: "($0.50/100g)" },
-      { id: 3, nameEn: "Tapioca Starch", nameKm: "ម្សៅដំឡូងមី", weight: "500g", pack: "500g x 50 Pcs/CTN", pcsPerCtn: 50, ctnPriceUSD: 16.50, feeMult: 1.0, ingredients: "Pure Tapioca Starch (Cassava Root)", asianBrand: "Vĩnh Thuận Tapioca 500g", asianOrigin: "🇻🇳 Viet", asianPrice: "$1.80 – $2.10", asianUnit: "($0.38/100g)", auSupermarket: "Coles / McKenzie's 375g", auPrice: "$2.35", auUnit: "($0.63/100g)" },
-      { id: 4, nameEn: "Pancake Flour Premix", nameKm: "ម្សៅនំគ្រក់/នំបាញ់ឆែវ", weight: "500g", pack: "500g x 30 Pcs/CTN", pcsPerCtn: 30, ctnPriceUSD: 21.00, feeMult: 1.0, ingredients: "Rice Flour, Turmeric, Coconut Powder, Spices", asianBrand: "Bánh Xèo Vĩnh Thuận 500g", asianOrigin: "🇻🇳 Viet", asianPrice: "$2.80 – $3.20", asianUnit: "($0.60/100g)", auSupermarket: "Woolworths / White Wings 400g", auPrice: "$3.50", auUnit: "($0.88/100g)" },
-      { id: 5, nameEn: "Crispy Tempura Flour", nameKm: "ម្សៅបំពងស្រួយ", weight: "1000g", pack: "1000g x 20 Pcs/CTN", pcsPerCtn: 20, ctnPriceUSD: 22.00, feeMult: 1.0, ingredients: "Wheat Starch, Rice Flour, Baking Powder, Seasoning", asianBrand: "Gogi Tempura Batter 1kg", asianOrigin: "🇹🇭 Thai", asianPrice: "$3.50 – $3.90", asianUnit: "($0.37/100g)", auSupermarket: "Coles / KanTong Tempura 125g", auPrice: "$4.50", auUnit: "($3.60/100g)" },
-      { id: 6, nameEn: "Kampot Black Pepper Whole", nameKm: "ម្រេចខ្មៅគ្រាប់កំពត", weight: "100g", pack: "100g x 50 Cans/CTN", pcsPerCtn: 50, ctnPriceUSD: 85.00, feeMult: 0.8, ingredients: "100% PGI Kampot Whole Black Peppercorns", asianBrand: "MasterFoods Whole Black 100g", asianOrigin: "🇹🇭 Thai", asianPrice: "$6.20 – $6.80", asianUnit: "($6.50/100g)", auSupermarket: "Coles / Saxa Peppercorns 100g", auPrice: "$7.80", auUnit: "($7.80/100g)" },
-      { id: 7, nameEn: "Fine Ground Black Pepper", nameKm: "ម្រេចខ្មៅម៉ត់", weight: "80g", pack: "80g x 50 Cans/CTN", pcsPerCtn: 50, ctnPriceUSD: 45.00, feeMult: 0.8, ingredients: "100% Pure Fine Ground Black Pepper", asianBrand: "Eastern Ground Black 100g", asianOrigin: "🇮🇳 India", asianPrice: "$3.20 – $3.60", asianUnit: "($3.40/100g)", auSupermarket: "Woolworths / Saxa Black 80g", auPrice: "$4.80", auUnit: "($6.00/100g)" },
-      { id: 8, nameEn: "Coarse Ground Black Pepper", nameKm: "ម្រេចខ្មៅបុក", weight: "80g", pack: "80g x 50 Cans/CTN", pcsPerCtn: 50, ctnPriceUSD: 45.00, feeMult: 0.8, ingredients: "100% Pure Coarse Ground Black Pepper", asianBrand: "MDH Cracked Black 100g", asianOrigin: "🇮🇳 India", asianPrice: "$3.30 – $3.70", asianUnit: "($3.50/100g)", auSupermarket: "Coles / MasterFoods Cracked 80g", auPrice: "$4.90", auUnit: "($6.13/100g)" },
-      { id: 9, nameEn: "Fine Ground White Pepper", nameKm: "ម្រេចសម៉ត់", weight: "80g", pack: "80g x 50 Cans/CTN", pcsPerCtn: 50, ctnPriceUSD: 52.00, feeMult: 0.8, ingredients: "100% Pure Fine Ground White Pepper", asianBrand: "Cock Brand White Pepper 100g", asianOrigin: "🇹🇭 Thai", asianPrice: "$3.90 – $4.40", asianUnit: "($4.15/100g)", auSupermarket: "Woolworths / Saxa White 80g", auPrice: "$5.20", auUnit: "($6.50/100g)" },
-      { id: 10, nameEn: "Kampot White Pepper Whole", nameKm: "ម្រេចសគ្រាប់កំពត", weight: "100g", pack: "100g x 50 Cans/CTN", pcsPerCtn: 50, ctnPriceUSD: 95.00, feeMult: 0.8, ingredients: "100% Premium Kampot White Peppercorns", asianBrand: "Spice Islands White 100g", asianOrigin: "🇹🇭 Thai", asianPrice: "$7.20 – $7.90", asianUnit: "($7.55/100g)", auSupermarket: "Coles / MasterFoods White 100g", auPrice: "$8.90", auUnit: "($8.90/100g)" },
-      { id: 11, nameEn: "Authentic Cambodian Fish Sauce", nameKm: "ទឹកត្រីកោះកុង", weight: "700ml", pack: "700ml x 12 Bottles/CTN", pcsPerCtn: 12, ctnPriceUSD: 16.80, feeMult: 1.2, ingredients: "Anchovy Extract 75%, Salt, Sugar", asianBrand: "Squid Brand Fish Sauce 725ml", asianOrigin: "🇹🇭 Thai", asianPrice: "$3.20 – $3.60", asianUnit: "($0.47/100mL)", auSupermarket: "Coles / Megachef 200ml", auPrice: "$4.20", auUnit: "($2.10/100mL)" },
-      { id: 12, nameEn: "Premium Light Soy Sauce", nameKm: "ទឹកស៊ីអ៊ីវខាប់", weight: "500ml", pack: "500ml x 12 Bottles/CTN", pcsPerCtn: 12, ctnPriceUSD: 14.40, feeMult: 1.2, ingredients: "Water, Soybeans, Wheat, Salt, Sugar", asianBrand: "Healthy Boy Soy Sauce 700ml", asianOrigin: "🇹🇭 Thai", asianPrice: "$2.60 – $3.00", asianUnit: "($0.40/100mL)", auSupermarket: "Woolworths / Lee Kum Kee 500ml", auPrice: "$3.40", auUnit: "($0.68/100mL)" },
-      { id: 13, nameEn: "Dark Sweet Soy Sauce", nameKm: "ទឹកស៊ីអ៊ីវព្រែមៀម", weight: "500ml", pack: "500ml x 12 Bottles/CTN", pcsPerCtn: 12, ctnPriceUSD: 15.60, feeMult: 1.2, ingredients: "Soybeans, Molasses, Sugar, Salt", asianBrand: "ABC Sweet Soy Kecap 620ml", asianOrigin: "🇮🇩 Indo", asianPrice: "$3.00 – $3.50", asianUnit: "($0.52/100mL)", auSupermarket: "Coles / Kikkoman Sweet 250ml", auPrice: "$3.80", auUnit: "($1.52/100mL)" },
-      { id: 14, nameEn: "Cambodian Jasmine Rice", nameKm: "អង្ករផ្ការំដួល", weight: "5kg", pack: "5kg x 4 Bags/CTN", pcsPerCtn: 4, ctnPriceUSD: 24.00, feeMult: 1.5, ingredients: "100% Phka Rumduol Premium Cambodian Rice", asianBrand: "Royal Umbrella Jasmine 5kg", asianOrigin: "🇹🇭 Thai", asianPrice: "$13.50 – $15.00", asianUnit: "($2.85/kg)", auSupermarket: "Woolworths / SunRice Jasmine 5kg", auPrice: "$18.00", auUnit: "($3.60/kg)" },
-      { id: 15, nameEn: "Kampong Speu Palm Sugar", nameKm: "ស្ករត្នោតកំពង់ស្ពឺ", weight: "500g", pack: "500g x 24 Tub/CTN", pcsPerCtn: 24, ctnPriceUSD: 28.80, feeMult: 1.0, ingredients: "100% Pure Kampong Speu Sap Palm Sugar", asianBrand: "Cock Brand Palm Sugar 500g", asianOrigin: "🇹🇭 Thai", asianPrice: "$3.20 – $3.70", asianUnit: "($0.69/100g)", auSupermarket: "Coles / Chef's Choice 250g", auPrice: "$4.50", auUnit: "($1.80/100g)" },
-      { id: 16, nameEn: "Roasted White Sesame Seeds", nameKm: "ល្ងសលីង", weight: "200g", pack: "200g x 30 Bags/CTN", pcsPerCtn: 30, ctnPriceUSD: 22.50, feeMult: 0.9, ingredients: "100% Cleaned Roasted Sesame Seeds", asianBrand: "Double Pagoda Sesame 200g", asianOrigin: "🇹🇭 Thai", asianPrice: "$2.30 – $2.70", asianUnit: "($1.25/100g)", auSupermarket: "Woolworths / McKenzie's 100g", auPrice: "$3.10", auUnit: "($3.10/100g)" },
-      { id: 17, nameEn: "Crispy Fried Shallots", nameKm: "ខ្ទឹមក្រហមបំពង", weight: "250g", pack: "250g x 24 Cans/CTN", pcsPerCtn: 24, ctnPriceUSD: 31.20, feeMult: 1.0, ingredients: "Fresh Shallots 90%, Palm Oil 10%", asianBrand: "Cock Brand Shallots 250g", asianOrigin: "🇹🇭 Thai", asianPrice: "$3.50 – $4.00", asianUnit: "($1.50/100g)", auSupermarket: "Coles / Pandaroo Shallots 100g", auPrice: "$4.60", auUnit: "($4.60/100g)" },
-      { id: 18, nameEn: "Crispy Fried Garlic", nameKm: "ខ្ទឹមសបំពង", weight: "250g", pack: "250g x 24 Cans/CTN", pcsPerCtn: 24, ctnPriceUSD: 28.80, feeMult: 1.0, ingredients: "Fresh Garlic 90%, Vegetable Oil 10%", asianBrand: "Erawan Fried Garlic 250g", asianOrigin: "🇹🇭 Thai", asianPrice: "$3.40 – $3.80", asianUnit: "($1.44/100g)", auSupermarket: "Woolworths / Hoyts Garlic 100g", auPrice: "$4.40", auUnit: "($4.40/100g)" },
-      { id: 19, nameEn: "Coconut Milk 17% Fat", nameKm: "ខ្ទិះដូង", weight: "400ml", pack: "400ml x 24 Cans/CTN", pcsPerCtn: 24, ctnPriceUSD: 19.20, feeMult: 1.1, ingredients: "Coconut Extract 82%, Water, Guar Gum", asianBrand: "Aroy-D Coconut Milk 400ml", asianOrigin: "🇹🇭 Thai", asianPrice: "$1.80 – $2.10", asianUnit: "($0.49/100mL)", auSupermarket: "Coles / Ayam Coconut Milk 400ml", auPrice: "$2.50", auUnit: "($0.63/100mL)" },
-      { id: 20, nameEn: "Rich Coconut Cream 22% Fat", nameKm: "ក្បាលខ្ទិះដូង", weight: "400ml", pack: "400ml x 24 Cans/CTN", pcsPerCtn: 24, ctnPriceUSD: 22.80, feeMult: 1.1, ingredients: "Coconut Extract 90%, Water, Stabilizer", asianBrand: "Kara Coconut Cream 400ml", asianOrigin: "🇮🇩 Indo", asianPrice: "$2.10 – $2.50", asianUnit: "($0.58/100mL)", auSupermarket: "Woolworths / Ayam Cream 400ml", auPrice: "$2.90", auUnit: "($0.73/100mL)" },
-      { id: 21, nameEn: "Cambodian Prahok Paste", nameKm: "ប្រហុកសាច់ប្រឡាក់", weight: "400g", pack: "400g x 20 Jars/CTN", pcsPerCtn: 20, ctnPriceUSD: 42.00, feeMult: 1.1, ingredients: "Fermented Mudfish, Salt, Ground Rice", asianBrand: "Cock Brand Gourami Fish 454g", asianOrigin: "🇹🇭 Thai", asianPrice: "$5.20 – $5.80", asianUnit: "($1.21/100g)", auSupermarket: "Specialty Asian / Imports 400g", auPrice: "$6.80", auUnit: "($1.70/100g)" },
-      { id: 22, nameEn: "Sour Tamarind Paste", nameKm: "ម្ជូរអំពិលទុំ", weight: "450g", pack: "450g x 24 Tub/CTN", pcsPerCtn: 24, ctnPriceUSD: 26.40, feeMult: 1.0, ingredients: "100% Seedless Tamarind Pulp & Salt", asianBrand: "Cock Tamarind Paste 454g", asianOrigin: "🇹🇭 Thai", asianPrice: "$2.60 – $3.00", asianUnit: "($0.62/100g)", auSupermarket: "Coles / Tamicon Tamarind 200g", auPrice: "$3.60", auUnit: "($1.80/100g)" },
-      { id: 23, nameEn: "Khmer Yellow Curry Powder", nameKm: "ម្សៅការីខែ្មរ", weight: "100g", pack: "100g x 50 Bags/CTN", pcsPerCtn: 50, ctnPriceUSD: 30.00, feeMult: 0.8, ingredients: "Turmeric, Lemongrass, Galangal, Garlic, Coriander", asianBrand: "WAH Curry Powder 100g", asianOrigin: "🇲🇾 MY", asianPrice: "$1.60 – $2.00", asianUnit: "($1.80/100g)", auSupermarket: "Woolworths / Clive of India 50g", auPrice: "$2.60", auUnit: "($5.20/100g)" },
-      { id: 24, nameEn: "Dried Red Chilli Flakes", nameKm: "ម្ទេសក្រហមបុក", weight: "250g", pack: "250g x 20 Bags/CTN", pcsPerCtn: 20, ctnPriceUSD: 22.00, feeMult: 0.9, ingredients: "100% Sundried Coarse Red Chilli Flakes", asianBrand: "TRS Chilli Flakes 100g", asianOrigin: "🇮🇳 India", asianPrice: "$2.60 – $3.10", asianUnit: "($1.14/100g)", auSupermarket: "Coles / Hoyts Chilli Flakes 100g", auPrice: "$3.80", auUnit: "($3.80/100g)" },
-      { id: 25, nameEn: "Rice Paper Wrappers 22cm", nameKm: "នំប្រដាប់ឆែន", weight: "375g", pack: "375g x 30 Pcs/CTN", pcsPerCtn: 30, ctnPriceUSD: 28.50, feeMult: 1.0, ingredients: "Tapioca, Rice Flour, Water, Salt", asianBrand: "Three Ladies Wrappers 375g", asianOrigin: "🇻🇳 Viet", asianPrice: "$2.20 – $2.60", asianUnit: "($0.64/100g)", auSupermarket: "Woolworths / Pandaroo 375g", auPrice: "$3.20", auUnit: "($0.85/100g)" }
-    ];
-
-    // 5 Upcoming products (Launch Nov 2026) with detailed competitor benchmarks
-    const upcomingProducts = [
-      { id: 1, nameEn: "Organic Palm Sugar Blocks", nameKm: "ស្ករត្នោតដុំអូហ្គានិក", weight: "500g", pack: "500g x 20 Pcs/CTN", pcsPerCtn: 20, ctnPriceUSD: 32.00, feeMult: 1.0, ingredients: "100% Certified Organic Palm Nectar", asianBrand: "Organic Thai Palm 500g", asianOrigin: "🇹🇭 Thai", asianPrice: "$3.50 – $4.00", asianUnit: "($0.75/100g)", auSupermarket: "Coles / Macro Organic 250g", auPrice: "$4.90", auUnit: "($1.96/100g)" },
-      { id: 2, nameEn: "Kampot Green Pepper Brine", nameKm: "ម្រេចខៀវត្រាំទឹកអំបិល", weight: "200g", pack: "200g x 24 Jars/CTN", pcsPerCtn: 24, ctnPriceUSD: 48.00, feeMult: 0.9, ingredients: "Fresh Green Peppercorns, Salt, Water", asianBrand: "Gourmet Thai Brine 200g", asianOrigin: "🇹🇭 Thai", asianPrice: "$4.90 – $5.50", asianUnit: "($2.60/100g)", auSupermarket: "Specialty / Feather & Bone 100g", auPrice: "$6.50", auUnit: "($6.50/100g)" },
-      { id: 3, nameEn: "Rice Paper Wrappers 16cm", nameKm: "នំប្រដាប់តូច", weight: "300g", pack: "300g x 40 Pcs/CTN", pcsPerCtn: 40, ctnPriceUSD: 32.00, feeMult: 1.0, ingredients: "Tapioca, Rice Flour, Salt", asianBrand: "Bánh Tráng Bamboo 300g", asianOrigin: "🇻🇳 Viet", asianPrice: "$1.90 – $2.30", asianUnit: "($0.70/100g)", auSupermarket: "Coles / Pandaroo Mini 200g", auPrice: "$2.80", auUnit: "($1.40/100g)" },
-      { id: 4, nameEn: "Crispy Banana Chips Sweet", nameKm: "ចេកឆៃផ្អែម", weight: "150g", pack: "150g x 30 Bags/CTN", pcsPerCtn: 30, ctnPriceUSD: 24.00, feeMult: 1.0, ingredients: "Cambodian Cultivated Banana, Palm Oil, Sugar", asianBrand: "Siam Banana Crisps 150g", asianOrigin: "🇹🇭 Thai", asianPrice: "$2.00 – $2.40", asianUnit: "($1.47/100g)", auSupermarket: "Woolworths / DJ&A Chips 100g", auPrice: "$2.90", auUnit: "($2.90/100g)" },
-      { id: 5, nameEn: "Freeze-Dried Kaffir Lime", nameKm: "ស្លឹកក្រូចសើចសំងួត", weight: "30g", pack: "30g x 40 Bags/CTN", pcsPerCtn: 40, ctnPriceUSD: 36.00, feeMult: 0.7, ingredients: "100% Pure Kaffir Lime Leaves", asianBrand: "Herbal Thai Leaves 30g", asianOrigin: "🇹🇭 Thai", asianPrice: "$2.50 – $3.00", asianUnit: "($9.16/100g)", auSupermarket: "Coles / Gourmet Garden 10g", auPrice: "$3.50", auUnit: "($35.00/100g)" }
-    ];
-
-    function recalculateFees() {
-      // Inputs
-      const fxAUDtoUSD = parseFloat(document.getElementById('fxRateInput').value) || 0.662;
-      const seaFreightUSD = parseFloat(document.getElementById('seaFreightUSD').value) || 1650;
-      const localCartageAUD = parseFloat(document.getElementById('localCartageAUD').value) || 750;
-      const marginPct = parseFloat(document.getElementById('marginInput').value) || 50;
-      const containerCap = parseFloat(document.getElementById('containerCap').value) || 900;
-
-      // Fixed Port & Brokerage Schedule sum = $580 AUD
-      const fixedBrokerageAUD = 580.00;
-
-      // Total Container Logistics AUD
-      const totalSeaFreightAUD = seaFreightUSD / fxAUDtoUSD;
-      const totalLogisticsAUD = totalSeaFreightAUD + fixedBrokerageAUD + localCartageAUD;
-
-      // Header Cards Updates
-      document.getElementById('cardSeaFreightUSD').innerText = `$${seaFreightUSD.toLocaleString('en-US', {minimumFractionDigits: 2})} USD`;
-      document.getElementById('cardLocalCartageAUD').innerText = `$${localCartageAUD.toLocaleString('en-US', {minimumFractionDigits: 2})} AUD`;
-      document.getElementById('cardTotalLogisticsAUD').innerText = `$${totalLogisticsAUD.toLocaleString('en-US', {minimumFractionDigits: 2})} AUD`;
-      document.getElementById('cardMarginVal').innerText = `${marginPct}%`;
-
-      // Per Carton Allocations
-      const oceanFreightPerCtnAUD = (seaFreightUSD / containerCap) / fxAUDtoUSD;
-      const brokeragePerCtnAUD = fixedBrokerageAUD / containerCap;
-      const cartagePerCtnAUD = localCartageAUD / containerCap;
-
-      // Render Tables with Dynamic Formula Breakdown Calculation
-      renderTable('mainProductsBody', mainProducts, fxAUDtoUSD, oceanFreightPerCtnAUD, brokeragePerCtnAUD, cartagePerCtnAUD, marginPct);
-      renderTable('upcomingProductsBody', upcomingProducts, fxAUDtoUSD, oceanFreightPerCtnAUD, brokeragePerCtnAUD, cartagePerCtnAUD, marginPct);
-    }
-
-    function renderTable(elementId, dataset, fxAUDtoUSD, oceanFreightPerCtnAUD, brokeragePerCtnAUD, cartagePerCtnAUD, marginPct) {
-      const tbody = document.getElementById(elementId);
-      tbody.innerHTML = '';
-
-      dataset.forEach((item, index) => {
-        // 1. FOB Calculations
-        const fobPcsUSD = item.ctnPriceUSD / item.pcsPerCtn;
-        const fobPcsAUD = fobPcsUSD / fxAUDtoUSD;
-
-        // 2. Logistics Component Allocations
-        const freightPcsAUD = (oceanFreightPerCtnAUD * item.feeMult) / item.pcsPerCtn;
-        const portBrokeragePcsAUD = (brokeragePerCtnAUD * item.feeMult) / item.pcsPerCtn;
-        const localCartagePcsAUD = (cartagePerCtnAUD * item.feeMult) / item.pcsPerCtn;
-
-        // 3. Total Landed Cost
-        const landedPcsAUD = fobPcsAUD + freightPcsAUD + portBrokeragePcsAUD + localCartagePcsAUD;
-        const landedPcsUSD = landedPcsAUD * fxAUDtoUSD;
-
-        // 4. Wholesale Selling Price with Margin %: Landed Cost * (1 + Margin %)
-        const sellPriceAUD = landedPcsAUD * (1 + (marginPct / 100));
-
-        const tr = document.createElement('tr');
-        tr.className = index % 2 === 0 ? 'bg-white hover:bg-amber-50/40 transition' : 'bg-slate-50/80 hover:bg-amber-50/40 transition';
-
-        tr.innerHTML = `
-          <!-- Column 1: N° (3%) -->
-          <td class="p-2 text-center font-bold text-slate-400 border-slate-200">${index + 1}</td>
-
-          <!-- Column 2: PRODUCT DESCRIPTION (20%) -->
-          <td class="p-2 relative has-tooltip cursor-help border-slate-200">
-            <div class="font-extrabold text-slate-900 flex items-center justify-between gap-1">
-              <span>${item.nameEn}</span>
-              <span class="bg-theme-slate text-theme-gold font-black text-[9px] px-1 py-0.5 rounded">${item.weight}</span>
-            </div>
-            <div class="khmer-font text-xs text-slate-700 font-bold mt-0.5">${item.nameKm}</div>
-            <div class="text-[10px] text-slate-500 font-medium flex items-center justify-between mt-0.5">
-              <span class="bg-slate-200 text-slate-800 px-1 py-0.5 rounded font-bold text-[9px]">${item.pack}</span>
-              <span class="text-slate-400 font-semibold">${item.pcsPerCtn} pcs/ctn</span>
-            </div>
-
-            <!-- Hover Specs Card -->
-            <div class="tooltip absolute left-2 top-full mt-1 z-30 w-72 p-3 bg-theme-darkslate text-white rounded-xl shadow-2xl text-[11px] border-2 border-theme-gold pointer-events-none">
-              <div class="flex justify-between items-start border-b border-slate-700 pb-1 mb-1.5">
+    <!-- Header Navigation Bar (Screen Only - Logo Removed) -->
+    <header class="bg-slate-900 text-white shadow-md no-print border-b-2 border-gold-500">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center">
+            <div class="flex items-center space-x-3">
                 <div>
-                  <p class="font-bold text-theme-gold serif-heading text-xs">${item.nameEn}</p>
-                  <p class="khmer-font text-amber-200 text-[11px]">${item.nameKm}</p>
+                    <h1 class="text-lg font-bold text-white tracking-wide">TWO PARROTS GROUP AUSTRALIA</h1>
+                    <p class="text-xs text-gold-400">Import & Distribution Landed Cost Intelligence</p>
                 </div>
-                <span class="bg-theme-gold text-theme-darkslate font-black text-[9px] px-1.5 py-0.5 rounded">${item.weight}</span>
-              </div>
-              <p class="mb-1"><span class="text-slate-300">Carton Spec:</span> <strong class="text-white">${item.pack}</strong></p>
-              <p class="mb-1"><span class="text-slate-300">Carton FOB Price:</span> <strong class="text-theme-gold">$${item.ctnPriceUSD.toFixed(2)} USD</strong></p>
-              <p class="mb-1"><span class="text-slate-300">Ingredients:</span> ${item.ingredients}</p>
-              <p class="text-[10px] text-amber-300 border-t border-slate-700 pt-1 mt-1">
-                <strong>Tariff & Compliance:</strong> Cambodian Origin (AANZFTA Duty-Free 0%)
-              </p>
             </div>
-          </td>
+            <div class="flex items-center space-x-3">
+                <button onclick="window.print()" class="px-4 py-2 bg-gold-500 hover:bg-gold-600 text-slate-900 font-semibold rounded-lg shadow transition flex items-center gap-2 text-sm">
+                    <i class="fa-solid fa-print"></i> Print A4 Quotation
+                </button>
+            </div>
+        </div>
+    </header>
 
-          <!-- Column 3: PRICE BEFORE DELIVERY (14%) -->
-          <td class="p-2 text-center bg-slate-50 font-black text-slate-900 border-slate-200">
-            <div class="text-[9px] text-slate-400 font-semibold uppercase">CTN $${item.ctnPriceUSD.toFixed(2)} USD</div>
-            <div class="text-xs text-slate-900 font-black">FOB $${fobPcsUSD.toFixed(2)} USD</div>
-            <div class="text-[10px] text-theme-goldhover font-extrabold">(A $${fobPcsAUD.toFixed(2)})</div>
-          </td>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
 
-          <!-- Column 4: TOTAL COST COMPONENT BREAKDOWN (25%) -->
-          <td class="p-2 text-left bg-amber-50/60 border-x-2 border-theme-gold text-[10px] leading-tight">
-            <!-- Headline Base Landed Cost -->
-            <div class="flex justify-between items-center border-b border-amber-300/80 pb-1 mb-1">
-              <span class="font-black text-slate-900 text-xs">Landed Cost: A $${landedPcsAUD.toFixed(2)}</span>
-              <span class="text-[9px] text-amber-800 font-bold">($${landedPcsUSD.toFixed(2)} USD)</span>
+        <!-- 1. HEADER BOX -->
+        <div class="bg-slate-900 text-white rounded-xl shadow-lg p-6 mb-6 border-l-4 border-gold-500 relative overflow-hidden">
+            <div class="absolute top-0 right-0 transform translate-x-4 -translate-y-4 w-32 h-32 bg-gold-500 opacity-10 rounded-full blur-2xl"></div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
+                <!-- Company & Management -->
+                <div class="border-b md:border-b-0 md:border-r border-slate-700 pb-4 md:pb-0 md:pr-4">
+                    <div class="flex items-center space-x-2 text-gold-400 font-bold text-lg mb-1">
+                        <i class="fa-solid fa-building"></i>
+                        <span>Two Parrots Group Australia</span>
+                    </div>
+                    <p class="text-sm text-slate-300 mb-1"><span class="text-slate-400">Managing Director:</span> <strong class="text-white">Kim Heng Ly</strong></p>
+                    <p class="text-xs text-slate-400 flex items-start gap-1">
+                        <i class="fa-solid fa-location-dot mt-0.5 text-gold-500"></i>
+                        <span>1/57 Elonera Rd, Noble Park North VIC 3174, Australia</span>
+                    </p>
+                </div>
+
+                <!-- Contact & Web -->
+                <div class="border-b md:border-b-0 md:border-r border-slate-700 pb-4 md:pb-0 md:pr-4">
+                    <h3 class="text-xs uppercase font-semibold text-slate-400 tracking-wider mb-2">Contact & Web Portal</h3>
+                    <p class="text-xs text-slate-300 mb-1.5 flex items-center gap-2">
+                        <i class="fa-solid fa-globe text-gold-400 w-4"></i>
+                        <a href="https://twoparrotsgroup.com.au" target="_blank" class="hover:underline text-gold-400">twoparrotsgroup.com.au</a>
+                    </p>
+                    <p class="text-xs text-slate-300 mb-1.5 flex items-center gap-2">
+                        <i class="fa-solid fa-envelope text-gold-400 w-4"></i>
+                        <a href="mailto:info@twoparrotsgroup.com.au" class="hover:underline">info@twoparrotsgroup.com.au</a>
+                    </p>
+                    <p class="text-xs text-slate-300 flex items-center gap-2">
+                        <i class="fa-solid fa-phone text-gold-400 w-4"></i>
+                        <span>+61 (03) 9000 0000</span>
+                    </p>
+                </div>
+
+                <!-- Logistics & Port Specs -->
+                <div>
+                    <h3 class="text-xs uppercase font-semibold text-slate-400 tracking-wider mb-2">Import / Logistics Terminal</h3>
+                    <p class="text-xs text-slate-300 mb-1.5 flex items-center gap-2">
+                        <i class="fa-solid fa-ship text-gold-400 w-4"></i>
+                        <span><strong>Discharge Port:</strong> Melbourne Swanson Dock / DP World</span>
+                    </p>
+                    <p class="text-xs text-slate-300 mb-1.5 flex items-center gap-2">
+                        <i class="fa-solid fa-box text-gold-400 w-4"></i>
+                        <span><strong>Standard Unit:</strong> 20ft FCL Container</span>
+                    </p>
+                    <p class="text-xs text-slate-300 flex items-center gap-2">
+                        <i class="fa-solid fa-calendar-check text-gold-400 w-4"></i>
+                        <span><strong>Effective Date:</strong> October 2026</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. SUMMARY CARDS -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-6">
+            <!-- Card 1: Customs Clearance Schedule -->
+            <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200 hover:shadow-md transition">
+                <div class="flex items-center justify-between mb-3 border-b border-slate-100 pb-2">
+                    <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                        <i class="fa-solid fa-file-invoice-dollar text-gold-600"></i> Customs Clearance Schedule
+                    </h3>
+                    <span class="bg-gold-100 text-gold-700 text-xs font-semibold px-2 py-0.5 rounded">Fixed Charges</span>
+                </div>
+                <ul class="text-xs text-slate-600 space-y-1.5">
+                    <li class="flex justify-between"><span>Customs Clearance Fee:</span> <strong class="text-slate-800">$185.00 + GST</strong></li>
+                    <li class="flex justify-between"><span>Quarantine Entry Fee:</span> <strong class="text-slate-800">$35.00 + GST</strong></li>
+                    <li class="flex justify-between"><span>Verification / IFIP Fee:</span> <strong class="text-slate-800">$35.00 + GST</strong></li>
+                    <li class="flex justify-between border-t border-dashed border-slate-200 pt-1">
+                        <span class="text-slate-500">Min. Quarantine Charge:</span> <strong class="text-slate-700">$42.00 AUD</strong>
+                    </li>
+                </ul>
             </div>
 
-            <!-- Itemized Cost Components List -->
-            <ul class="space-y-0.5 text-[9.5px] text-slate-700 font-medium pl-1 mb-1.5">
-              <li class="flex justify-between border-b border-slate-200/50 pb-0.5">
-                <span class="text-slate-600">• FOB Base Cost:</span>
-                <span class="font-bold text-slate-900">$${fobPcsAUD.toFixed(2)} AUD</span>
-              </li>
-              <li class="flex justify-between border-b border-slate-200/50 pb-0.5">
-                <span class="text-slate-600">• Ocean Freight:</span>
-                <span class="font-bold text-slate-900">$${freightPcsAUD.toFixed(2)} AUD</span>
-              </li>
-              <li class="flex justify-between border-b border-slate-200/50 pb-0.5">
-                <span class="text-slate-600">• Customs & Port:</span>
-                <span class="font-bold text-slate-900">$${portBrokeragePcsAUD.toFixed(2)} AUD</span>
-              </li>
-              <li class="flex justify-between border-b border-slate-200/50 pb-0.5">
-                <span class="text-slate-600">• Local Transport & Whse:</span>
-                <span class="font-bold text-slate-900">$${localCartagePcsAUD.toFixed(2)} AUD</span>
-              </li>
-            </ul>
-
-            <!-- Selling Price Row with Dynamic Margin -->
-            <div class="p-1 rounded bg-theme-darkslate text-white flex justify-between items-center border border-theme-gold">
-              <span class="text-[9px] uppercase tracking-wider text-amber-300 font-bold">Selling Price (${marginPct}% Margin):</span>
-              <span class="text-xs font-black text-theme-gold font-mono">A $${sellPriceAUD.toFixed(2)}</span>
+            <!-- Card 2: Container Freight Baseline -->
+            <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200 hover:shadow-md transition">
+                <div class="flex items-center justify-between mb-3 border-b border-slate-100 pb-2">
+                    <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                        <i class="fa-solid fa-truck-ramp-box text-gold-600"></i> Freight Baseline (20ft FCL)
+                    </h3>
+                    <span class="bg-slate-100 text-slate-700 text-xs font-semibold px-2 py-0.5 rounded">Route Metrics</span>
+                </div>
+                <ul class="text-xs text-slate-600 space-y-1.5">
+                    <li class="flex justify-between"><span>Origin - Destination:</span> <strong class="text-slate-800">Sihanoukville → Melb</strong></li>
+                    <li class="flex justify-between"><span>Baseline Ocean Freight:</span> <strong class="text-gold-700 font-bold" id="card-ocean-freight">$1,650.00 USD</strong></li>
+                    <li class="flex justify-between"><span>VIC Local Cartage:</span> <strong class="text-slate-800" id="card-local-cartage">$750.00 AUD</strong></li>
+                    <li class="flex justify-between border-t border-dashed border-slate-200 pt-1">
+                        <span>Benchmark FX Rate:</span> <strong class="text-slate-700" id="card-fx-rate">0.6620 AUD/USD</strong>
+                    </li>
+                </ul>
             </div>
-          </td>
 
-          <!-- Column 5: ASIAN MARKET COMPARISON BRAND (19%) -->
-          <td class="p-2 text-center bg-slate-50 text-[10px] border-slate-200">
-            <div class="flex items-center justify-center gap-1 mb-0.5">
-              <span class="bg-slate-200 text-slate-800 font-extrabold text-[9px] px-1 py-0.5 rounded">${item.asianOrigin}</span>
+            <!-- Card 3: Detailed Compliance & Requirements -->
+            <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200 hover:shadow-md transition">
+                <div class="flex items-center justify-between mb-2.5 border-b border-slate-100 pb-2">
+                    <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                        <i class="fa-solid fa-clipboard-check text-gold-600"></i> Compliance & Requirements
+                    </h3>
+                    <span class="bg-emerald-50 text-emerald-700 text-xs font-semibold px-2 py-0.5 rounded">Customs & Biosecurity</span>
+                </div>
+                
+                <div class="space-y-2.5 text-xs">
+                    <!-- Documents required from Supplier -->
+                    <div>
+                        <h4 class="font-bold text-slate-800 text-[11px] uppercase tracking-wider mb-1 text-gold-700 flex items-center gap-1">
+                            <i class="fa-solid fa-file-export text-gold-600"></i> Supplier Required Documents
+                        </h4>
+                        <ul class="grid grid-cols-2 gap-x-2 gap-y-0.5 text-[11px] text-slate-700">
+                            <li class="flex items-center gap-1"><i class="fa-solid fa-circle-check text-emerald-500 text-[9px]"></i> Bill of Lading</li>
+                            <li class="flex items-center gap-1"><i class="fa-solid fa-circle-check text-emerald-500 text-[9px]"></i> Commercial Invoice</li>
+                            <li class="flex items-center gap-1"><i class="fa-solid fa-circle-check text-emerald-500 text-[9px]"></i> Packing List</li>
+                            <li class="flex items-center gap-1"><i class="fa-solid fa-circle-check text-emerald-500 text-[9px]"></i> Packing Declaration</li>
+                            <li class="flex items-center gap-1"><i class="fa-solid fa-circle-check text-emerald-500 text-[9px]"></i> Manufacturer Declaration</li>
+                            <li class="flex items-center gap-1"><i class="fa-solid fa-circle-check text-emerald-500 text-[9px]"></i> FTA (Free Trade)</li>
+                            <li class="flex items-center gap-1"><i class="fa-solid fa-circle-check text-emerald-500 text-[9px]"></i> Phytosanitary Cert.</li>
+                            <li class="flex items-center gap-1"><i class="fa-solid fa-circle-check text-emerald-500 text-[9px]"></i> Fumigation Cert.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Documents required from Importer -->
+                    <div class="border-t border-slate-100 pt-1.5">
+                        <h4 class="font-bold text-slate-800 text-[11px] uppercase tracking-wider mb-1 text-gold-700 flex items-center gap-1">
+                            <i class="fa-solid fa-file-import text-gold-600"></i> Importer Required Documents
+                        </h4>
+                        <ul class="grid grid-cols-2 gap-x-2 gap-y-0.5 text-[11px] text-slate-700">
+                            <li class="flex items-center gap-1"><i class="fa-solid fa-circle-check text-blue-500 text-[9px]"></i> LOA (Template Attached)</li>
+                            <li class="flex items-center gap-1"><i class="fa-solid fa-circle-check text-blue-500 text-[9px]"></i> Photo ID</li>
+                            <li class="flex items-center gap-1"><i class="fa-solid fa-circle-check text-blue-500 text-[9px]"></i> EMPP (Proof Payment)</li>
+                            <li class="flex items-center gap-1"><i class="fa-solid fa-circle-check text-blue-500 text-[9px]"></i> ASIC Document (ABN)</li>
+                            <li class="flex items-center gap-1 col-span-2"><i class="fa-solid fa-circle-check text-blue-500 text-[9px]"></i> ASIC Statement (Director Names)</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-            <div class="font-extrabold text-slate-900">${item.asianBrand}</div>
-            <div class="text-[10px] font-black text-amber-900 mt-0.5">AU Est: ${item.asianPrice}</div>
-            <div class="text-[9px] font-bold text-slate-500">${item.asianUnit}</div>
-          </td>
+        </div>
 
-          <!-- Column 6: AUSTRALIAN SUPERMARKET PRICE (19%) -->
-          <td class="p-2 text-center bg-slate-50 text-[10px] border-slate-200">
-            <span class="inline-block bg-amber-100 text-amber-900 font-extrabold text-[9px] px-1.5 py-0.5 rounded mb-0.5 border border-amber-300">
-              ${item.auSupermarket}
-            </span>
-            <div class="text-[10px] font-black text-theme-darkslate mt-0.5">Retail: ${item.auPrice}</div>
-            <div class="text-[9px] font-bold text-slate-500">${item.auUnit}</div>
-          </td>
-        `;
+        <!-- 3. MAIN PRODUCT QUOTATION TABLE -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-200 mb-8">
+            <div class="bg-slate-900 px-6 py-4 flex flex-wrap justify-between items-center gap-4">
+                <div>
+                    <h2 class="text-base font-bold text-white tracking-wide uppercase">Landed Cost Quotation & Benchmark Schedule</h2>
+                    <p class="text-xs text-gold-400">Rearranged per Two Parrots Quotation (25 Active Products + 5 Upcoming Nov 2026 Launch)</p>
+                </div>
+                <div class="flex items-center space-x-2 text-xs">
+                    <span class="px-2.5 py-1 bg-slate-800 text-slate-300 rounded border border-slate-700">
+                        <i class="fa-solid fa-tag text-gold-400 mr-1"></i> Active: <strong>25</strong>
+                    </span>
+                    <span class="px-2.5 py-1 bg-gold-500/20 text-gold-400 rounded border border-gold-500/40">
+                        <i class="fa-solid fa-rocket mr-1"></i> Upcoming: <strong>5</strong>
+                    </span>
+                </div>
+            </div>
 
-        tbody.appendChild(tr);
-      });
-    }
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-slate-800 text-slate-200 text-xs uppercase font-semibold tracking-wider border-b border-slate-700">
+                            <!-- Col 1: N° (3%) -->
+                            <th class="py-3 px-2 text-center w-[3%] border-r border-slate-700">N°</th>
+                            
+                            <!-- Col 2: Product Description (22%) -->
+                            <th class="py-3 px-3 w-[22%] border-r border-slate-700">Product Description</th>
+                            
+                            <!-- Col 3: Price Pcs Before Delivery (13%) -->
+                            <th class="py-3 px-3 w-[13%] border-r border-slate-700 text-right">
+                                Price Pcs Before Delivery
+                                <span class="block text-[10px] text-gold-400 normal-case font-normal">(FOB USD & AUD)</span>
+                            </th>
+                            
+                            <!-- Col 4: Total Cost of Each Pcs (25%) -->
+                            <th class="py-3 px-3 w-[25%] border-r border-slate-700 bg-slate-850">
+                                <div class="text-gold-400 font-bold">Total Cost of Each Pcs</div>
+                                <span class="block text-[9px] text-slate-400 normal-case font-normal leading-tight">
+                                    Itemized: Landed Cost | FOB | Ocean Freight | Port & Customs | Local Transp | Selling Price @ Margin
+                                </span>
+                            </th>
+                            
+                            <!-- Col 5: Asian Market Comparison Brand (18%) -->
+                            <th class="py-3 px-3 w-[18%] border-r border-slate-700">
+                                Asian Market Comparison
+                                <span class="block text-[10px] text-slate-400 normal-case font-normal">(Thai, Viet, Asian Benchmarks)</span>
+                            </th>
+                            
+                            <!-- Col 6: Australian Supermarket Price (19%) -->
+                            <th class="py-3 px-3 w-[19%]">
+                                Australian Supermarket Price
+                                <span class="block text-[10px] text-slate-400 normal-case font-normal">(Coles / Woolworths Benchmarks)</span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="product-table-body" class="divide-y divide-slate-200 text-xs">
+                        <!-- JS renders 30 rearranged products here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
-    document.addEventListener('DOMContentLoaded', () => {
-      recalculateFees();
-    });
-  </script>
+    </div>
+
+    <!-- 4. FLOATING LANDED COST ENGINE TOOLBAR -->
+    <div class="fixed bottom-0 left-0 right-0 bg-slate-900 border-t-2 border-gold-500 shadow-2xl p-4 text-white z-50 no-print">
+        <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center space-x-3">
+                <div class="p-2 bg-gold-500 text-slate-900 rounded-lg">
+                    <i class="fa-solid fa-calculator text-lg"></i>
+                </div>
+                <div>
+                    <h3 class="font-bold text-sm text-white">Live Landed Cost Recalculation Engine</h3>
+                    <p class="text-[11px] text-slate-400">Adjust freight variables & margin percentage to compute live costings</p>
+                </div>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-4">
+                <!-- FX Rate -->
+                <div class="flex flex-col">
+                    <label class="text-[10px] text-gold-400 uppercase font-semibold mb-0.5">FX Rate (AUD/USD)</label>
+                    <input type="number" id="input-fx" value="0.6620" step="0.005" min="0.1" class="bg-slate-800 border border-slate-700 text-white rounded px-2.5 py-1 text-xs w-24 text-right focus:outline-none focus:border-gold-500">
+                </div>
+
+                <!-- 20ft Ocean Freight -->
+                <div class="flex flex-col">
+                    <label class="text-[10px] text-gold-400 uppercase font-semibold mb-0.5">20ft Freight (USD)</label>
+                    <input type="number" id="input-freight" value="1650" step="25" min="0" class="bg-slate-800 border border-slate-700 text-white rounded px-2.5 py-1 text-xs w-28 text-right focus:outline-none focus:border-gold-500">
+                </div>
+
+                <!-- Vic Cartage -->
+                <div class="flex flex-col">
+                    <label class="text-[10px] text-gold-400 uppercase font-semibold mb-0.5">VIC Cartage (AUD)</label>
+                    <input type="number" id="input-cartage" value="750" step="25" min="0" class="bg-slate-800 border border-slate-700 text-white rounded px-2.5 py-1 text-xs w-28 text-right focus:outline-none focus:border-gold-500">
+                </div>
+
+                <!-- Target Margin % -->
+                <div class="flex flex-col">
+                    <label class="text-[10px] text-gold-400 uppercase font-semibold mb-0.5">Target Margin (%)</label>
+                    <div class="relative">
+                        <input type="number" id="input-margin" value="50" step="1" min="0" max="95" class="bg-slate-800 border border-gold-500 text-gold-400 font-bold rounded px-2.5 py-1 text-xs w-24 text-right focus:outline-none pr-5">
+                        <span class="absolute right-2 top-1 text-xs text-gold-400">%</span>
+                    </div>
+                </div>
+
+                <button id="btn-recalculate" onclick="recalculateAll()" class="mt-3 sm:mt-0 px-4 py-2 gold-gradient hover:opacity-90 text-slate-900 font-bold rounded shadow transition text-xs flex items-center gap-1.5">
+                    <i class="fa-solid fa-arrows-rotate"></i> Recalculate
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRODUCT DATA & CALCULATION ENGINE SCRIPT -->
+    <script>
+        // 30 Rearranged Products Exactly Matching Two Parrots Quotation Schedule
+        const productsData = [
+            // --- 25 ACTIVE PRODUCTS (REARRANGED ACCORDING TO QUOTATION PDF) ---
+            {
+                id: 1,
+                status: 'Active',
+                nameEng: 'Finest Rice Flour 500g',
+                nameKhmer: 'ម្សៅអង្ករខ្សាយ ៥០០ក្រាម',
+                spec: '500g Bag / 20 Pcs (10kg/CTN)',
+                fobUsd: 0.36,
+                pcsPer20ft: 20000,
+                asianComp: 'Erawan Rice Flour 500g ($2.20 - $4.40/kg)',
+                asianSource: 'Src: KFL Asian Grocery Springvale',
+                ausComp: 'McKenzie\'s Rice Flour 500g ($3.50 - $7.00/kg)',
+                ausSource: 'Src: Coles Online AU (Melb)'
+            },
+            {
+                id: 2,
+                status: 'Active',
+                nameEng: 'Glutinous Rice Flour 500g',
+                nameKhmer: 'ម្សៅអង្ករដំណើប ៥០០ក្រាម',
+                spec: '500g Bag / 20 Pcs (10kg/CTN)',
+                fobUsd: 0.58,
+                pcsPer20ft: 20000,
+                asianComp: 'Erawan Glutinous Rice Flour 500g ($2.50 - $5.00/kg)',
+                asianSource: 'Src: Minh Phat Market Richmond',
+                ausComp: 'Cock Brand Glutinous Flour 500g ($3.20 - $6.40/kg)',
+                ausSource: 'Src: Woolworths Supermarkets VIC'
+            },
+            {
+                id: 3,
+                status: 'Active',
+                nameEng: 'Tapioca Flour 500g',
+                nameKhmer: 'ម្សៅឆា ៥០០ក្រាម',
+                spec: '500g Bag / 20 Pcs (10kg/CTN)',
+                fobUsd: 0.44,
+                pcsPer20ft: 20000,
+                asianComp: 'Cock Brand Tapioca Starch 500g ($2.10 - $4.20/kg)',
+                asianSource: 'Src: Asia Grocery Online AU',
+                ausComp: 'McKenzie\'s Tapioca Flour 375g ($2.80 - $7.46/kg)',
+                ausSource: 'Src: Coles Online AU (Melb)'
+            },
+            {
+                id: 4,
+                status: 'Active',
+                nameEng: 'Pancake Flour (Banh Xeo) 500g',
+                nameKhmer: 'ម្សៅបាញ់ឆែវ ៥០០ក្រាម',
+                spec: '500g Bag / 20 Pcs (10kg/CTN)',
+                fobUsd: 0.90,
+                pcsPer20ft: 20000,
+                asianComp: 'Bot Banh Xeo Pancake Mix 500g ($3.80 - $7.60/kg)',
+                asianSource: 'Src: KFL Asian Grocery Springvale',
+                ausComp: 'Greens Original Pancake Mix 375g ($3.20 - $8.53/kg)',
+                ausSource: 'Src: Woolworths Supermarkets VIC'
+            },
+            {
+                id: 5,
+                status: 'Active',
+                nameEng: 'Crispy Tempura Flour 1000g',
+                nameKhmer: 'ម្សៅបំពងស្រួយ ១០០០ក្រាម',
+                spec: '1000g Bag / 10 Pcs (10kg/CTN)',
+                fobUsd: 1.25,
+                pcsPer20ft: 10000,
+                asianComp: 'Gogi Tempura Batter Mix 500g ($2.80 - $5.60/kg)',
+                asianSource: 'Src: Minh Phat Market Richmond',
+                ausComp: 'White Wings Tempura Batter 300g ($3.50 - $11.66/kg)',
+                ausSource: 'Src: Coles Online AU (Melb)'
+            },
+            {
+                id: 6,
+                status: 'Active',
+                nameEng: 'Crispy Tempura Flour 150g',
+                nameKhmer: 'ម្សៅបំពងស្រួយ ១៥០ក្រាម',
+                spec: '150g Bag / 60 Pcs (6x10pcs/CTN)',
+                fobUsd: 0.39,
+                pcsPer20ft: 60000,
+                asianComp: 'Gogi Crispy Batter Pack 150g ($1.60 - $10.66/kg)',
+                asianSource: 'Src: KFL Asian Grocery Springvale',
+                ausComp: 'Knorr Crispy Seasoned Coating 150g ($2.50 - $16.66/kg)',
+                ausSource: 'Src: Woolworths Supermarkets VIC'
+            },
+            {
+                id: 7,
+                status: 'Active',
+                nameEng: 'Fried Banana Flour 500g',
+                nameKhmer: 'ម្សៅចេកចៀន ៥០០ក្រាម',
+                spec: '500g Bag / 20 Pcs (10kg/CTN)',
+                fobUsd: 1.60,
+                pcsPer20ft: 20000,
+                asianComp: 'Bot Chien Chuoi Banana Mix 500g ($4.50 - $9.00/kg)',
+                asianSource: 'Src: Asia Grocery Online AU',
+                ausComp: 'Asian Specialty Dessert Batter 400g ($5.20 - $13.00/kg)',
+                ausSource: 'Src: Coles Online AU (Melb)'
+            },
+            {
+                id: 8,
+                status: 'Active',
+                nameEng: 'Black Pepper Whole 120g',
+                nameKhmer: 'ម្រេចខ្មៅគ្រាប់មូល ១២០ក្រាម',
+                spec: '120g Can / 12 Cans/CTN',
+                fobUsd: 3.63,
+                pcsPer20ft: 18000,
+                asianComp: 'Thai Whole Black Peppercorn 100g ($6.50 - $65.00/kg)',
+                asianSource: 'Src: Minh Phat Market Richmond',
+                ausComp: 'Hoyts Whole Black Peppercorn 100g ($6.20 - $62.00/kg)',
+                ausSource: 'Src: Woolworths Supermarkets VIC'
+            },
+            {
+                id: 9,
+                status: 'Active',
+                nameEng: 'Fine Ground Black Pepper 80g',
+                nameKhmer: 'ម្រេចខ្មៅម៉ដ្ឋ ៨០ក្រាម',
+                spec: '80g Can / 20 Cans/CTN',
+                fobUsd: 1.43,
+                pcsPer20ft: 24000,
+                asianComp: 'Cock Brand Ground Black Pepper 80g ($3.80 - $47.50/kg)',
+                asianSource: 'Src: KFL Asian Grocery Springvale',
+                ausComp: 'Saxa Black Pepper Ground 50g ($3.90 - $78.00/kg)',
+                ausSource: 'Src: Coles Online AU (Melb)'
+            },
+            {
+                id: 10,
+                status: 'Active',
+                nameEng: 'Coarse Ground Black Pepper 80g',
+                nameKhmer: 'ម្រេចខ្មៅចម្រៀក ៨០ក្រាម',
+                spec: '80g Can / 20 Cans/CTN',
+                fobUsd: 1.43,
+                pcsPer20ft: 24000,
+                asianComp: 'MasterFoods Cracked Black Pepper 50g ($4.50 - $90.00/kg)',
+                asianSource: 'Src: Asia Grocery Online AU',
+                ausComp: 'McCormick Cracked Black Pepper 40g ($4.20 - $105.00/kg)',
+                ausSource: 'Src: Woolworths Supermarkets VIC'
+            },
+            {
+                id: 11,
+                status: 'Active',
+                nameEng: 'Fine Ground White Pepper 80g',
+                nameKhmer: 'ម្រេចសចម្រៀក ៨០ក្រាម',
+                spec: '80g Can / 20 Cans/CTN',
+                fobUsd: 1.43,
+                pcsPer20ft: 24000,
+                asianComp: 'Cock Brand White Pepper Powder 100g ($5.80 - $58.00/kg)',
+                asianSource: 'Src: KFL Asian Grocery Springvale',
+                ausComp: 'Hoyts White Pepper Ground 100g ($6.20 - $62.00/kg)',
+                ausSource: 'Src: Coles Online AU (Melb)'
+            },
+            {
+                id: 12,
+                status: 'Active',
+                nameEng: 'Coarse Ground Black Pepper 650g',
+                nameKhmer: 'ម្រេចខ្មៅចម្រៀក ៦៥០ក្រាម',
+                spec: '650g Can / 6 Cans/CTN',
+                fobUsd: 7.46,
+                pcsPer20ft: 9000,
+                asianComp: 'Chef Choice Coarse Black Pepper 500g ($16.50 - $33.00/kg)',
+                asianSource: 'Src: Minh Phat Market Richmond',
+                ausComp: 'MasterFoods Black Pepper Catering 500g ($18.90 - $37.80/kg)',
+                ausSource: 'Src: Woolworths Supermarkets VIC'
+            },
+            {
+                id: 13,
+                status: 'Active',
+                nameEng: 'Fine Ground Black Pepper 650g',
+                nameKhmer: 'ម្រេចខ្មៅម៉ដ្ឋ ៦៥០ក្រាម',
+                spec: '650g Can / 6 Cans/CTN',
+                fobUsd: 7.46,
+                pcsPer20ft: 9000,
+                asianComp: 'Thai Pure Fine Ground Black Pepper 500g ($15.80 - $31.60/kg)',
+                asianSource: 'Src: KFL Asian Grocery Springvale',
+                ausComp: 'Hoyts Catering Ground Black Pepper 500g ($17.50 - $35.00/kg)',
+                ausSource: 'Src: Coles Online AU (Melb)'
+            },
+            {
+                id: 14,
+                status: 'Active',
+                nameEng: 'Black Pepper Whole 1000g',
+                nameKhmer: 'ម្រេចខ្មៅគ្រាប់មូល ១០០០ក្រាម',
+                spec: '1000g Bag / 10 Bags (10kg/CTN)',
+                fobUsd: 9.07,
+                pcsPer20ft: 10000,
+                asianComp: 'VN Premium Whole Black Pepper 1kg ($22.00 - $22.00/kg)',
+                asianSource: 'Src: Asia Grocery Online AU',
+                ausComp: 'MasterFoods Black Peppercorns Bulk 1kg ($28.50 - $28.50/kg)',
+                ausSource: 'Src: Woolworths Supermarkets VIC'
+            },
+            {
+                id: 15,
+                status: 'Active',
+                nameEng: 'Black Pepper Whole 500g',
+                nameKhmer: 'ម្រេចខ្មៅគ្រាប់មូល ៥០០ក្រាម',
+                spec: '500g Bag / 20 Bags (10kg/CTN)',
+                fobUsd: 4.60,
+                pcsPer20ft: 20000,
+                asianComp: 'Erawan Whole Black Peppercorn 500g ($12.50 - $25.00/kg)',
+                asianSource: 'Src: Minh Phat Market Richmond',
+                ausComp: 'Hoyts Black Peppercorn Pouch 500g ($14.80 - $29.60/kg)',
+                ausSource: 'Src: Coles Online AU (Melb)'
+            },
+            {
+                id: 16,
+                status: 'Active',
+                nameEng: 'Crushed Black Pepper (10-20 Mesh) 1000g',
+                nameKhmer: 'ម្រេចខ្មៅចម្រៀកកំរិត 10-20 ម៉េស ១០០០ក្រាម',
+                spec: '1000g Bag / 10 Bags (10kg/CTN)',
+                fobUsd: 9.46,
+                pcsPer20ft: 10000,
+                asianComp: 'VN Cracked Black Pepper Bulk 1kg ($24.00 - $24.00/kg)',
+                asianSource: 'Src: KFL Asian Grocery Springvale',
+                ausComp: 'McCormick Cracked Pepper Catering 1kg ($31.00 - $31.00/kg)',
+                ausSource: 'Src: Woolworths Supermarkets VIC'
+            },
+            {
+                id: 17,
+                status: 'Active',
+                nameEng: 'Crushed Black Pepper (10-20 Mesh) 500g',
+                nameKhmer: 'ម្រេចខ្មៅចម្រៀកកំរិត 10-20 ម៉េស ៥០០ក្រាម',
+                spec: '500g Bag / 20 Bags (10kg/CTN)',
+                fobUsd: 4.79,
+                pcsPer20ft: 20000,
+                asianComp: 'Cock Brand Crushed Black Pepper 500g ($13.20 - $26.40/kg)',
+                asianSource: 'Src: Asia Grocery Online AU',
+                ausComp: 'MasterFoods Cracked Black Pepper 500g ($16.00 - $32.00/kg)',
+                ausSource: 'Src: Coles Online AU (Melb)'
+            },
+            {
+                id: 18,
+                status: 'Active',
+                nameEng: 'Fine Ground Black Pepper (40 Mesh) 1000g',
+                nameKhmer: 'ម្រេចខ្មៅម៉ដ្ឋកំរិត 40 ម៉េស ១០០០ក្រាម',
+                spec: '1000g Bag / 10 Bags (10kg/CTN)',
+                fobUsd: 9.46,
+                pcsPer20ft: 10000,
+                asianComp: 'Thai Pure Black Pepper Powder 1kg ($23.50 - $23.50/kg)',
+                asianSource: 'Src: Minh Phat Market Richmond',
+                ausComp: 'Saxa Pure Ground Black Pepper 1kg ($29.90 - $29.90/kg)',
+                ausSource: 'Src: Woolworths Supermarkets VIC'
+            },
+            {
+                id: 19,
+                status: 'Active',
+                nameEng: 'Fine Ground Black Pepper (40 Mesh) 500g',
+                nameKhmer: 'ម្រេចខ្មៅម៉ដ្ឋកំរិត 40 ម៉េស ៥០០ក្រាម',
+                spec: '500g Bag / 20 Bags (10kg/CTN)',
+                fobUsd: 4.78,
+                pcsPer20ft: 20000,
+                asianComp: 'Cock Brand Fine Black Pepper 500g ($12.80 - $25.60/kg)',
+                asianSource: 'Src: KFL Asian Grocery Springvale',
+                ausComp: 'Hoyts Fine Black Pepper 500g ($15.20 - $30.40/kg)',
+                ausSource: 'Src: Coles Online AU (Melb)'
+            },
+            {
+                id: 20,
+                status: 'Active',
+                nameEng: 'Black Pepper Whole 200g',
+                nameKhmer: 'ម្រេចខ្មៅគ្រាប់មូល ២០០ក្រាម',
+                spec: '200g Can / 12 Cans/CTN',
+                fobUsd: 2.68,
+                pcsPer20ft: 14400,
+                asianComp: 'Thai Whole Black Pepper Can 200g ($7.20 - $36.00/kg)',
+                asianSource: 'Src: Asia Grocery Online AU',
+                ausComp: 'McCormick Black Peppercorn Can 200g ($8.50 - $42.50/kg)',
+                ausSource: 'Src: Woolworths Supermarkets VIC'
+            },
+            {
+                id: 21,
+                status: 'Active',
+                nameEng: 'Coarse Ground Black Pepper 250g',
+                nameKhmer: 'ម្រេចខ្មៅចម្រៀក ២៥០ក្រាម',
+                spec: '250g Can / 12 Cans/CTN',
+                fobUsd: 3.37,
+                pcsPer20ft: 14400,
+                asianComp: 'Cock Brand Coarse Black Pepper 250g ($8.20 - $32.80/kg)',
+                asianSource: 'Src: Minh Phat Market Richmond',
+                ausComp: 'MasterFoods Cracked Pepper Shaker 250g ($9.80 - $39.20/kg)',
+                ausSource: 'Src: Coles Online AU (Melb)'
+            },
+            {
+                id: 22,
+                status: 'Active',
+                nameEng: 'Fine Ground Black Pepper 250g',
+                nameKhmer: 'ម្រេចខ្មៅម៉ដ្ឋ ២៥០ក្រាម',
+                spec: '250g Can / 12 Cans/CTN',
+                fobUsd: 3.37,
+                pcsPer20ft: 14400,
+                asianComp: 'Erawan Ground Black Pepper 250g ($8.00 - $32.00/kg)',
+                asianSource: 'Src: KFL Asian Grocery Springvale',
+                ausComp: 'Saxa Ground Black Pepper Shaker 250g ($9.50 - $38.00/kg)',
+                ausSource: 'Src: Woolworths Supermarkets VIC'
+            },
+            {
+                id: 23,
+                status: 'Active',
+                nameEng: 'Black Pepper Whole 350g',
+                nameKhmer: 'ម្រេចខ្មៅគ្រាប់មូល ៣៥០ក្រាម',
+                spec: '350g Can / 12 Cans/CTN',
+                fobUsd: 3.59,
+                pcsPer20ft: 14400,
+                asianComp: 'Thai Whole Peppercorn Can 350g ($10.50 - $30.00/kg)',
+                asianSource: 'Src: Asia Grocery Online AU',
+                ausComp: 'Hoyts Peppercorns Can 350g ($12.20 - $34.85/kg)',
+                ausSource: 'Src: Coles Online AU (Melb)'
+            },
+            {
+                id: 24,
+                status: 'Active',
+                nameEng: 'Coarse Ground Black Pepper 360g',
+                nameKhmer: 'ម្រេចខ្មៅចម្រៀក ៣៦០ក្រាម',
+                spec: '360g Can / 12 Cans/CTN',
+                fobUsd: 4.06,
+                pcsPer20ft: 14400,
+                asianComp: 'VN Cracked Black Pepper Can 360g ($11.80 - $32.77/kg)',
+                asianSource: 'Src: Minh Phat Market Richmond',
+                ausComp: 'MasterFoods Cracked Pepper Can 360g ($13.80 - $38.33/kg)',
+                ausSource: 'Src: Woolworths Supermarkets VIC'
+            },
+            {
+                id: 25,
+                status: 'Active',
+                nameEng: 'Fine Ground Black Pepper 360g',
+                nameKhmer: 'ម្រេចខ្មៅម៉ដ្ឋ ៣៦០ក្រាម',
+                spec: '360g Can / 12 Cans/CTN',
+                fobUsd: 3.89,
+                pcsPer20ft: 14400,
+                asianComp: 'Cock Brand Fine Pepper Can 360g ($11.20 - $31.11/kg)',
+                asianSource: 'Src: KFL Asian Grocery Springvale',
+                ausComp: 'Saxa Ground Black Pepper Can 360g ($13.50 - $37.50/kg)',
+                ausSource: 'Src: Coles Online AU (Melb)'
+            },
+
+            // --- 5 UPCOMING PRODUCTS (NOV 2026 LAUNCH FROM QUOTATION REMARKS) ---
+            {
+                id: 26,
+                status: 'Upcoming',
+                nameEng: 'Instant Rice Stir-Fry Noodle 100g',
+                nameKhmer: 'មីគោក ១០០ក្រាម',
+                spec: '100g Box / 24 Pcs per CTN',
+                fobUsd: 0.85,
+                pcsPer20ft: 18000,
+                asianComp: 'Mama Instant Rice Noodle Pack 100g ($2.20 - $22.00/kg)',
+                asianSource: 'Src: Minh Phat Market Richmond',
+                ausComp: 'Trident Instant Rice Noodle Bowl 100g ($2.80 - $28.00/kg)',
+                ausSource: 'Src: Woolworths Supermarkets VIC'
+            },
+            {
+                id: 27,
+                status: 'Upcoming',
+                nameEng: 'Crispy Rice Cake Flour 500g',
+                nameKhmer: 'ម្សៅនំគ្រក់ ៥០០ក្រាម',
+                spec: '500g Bag / 20 Pcs (10kg/CTN)',
+                fobUsd: 0.95,
+                pcsPer20ft: 20000,
+                asianComp: 'Bot Banh Khot Cake Flour 500g ($3.90 - $7.80/kg)',
+                asianSource: 'Src: KFL Asian Grocery Springvale',
+                ausComp: 'Asian Specialty Rice Cake Premix 500g ($4.80 - $9.60/kg)',
+                ausSource: 'Src: Coles Online AU (Melb)'
+            },
+            {
+                id: 28,
+                status: 'Upcoming',
+                nameEng: 'Chinese Doughnuts Flour 500g',
+                nameKhmer: 'ម្សៅនំឆា ៥០០ក្រាម',
+                spec: '500g Bag / 20 Pcs (10kg/CTN)',
+                fobUsd: 0.90,
+                pcsPer20ft: 20000,
+                asianComp: 'Youtiao Chinese Donut Premix 500g ($3.60 - $7.20/kg)',
+                asianSource: 'Src: Asia Grocery Online AU',
+                ausComp: 'Defiance Specialty Flour Mix 500g ($4.20 - $8.40/kg)',
+                ausSource: 'Src: Woolworths Supermarkets VIC'
+            },
+            {
+                id: 29,
+                status: 'Upcoming',
+                nameEng: 'Waffle Flour 500g',
+                nameKhmer: 'ម្សៅពុម្ព ៥០០ក្រាម',
+                spec: '500g Bag / 20 Pcs (10kg/CTN)',
+                fobUsd: 1.10,
+                pcsPer20ft: 20000,
+                asianComp: 'Thai Pandan Waffle Premix 500g ($4.20 - $8.40/kg)',
+                asianSource: 'Src: Minh Phat Market Richmond',
+                ausComp: 'Greens Belgian Waffle Mix 400g ($4.50 - $11.25/kg)',
+                ausSource: 'Src: Coles Online AU (Melb)'
+            },
+            {
+                id: 30,
+                status: 'Upcoming',
+                nameEng: 'Steamed Rice Cake Flour 500g',
+                nameKhmer: 'ម្សៅនំអាកោ ៥០០ក្រាម',
+                spec: '500g Bag / 20 Pcs (10kg/CTN)',
+                fobUsd: 0.85,
+                pcsPer20ft: 20000,
+                asianComp: 'Bot Banh Bo Steamed Cake Flour 500g ($3.50 - $7.00/kg)',
+                asianSource: 'Src: KFL Asian Grocery Springvale',
+                ausComp: 'Asian Rice Cake Premix 500g ($4.20 - $8.40/kg)',
+                ausSource: 'Src: Woolworths Supermarkets VIC'
+            }
+        ];
+
+        // Fixed Customs Charges
+        const CUSTOMS_CLEARANCE = 185.00;
+        const QUARANTINE_ENTRY = 35.00;
+        const VERIFICATION_FEE = 35.00;
+        const MIN_QUARANTINE_CHARGE = 42.00;
+        const TOTAL_FIXED_CUSTOMS_AUD = CUSTOMS_CLEARANCE + QUARANTINE_ENTRY + VERIFICATION_FEE + MIN_QUARANTINE_CHARGE; // $297.00 AUD
+
+        // Calculation Function
+        function calculateProductCosts(product, fx, oceanFreightUsd, localCartageAud, marginPercent) {
+            // 1. FOB AUD
+            const fobAud = product.fobUsd / fx;
+
+            // 2. Freight AUD per pc
+            const oceanFreightAudTotal = oceanFreightUsd / fx;
+            const freightAudPerPc = oceanFreightAudTotal / product.pcsPer20ft;
+
+            // 3. Port & Customs AUD per pc
+            const customsAudPerPc = TOTAL_FIXED_CUSTOMS_AUD / product.pcsPer20ft;
+
+            // 4. Local Transport AUD per pc
+            const cartageAudPerPc = localCartageAud / product.pcsPer20ft;
+
+            // 5. Total Landed Cost AUD
+            const landedCostAud = fobAud + freightAudPerPc + customsAudPerPc + cartageAudPerPc;
+
+            // 6. Selling Price at Margin % = Landed Cost / (1 - Margin%)
+            const marginDecimal = marginPercent / 100;
+            const sellingPriceAud = marginDecimal < 1 ? landedCostAud / (1 - marginDecimal) : landedCostAud;
+
+            return {
+                fobAud,
+                freightAudPerPc,
+                customsAudPerPc,
+                cartageAudPerPc,
+                landedCostAud,
+                sellingPriceAud
+            };
+        }
+
+        // Render Function
+        function renderTable() {
+            const fx = parseFloat(document.getElementById('input-fx').value) || 0.6620;
+            const oceanFreightUsd = parseFloat(document.getElementById('input-freight').value) || 1650;
+            const localCartageAud = parseFloat(document.getElementById('input-cartage').value) || 750;
+            const marginPercent = parseFloat(document.getElementById('input-margin').value) || 50;
+
+            // Update Summary Card Indicators
+            document.getElementById('card-fx-rate').innerText = fx.toFixed(4) + ' AUD/USD';
+            document.getElementById('card-ocean-freight').innerText = '$' + oceanFreightUsd.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' USD';
+            document.getElementById('card-local-cartage').innerText = '$' + localCartageAud.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' AUD';
+
+            const tbody = document.getElementById('product-table-body');
+            tbody.innerHTML = '';
+
+            productsData.forEach((p, idx) => {
+                const calc = calculateProductCosts(p, fx, oceanFreightUsd, localCartageAud, marginPercent);
+                const isUpcoming = p.status === 'Upcoming';
+
+                const tr = document.createElement('tr');
+                tr.className = `hover:bg-slate-50 transition ${isUpcoming ? 'bg-amber-50/40' : (idx % 2 === 0 ? 'bg-white' : 'bg-slate-50/50')}`;
+
+                tr.innerHTML = `
+                    <!-- Col 1: N° -->
+                    <td class="py-3 px-2 text-center font-bold text-slate-500 border-r border-slate-200">
+                        ${p.id}
+                    </td>
+
+                    <!-- Col 2: Product Description -->
+                    <td class="py-3 px-3 border-r border-slate-200">
+                        <div class="flex items-center gap-1.5 mb-0.5">
+                            <span class="font-bold text-slate-900">${p.nameEng}</span>
+                            ${isUpcoming ? '<span class="bg-amber-500 text-white text-[9px] font-bold px-1.5 py-0.2 rounded">NOV 2026</span>' : ''}
+                        </div>
+                        <div class="text-slate-600 text-[11px] font-khmer mb-1">${p.nameKhmer}</div>
+                        <div class="flex items-center gap-2 text-[10px] text-slate-500">
+                            <span class="bg-slate-100 border border-slate-200 px-1.5 py-0.5 rounded">
+                                <i class="fa-solid fa-weight-hanging text-gold-600 mr-1"></i>${p.spec}
+                            </span>
+                            <span class="text-slate-400">(${p.pcsPer20ft.toLocaleString()} pcs/20ft)</span>
+                        </div>
+                    </td>
+
+                    <!-- Col 3: Price Pcs Before Delivery (FOB) -->
+                    <td class="py-3 px-3 border-r border-slate-200 text-right font-mono">
+                        <div class="font-bold text-slate-900 text-sm">$${p.fobUsd.toFixed(2)} USD</div>
+                        <div class="text-slate-500 text-[11px]">$${calc.fobAud.toFixed(2)} AUD</div>
+                    </td>
+
+                    <!-- Col 4: Total Cost of Each Pcs (Itemized Breakdown) -->
+                    <td class="py-3 px-3 border-r border-slate-200 bg-slate-50/80 font-mono">
+                        <div class="flex justify-between items-center border-b border-slate-200 pb-1 mb-1">
+                            <span class="text-slate-700 font-bold text-xs uppercase">Landed Cost AUD:</span>
+                            <span class="text-slate-900 font-black text-sm">$${calc.landedCostAud.toFixed(2)}</span>
+                        </div>
+                        <div class="space-y-0.5 text-[10px] text-slate-600 border-b border-dashed border-slate-200 pb-1 mb-1">
+                            <div class="flex justify-between">
+                                <span class="text-slate-500">FOB AUD:</span>
+                                <span>$${calc.fobAud.toFixed(2)}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-500">Ocean Freight AUD:</span>
+                                <span>$${calc.freightAudPerPc.toFixed(3)}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-500">Customs & Port AUD:</span>
+                                <span>$${calc.customsAudPerPc.toFixed(3)}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-500">Local Transport AUD:</span>
+                                <span>$${calc.cartageAudPerPc.toFixed(3)}</span>
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-center bg-gold-50 border border-gold-200 p-1 rounded">
+                            <span class="text-gold-800 font-bold text-[10px]">Selling Price @ ${marginPercent}%:</span>
+                            <span class="text-gold-700 font-bold text-xs">$${calc.sellingPriceAud.toFixed(2)}</span>
+                        </div>
+                    </td>
+
+                    <!-- Col 5: Asian Market Comparison Brand -->
+                    <td class="py-3 px-3 border-r border-slate-200">
+                        <div class="text-slate-800 font-medium text-xs mb-1">${p.asianComp}</div>
+                        <div>
+                            <span class="source-badge bg-amber-100 text-amber-800 border border-amber-300">
+                                <i class="fa-solid fa-store mr-0.5 text-[9px]"></i> ${p.asianSource}
+                            </span>
+                        </div>
+                    </td>
+
+                    <!-- Col 6: Australian Supermarket Price -->
+                    <td class="py-3 px-3">
+                        <div class="text-slate-800 font-medium text-xs mb-1">${p.ausComp}</div>
+                        <div>
+                            <span class="source-badge bg-blue-100 text-blue-800 border border-blue-300">
+                                <i class="fa-solid fa-cart-shopping mr-0.5 text-[9px]"></i> ${p.ausSource}
+                            </span>
+                        </div>
+                    </td>
+                `;
+
+                tbody.appendChild(tr);
+            });
+        }
+
+        function recalculateAll() {
+            renderTable();
+        }
+
+        // Auto recalculate on keyup/change for real-time interactivity
+        document.getElementById('input-fx').addEventListener('input', renderTable);
+        document.getElementById('input-freight').addEventListener('input', renderTable);
+        document.getElementById('input-cartage').addEventListener('input', renderTable);
+        document.getElementById('input-margin').addEventListener('input', renderTable);
+
+        // Initial render on page load
+        window.onload = function() {
+            renderTable();
+        };
+    </script>
 </body>
 </html>
