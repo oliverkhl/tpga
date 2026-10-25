@@ -1,0 +1,25 @@
+{
+  "lastUpdated": "2026-10-25T02:00:00Z",
+  "competitors": {
+    "1": {
+      "asianComps": [
+        { "brand": "Erawan Rice Flour", "weightG": 500, "priceAud": 2.20, "source": "Src: KFL Asian Grocery Springvale" },
+        { "brand": "Cock Brand Rice Flour", "weightG": 500, "priceAud": 2.10, "source": "Src: Minh Phat Market Richmond" }
+      ],
+      "ausComps": [
+        { "brand": "McKenzie's Rice Flour", "weightG": 500, "priceAud": 3.50, "source": "Src: Coles Online AU (Melb)" },
+        { "brand": "Anchor Rice Flour", "weightG": 500, "priceAud": 3.40, "source": "Src: Woolworths Supermarkets VIC" }
+      ]
+    },
+    "5": {
+      "asianComps": [
+        { "brand": "Gogi Tempura Batter Mix", "weightG": 500, "priceAud": 2.80, "source": "Src: Minh Phat Market Richmond" },
+        { "brand": "Showwa Tempura Flour", "weightG": 1000, "priceAud": 5.20, "source": "Src: Asia Grocery Online AU" }
+      ],
+      "ausComps": [
+        { "brand": "White Wings Tempura Batter", "weightG": 300, "priceAud": 3.50, "source": "Src: Coles Online AU (Melb)" },
+        { "brand": "Knorr Crispy Tempura Mix", "weightG": 500, "priceAud": 4.80, "source": "Src: Woolworths Supermarkets VIC" }
+      ]
+    }
+  }
+}
