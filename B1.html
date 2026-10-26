@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Two Parrots Group Australia - Master OpEx Budget & Compliance Portal</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Hanuman:wght@400;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        slate: {
+                            850: '#151f30',
+                            900: '#1E293B',
+                        },
+                        gold: {
+                            100: '#FDF8E1',
+                            300: '#F3E5AB',
+                            400: '#E6C655',
+                            500: '#D4AF37',
+                            600: '#C59B27',
+                            700: '#9B7817'
+                        },
+                        greybg: '#F4F5F7'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        khmer: ['Hanuman', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #F4F5F7;
+            font-family: 'Inter', sans-serif;
+            color: #1E293B;
+        }
+
+        .gold-gradient {
+            background: linear-gradient(135deg, #D4AF37 0%, #C59B27 100%);
+        }
+
+        input[type=number]::-webkit-inner-spin-button, 
+        input[type=number]::-webkit-outer-spin-button { 
+            -webkit-appearance: none; 
+            margin: 0; 
+        }
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+
+        @media print {
+            body {
+                background-color: #ffffff !important;
+                color: #000000 !important;
+                font-size: 10px !important;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .page-break {
+                page-break-before: always;
+            }
+            .container {
+                max-width: 100% !important;
+                width: 100% !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+            .shadow-lg, .shadow-md, .shadow-sm {
+                box-shadow: none !important;
+            }
+            .border {
+                border-color: #cbd5e1 !important;
+            }
+            table {
+                width: 100% !important;
+                font-size: 9px !important;
+            }
+            th, td {
+                padding: 4px 6px !important;
+            }
+            @page {
+                size: A4 portrait;
+                margin: 0.8cm;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen pb-40 relative">
+
+    <!-- PASSWORD MODAL OVERLAY -->
+    <div id="password-modal" class="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/70 backdrop-blur-md p-4 transition-opacity duration-300 no-print">
+        <div class="bg-slate-900 border-2 border-gold-500 text-white rounded-2xl shadow-2xl p-6 sm:p-8 max-w-md w-full relative">
+            <div class="text-center mb-6">
+                <div class="w-14 h-14 bg-gold-500/10 rounded-full border border-gold-500/30 flex items-center justify-center mx-auto mb-3">
+                    <i class="fa-solid fa-lock text-gold-400 text-2xl"></i>
+                </div>
+                <h2 data-i18n="modal_title" class="text-xl font-bold text-white tracking-wide">Restricted Access</h2>
+                <p data-i18n="modal_desc" class="text-xs text-slate-400 mt-1">Please enter the security password to view the Budget & Compliance Portal.</p>
+            </div>
+            
+            <form id="password-form" onsubmit="unlockPage(event)">
+                <div class="mb-5">
+                    <label data-i18n="modal_label" class="block text-xs uppercase font-semibold text-gold-400 mb-1.5 tracking-wider">Enter Password</label>
+                    <div class="relative">
+                        <input type="password" id="password-input" placeholder="••••••••" autofocus class="w-full bg-slate-800 border border-slate-700 focus:border-gold-500 rounded-lg px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none transition">
+                        <button type="button" onclick="togglePasswordVisibility()" class="absolute right-3 top-2.5 text-slate-400 hover:text-gold-400 text-sm">
+                            <i id="eye-icon" class="fa-solid fa-eye"></i>
+                        </button>
+                    </div>
+                    <p id="password-error" data-i18n="modal_error" class="text-red-400 text-xs mt-2 hidden flex items-center gap-1">
+                        <i class="fa-solid fa-circle-exclamation"></i> Incorrect password. Please try again.
+                    </p>
+                </div>
+                
+                <button type="submit" class="w-full py-2.5 gold-gradient hover:opacity-90 text-slate-900 font-bold rounded-lg shadow transition text-sm flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-key"></i> <span data-i18n="modal_btn">Unlock Dashboard</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MAIN PAGE WRAPPER WITH BLUR STATE ON LOAD -->
+    <div id="page-content" class="filter blur-xl pointer-events-none select-none transition-all duration-500">
+
+        <!-- Header Navigation Bar -->
+        <header class="bg-slate-900 text-white shadow-md no-print border-b-2 border-gold-500">
+            <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center gap-4">
+                <div>
+                    <h1 class="text-lg font-bold text-white tracking-wide">TWO PARROTS GROUP AUSTRALIA</h1>
+                    <p data-i18n="header_sub" class="text-xs text-gold-400">Master Operational Expense Budget & Product Compliance Portal</p>
+                </div>
+
+                <div class="flex items-center space-x-3">
+                    <div class="flex items-center bg-slate-800 p-1 rounded-lg border border-slate-700 space-x-1">
+                        <button onclick="setLanguage('en')" id="lang-btn-en" title="English" class="px-2.5 py-1 text-base rounded transition bg-gold-500/20 border border-gold-500">🇬🇧</button>
+                        <button onclick="setLanguage('km')" id="lang-btn-km" title="Khmer" class="px-2.5 py-1 text-base rounded transition opacity-60 hover:opacity-100">🇰🇭</button>
+                        <button onclick="setLanguage('fr')" id="lang-btn-fr" title="French" class="px-2.5 py-1 text-base rounded transition opacity-60 hover:opacity-100">🇫🇷</button>
+                        <button onclick="setLanguage('zh')" id="lang-btn-zh" title="Chinese" class="px-2.5 py-1 text-base rounded transition opacity-60 hover:opacity-100">🇨🇳</button>
+                    </div>
+
+                    <button onclick="window.print()" class="px-4 py-2 bg-gold-500 hover:bg-gold-600 text-slate-900 font-semibold rounded-lg shadow transition flex items-center gap-2 text-sm">
+                        <i class="fa-solid fa-print"></i> <span data-i18n="btn_print">Print A4 Report</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+
+            <!-- 1. HEADER BOX -->
+            <div class="bg-slate-900 text-white rounded-xl shadow-lg p-6 mb-6 border-l-4 border-gold-500 relative overflow-hidden">
+                <div class="absolute top-0 right-0 transform translate-x-4 -translate-y-4 w-32 h-32 bg-gold-500 opacity-10 rounded-full blur-2xl"></div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
+                    <div class="border-b md:border-b-0 md:border-r border-slate-700 pb-4 md:pb-0 md:pr-4">
+                        <div class="flex items-center space-x-2 text-gold-400 font-bold text-lg mb-1">
+                            <i class="fa-solid fa-building"></i>
+                            <span>Two Parrots Group Australia</span>
+                        </div>
+                        <p class="text-sm text-slate-300 mb-1"><span class="text-slate-400">Managing Director:</span> <strong class="text-white">Kim Heng Ly</strong></p>
+                        <p class="text-xs text-slate-400 flex items-start gap-1">
+                            <i class="fa-solid fa-location-dot mt-0.5 text-gold-500"></i>
+                            <span>1/57 Elonera Rd, Noble Park North VIC 3174, Australia</span>
+                        </p>
+                    </div>
+
+                    <div class="border-b md:border-b-0 md:border-r border-slate-700 pb-4 md:pb-0 md:pr-4">
+                        <h3 data-i18n="card_contact_title" class="text-xs uppercase font-semibold text-slate-400 tracking-wider mb-2">Contact & Operations</h3>
+                        <p class="text-xs text-slate-300 mb-1.5 flex items-center gap-2">
+                            <i class="fa-solid fa-globe text-gold-400 w-4"></i>
+                            <a href="https://twoparrotsgroup.com.au" target="_blank" class="hover:underline text-gold-400">twoparrotsgroup.com.au</a>
+                        </p>
+                        <p class="text-xs text-slate-300 mb-1.5 flex items-center gap-2">
+                            <i class="fa-solid fa-envelope text-gold-400 w-4"></i>
+                            <a href="mailto:info@twoparrotsgroup.com.au" class="hover:underline">info@twoparrotsgroup.com.au</a>
+                        </p>
+                        <p class="text-xs text-slate-300 flex items-center gap-2">
+                            <i class="fa-solid fa-phone text-gold-400 w-4"></i>
+                            <span>+61 (03) 9000 0000</span>
+                        </p>
+                    </div>
+
+                    <div>
+                        <h3 data-i18n="card_logistics_title" class="text-xs uppercase font-semibold text-slate-400 tracking-wider mb-2">Import & Distribution Scope</h3>
+                        <p class="text-xs text-slate-300 mb-1.5 flex items-center gap-2">
+                            <i class="fa-solid fa-route text-gold-400 w-4"></i>
+                            <span><strong data-i18n="lbl_trade_corridor">Trade Corridor:</strong> Phnom Penh/Sihanoukville → Melbourne</span>
+                        </p>
+                        <p class="text-xs text-slate-300 mb-1.5 flex items-center gap-2">
+                            <i class="fa-solid fa-users text-gold-400 w-4"></i>
+                            <span><strong data-i18n="lbl_headcount">Team Structure:</strong> MD + Ops + Sales + Warehouse</span>
+                        </p>
+                        <p class="text-xs text-slate-300 flex items-center gap-2">
+                            <i class="fa-solid fa-calendar-check text-gold-400 w-4"></i>
+                            <span><strong data-i18n="lbl_effective_date">Budget Period:</strong> FY 2026 / 2027</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. EXECUTIVE OPEX SUMMARY BANNER & KPI CARDS -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-6">
+                <div class="bg-slate-900 text-white rounded-xl p-5 shadow-sm border border-slate-800 relative overflow-hidden">
+                    <div class="text-gold-400 text-xs font-semibold uppercase tracking-wider mb-1" data-i18n="kpi1_label">Total Annual OpEx (ex. GST)</div>
+                    <div class="text-3xl font-black text-white font-mono" id="kpi-total-annual">$450,685.00</div>
+                    <p class="text-[11px] text-slate-400 mt-2 flex items-center gap-1">
+                        <i class="fa-solid fa-circle-info text-gold-400"></i>
+                        <span data-i18n="kpi1_sub">Includes 4 team roles, office, logistics & IT</span>
+                    </p>
+                </div>
+
+                <div class="bg-white rounded-xl p-5 shadow-sm border border-slate-200">
+                    <div class="text-slate-500 text-xs font-semibold uppercase tracking-wider mb-1" data-i18n="kpi2_label">Monthly Operational Burn</div>
+                    <div class="text-3xl font-black text-slate-900 font-mono" id="kpi-total-monthly">$37,557.08</div>
+                    <p class="text-[11px] text-slate-500 mt-2 flex items-center gap-1">
+                        <i class="fa-solid fa-calendar text-gold-600"></i>
+                        <span data-i18n="kpi2_sub">Average monthly cash requirement</span>
+                    </p>
+                </div>
+
+                <div class="bg-white rounded-xl p-5 shadow-sm border border-slate-200">
+                    <div class="text-slate-500 text-xs font-semibold uppercase tracking-wider mb-1" data-i18n="kpi3_label">Weekly Fixed Expenses</div>
+                    <div class="text-3xl font-black text-gold-600 font-mono" id="kpi-total-weekly">$8,667.02</div>
+                    <p class="text-[11px] text-slate-500 mt-2 flex items-center gap-1">
+                        <i class="fa-solid fa-clock text-gold-600"></i>
+                        <span data-i18n="kpi3_sub">Fixed overheads + full team payroll</span>
+                    </p>
+                </div>
+            </div>
+
+            <!-- 3. WHERE TO APPLY & AGENCY ROUTING TABLE -->
+            <div class="bg-white rounded-xl shadow-md overflow-hidden border-2 border-slate-300 mb-8">
+                <div class="bg-slate-900 px-6 py-4 flex flex-wrap justify-between items-center gap-4">
+                    <div>
+                        <h2 data-i18n="agency_hdr" class="text-base font-bold text-white tracking-wide uppercase">Where to Apply & Agency Contact Routing Directory</h2>
+                        <p data-i18n="agency_sub" class="text-xs text-gold-400">Target agencies, portals, and prerequisite document checklists required before submission</p>
+                    </div>
+                    <span class="px-3 py-1 bg-gold-500/20 text-gold-400 text-xs font-bold rounded border border-gold-500/40">
+                        <i class="fa-solid fa-building-flag mr-1"></i> Regulatory Routing
+                    </span>
+                </div>
+
+                <div class="p-6">
+                    <div class="overflow-x-auto border border-slate-200 rounded-lg">
+                        <table class="w-full text-left border-collapse text-xs">
+                            <thead>
+                                <tr class="bg-slate-800 text-slate-200 uppercase font-semibold text-[11px]">
+                                    <th data-i18n="th_ag_authority" class="py-2.5 px-3 border-r border-slate-700 w-[22%]">Authority / Agent</th>
+                                    <th data-i18n="th_ag_portal" class="py-2.5 px-3 border-r border-slate-700 w-[18%]">Where to Apply (Portal / Office)</th>
+                                    <th data-i18n="th_ag_prods" class="py-2.5 px-3 border-r border-slate-700 w-[22%]">Target Products</th>
+                                    <th data-i18n="th_ag_prereq" class="py-2.5 px-3 w-[38%]">Prerequisite Documents Needed BEFORE Contacting</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-200">
+                                <tr class="bg-rose-50/70">
+                                    <td class="py-2.5 px-3 border-r border-slate-200 font-bold text-rose-900">
+                                        Australian DAFF Biosecurity
+                                    </td>
+                                    <td class="py-2.5 px-3 border-r border-slate-200 text-slate-700 font-mono text-[11px]">
+                                        BICON System / B2B Biosecurity Portal
+                                    </td>
+                                    <td class="py-2.5 px-3 border-r border-slate-200 text-slate-800 font-medium">
+                                        No. 20 (Seasoning Powder - Chicken 7.19%), No. 8-9 (Whole Pepper), No. 19 (Glutinous Rice)
+                                    </td>
+                                    <td class="py-2.5 px-3 text-slate-800">
+                                        <ul class="list-disc pl-4 space-y-0.5">
+                                            <li>DAFF Import Permit Application Form</li>
+                                            <li>Official Manufacturer Heat Treatment Certificate (°C & time)</li>
+                                            <li>Official Processing Flowchart from Cambodian factory</li>
+                                            <li>Phytosanitary Cert (Whole Pepper & Rice)</li>
+                                        </ul>
+                                    </td>
+                                </tr>
+
+                                <tr class="bg-white">
+                                    <td class="py-2.5 px-3 border-r border-slate-200 font-bold text-slate-800">
+                                        GDA (Cambodian Ministry of Agriculture)
+                                    </td>
+                                    <td class="py-2.5 px-3 border-r border-slate-200 text-slate-700 font-mono text-[11px]">
+                                        Phytosanitary Division (Phnom Penh / Sihanoukville)
+                                    </td>
+                                    <td class="py-2.5 px-3 border-r border-slate-200 text-slate-800 font-medium">
+                                        No. 8-9 (Whole Peppercorns), No. 19 (Glutinous Rice)
+                                    </td>
+                                    <td class="py-2.5 px-3 text-slate-800">
+                                        <ul class="list-disc pl-4 space-y-0.5">
+                                            <li>Export Application Form & Business License</li>
+                                            <li>Pest Freedom & Storage Cleanliness Inspection Report</li>
+                                            <li>Commercial Invoice & Packing List</li>
+                                        </ul>
+                                    </td>
+                                </tr>
+
+                                <tr class="bg-slate-50">
+                                    <td class="py-2.5 px-3 border-r border-slate-200 font-bold text-slate-800">
+                                        Australian Border Force (ABF) / Customs Broker
+                                    </td>
+                                    <td class="py-2.5 px-3 border-r border-slate-200 text-slate-700 font-mono text-[11px]">
+                                        ICS System via Licensed Customs Broker
+                                    </td>
+                                    <td class="py-2.5 px-3 border-r border-slate-200 text-slate-800 font-medium">
+                                        All 20 Products (No. 1 – 20)
+                                    </td>
+                                    <td class="py-2.5 px-3 text-slate-800">
+                                        <ul class="list-disc pl-4 space-y-0.5">
+                                            <li>Letter of Authorization (LOA) & ASIC extract (ABN)</li>
+                                            <li>AANZFTA / RCEP Form D Certificate of Origin (0% Duty)</li>
+                                            <li>Commercial Invoice, Packing List & Ocean Bill of Lading</li>
+                                            <li>Annual ISPM-15 Wood Packing Declaration</li>
+                                        </ul>
+                                    </td>
+                                </tr>
+
+                                <tr class="bg-white">
+                                    <td class="py-2.5 px-3 border-r border-slate-200 font-bold text-slate-800">
+                                        FSANZ / IFIS Food Inspection Officers
+                                    </td>
+                                    <td class="py-2.5 px-3 border-r border-slate-200 text-slate-700 font-mono text-[11px]">
+                                        Imported Food Inspection Scheme (IFIS) Portal
+                                    </td>
+                                    <td class="py-2.5 px-3 border-r border-slate-200 text-slate-800 font-medium">
+                                        All Flours (No. 1-7, 15-18), Pepper (No. 8-13), Noodles (No. 14)
+                                    </td>
+                                    <td class="py-2.5 px-3 text-slate-800">
+                                        <ul class="list-disc pl-4 space-y-0.5">
+                                            <li>Full Ingredient % Breakdown (Preservatives & INS 621/635/Sucralose)</li>
+                                            <li>Manufacturer Allergen Statement (Gluten, Soy, Sesame, Coconut)</li>
+                                            <li>Microbiological COA (Salmonella -ve, Aflatoxins within limit)</li>
+                                            <li>PEAL Compliant Retail Artwork Proofs</li>
+                                        </ul>
+                                    </td>
+                                </tr>
+
+                                <tr class="bg-slate-50">
+                                    <td class="py-2.5 px-3 border-r border-slate-200 font-bold text-slate-800">
+                                        Accredited Fumigation Provider (Cambodia)
+                                    </td>
+                                    <td class="py-2.5 px-3 border-r border-slate-200 text-slate-700 font-mono text-[11px]">
+                                        AFAS Registered Treatment Office (Sihanoukville Port)
+                                    </td>
+                                    <td class="py-2.5 px-3 border-r border-slate-200 text-slate-800 font-medium">
+                                        Whole Pepper (No. 8-9), Glutinous Rice (No. 19), Timber Pallets
+                                    </td>
+                                    <td class="py-2.5 px-3 text-slate-800">
+                                        <ul class="list-disc pl-4 space-y-0.5">
+                                            <li>Container Booking Notice & Packing List</li>
+                                            <li>Australian BICON Fumigation Dosage Requirement Specification</li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. ACTION CHECKLIST BEFORE ORDER & SHIPMENT -->
+            <div class="bg-white rounded-xl shadow-md overflow-hidden border-2 border-slate-300 mb-8">
+                <div class="bg-slate-900 px-6 py-4 flex flex-wrap justify-between items-center gap-4">
+                    <div>
+                        <h2 data-i18n="chk_title" class="text-base font-bold text-white tracking-wide uppercase">Pre-Order & Pre-Shipment Product Compliance Action Checklist</h2>
+                        <p data-i18n="chk_subtitle" class="text-xs text-gold-400">Mandatory verification steps before placing orders or loading containers from Cambodia to Australia</p>
+                    </div>
+                    <span class="px-3 py-1 bg-amber-500/20 text-amber-400 text-xs font-bold rounded border border-amber-500/40">
+                        <i class="fa-solid fa-clipboard-check mr-1"></i> <span data-i18n="badge_strict_daff">DAFF & FSANZ Compliant</span>
+                    </span>
+                </div>
+
+                <div class="p-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <!-- Phase 1: Pre-Order -->
+                        <div class="bg-slate-50 border border-slate-200 rounded-xl p-4">
+                            <h3 data-i18n="chk_phase1_hdr" class="font-bold text-sm text-slate-900 mb-3 pb-2 border-b border-slate-200 flex items-center gap-2 text-gold-700">
+                                <i class="fa-solid fa-cart-shopping text-gold-600"></i> PHASE 1: PRE-ORDER CHECKLIST (Before Placing Order)
+                            </h3>
+                            <ul class="space-y-2 text-xs text-slate-700">
+                                <li class="flex items-start gap-2 bg-rose-50 border border-rose-200 p-2 rounded">
+                                    <input type="checkbox" class="mt-0.5 rounded text-gold-600 focus:ring-gold-500">
+                                    <div>
+                                        <strong class="text-rose-900 block" data-i18n="chk_p1_item1_title">DAFF Import Permit for Seasoning Powder (No. 20)</strong>
+                                        <span data-i18n="chk_p1_item1_desc">Apply for Australian DAFF Biosecurity permit for dehydrated chicken (7.19%) BEFORE placing PO to avoid border destruction.</span>
+                                    </div>
+                                </li>
+                                <li class="flex items-start gap-2 bg-white p-2 rounded border border-slate-200">
+                                    <input type="checkbox" class="mt-0.5 rounded text-gold-600 focus:ring-gold-500">
+                                    <div>
+                                        <strong class="text-slate-900 block" data-i18n="chk_p2_item1_title">BICON Biosecurity Query (Whole Pepper & Rice)</strong>
+                                        <span data-i18n="chk_p2_item1_desc">Verify BICON conditions for Whole Pepper (No. 8-9) devitalisation and Milled Rice (No. 19) stored pest controls.</span>
+                                    </div>
+                                </li>
+                                <li class="flex items-start gap-2 bg-white p-2 rounded border border-slate-200">
+                                    <input type="checkbox" class="mt-0.5 rounded text-gold-600 focus:ring-gold-500">
+                                    <div>
+                                        <strong class="text-slate-900 block" data-i18n="chk_p3_item1_title">FSANZ Food Additive & Sweetener Audit</strong>
+                                        <span data-i18n="chk_p3_item1_desc">Check MSG (INS 621), Ribonucleotides (INS 635) & Sucralose limits in Instant Noodles (No. 14) against FSANZ Code 1.3.1.</span>
+                                    </div>
+                                </li>
+                                <li class="flex items-start gap-2 bg-white p-2 rounded border border-slate-200">
+                                    <input type="checkbox" class="mt-0.5 rounded text-gold-600 focus:ring-gold-500">
+                                    <div>
+                                        <strong class="text-slate-900 block" data-i18n="chk_p4_item1_title">PEAL Plain English Allergen Artwork Review</strong>
+                                        <span data-i18n="chk_p4_item1_desc">Ensure packaging artwork explicitly bolds allergens (Wheat, Sesame, Soy, Coconut) and contains summary box.</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Phase 2: Pre-Shipment -->
+                        <div class="bg-slate-50 border border-slate-200 rounded-xl p-4">
+                            <h3 data-i18n="chk_phase2_hdr" class="font-bold text-sm text-slate-900 mb-3 pb-2 border-b border-slate-200 flex items-center gap-2 text-gold-700">
+                                <i class="fa-solid fa-ship text-gold-600"></i> PHASE 2: PRE-SHIPMENT CHECKLIST (Before Loading Container)
+                            </h3>
+                            <ul class="space-y-2 text-xs text-slate-700">
+                                <li class="flex items-start gap-2 bg-white p-2 rounded border border-slate-200">
+                                    <input type="checkbox" class="mt-0.5 rounded text-gold-600 focus:ring-gold-500">
+                                    <div>
+                                        <strong class="text-slate-900 block" data-i18n="chk_s1_title">Phytosanitary Certificate from Cambodian Gov</strong>
+                                        <span data-i18n="chk_s1_desc">Obtain official Phytosanitary Cert for Whole Pepper (No. 8-9) and Milled Rice (No. 19) confirming free from insects/seeds.</span>
+                                    </div>
+                                </li>
+                                <li class="flex items-start gap-2 bg-white p-2 rounded border border-slate-200">
+                                    <input type="checkbox" class="mt-0.5 rounded text-gold-600 focus:ring-gold-500">
+                                    <div>
+                                        <strong class="text-slate-900 block" data-i18n="chk_s2_title">Microbiological Certificate of Analysis (COA)</strong>
+                                        <span data-i18n="chk_s2_desc">Require batch test COAs showing negative Salmonella and Aflatoxin compliance for Peppercorns and Flours.</span>
+                                    </div>
+                                </li>
+                                <li class="flex items-start gap-2 bg-white p-2 rounded border border-slate-200">
+                                    <input type="checkbox" class="mt-0.5 rounded text-gold-600 focus:ring-gold-500">
+                                    <div>
+                                        <strong class="text-slate-900 block" data-i18n="chk_s3_title">Heat-Treatment & Flowchart Statement</strong>
+                                        <span data-i18n="chk_s3_desc">Obtain official processing flowchart and thermal declaration for Seasoning Powder (No. 20) and Noodles (No. 14).</span>
+                                    </div>
+                                </li>
+                                <li class="flex items-start gap-2 bg-white p-2 rounded border border-slate-200">
+                                    <input type="checkbox" class="mt-0.5 rounded text-gold-600 focus:ring-gold-500">
+                                    <div>
+                                        <strong class="text-slate-900 block" data-i18n="chk_s4_title">ISPM-15 Wood Packing & Container Declaration</strong>
+                                        <span data-i18n="chk_s4_desc">Sign Packing Declaration stating container cleanliness and ISPM-15 treatment for timber pallets used.</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. DETAILED EXPENSE CATEGORIES TABLE -->
+            <div class="bg-white rounded-xl shadow-md overflow-hidden border-2 border-slate-300 mb-8">
+                <div class="bg-slate-900 px-6 py-4 flex flex-wrap justify-between items-center gap-4">
+                    <div>
+                        <h2 data-i18n="tbl_title" class="text-base font-bold text-white tracking-wide uppercase">Operational Expense Itemization & Category Breakdown</h2>
+                        <p data-i18n="tbl_subtitle" class="text-xs text-gold-400">Complete itemization across stated expenses, personnel market benchmarks, IT stack, and logistics</p>
+                    </div>
+                    <span class="px-3 py-1 bg-gold-500/20 text-gold-400 text-xs font-bold rounded border border-gold-500/40">
+                        <i class="fa-solid fa-chart-pie mr-1"></i> <span data-i18n="badge_active_model">FY2026 Active Model</span>
+                    </span>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-slate-800 text-slate-200 text-xs uppercase font-semibold tracking-wider border-b-2 border-slate-900">
+                                <th data-i18n="th_category" class="py-3 px-4 w-[28%] border-r-2 border-slate-700">Expense Category & Item</th>
+                                <th data-i18n="th_weekly" class="py-3 px-3 w-[14%] text-right border-r-2 border-slate-700">Weekly (ex. GST)</th>
+                                <th data-i18n="th_monthly" class="py-3 px-3 w-[14%] text-right border-r-2 border-slate-700">Monthly (ex. GST)</th>
+                                <th data-i18n="th_annual" class="py-3 px-3 w-[16%] text-right border-r-2 border-slate-700">Annual (ex. GST)</th>
+                                <th data-i18n="th_notes" class="py-3 px-4 w-[28%]">Operational Scope & Tax Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody id="budget-table-body" class="text-xs">
+                            <!-- JS Renders Itemized Budget Breakdown Here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- 6. FLOATING BUDGET ADJUSTMENT TOOLBAR -->
+        <div class="fixed bottom-0 left-0 right-0 bg-slate-900 border-t-2 border-gold-500 shadow-2xl p-4 text-white z-50 no-print">
+            <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4">
+                <div class="flex items-center space-x-3">
+                    <div class="p-2 bg-gold-500 text-slate-900 rounded-lg">
+                        <i class="fa-solid fa-sliders text-lg"></i>
+                    </div>
+                    <div>
+                        <h3 data-i18n="tb_title" class="font-bold text-sm text-white">Live Personnel Salary & On-Cost Adjuster</h3>
+                        <p data-i18n="tb_desc" class="text-[11px] text-slate-400">Modify base salaries ($0 permitted) to re-calculate total company operational budget in real time</p>
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap items-center gap-3">
+                    <div class="flex flex-col">
+                        <label data-i18n="lbl_md_salary" class="text-[10px] text-gold-400 uppercase font-semibold mb-0.5">MD Base ($/yr)</label>
+                        <input type="number" id="input-md-salary" value="110000" step="1000" min="0" class="bg-slate-800 border border-slate-700 text-white rounded px-2 py-1 text-xs w-28 text-right focus:outline-none focus:border-gold-500 font-mono">
+                    </div>
+
+                    <div class="flex flex-col">
+                        <label data-i18n="lbl_ops_salary" class="text-[10px] text-gold-400 uppercase font-semibold mb-0.5">Ops Mgr ($/yr)</label>
+                        <input type="number" id="input-ops-salary" value="84000" step="1000" min="0" class="bg-slate-800 border border-slate-700 text-white rounded px-2 py-1 text-xs w-28 text-right focus:outline-none focus:border-gold-500 font-mono">
+                    </div>
+
+                    <div class="flex flex-col">
+                        <label data-i18n="lbl_sales_salary" class="text-[10px] text-gold-400 uppercase font-semibold mb-0.5">Sales Rep ($/yr)</label>
+                        <input type="number" id="input-sales-salary" value="75000" step="1000" min="0" class="bg-slate-800 border border-slate-700 text-white rounded px-2 py-1 text-xs w-28 text-right focus:outline-none focus:border-gold-500 font-mono">
+                    </div>
+
+                    <div class="flex flex-col">
+                        <label data-i18n="lbl_wh_salary" class="text-[10px] text-gold-400 uppercase font-semibold mb-0.5">WH Mgr ($/yr)</label>
+                        <input type="number" id="input-wh-salary" value="75000" step="1000" min="0" class="bg-slate-800 border border-slate-700 text-white rounded px-2 py-1 text-xs w-28 text-right focus:outline-none focus:border-gold-500 font-mono">
+                    </div>
+
+                    <div class="flex flex-col">
+                        <label data-i18n="lbl_super_rate" class="text-[10px] text-gold-400 uppercase font-semibold mb-0.5">Super (%)</label>
+                        <div class="relative">
+                            <input type="number" id="input-super-rate" value="11.5" step="0.5" min="0" max="20" class="bg-slate-800 border border-gold-500 text-gold-400 font-bold rounded px-2 py-1 text-xs w-16 text-right focus:outline-none pr-4">
+                            <span class="absolute right-1 top-1 text-xs text-gold-400">%</span>
+                        </div>
+                    </div>
+
+                    <button id="btn-recalculate" onclick="renderBudget()" class="mt-3 sm:mt-0 px-3.5 py-1.5 gold-gradient hover:opacity-90 text-slate-900 font-bold rounded shadow transition text-xs flex items-center gap-1.5">
+                        <i class="fa-solid fa-arrows-rotate"></i> <span data-i18n="btn_recalc">Update Budget</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        let currentLang = 'en';
+
+        const translations = {
+            en: {
+                modal_title: "Restricted Access",
+                modal_desc: "Please enter the security password to view the Budget & Compliance Portal.",
+                modal_label: "Enter Password",
+                modal_error: "Incorrect password. Please try again.",
+                modal_btn: "Unlock Dashboard",
+                header_sub: "Master Operational Expense Budget & Product Compliance Portal",
+                btn_print: "Print A4 Report",
+                card_contact_title: "Contact & Operations",
+                card_logistics_title: "Import & Distribution Scope",
+                lbl_trade_corridor: "Trade Corridor:",
+                lbl_headcount: "Team Structure:",
+                lbl_effective_date: "Budget Period:",
+                kpi1_label: "Total Annual OpEx (ex. GST)",
+                kpi1_sub: "Includes 4 team roles, office, logistics & IT",
+                kpi2_label: "Monthly Operational Burn",
+                kpi2_sub: "Average monthly cash requirement",
+                kpi3_label: "Weekly Fixed Expenses",
+                kpi3_sub: "Fixed overheads + full team payroll",
+
+                agency_hdr: "Where to Apply & Agency Contact Routing Directory",
+                agency_sub: "Target agencies, portals, and prerequisite document checklists required before submission",
+                th_ag_authority: "Authority / Agent",
+                th_ag_portal: "Where to Apply (Portal / Office)",
+                th_ag_prods: "Target Products",
+                th_ag_prereq: "Prerequisite Documents Needed BEFORE Contacting",
+
+                chk_title: "Pre-Order & Pre-Shipment Product Compliance Action Checklist",
+                chk_subtitle: "Mandatory verification steps before placing orders or loading containers from Cambodia to Australia",
+                badge_strict_daff: "DAFF & FSANZ Compliant",
+                chk_phase1_hdr: "PHASE 1: PRE-ORDER CHECKLIST (Before Placing Order)",
+                chk_p1_item1_title: "DAFF Import Permit for Seasoning Powder (No. 20)",
+                chk_p1_item1_desc: "Apply for Australian DAFF Biosecurity permit for dehydrated chicken (7.19%) BEFORE placing PO to avoid border destruction.",
+                chk_p2_item1_title: "BICON Biosecurity Query (Whole Pepper & Rice)",
+                chk_p2_item1_desc: "Verify BICON conditions for Whole Pepper (No. 8-9) devitalisation and Milled Rice (No. 19) stored pest controls.",
+                chk_p3_item1_title: "FSANZ Food Additive & Sweetener Audit",
+                chk_p3_item1_desc: "Check MSG (INS 621), Ribonucleotides (INS 635) & Sucralose limits in Instant Noodles (No. 14) against FSANZ Code 1.3.1.",
+                chk_p4_item1_title: "PEAL Plain English Allergen Artwork Review",
+                chk_p4_item1_desc: "Ensure packaging artwork explicitly bolds allergens (Wheat, Sesame, Soy, Coconut) and contains summary box.",
+                chk_phase2_hdr: "PHASE 2: PRE-SHIPMENT CHECKLIST (Before Loading Container)",
+                chk_s1_title: "Phytosanitary Certificate from Cambodian Gov",
+                chk_s1_desc: "Obtain official Phytosanitary Cert for Whole Pepper (No. 8-9) and Milled Rice (No. 19) confirming free from insects/seeds.",
+                chk_s2_title: "Microbiological Certificate of Analysis (COA)",
+                chk_s2_desc: "Require batch test COAs showing negative Salmonella and Aflatoxin compliance for Peppercorns and Flours.",
+                chk_s3_title: "Heat-Treatment & Flowchart Statement",
+                chk_s3_desc: "Obtain official processing flowchart and thermal declaration for Seasoning Powder (No. 20) and Noodles (No. 14).",
+                chk_s4_title: "ISPM-15 Wood Packing & Container Declaration",
+                chk_s4_desc: "Sign Packing Declaration stating container cleanliness and ISPM-15 treatment for timber pallets used.",
+
+                tbl_title: "Operational Expense Itemization & Category Breakdown",
+                tbl_subtitle: "Complete itemization across stated expenses, personnel market benchmarks, IT stack, and logistics",
+                badge_active_model: "FY2026 Active Model",
+                th_category: "Expense Category & Item",
+                th_weekly: "Weekly (ex. GST)",
+                th_monthly: "Monthly (ex. GST)",
+                th_annual: "Annual (ex. GST)",
+                th_notes: "Operational Scope & Tax Notes",
+                lbl_subtotal: "Subtotal",
+                lbl_total_opex: "TOTAL OPERATIONAL EXPENSES (OpEx)",
+                lbl_allocation: "Annual OpEx Allocation",
+                lbl_excl_gst: "Excl. GST",
+
+                cat1_title: "1. Stated Fixed Overheads",
+                c1_i1_name: "Office Rent",
+                c1_i1_notes: "$60/week | Commercial lease in Melbourne",
+                c1_i2_name: "Storage Facility",
+                c1_i2_notes: "$130/week | Secure stock warehousing space",
+                c1_i3_name: "Commercial Vehicle Rental",
+                c1_i3_notes: "$444/week | Commercial delivery vehicle",
+
+                cat2_title: "2. Executive, Operational & Commercial Personnel (Melbourne Benchmark)",
+                c2_md_base: "Managing Director (Base: {amount})",
+                c2_md_base_notes: "Executive leadership & procurement",
+                c2_md_super: "Managing Director Superannuation ({rate}%)",
+                c2_md_super_notes: "Mandatory Superannuation Guarantee",
+                c2_md_wc: "Managing Director WorkCover Insurance (2.0%)",
+                c2_md_wc_notes: "WorkSafe Victoria worker compensation",
+
+                c2_ops_base: "Operations Manager (Base: {amount})",
+                c2_ops_base_notes: "Supply chain, warehousing & local delivery",
+                c2_ops_super: "Operations Manager Superannuation ({rate}%)",
+                c2_ops_super_notes: "Mandatory Superannuation Guarantee",
+                c2_ops_wc: "Operations Manager WorkCover Insurance (2.0%)",
+                c2_ops_wc_notes: "WorkSafe Victoria worker compensation",
+
+                c2_sales_base: "Sales Representative (Base: {amount})",
+                c2_sales_base_notes: "Wholesale distribution, retail accounts & client acquisition",
+                c2_sales_super: "Sales Representative Superannuation ({rate}%)",
+                c2_sales_super_notes: "Mandatory Superannuation Guarantee",
+                c2_sales_wc: "Sales Representative WorkCover Insurance (2.0%)",
+                c2_sales_wc_notes: "WorkSafe Victoria worker compensation",
+
+                c2_wh_base: "Warehouse Manager (Base: {amount})",
+                c2_wh_base_notes: "Inventory control, order fulfillment & warehouse ops",
+                c2_wh_super: "Warehouse Manager Superannuation ({rate}%)",
+                c2_wh_super_notes: "Mandatory Superannuation Guarantee",
+                c2_wh_wc: "Warehouse Manager WorkCover Insurance (2.0%)",
+                c2_wh_wc_notes: "WorkSafe Victoria worker compensation",
+
+                cat3_title: "3. Vehicle Running & Transportation Expenses",
+                c3_i1_name: "Fuel (Unleaded / Diesel)",
+                c3_i1_notes: "Based on 1,500 km/month local distribution",
+                c3_i2_name: "CityLink / EastLink Tolls",
+                c3_i2_notes: "Port of Melbourne & Melbourne Metro toll routes",
+                c3_i3_name: "Vehicle Maintenance & Insurance Excess",
+                c3_i3_notes: "Commercial rental vehicle excess cover & upkeep",
+
+                cat4_title: "4. IT, Communications & SaaS Stack",
+                c4_i1_name: "Telecoms & Mobile Voice/Data Services",
+                c4_i1_notes: "2x Mobile lines + NBN Office Broadband",
+                c4_i2_name: "E-Commerce Platform (Shopify / Web)",
+                c4_i2_notes: "Website hosting & online product catalog",
+                c4_i3_name: "Email & Productivity (Google Workspace)",
+                c4_i3_notes: "Enterprise email, phone, cloud drive",
+                c4_i4_name: "Accounting Software (Xero Multi-Currency)",
+                c4_i4_notes: "Standard multi-currency plan (KHR/USD/AUD)",
+                c4_i5_name: "Inventory Management System",
+                c4_i5_notes: "Stock tracking across transit & storage",
+
+                cat5_title: "5. Professional Services & Business Insurance",
+                c5_i1_name: "Accounting & Tax Return Fee",
+                c5_i1_notes: "$177 + GST/year ($194.70 inc GST as provided)",
+                c5_i2_name: "Public & Products Liability Insurance",
+                c5_i2_notes: "$10M-$20M cover for imported food/wholesale",
+                c5_i3_name: "Marine Cargo & Freight Transit Cover",
+                c5_i3_notes: "Sea/air freight protection factory-to-warehouse",
+                c5_i4_name: "Management Liability & Cyber Protection",
+                c5_i4_notes: "Executive protection & digital system cover",
+
+                cat6_title: "6. Estimated Logistics & Customs Administration",
+                c6_i1_name: "Customs Clearance & Brokerage Fees",
+                c6_i1_notes: "Customs entry lodgement (12 shipments/yr)",
+                c6_i2_name: "Port Service Charges (PSC) & Handling",
+                c6_i2_notes: "DP World / Swanson Dock terminal handling",
+                c6_i3_name: "Local Cartage & Wharf Transport",
+                c6_i3_notes: "Wharf container transport to Melbourne storage",
+
+                tb_title: "Live Personnel Salary & On-Cost Adjuster",
+                tb_desc: "Modify base salaries ($0 permitted) to re-calculate total company operational budget in real time",
+                lbl_md_salary: "MD Base ($/yr)",
+                lbl_ops_salary: "Ops Mgr ($/yr)",
+                lbl_sales_salary: "Sales Rep ($/yr)",
+                lbl_wh_salary: "WH Mgr ($/yr)",
+                lbl_super_rate: "Super (%)",
+                btn_recalc: "Update Budget"
+            }
+        };
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            ['en', 'km', 'fr', 'zh'].forEach(l => {
+                const btn = document.getElementById(`lang-btn-${l}`);
+                if (l === lang) {
+                    btn.className = "px-2.5 py-1 text-base rounded transition bg-gold-500/20 border border-gold-500 shadow";
+                } else {
+                    btn.className = "px-2.5 py-1 text-base rounded transition opacity-60 hover:opacity-100";
+                }
+            });
+
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    el.innerText = translations[lang][key];
+                }
+            });
+
+            renderBudget();
+        }
+
+        function unlockPage(e) {
+            if (e) e.preventDefault();
+            const inputVal = document.getElementById('password-input').value;
+            const errorMsg = document.getElementById('password-error');
+            const modal = document.getElementById('password-modal');
+            const content = document.getElementById('page-content');
+
+            if (inputVal === 'twoparrots') {
+                modal.classList.add('opacity-0', 'pointer-events-none');
+                setTimeout(() => { modal.style.display = 'none'; }, 300);
+                content.classList.remove('blur-xl', 'pointer-events-none', 'select-none');
+                renderBudget();
+            } else {
+                errorMsg.classList.remove('hidden');
+                document.getElementById('password-input').classList.add('border-red-500');
+            }
+        }
+
+        function togglePasswordVisibility() {
+            const input = document.getElementById('password-input');
+            const icon = document.getElementById('eye-icon');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+
+        function formatCurrency(val) {
+            return '$' + val.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+
+        function parseSalaryInput(elementId) {
+            const val = document.getElementById(elementId).value;
+            if (val === '' || val === null || isNaN(val)) return 0;
+            const parsed = parseFloat(val);
+            return parsed < 0 ? 0 : parsed;
+        }
+
+        function renderBudget() {
+            const t = translations[currentLang] || translations['en'];
+
+            const mdSalary = parseSalaryInput('input-md-salary');
+            const opsSalary = parseSalaryInput('input-ops-salary');
+            const salesSalary = parseSalaryInput('input-sales-salary');
+            const whSalary = parseSalaryInput('input-wh-salary');
+            const superRate = (parseFloat(document.getElementById('input-super-rate').value) || 11.5) / 100;
+            const workcoverRate = 0.02;
+
+            const mdSuper = mdSalary * superRate;
+            const mdWorkcover = mdSalary * workcoverRate;
+
+            const opsSuper = opsSalary * superRate;
+            const opsWorkcover = opsSalary * workcoverRate;
+
+            const salesSuper = salesSalary * superRate;
+            const salesWorkcover = salesSalary * workcoverRate;
+
+            const whSuper = whSalary * superRate;
+            const whWorkcover = whSalary * workcoverRate;
+
+            const superRateDisplay = (superRate * 100).toFixed(1);
+
+            const categories = [
+                {
+                    title: t.cat1_title,
+                    items: [
+                        { name: t.c1_i1_name, weekly: 60.00, monthly: 260.00, annual: 3120.00, notes: t.c1_i1_notes },
+                        { name: t.c1_i2_name, weekly: 130.00, monthly: 563.33, annual: 6760.00, notes: t.c1_i2_notes },
+                        { name: t.c1_i3_name, weekly: 444.00, monthly: 1924.00, annual: 23088.00, notes: t.c1_i3_notes }
+                    ]
+                },
+                {
+                    title: t.cat2_title,
+                    items: [
+                        { name: t.c2_md_base.replace('{amount}', formatCurrency(mdSalary)), weekly: mdSalary/52, monthly: mdSalary/12, annual: mdSalary, notes: t.c2_md_base_notes },
+                        { name: t.c2_md_super.replace('{rate}', superRateDisplay), weekly: mdSuper/52, monthly: mdSuper/12, annual: mdSuper, notes: t.c2_md_super_notes },
+                        { name: t.c2_md_wc, weekly: mdWorkcover/52, monthly: mdWorkcover/12, annual: mdWorkcover, notes: t.c2_md_wc_notes },
+
+                        { name: t.c2_ops_base.replace('{amount}', formatCurrency(opsSalary)), weekly: opsSalary/52, monthly: opsSalary/12, annual: opsSalary, notes: t.c2_ops_base_notes },
+                        { name: t.c2_ops_super.replace('{rate}', superRateDisplay), weekly: opsSuper/52, monthly: opsSuper/12, annual: opsSuper, notes: t.c2_ops_super_notes },
+                        { name: t.c2_ops_wc, weekly: opsWorkcover/52, monthly: opsWorkcover/12, annual: opsWorkcover, notes: t.c2_ops_wc_notes },
+
+                        { name: t.c2_sales_base.replace('{amount}', formatCurrency(salesSalary)), weekly: salesSalary/52, monthly: salesSalary/12, annual: salesSalary, notes: t.c2_sales_base_notes },
+                        { name: t.c2_sales_super.replace('{rate}', superRateDisplay), weekly: salesSuper/52, monthly: salesSuper/12, annual: salesSuper, notes: t.c2_sales_super_notes },
+                        { name: t.c2_sales_wc, weekly: salesWorkcover/52, monthly: salesWorkcover/12, annual: salesWorkcover, notes: t.c2_sales_wc_notes },
+
+                        { name: t.c2_wh_base.replace('{amount}', formatCurrency(whSalary)), weekly: whSalary/52, monthly: whSalary/12, annual: whSalary, notes: t.c2_wh_base_notes },
+                        { name: t.c2_wh_super.replace('{rate}', superRateDisplay), weekly: whSuper/52, monthly: whSuper/12, annual: whSuper, notes: t.c2_wh_super_notes },
+                        { name: t.c2_wh_wc, weekly: whWorkcover/52, monthly: whWorkcover/12, annual: whWorkcover, notes: t.c2_wh_wc_notes }
+                    ]
+                },
+                {
+                    title: t.cat3_title,
+                    items: [
+                        { name: t.c3_i1_name, weekly: 60.00, monthly: 260.00, annual: 3120.00, notes: t.c3_i1_notes },
+                        { name: t.c3_i2_name, weekly: 19.62, monthly: 85.00, annual: 1020.00, notes: t.c3_i2_notes },
+                        { name: t.c3_i3_name, weekly: 9.23, monthly: 40.00, annual: 480.00, notes: t.c3_i3_notes }
+                    ]
+                },
+                {
+                    title: t.cat4_title,
+                    items: [
+                        { name: t.c4_i1_name, weekly: 36.92, monthly: 160.00, annual: 1920.00, notes: t.c4_i1_notes },
+                        { name: t.c4_i2_name, weekly: 12.69, monthly: 55.00, annual: 660.00, notes: t.c4_i2_notes },
+                        { name: t.c4_i3_name, weekly: 6.92, monthly: 30.00, annual: 360.00, notes: t.c4_i3_notes },
+                        { name: t.c4_i4_name, weekly: 20.77, monthly: 90.00, annual: 1080.00, notes: t.c4_i4_notes },
+                        { name: t.c4_i5_name, weekly: 16.15, monthly: 70.00, annual: 840.00, notes: t.c4_i5_notes }
+                    ]
+                },
+                {
+                    title: t.cat5_title,
+                    items: [
+                        { name: t.c5_i1_name, weekly: 3.40, monthly: 14.75, annual: 177.00, notes: t.c5_i1_notes },
+                        { name: t.c5_i2_name, weekly: 34.62, monthly: 150.00, annual: 1800.00, notes: t.c5_i2_notes },
+                        { name: t.c5_i3_name, weekly: 28.85, monthly: 125.00, annual: 1500.00, notes: t.c5_i3_notes },
+                        { name: t.c5_i4_name, weekly: 35.77, monthly: 155.00, annual: 1860.00, notes: t.c5_i4_notes }
+                    ]
+                },
+                {
+                    title: t.cat6_title,
+                    items: [
+                        { name: t.c6_i1_name, weekly: 63.46, monthly: 275.00, annual: 3300.00, notes: t.c6_i1_notes },
+                        { name: t.c6_i2_name, weekly: 103.85, monthly: 450.00, annual: 5400.00, notes: t.c6_i2_notes },
+                        { name: t.c6_i3_name, weekly: 57.69, monthly: 250.00, annual: 3000.00, notes: t.c6_i3_notes }
+                    ]
+                }
+            ];
+
+            let grandTotalAnnual = 0;
+            let grandTotalMonthly = 0;
+            let grandTotalWeekly = 0;
+
+            const tbody = document.getElementById('budget-table-body');
+            tbody.innerHTML = '';
+
+            categories.forEach(cat => {
+                let catAnnual = 0;
+                let catMonthly = 0;
+                let catWeekly = 0;
+
+                const headerTr = document.createElement('tr');
+                headerTr.className = "bg-slate-800 text-gold-400 font-bold text-xs uppercase tracking-wider";
+                headerTr.innerHTML = `
+                    <td colspan="5" class="py-2.5 px-4 border-b border-slate-700">
+                        <i class="fa-solid fa-folder-open mr-1.5"></i> ${cat.title}
+                    </td>
+                `;
+                tbody.appendChild(headerTr);
+
+                cat.items.forEach((item, idx) => {
+                    catAnnual += item.annual;
+                    catMonthly += item.monthly;
+                    catWeekly += item.weekly;
+
+                    const rowTr = document.createElement('tr');
+                    rowTr.className = `hover:bg-slate-100 transition border-b border-slate-200 ${idx % 2 === 0 ? 'bg-white' : 'bg-slate-50/70'}`;
+                    rowTr.innerHTML = `
+                        <td class="py-2.5 px-4 border-r border-slate-200 font-medium text-slate-800">
+                            ${item.name}
+                        </td>
+                        <td class="py-2.5 px-3 border-r border-slate-200 text-right font-mono text-slate-700">
+                            ${formatCurrency(item.weekly)}
+                        </td>
+                        <td class="py-2.5 px-3 border-r border-slate-200 text-right font-mono text-slate-700">
+                            ${formatCurrency(item.monthly)}
+                        </td>
+                        <td class="py-2.5 px-3 border-r border-slate-200 text-right font-mono font-semibold text-slate-900">
+                            ${formatCurrency(item.annual)}
+                        </td>
+                        <td class="py-2.5 px-4 text-slate-500 text-[11px]">
+                            ${item.notes}
+                        </td>
+                    `;
+                    tbody.appendChild(rowTr);
+                });
+
+                grandTotalAnnual += catAnnual;
+                grandTotalMonthly += catMonthly;
+                grandTotalWeekly += catWeekly;
+
+                const subtotalTr = document.createElement('tr');
+                subtotalTr.className = "bg-slate-100 font-bold border-b-2 border-slate-300 text-slate-800";
+                subtotalTr.innerHTML = `
+                    <td class="py-2 px-4 border-r border-slate-300 uppercase text-[10px] tracking-wider text-slate-600">${t.lbl_subtotal}</td>
+                    <td class="py-2 px-3 border-r border-slate-300 text-right font-mono text-xs">${formatCurrency(catWeekly)}</td>
+                    <td class="py-2 px-3 border-r border-slate-300 text-right font-mono text-xs">${formatCurrency(catMonthly)}</td>
+                    <td class="py-2 px-3 border-r border-slate-300 text-right font-mono text-xs text-gold-700">${formatCurrency(catAnnual)}</td>
+                    <td class="py-2 px-4 text-[10px] text-slate-400">${t.lbl_excl_gst}</td>
+                `;
+                tbody.appendChild(subtotalTr);
+            });
+
+            const totalTr = document.createElement('tr');
+            totalTr.className = "bg-slate-900 text-white font-extrabold border-t-2 border-gold-500 text-sm";
+            totalTr.innerHTML = `
+                <td class="py-3.5 px-4 border-r border-slate-700 uppercase tracking-wider text-gold-400">${t.lbl_total_opex}</td>
+                <td class="py-3.5 px-3 border-r border-slate-700 text-right font-mono text-gold-400">${formatCurrency(grandTotalWeekly)}</td>
+                <td class="py-3.5 px-3 border-r border-slate-700 text-right font-mono text-gold-400">${formatCurrency(grandTotalMonthly)}</td>
+                <td class="py-3.5 px-3 border-r border-slate-700 text-right font-mono text-gold-400 text-base">${formatCurrency(grandTotalAnnual)}</td>
+                <td class="py-3.5 px-4 text-xs font-normal text-slate-300 font-sans">100.0% ${t.lbl_allocation}</td>
+            `;
+            tbody.appendChild(totalTr);
+
+            document.getElementById('kpi-total-annual').innerText = formatCurrency(grandTotalAnnual);
+            document.getElementById('kpi-total-monthly').innerText = formatCurrency(grandTotalMonthly);
+            document.getElementById('kpi-total-weekly').innerText = formatCurrency(grandTotalWeekly);
+        }
+
+        window.onload = function() {
+            renderBudget();
+        };
+    </script>
+</body>
+</html>
