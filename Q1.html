@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Two Parrots Group Australia - Landed Cost Quotation</title>
+    <title>Two Parrots Group Australia - Landed Cost Quotation & OpEx Budget</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome Icons -->
@@ -35,7 +35,6 @@
         }
     </script>
     <style>
-        /* Custom Styles & Print CSS */
         body {
             background-color: #F4F5F7;
             font-family: 'Inter', sans-serif;
@@ -55,7 +54,7 @@
             font-weight: 500;
         }
 
-        /* Hide spin buttons on numeric inputs for cleaner look */
+        /* Hide spin buttons on numeric inputs */
         input[type=number]::-webkit-inner-spin-button, 
         input[type=number]::-webkit-outer-spin-button { 
             -webkit-appearance: none; 
@@ -144,13 +143,11 @@
         <header class="bg-slate-900 text-white shadow-md no-print border-b-2 border-gold-500">
             <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center gap-4">
                 <div>
-                    <!-- Company Title ALWAYS in English -->
                     <h1 class="text-lg font-bold text-white tracking-wide">TWO PARROTS GROUP AUSTRALIA</h1>
                     <p data-i18n="header_sub" class="text-xs text-gold-400">Import & Distribution Landed Cost Intelligence</p>
                 </div>
 
                 <div class="flex items-center space-x-3">
-                    <!-- LANGUAGE SELECTOR BUTTONS (MINI FLAGS ONLY) -->
                     <div class="flex items-center bg-slate-800 p-1 rounded-lg border border-slate-700 space-x-1">
                         <button onclick="setLanguage('en')" id="lang-btn-en" title="English" class="px-2.5 py-1 text-base rounded transition bg-gold-500/20 border border-gold-500">🇬🇧</button>
                         <button onclick="setLanguage('km')" id="lang-btn-km" title="Khmer" class="px-2.5 py-1 text-base rounded transition opacity-60 hover:opacity-100">🇰🇭</button>
@@ -158,7 +155,6 @@
                         <button onclick="setLanguage('zh')" id="lang-btn-zh" title="Chinese" class="px-2.5 py-1 text-base rounded transition opacity-60 hover:opacity-100">🇨🇳</button>
                     </div>
 
-                    <!-- Print Button -->
                     <button onclick="window.print()" class="px-4 py-2 bg-gold-500 hover:bg-gold-600 text-slate-900 font-semibold rounded-lg shadow transition flex items-center gap-2 text-sm">
                         <i class="fa-solid fa-print"></i> <span data-i18n="btn_print">Print A4 Quotation</span>
                     </button>
@@ -168,25 +164,23 @@
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
 
-            <!-- 1. HEADER BOX (BUSINESS DETAILS LOCKED IN ENGLISH) -->
+            <!-- 1. HEADER BOX -->
             <div class="bg-slate-900 text-white rounded-xl shadow-lg p-6 mb-6 border-l-4 border-gold-500 relative overflow-hidden">
                 <div class="absolute top-0 right-0 transform translate-x-4 -translate-y-4 w-32 h-32 bg-gold-500 opacity-10 rounded-full blur-2xl"></div>
                 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
-                    <!-- Company & Management (ENGLISH LOCKED) -->
                     <div class="border-b md:border-b-0 md:border-r border-slate-700 pb-4 md:pb-0 md:pr-4">
                         <div class="flex items-center space-x-2 text-gold-400 font-bold text-lg mb-1">
                             <i class="fa-solid fa-building"></i>
                             <span>Two Parrots Group Australia</span>
                         </div>
-                        <p class="text-sm text-slate-300 mb-1"><span class="text-slate-400">Managing Director:</span> <strong class="text-white">Kim Heng Ly</strong></p>
+                        <p class="text-sm text-slate-300 mb-1"><span class="text-slate-400" data-i18n="lbl_md">Managing Director:</span> <strong class="text-white">Kim Heng Ly</strong></p>
                         <p class="text-xs text-slate-400 flex items-start gap-1">
                             <i class="fa-solid fa-location-dot mt-0.5 text-gold-500"></i>
                             <span>1/57 Elonera Rd, Noble Park North VIC 3174, Australia</span>
                         </p>
                     </div>
 
-                    <!-- Contact & Web Portal (ENGLISH LOCKED) -->
                     <div class="border-b md:border-b-0 md:border-r border-slate-700 pb-4 md:pb-0 md:pr-4">
                         <h3 data-i18n="card_contact_title" class="text-xs uppercase font-semibold text-slate-400 tracking-wider mb-2">Contact & Web Portal</h3>
                         <p class="text-xs text-slate-300 mb-1.5 flex items-center gap-2">
@@ -199,24 +193,23 @@
                         </p>
                         <p class="text-xs text-slate-300 flex items-center gap-2">
                             <i class="fa-solid fa-phone text-gold-400 w-4"></i>
-                            <span>046 88 2 99 88</span>
+                            <span>+61 (03) 9000 0000</span>
                         </p>
                     </div>
 
-                    <!-- Logistics & Port Specs (ENGLISH LOCKED SPECIFICS) -->
                     <div>
                         <h3 data-i18n="card_logistics_title" class="text-xs uppercase font-semibold text-slate-400 tracking-wider mb-2">Import / Logistics Terminal</h3>
                         <p class="text-xs text-slate-300 mb-1.5 flex items-center gap-2">
                             <i class="fa-solid fa-ship text-gold-400 w-4"></i>
-                            <span><strong data-i18n="lbl_discharge_port">Discharge Port:</strong> Melbourne Swanson Dock / DP World</span>
+                            <span><strong data-i18n="lbl_discharge_port">Discharge Port:</strong> <span data-i18n="val_discharge_port">Melbourne Swanson Dock / DP World</span></span>
                         </p>
                         <p class="text-xs text-slate-300 mb-1.5 flex items-center gap-2">
                             <i class="fa-solid fa-box text-gold-400 w-4"></i>
-                            <span><strong data-i18n="lbl_standard_unit">Standard Unit:</strong> 20ft FCL Container</span>
+                            <span><strong data-i18n="lbl_standard_unit">Standard Unit:</strong> <span data-i18n="val_standard_unit">20ft FCL Container</span></span>
                         </p>
                         <p class="text-xs text-slate-300 flex items-center gap-2">
                             <i class="fa-solid fa-calendar-check text-gold-400 w-4"></i>
-                            <span><strong data-i18n="lbl_effective_date">Effective Date:</strong> October 2026</span>
+                            <span><strong data-i18n="lbl_effective_date">Effective Date:</strong> <span data-i18n="val_effective_date">October 2026</span></span>
                         </p>
                     </div>
                 </div>
@@ -224,7 +217,7 @@
 
             <!-- 2. SUMMARY CARDS -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-6">
-                <!-- Card 1: Customs Clearance Schedule -->
+                <!-- Card 1 -->
                 <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200 hover:shadow-md transition">
                     <div class="flex items-center justify-between mb-3 border-b border-slate-100 pb-2">
                         <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
@@ -242,7 +235,7 @@
                     </ul>
                 </div>
 
-                <!-- Card 2: Container Freight Baseline -->
+                <!-- Card 2 -->
                 <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200 hover:shadow-md transition">
                     <div class="flex items-center justify-between mb-3 border-b border-slate-100 pb-2">
                         <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
@@ -251,7 +244,7 @@
                         <span data-i18n="tag_route_metrics" class="bg-slate-100 text-slate-700 text-xs font-semibold px-2 py-0.5 rounded">Route Metrics</span>
                     </div>
                     <ul class="text-xs text-slate-600 space-y-1.5">
-                        <li class="flex justify-between"><span data-i18n="lbl_route">Origin - Destination:</span> <strong class="text-slate-800">Sihanoukville → Melb</strong></li>
+                        <li class="flex justify-between"><span data-i18n="lbl_route">Origin - Destination:</span> <strong class="text-slate-800" data-i18n="val_route">Sihanoukville → Melb</strong></li>
                         <li class="flex justify-between"><span data-i18n="lbl_ocean_freight">Baseline Ocean Freight:</span> <strong class="text-gold-700 font-bold" id="card-ocean-freight">$1,650.00 USD</strong></li>
                         <li class="flex justify-between"><span data-i18n="lbl_cartage">VIC Local Cartage:</span> <strong class="text-slate-800" id="card-local-cartage">$750.00 AUD</strong></li>
                         <li class="flex justify-between border-t border-dashed border-slate-200 pt-1">
@@ -260,7 +253,7 @@
                     </ul>
                 </div>
 
-                <!-- Card 3: Detailed Compliance & Requirements -->
+                <!-- Card 3 -->
                 <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200 hover:shadow-md transition">
                     <div class="flex items-center justify-between mb-2.5 border-b border-slate-100 pb-2">
                         <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
@@ -270,7 +263,6 @@
                     </div>
                     
                     <div class="space-y-2.5 text-xs">
-                        <!-- Documents required from Supplier -->
                         <div>
                             <h4 data-i18n="hdr_supplier_docs" class="font-bold text-slate-800 text-[11px] uppercase tracking-wider mb-1 text-gold-700 flex items-center gap-1">
                                 <i class="fa-solid fa-file-export text-gold-600"></i> Supplier Required Documents
@@ -287,7 +279,6 @@
                             </ul>
                         </div>
 
-                        <!-- Documents required from Importer -->
                         <div class="border-t border-slate-100 pt-1.5">
                             <h4 data-i18n="hdr_importer_docs" class="font-bold text-slate-800 text-[11px] uppercase tracking-wider mb-1 text-gold-700 flex items-center gap-1">
                                 <i class="fa-solid fa-file-import text-gold-600"></i> Importer Required Documents
@@ -301,6 +292,445 @@
                             </ul>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <!-- SECTION: INTERACTIVE OPERATIONAL EXPENSE BUDGET BREAKDOWN -->
+            <div class="bg-white rounded-xl shadow-md overflow-hidden border-2 border-slate-300 mb-8">
+                <div class="bg-slate-900 px-6 py-4 border-b-2 border-gold-500 flex flex-wrap justify-between items-center gap-4">
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid fa-chart-pie text-gold-400 text-lg"></i>
+                            <h2 class="text-base font-bold text-white tracking-wide uppercase" data-i18n="opex_main_title">Master Operational Expense Budget & Operating Model</h2>
+                        </div>
+                        <p class="text-xs text-gold-400 mt-0.5" data-i18n="opex_main_subtitle">Business Entity: Cambodia-to-Melbourne Import & Distribution Business | Location: Melbourne, VIC, Australia (AUD)</p>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <button onclick="resetOpExBudget()" class="px-3 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-600 rounded text-xs font-semibold transition flex items-center gap-1">
+                            <i class="fa-solid fa-rotate-left"></i> <span data-i18n="btn_reset_opex">Reset Budget</span>
+                        </button>
+                        <span class="bg-gold-500/20 text-gold-400 text-xs font-bold px-3 py-1 rounded border border-gold-500/40 font-mono">
+                            <span data-i18n="lbl_total_opex_banner">Total OpEx:</span> $<span id="banner-opex-total">280,435.00</span> AUD / <span data-i18n="lbl_year">Year</span>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="p-6 space-y-6">
+                    <!-- 1. Executive Summary Cards & Dynamic Summary Table -->
+                    <div>
+                        <h3 class="text-sm font-bold text-slate-900 uppercase tracking-wider mb-3 flex items-center gap-2 border-b border-slate-200 pb-2">
+                            <i class="fa-solid fa-list-check text-gold-600"></i> <span data-i18n="opex_sec1_title">1. Executive Summary & Budget Overview</span>
+                        </h3>
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
+                            <div class="bg-slate-900 text-white p-4 rounded-lg border-l-4 border-gold-500">
+                                <span class="text-[10px] uppercase font-bold text-slate-400" data-i18n="opex_kpi1_lbl">Monthly Operational Expenses</span>
+                                <div id="kpi-monthly-opex" class="text-xl font-black text-gold-400 font-mono mt-0.5">$23,369.58 AUD</div>
+                                <span class="text-[10px] text-slate-400" data-i18n="opex_kpi1_sub">Excl. GST | All 6 Categories</span>
+                            </div>
+                            <div class="bg-slate-900 text-white p-4 rounded-lg border-l-4 border-gold-500">
+                                <span class="text-[10px] uppercase font-bold text-slate-400" data-i18n="opex_kpi2_lbl">Annual Operational Expenses</span>
+                                <div id="kpi-annual-opex" class="text-xl font-black text-white font-mono mt-0.5">$280,435.00 AUD</div>
+                                <span class="text-[10px] text-slate-400" data-i18n="opex_kpi2_sub">Excl. GST | Fixed + Salaries + Logistics</span>
+                            </div>
+                            <div class="bg-slate-900 text-white p-4 rounded-lg border-l-4 border-gold-500">
+                                <span class="text-[10px] uppercase font-bold text-slate-400" data-i18n="opex_kpi3_lbl">Primary Cost Driver</span>
+                                <div class="text-lg font-bold text-emerald-400 font-mono mt-0.5"><span data-i18n="opex_kpi3_val">Personnel</span> (<span id="kpi-personnel-pct">78.8%</span>)</div>
+                                <span id="kpi-personnel-amt" class="text-[10px] text-slate-400">$220,950.00 AUD (Salary + Super + WorkCover)</span>
+                            </div>
+                        </div>
+
+                        <div class="overflow-x-auto rounded-lg border border-slate-200">
+                            <table class="w-full text-left text-xs">
+                                <thead>
+                                    <tr class="bg-slate-800 text-slate-200 font-bold uppercase tracking-wider border-b border-slate-700">
+                                        <th class="py-2.5 px-4" data-i18n="th_opex_cat">Expense Category</th>
+                                        <th class="py-2.5 px-4 text-right" data-i18n="th_opex_mth">Monthly Cost (ex GST)</th>
+                                        <th class="py-2.5 px-4 text-right" data-i18n="th_opex_ann">Annual Cost (ex GST)</th>
+                                        <th class="py-2.5 px-4 text-right" data-i18n="th_opex_pct">% of Total OpEx</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-200 bg-white">
+                                    <tr class="hover:bg-slate-50">
+                                        <td class="py-2 px-4 font-semibold text-slate-800" data-i18n="opex_cat1_name">1. Stated Fixed Overheads (Office, Storage, Rental Car)</td>
+                                        <td class="py-2 px-4 text-right font-mono" id="sum-mth-c1">$2,747.33</td>
+                                        <td class="py-2 px-4 text-right font-mono font-bold" id="sum-ann-c1">$32,968.00</td>
+                                        <td class="py-2 px-4 text-right font-mono font-semibold text-slate-600" id="sum-pct-c1">11.8%</td>
+                                    </tr>
+                                    <tr class="hover:bg-slate-50">
+                                        <td class="py-2 px-4 font-semibold text-slate-800" data-i18n="opex_cat2_name">2. Executive & Operational Personnel (Salaries, Super, WorkCover)</td>
+                                        <td class="py-2 px-4 text-right font-mono" id="sum-mth-c2">$18,412.50</td>
+                                        <td class="py-2 px-4 text-right font-mono font-bold text-emerald-700" id="sum-ann-c2">$220,950.00</td>
+                                        <td class="py-2 px-4 text-right font-mono font-semibold text-slate-600" id="sum-pct-c2">78.8%</td>
+                                    </tr>
+                                    <tr class="hover:bg-slate-50">
+                                        <td class="py-2 px-4 font-semibold text-slate-800" data-i18n="opex_cat3_name">3. Vehicle Running & Transportation Expenses (Fuel, Tolls, Maint.)</td>
+                                        <td class="py-2 px-4 text-right font-mono" id="sum-mth-c3">$385.00</td>
+                                        <td class="py-2 px-4 text-right font-mono font-bold" id="sum-ann-c3">$4,620.00</td>
+                                        <td class="py-2 px-4 text-right font-mono font-semibold text-slate-600" id="sum-pct-c3">1.6%</td>
+                                    </tr>
+                                    <tr class="hover:bg-slate-50">
+                                        <td class="py-2 px-4 font-semibold text-slate-800" data-i18n="opex_cat4_name">4. IT, Communications & SaaS Stack (Telecoms, Web, Software)</td>
+                                        <td class="py-2 px-4 text-right font-mono" id="sum-mth-c4">$405.00</td>
+                                        <td class="py-2 px-4 text-right font-mono font-bold" id="sum-ann-c4">$4,860.00</td>
+                                        <td class="py-2 px-4 text-right font-mono font-semibold text-slate-600" id="sum-pct-c4">1.7%</td>
+                                    </tr>
+                                    <tr class="hover:bg-slate-50">
+                                        <td class="py-2 px-4 font-semibold text-slate-800" data-i18n="opex_cat5_name">5. Business Insurance & Compliance (Liability, Transit, Audit)</td>
+                                        <td class="py-2 px-4 text-right font-mono" id="sum-mth-c5">$444.75</td>
+                                        <td class="py-2 px-4 text-right font-mono font-bold" id="sum-ann-c5">$5,337.00</td>
+                                        <td class="py-2 px-4 text-right font-mono font-semibold text-slate-600" id="sum-pct-c5">1.9%</td>
+                                    </tr>
+                                    <tr class="hover:bg-slate-50">
+                                        <td class="py-2 px-4 font-semibold text-slate-800" data-i18n="opex_cat6_name">6. Estimated Logistics & Customs Administration (Clearance, PSC)</td>
+                                        <td class="py-2 px-4 text-right font-mono" id="sum-mth-c6">$975.00</td>
+                                        <td class="py-2 px-4 text-right font-mono font-bold" id="sum-ann-c6">$11,700.00</td>
+                                        <td class="py-2 px-4 text-right font-mono font-semibold text-slate-600" id="sum-pct-c6">4.2%</td>
+                                    </tr>
+                                    <tr class="bg-slate-900 text-white font-bold text-xs">
+                                        <td class="py-2.5 px-4 uppercase text-gold-400" data-i18n="opex_total_lbl">TOTAL OPERATIONAL EXPENSES (OpEx)</td>
+                                        <td class="py-2.5 px-4 text-right font-mono text-white" id="sum-mth-total">$23,369.58</td>
+                                        <td class="py-2.5 px-4 text-right font-mono text-gold-400 text-sm" id="sum-ann-total">$280,435.00</td>
+                                        <td class="py-2.5 px-4 text-right font-mono">100.0%</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- 2. Detailed Editable Expense Itemization -->
+                    <div>
+                        <h3 class="text-sm font-bold text-slate-900 uppercase tracking-wider mb-3 flex items-center gap-2 border-b border-slate-200 pb-2">
+                            <i class="fa-solid fa-edit text-gold-600"></i> <span data-i18n="opex_sec2_title">2. Detailed Expense Itemization (Editable AUD Prices)</span>
+                        </h3>
+
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+                            <!-- Category 1 -->
+                            <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 shadow-sm">
+                                <h4 class="font-bold text-xs text-slate-900 uppercase mb-2 flex justify-between items-center">
+                                    <span data-i18n="c1_hdr">Category 1: Stated Fixed Overheads</span>
+                                    <span class="text-gold-700 font-mono font-bold" id="subtotal-c1-hdr">$32,968.00/yr</span>
+                                </h4>
+                                <table class="w-full text-[11px] bg-white rounded border border-slate-200">
+                                    <thead class="bg-slate-800 text-white">
+                                        <tr>
+                                            <th class="p-1.5 text-left" data-i18n="th_item">Line Item</th>
+                                            <th class="p-1.5 text-right" data-i18n="th_wk">Weekly AUD</th>
+                                            <th class="p-1.5 text-right" data-i18n="th_mth">Monthly</th>
+                                            <th class="p-1.5 text-right" data-i18n="th_ann">Annual</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-slate-100">
+                                        <tr>
+                                            <td class="p-1.5 font-medium" data-i18n="c1_item1">Office Rent</td>
+                                            <td class="p-1.5 text-right font-mono">
+                                                $<input type="number" id="c1_1_input" value="60.00" step="5" min="0" oninput="updateOpExFromInputs()" class="w-16 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
+                                            </td>
+                                            <td class="p-1.5 text-right font-mono" id="c1_1_mth">$260.00</td>
+                                            <td class="p-1.5 text-right font-mono font-bold" id="c1_1_ann">$3,120.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-1.5 font-medium" data-i18n="c1_item2">Storage Unit / Small Warehouse</td>
+                                            <td class="p-1.5 text-right font-mono">
+                                                $<input type="number" id="c1_2_input" value="130.00" step="5" min="0" oninput="updateOpExFromInputs()" class="w-16 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
+                                            </td>
+                                            <td class="p-1.5 text-right font-mono" id="c1_2_mth">$563.33</td>
+                                            <td class="p-1.5 text-right font-mono font-bold" id="c1_2_ann">$6,760.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-1.5 font-medium" data-i18n="c1_item3">Commercial Vehicle Rental</td>
+                                            <td class="p-1.5 text-right font-mono">
+                                                $<input type="number" id="c1_3_input" value="444.00" step="10" min="0" oninput="updateOpExFromInputs()" class="w-16 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
+                                            </td>
+                                            <td class="p-1.5 text-right font-mono" id="c1_3_mth">$1,924.00</td>
+                                            <td class="p-1.5 text-right font-mono font-bold" id="c1_3_ann">$23,088.00</td>
+                                        </tr>
+                                        <tr class="bg-slate-100 font-bold border-t border-slate-300">
+                                            <td class="p-1.5 text-slate-900" data-i18n="lbl_subtotal_ex_gst">Subtotal (excl. GST)</td>
+                                            <td class="p-1.5 text-right font-mono" id="c1_wk_sub">$634.00</td>
+                                            <td class="p-1.5 text-right font-mono" id="c1_mth_sub">$2,747.33</td>
+                                            <td class="p-1.5 text-right font-mono text-gold-700" id="c1_ann_sub">$32,968.00</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Category 2 -->
+                            <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 shadow-sm">
+                                <h4 class="font-bold text-xs text-slate-900 uppercase mb-2 flex justify-between items-center">
+                                    <span data-i18n="c2_hdr">Category 2: Personnel Overhead</span>
+                                    <span class="text-emerald-700 font-mono font-bold" id="subtotal-c2-hdr">$220,950.00/yr</span>
+                                </h4>
+                                <table class="w-full text-[11px] bg-white rounded border border-slate-200">
+                                    <thead class="bg-slate-800 text-white">
+                                        <tr>
+                                            <th class="p-1.5 text-left" data-i18n="th_role">Role / Position</th>
+                                            <th class="p-1.5 text-right" data-i18n="th_base">Base Salary AUD</th>
+                                            <th class="p-1.5 text-right" data-i18n="th_super">Super (11.5%)</th>
+                                            <th class="p-1.5 text-right" data-i18n="th_wc">WorkCover</th>
+                                            <th class="p-1.5 text-right" data-i18n="th_ann">Total Annual</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-slate-100">
+                                        <tr>
+                                            <td class="p-1.5 font-medium" data-i18n="c2_role1">Managing Director</td>
+                                            <td class="p-1.5 text-right font-mono">
+                                                $<input type="number" id="c2_1_base" value="110000.00" step="1000" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
+                                            </td>
+                                            <td class="p-1.5 text-right font-mono" id="c2_1_super">$12,650.00</td>
+                                            <td class="p-1.5 text-right font-mono">
+                                                $<input type="number" id="c2_1_wc" value="2200.00" step="100" min="0" oninput="updateOpExFromInputs()" class="w-16 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
+                                            </td>
+                                            <td class="p-1.5 text-right font-mono font-bold" id="c2_1_tot">$124,850.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-1.5 font-medium" data-i18n="c2_role2">Operations Manager</td>
+                                            <td class="p-1.5 text-right font-mono">
+                                                $<input type="number" id="c2_2_base" value="84000.00" step="1000" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
+                                            </td>
+                                            <td class="p-1.5 text-right font-mono" id="c2_2_super">$9,660.00</td>
+                                            <td class="p-1.5 text-right font-mono">
+                                                $<input type="number" id="c2_2_wc" value="2440.00" step="100" min="0" oninput="updateOpExFromInputs()" class="w-16 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
+                                            </td>
+                                            <td class="p-1.5 text-right font-mono font-bold" id="c2_2_tot">$96,100.00</td>
+                                        </tr>
+                                        <tr class="bg-slate-100 font-bold border-t border-slate-300">
+                                            <td class="p-1.5 text-slate-900" data-i18n="lbl_subtotal">Subtotal</td>
+                                            <td class="p-1.5 text-right font-mono" id="c2_base_sub">$194,000.00</td>
+                                            <td class="p-1.5 text-right font-mono" id="c2_super_sub">$22,310.00</td>
+                                            <td class="p-1.5 text-right font-mono" id="c2_wc_sub">$4,640.00</td>
+                                            <td class="p-1.5 text-right font-mono text-emerald-700" id="c2_ann_sub">$220,950.00</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Category 3 -->
+                            <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 shadow-sm">
+                                <h4 class="font-bold text-xs text-slate-900 uppercase mb-2 flex justify-between items-center">
+                                    <span data-i18n="c3_hdr">Category 3: Vehicle Running Expenses</span>
+                                    <span class="text-gold-700 font-mono font-bold" id="subtotal-c3-hdr">$4,620.00/yr</span>
+                                </h4>
+                                <table class="w-full text-[11px] bg-white rounded border border-slate-200">
+                                    <thead class="bg-slate-800 text-white">
+                                        <tr>
+                                            <th class="p-1.5 text-left" data-i18n="th_desc">Expense Description</th>
+                                            <th class="p-1.5 text-right" data-i18n="th_mth">Monthly AUD</th>
+                                            <th class="p-1.5 text-right" data-i18n="th_ann">Annual Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-slate-100">
+                                        <tr>
+                                            <td class="p-1.5 font-medium" data-i18n="c3_item1">Fuel (Unleaded / Diesel)</td>
+                                            <td class="p-1.5 text-right font-mono">
+                                                $<input type="number" id="c3_1_mth_input" value="260.00" step="10" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
+                                            </td>
+                                            <td class="p-1.5 text-right font-mono font-bold" id="c3_1_ann">$3,120.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-1.5 font-medium" data-i18n="c3_item2">Transurban Tolls</td>
+                                            <td class="p-1.5 text-right font-mono">
+                                                $<input type="number" id="c3_2_mth_input" value="85.00" step="5" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
+                                            </td>
+                                            <td class="p-1.5 text-right font-mono font-bold" id="c3_2_ann">$1,020.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-1.5 font-medium" data-i18n="c3_item3">Vehicle Maintenance</td>
+                                            <td class="p-1.5 text-right font-mono">
+                                                $<input type="number" id="c3_3_mth_input" value="40.00" step="5" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
+                                            </td>
+                                            <td class="p-1.5 text-right font-mono font-bold" id="c3_3_ann">$480.00</td>
+                                        </tr>
+                                        <tr class="bg-slate-100 font-bold border-t border-slate-300">
+                                            <td class="p-1.5 text-slate-900" data-i18n="lbl_subtotal_ex_gst">Subtotal (excl. GST)</td>
+                                            <td class="p-1.5 text-right font-mono" id="c3_mth_sub">$385.00</td>
+                                            <td class="p-1.5 text-right font-mono text-gold-700" id="c3_ann_sub">$4,620.00</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Category 4 -->
+                            <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 shadow-sm">
+                                <h4 class="font-bold text-xs text-slate-900 uppercase mb-2 flex justify-between items-center">
+                                    <span data-i18n="c4_hdr">Category 4: IT & SaaS Stack</span>
+                                    <span class="text-gold-700 font-mono font-bold" id="subtotal-c4-hdr">$4,860.00/yr</span>
+                                </h4>
+                                <table class="w-full text-[11px] bg-white rounded border border-slate-200">
+                                    <thead class="bg-slate-800 text-white">
+                                        <tr>
+                                            <th class="p-1.5 text-left" data-i18n="th_software">Software / Service</th>
+                                            <th class="p-1.5 text-right" data-i18n="th_mth">Monthly AUD</th>
+                                            <th class="p-1.5 text-right" data-i18n="th_ann">Annual Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-slate-100">
+                                        <tr>
+                                            <td class="p-1.5 font-medium" data-i18n="c4_item1">Telecoms & Mobile Services</td>
+                                            <td class="p-1.5 text-right font-mono">
+                                                $<input type="number" id="c4_1_mth_input" value="160.00" step="5" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
+                                            </td>
+                                            <td class="p-1.5 text-right font-mono font-bold" id="c4_1_ann">$1,920.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-1.5 font-medium" data-i18n="c4_item2">E-Commerce Platform</td>
+                                            <td class="p-1.5 text-right font-mono">
+                                                $<input type="number" id="c4_2_mth_input" value="55.00" step="5" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
+                                            </td>
+                                            <td class="p-1.5 text-right font-mono font-bold" id="c4_2_ann">$660.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-1.5 font-medium" data-i18n="c4_item3">Email & Productivity</td>
+                                            <td class="p-1.5 text-right font-mono">
+                                                $<input type="number" id="c4_3_mth_input" value="30.00" step="5" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
+                                            </td>
+                                            <td class="p-1.5 text-right font-mono font-bold" id="c4_3_ann">$360.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-1.5 font-medium" data-i18n="c4_item4">Accounting & ERP Integration</td>
+                                            <td class="p-1.5 text-right font-mono">
+                                                $<input type="number" id="c4_4_mth_input" value="90.00" step="5" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
+                                            </td>
+                                            <td class="p-1.5 text-right font-mono font-bold" id="c4_4_ann">$1,080.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-1.5 font-medium" data-i18n="c4_item5">Inventory Management Software</td>
+                                            <td class="p-1.5 text-right font-mono">
+                                                $<input type="number" id="c4_5_mth_input" value="70.00" step="5" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
+                                            </td>
+                                            <td class="p-1.5 text-right font-mono font-bold" id="c4_5_ann">$840.00</td>
+                                        </tr>
+                                        <tr class="bg-slate-100 font-bold border-t border-slate-300">
+                                            <td class="p-1.5 text-slate-900" data-i18n="lbl_subtotal_ex_gst">Subtotal (excl. GST)</td>
+                                            <td class="p-1.5 text-right font-mono" id="c4_mth_sub">$405.00</td>
+                                            <td class="p-1.5 text-right font-mono text-gold-700" id="c4_ann_sub">$4,860.00</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Category 5 -->
+                            <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 shadow-sm">
+                                <h4 class="font-bold text-xs text-slate-900 uppercase mb-2 flex justify-between items-center">
+                                    <span data-i18n="c5_hdr">Category 5: Insurance & Compliance</span>
+                                    <span class="text-gold-700 font-mono font-bold" id="subtotal-c5-hdr">$5,337.00/yr</span>
+                                </h4>
+                                <table class="w-full text-[11px] bg-white rounded border border-slate-200">
+                                    <thead class="bg-slate-800 text-white">
+                                        <tr>
+                                            <th class="p-1.5 text-left" data-i18n="th_policy">Service / Policy Type</th>
+                                            <th class="p-1.5 text-right" data-i18n="th_ex_gst">Annual ex GST AUD</th>
+                                            <th class="p-1.5 text-right" data-i18n="th_inc_gst">inc GST (10%)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-slate-100">
+                                        <tr>
+                                            <td class="p-1.5 font-medium" data-i18n="c5_item1">Accounting & Tax Compliance Fee</td>
+                                            <td class="p-1.5 text-right font-mono">
+                                                $<input type="number" id="c5_1_ann_input" value="177.00" step="10" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
+                                            </td>
+                                            <td class="p-1.5 text-right font-mono" id="c5_1_inc_gst">$194.70</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-1.5 font-medium" data-i18n="c5_item2">Public & Products Liability</td>
+                                            <td class="p-1.5 text-right font-mono">
+                                                $<input type="number" id="c5_2_ann_input" value="1800.00" step="50" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
+                                            </td>
+                                            <td class="p-1.5 text-right font-mono" id="c5_2_inc_gst">$1,980.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-1.5 font-medium" data-i18n="c5_item3">Marine Cargo / Transit Insurance</td>
+                                            <td class="p-1.5 text-right font-mono">
+                                                $<input type="number" id="c5_3_ann_input" value="1500.00" step="50" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
+                                            </td>
+                                            <td class="p-1.5 text-right font-mono" id="c5_3_inc_gst">$1,650.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-1.5 font-medium" data-i18n="c5_item4">Management Liability & Cyber</td>
+                                            <td class="p-1.5 text-right font-mono">
+                                                $<input type="number" id="c5_4_ann_input" value="1860.00" step="50" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
+                                            </td>
+                                            <td class="p-1.5 text-right font-mono" id="c5_4_inc_gst">$2,046.00</td>
+                                        </tr>
+                                        <tr class="bg-slate-100 font-bold border-t border-slate-300">
+                                            <td class="p-1.5 text-slate-900" data-i18n="lbl_subtotal">Subtotal</td>
+                                            <td class="p-1.5 text-right font-mono text-gold-700" id="c5_ex_sub">$5,337.00</td>
+                                            <td class="p-1.5 text-right font-mono text-slate-800" id="c5_inc_sub">$5,870.70</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Category 6 -->
+                            <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 shadow-sm">
+                                <h4 class="font-bold text-xs text-slate-900 uppercase mb-2 flex justify-between items-center">
+                                    <span data-i18n="c6_hdr">Category 6: Import Freight Clearance & Customs</span>
+                                    <span class="text-gold-700 font-mono font-bold" id="subtotal-c6-hdr">$11,700.00/yr</span>
+                                </h4>
+                                <table class="w-full text-[11px] bg-white rounded border border-slate-200">
+                                    <thead class="bg-slate-800 text-white">
+                                        <tr>
+                                            <th class="p-1.5 text-left" data-i18n="th_service">Service Component</th>
+                                            <th class="p-1.5 text-right" data-i18n="th_per_shipment">Per Shipment AUD</th>
+                                            <th class="p-1.5 text-right" data-i18n="th_ann_shipments">Annual (12 Shipments)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-slate-100">
+                                        <tr>
+                                            <td class="p-1.5 font-medium" data-i18n="c6_item1">Customs Brokerage Fees</td>
+                                            <td class="p-1.5 text-right font-mono">
+                                                $<input type="number" id="c6_1_ship_input" value="275.00" step="25" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
+                                            </td>
+                                            <td class="p-1.5 text-right font-mono font-bold" id="c6_1_ann">$3,300.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-1.5 font-medium" data-i18n="c6_item2">Port Service Charges (PSC)</td>
+                                            <td class="p-1.5 text-right font-mono">
+                                                $<input type="number" id="c6_2_ship_input" value="450.00" step="25" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
+                                            </td>
+                                            <td class="p-1.5 text-right font-mono font-bold" id="c6_2_ann">$5,400.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-1.5 font-medium" data-i18n="c6_item3">Cartage / Wharf Transport</td>
+                                            <td class="p-1.5 text-right font-mono">
+                                                $<input type="number" id="c6_3_ship_input" value="250.00" step="25" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
+                                            </td>
+                                            <td class="p-1.5 text-right font-mono font-bold" id="c6_3_ann">$3,000.00</td>
+                                        </tr>
+                                        <tr class="bg-slate-100 font-bold border-t border-slate-300">
+                                            <td class="p-1.5 text-slate-900" data-i18n="lbl_subtotal_ex_ocean">Subtotal (excl. Ocean & Duty)</td>
+                                            <td class="p-1.5 text-right font-mono" id="c6_ship_sub">$975.00</td>
+                                            <td class="p-1.5 text-right font-mono text-gold-700" id="c6_ann_sub">$11,700.00</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- 3. Key Compliance & Financial Considerations -->
+                    <div class="bg-slate-900 text-white p-4 rounded-lg border-l-4 border-gold-500">
+                        <h3 class="text-xs font-bold uppercase tracking-wider mb-2 text-gold-400 flex items-center gap-1.5">
+                            <i class="fa-solid fa-scale-balanced"></i> <span data-i18n="opex_sec3_title">3. Key Compliance & Financial Considerations</span>
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-[11px] text-slate-300">
+                            <div>
+                                <strong class="text-white block mb-1" data-i18n="opex_note1_title">Customs Tariffs & FTAs:</strong>
+                                <span data-i18n="opex_note1_body">Goods originating in Cambodia qualify for duty-free entry into Australia under AANZFTA or RCEP, provided a valid Certificate of Origin (COO) is supplied.</span>
+                            </div>
+                            <div>
+                                <strong class="text-white block mb-1" data-i18n="opex_note2_title">Import GST Deferred Scheme (DGST):</strong>
+                                <span data-i18n="opex_note2_body">Import GST (10%) is calculated on Customs Value + Duty + Transport/Insurance. Registering for Deferred GST defers border payment to monthly BAS returns.</span>
+                            </div>
+                            <div>
+                                <strong class="text-white block mb-1" data-i18n="opex_note3_title">Superannuation Compliance:</strong>
+                                <span data-i18n="opex_note3_body">Statutory Employer Superannuation Guarantee (11.5%) must be remitted quarterly to compliant Australian super funds before statutory due dates.</span>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
@@ -326,30 +756,29 @@
                         <thead>
                             <tr class="bg-slate-800 text-slate-200 text-xs uppercase font-semibold tracking-wider border-b-2 border-slate-900">
                                 <th class="py-3 px-2 text-center w-[3%] border-r-2 border-slate-700">N°</th>
-                                <th data-i18n="th_prod_desc" class="py-3 px-3 w-[20%] border-r-2 border-slate-700">Product Description</th>
-                                <!-- INTERACTIVE FOB CTN USD PRICE COLUMN HEADER -->
+                                <th data-i18n="th_prod_desc" class="py-3 px-3 w-[19%] border-r-2 border-slate-700">Product Description</th>
                                 <th class="py-3 px-3 w-[15%] border-r-2 border-slate-700 text-right">
                                     <span data-i18n="th_fob_price">CTN Price Before Delivery</span>
-                                    <span class="block text-[10px] text-gold-400 normal-case font-normal">(Adjustable CTN USD → Auto PCS USD/AUD)</span>
+                                    <span class="block text-[10px] text-gold-400 normal-case font-normal" data-i18n="th_fob_sub">(Adjustable CTN USD → Auto PCS USD/AUD)</span>
                                 </th>
-                                <th class="py-3 px-3 w-[22%] border-r-2 border-slate-700 bg-slate-850">
-                                    <div data-i18n="th_total_cost" class="text-gold-400 font-bold">Total Cost of Each Pcs</div>
+                                <th class="py-3 px-3 w-[23%] border-r-2 border-slate-700 bg-slate-850">
+                                    <div data-i18n="th_total_cost" class="text-gold-400 font-bold">Total Landed Cost & Selling Prices</div>
                                     <span data-i18n="th_itemized_note" class="block text-[9px] text-slate-400 normal-case font-normal leading-tight">
-                                        Itemized: Landed Cost | FOB | Ocean Freight | Port & Customs | Local Transp | Selling Price @ Margin
+                                        Structure: Total Landed Cost (Inc. OpEx) → Itemized CTN Breakdown → Selling Prices
                                     </span>
                                 </th>
                                 <th class="py-3 px-3 w-[20%] border-r-2 border-slate-700">
                                     <span data-i18n="th_asian_bench">Ethnic & Asian Market Comparisons</span>
-                                    <span class="block text-[10px] text-slate-400 normal-case font-normal">(Asian, Indian, Nepalese, Sri Lankan)</span>
+                                    <span class="block text-[10px] text-slate-400 normal-case font-normal" data-i18n="th_asian_sub">(Asian, Indian, Nepalese, Sri Lankan)</span>
                                 </th>
                                 <th class="py-3 px-3 w-[20%]">
                                     <span data-i18n="th_aus_bench">Australian Supermarket Prices</span>
-                                    <span class="block text-[10px] text-slate-400 normal-case font-normal">(Coles, Woolworths, ALDI, Costco, IGA)</span>
+                                    <span class="block text-[10px] text-slate-400 normal-case font-normal" data-i18n="th_aus_sub">(Coles, Woolworths, ALDI, Costco, IGA)</span>
                                 </th>
                             </tr>
                         </thead>
                         <tbody id="product-table-body" class="text-xs">
-                            <!-- JS renders 30 products here with weight-normalized price badges -->
+                            <!-- JS renders 30 products here -->
                         </tbody>
                     </table>
                 </div>
@@ -407,8 +836,236 @@
 
     </div>
 
-    <!-- SCRIPT FOR PASSWORD, I18N DICTIONARY, CTN PRICE EDITING & CALCULATION ENGINE -->
+    <!-- SCRIPT FOR PASSWORD, I18N DICTIONARY, OPEX ALLOCATION ENGINE & CALCULATION ENGINE -->
     <script>
+        // --- DYNAMIC OPEX BUDGET ENGINE STATE ---
+        let currentAnnualOpExAUD = 280435.00;
+        const ANNUAL_CONTAINERS = 12; // 12 x 20ft FCL Shipments per year
+        let currentOpExPerContainerAUD = currentAnnualOpExAUD / ANNUAL_CONTAINERS;
+
+        // Default OpEx Baseline Values for Reset Button
+        const defaultOpExValues = {
+            c1_1_input: 60.00,
+            c1_2_input: 130.00,
+            c1_3_input: 444.00,
+            c2_1_base: 110000.00,
+            c2_1_wc: 2200.00,
+            c2_2_base: 84000.00,
+            c2_2_wc: 2440.00,
+            c3_1_mth_input: 260.00,
+            c3_2_mth_input: 85.00,
+            c3_3_mth_input: 40.00,
+            c4_1_mth_input: 160.00,
+            c4_2_mth_input: 55.00,
+            c4_3_mth_input: 30.00,
+            c4_4_mth_input: 90.00,
+            c4_5_mth_input: 70.00,
+            c5_1_ann_input: 177.00,
+            c5_2_ann_input: 1800.00,
+            c5_3_ann_input: 1500.00,
+            c5_4_ann_input: 1860.00,
+            c6_1_ship_input: 275.00,
+            c6_2_ship_input: 450.00,
+            c6_3_ship_input: 250.00
+        };
+
+        // --- REAL-TIME OPEX CALCULATOR & RE-ALLOCATION ---
+        function updateOpExFromInputs() {
+            // Category 1
+            const c1_1_wk = parseFloat(document.getElementById('c1_1_input').value) || 0;
+            const c1_2_wk = parseFloat(document.getElementById('c1_2_input').value) || 0;
+            const c1_3_wk = parseFloat(document.getElementById('c1_3_input').value) || 0;
+
+            const c1_1_ann = c1_1_wk * 52;
+            const c1_2_ann = c1_2_wk * 52;
+            const c1_3_ann = c1_3_wk * 52;
+
+            document.getElementById('c1_1_mth').innerText = '$' + (c1_1_ann / 12).toFixed(2);
+            document.getElementById('c1_1_ann').innerText = '$' + c1_1_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('c1_2_mth').innerText = '$' + (c1_2_ann / 12).toFixed(2);
+            document.getElementById('c1_2_ann').innerText = '$' + c1_2_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('c1_3_mth').innerText = '$' + (c1_3_ann / 12).toFixed(2);
+            document.getElementById('c1_3_ann').innerText = '$' + c1_3_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+            const c1_ann_sub = c1_1_ann + c1_2_ann + c1_3_ann;
+            const c1_mth_sub = c1_ann_sub / 12;
+            const c1_wk_sub = c1_1_wk + c1_2_wk + c1_3_wk;
+
+            document.getElementById('c1_wk_sub').innerText = '$' + c1_wk_sub.toFixed(2);
+            document.getElementById('c1_mth_sub').innerText = '$' + c1_mth_sub.toFixed(2);
+            document.getElementById('c1_ann_sub').innerText = '$' + c1_ann_sub.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('subtotal-c1-hdr').innerText = '$' + c1_ann_sub.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + '/yr';
+
+            // Category 2
+            const c2_1_base = parseFloat(document.getElementById('c2_1_base').value) || 0;
+            const c2_1_super = c2_1_base * 0.115;
+            const c2_1_wc = parseFloat(document.getElementById('c2_1_wc').value) || 0;
+            const c2_1_tot = c2_1_base + c2_1_super + c2_1_wc;
+
+            const c2_2_base = parseFloat(document.getElementById('c2_2_base').value) || 0;
+            const c2_2_super = c2_2_base * 0.115;
+            const c2_2_wc = parseFloat(document.getElementById('c2_2_wc').value) || 0;
+            const c2_2_tot = c2_2_base + c2_2_super + c2_2_wc;
+
+            document.getElementById('c2_1_super').innerText = '$' + c2_1_super.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('c2_1_tot').innerText = '$' + c2_1_tot.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('c2_2_super').innerText = '$' + c2_2_super.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('c2_2_tot').innerText = '$' + c2_2_tot.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+            const c2_base_sub = c2_1_base + c2_2_base;
+            const c2_super_sub = c2_1_super + c2_2_super;
+            const c2_wc_sub = c2_1_wc + c2_2_wc;
+            const c2_ann_sub = c2_1_tot + c2_2_tot;
+            const c2_mth_sub = c2_ann_sub / 12;
+
+            document.getElementById('c2_base_sub').innerText = '$' + c2_base_sub.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('c2_super_sub').innerText = '$' + c2_super_sub.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('c2_wc_sub').innerText = '$' + c2_wc_sub.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('c2_ann_sub').innerText = '$' + c2_ann_sub.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('subtotal-c2-hdr').innerText = '$' + c2_ann_sub.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + '/yr';
+
+            // Category 3
+            const c3_1_mth = parseFloat(document.getElementById('c3_1_mth_input').value) || 0;
+            const c3_2_mth = parseFloat(document.getElementById('c3_2_mth_input').value) || 0;
+            const c3_3_mth = parseFloat(document.getElementById('c3_3_mth_input').value) || 0;
+
+            const c3_1_ann = c3_1_mth * 12;
+            const c3_2_ann = c3_2_mth * 12;
+            const c3_3_ann = c3_3_mth * 12;
+
+            document.getElementById('c3_1_ann').innerText = '$' + c3_1_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('c3_2_ann').innerText = '$' + c3_2_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('c3_3_ann').innerText = '$' + c3_3_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+            const c3_mth_sub = c3_1_mth + c3_2_mth + c3_3_mth;
+            const c3_ann_sub = c3_1_ann + c3_2_ann + c3_3_ann;
+
+            document.getElementById('c3_mth_sub').innerText = '$' + c3_mth_sub.toFixed(2);
+            document.getElementById('c3_ann_sub').innerText = '$' + c3_ann_sub.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('subtotal-c3-hdr').innerText = '$' + c3_ann_sub.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + '/yr';
+
+            // Category 4
+            const c4_1_mth = parseFloat(document.getElementById('c4_1_mth_input').value) || 0;
+            const c4_2_mth = parseFloat(document.getElementById('c4_2_mth_input').value) || 0;
+            const c4_3_mth = parseFloat(document.getElementById('c4_3_mth_input').value) || 0;
+            const c4_4_mth = parseFloat(document.getElementById('c4_4_mth_input').value) || 0;
+            const c4_5_mth = parseFloat(document.getElementById('c4_5_mth_input').value) || 0;
+
+            const c4_1_ann = c4_1_mth * 12;
+            const c4_2_ann = c4_2_mth * 12;
+            const c4_3_ann = c4_3_mth * 12;
+            const c4_4_ann = c4_4_mth * 12;
+            const c4_5_ann = c4_5_mth * 12;
+
+            document.getElementById('c4_1_ann').innerText = '$' + c4_1_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('c4_2_ann').innerText = '$' + c4_2_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('c4_3_ann').innerText = '$' + c4_3_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('c4_4_ann').innerText = '$' + c4_4_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('c4_5_ann').innerText = '$' + c4_5_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+            const c4_mth_sub = c4_1_mth + c4_2_mth + c4_3_mth + c4_4_mth + c4_5_mth;
+            const c4_ann_sub = c4_1_ann + c4_2_ann + c4_3_ann + c4_4_ann + c4_5_ann;
+
+            document.getElementById('c4_mth_sub').innerText = '$' + c4_mth_sub.toFixed(2);
+            document.getElementById('c4_ann_sub').innerText = '$' + c4_ann_sub.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('subtotal-c4-hdr').innerText = '$' + c4_ann_sub.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + '/yr';
+
+            // Category 5
+            const c5_1_ex = parseFloat(document.getElementById('c5_1_ann_input').value) || 0;
+            const c5_2_ex = parseFloat(document.getElementById('c5_2_ann_input').value) || 0;
+            const c5_3_ex = parseFloat(document.getElementById('c5_3_ann_input').value) || 0;
+            const c5_4_ex = parseFloat(document.getElementById('c5_4_ann_input').value) || 0;
+
+            document.getElementById('c5_1_inc_gst').innerText = '$' + (c5_1_ex * 1.1).toFixed(2);
+            document.getElementById('c5_2_inc_gst').innerText = '$' + (c5_2_ex * 1.1).toFixed(2);
+            document.getElementById('c5_3_inc_gst').innerText = '$' + (c5_3_ex * 1.1).toFixed(2);
+            document.getElementById('c5_4_inc_gst').innerText = '$' + (c5_4_ex * 1.1).toFixed(2);
+
+            const c5_ann_sub = c5_1_ex + c5_2_ex + c5_3_ex + c5_4_ex;
+            const c5_mth_sub = c5_ann_sub / 12;
+            const c5_inc_sub = c5_ann_sub * 1.1;
+
+            document.getElementById('c5_ex_sub').innerText = '$' + c5_ann_sub.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('c5_inc_sub').innerText = '$' + c5_inc_sub.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('subtotal-c5-hdr').innerText = '$' + c5_ann_sub.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + '/yr';
+
+            // Category 6
+            const c6_1_ship = parseFloat(document.getElementById('c6_1_ship_input').value) || 0;
+            const c6_2_ship = parseFloat(document.getElementById('c6_2_ship_input').value) || 0;
+            const c6_3_ship = parseFloat(document.getElementById('c6_3_ship_input').value) || 0;
+
+            const c6_1_ann = c6_1_ship * 12;
+            const c6_2_ann = c6_2_ship * 12;
+            const c6_3_ann = c6_3_ship * 12;
+
+            document.getElementById('c6_1_ann').innerText = '$' + c6_1_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('c6_2_ann').innerText = '$' + c6_2_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('c6_3_ann').innerText = '$' + c6_3_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+            const c6_ship_sub = c6_1_ship + c6_2_ship + c6_3_ship;
+            const c6_ann_sub = c6_1_ann + c6_2_ann + c6_3_ann;
+            const c6_mth_sub = c6_ann_sub / 12;
+
+            document.getElementById('c6_ship_sub').innerText = '$' + c6_ship_sub.toFixed(2);
+            document.getElementById('c6_ann_sub').innerText = '$' + c6_ann_sub.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('subtotal-c6-hdr').innerText = '$' + c6_ann_sub.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + '/yr';
+
+            // GRAND TOTAL OPEX RECALCULATION
+            const totalAnnualOpEx = c1_ann_sub + c2_ann_sub + c3_ann_sub + c4_ann_sub + c5_ann_sub + c6_ann_sub;
+            const totalMonthlyOpEx = totalAnnualOpEx / 12;
+
+            currentAnnualOpExAUD = totalAnnualOpEx;
+            currentOpExPerContainerAUD = totalAnnualOpEx / ANNUAL_CONTAINERS;
+
+            // Update Summary Table Cards & Rows
+            document.getElementById('banner-opex-total').innerText = totalAnnualOpEx.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('kpi-monthly-opex').innerText = '$' + totalMonthlyOpEx.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' AUD';
+            document.getElementById('kpi-annual-opex').innerText = '$' + totalAnnualOpEx.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' AUD';
+
+            const personnelPct = totalAnnualOpEx > 0 ? ((c2_ann_sub / totalAnnualOpEx) * 100).toFixed(1) : '0.0';
+            document.getElementById('kpi-personnel-pct').innerText = personnelPct + '%';
+            document.getElementById('kpi-personnel-amt').innerText = '$' + c2_ann_sub.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' AUD (Salary + Super + WorkCover)';
+
+            // Executive Summary Table Updates
+            document.getElementById('sum-mth-c1').innerText = '$' + c1_mth_sub.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('sum-ann-c1').innerText = '$' + c1_ann_sub.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('sum-pct-c1').innerText = (totalAnnualOpEx > 0 ? ((c1_ann_sub / totalAnnualOpEx) * 100).toFixed(1) : '0.0') + '%';
+
+            document.getElementById('sum-mth-c2').innerText = '$' + c2_mth_sub.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('sum-ann-c2').innerText = '$' + c2_ann_sub.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('sum-pct-c2').innerText = (totalAnnualOpEx > 0 ? ((c2_ann_sub / totalAnnualOpEx) * 100).toFixed(1) : '0.0') + '%';
+
+            document.getElementById('sum-mth-c3').innerText = '$' + c3_mth_sub.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('sum-ann-c3').innerText = '$' + c3_ann_sub.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('sum-pct-c3').innerText = (totalAnnualOpEx > 0 ? ((c3_ann_sub / totalAnnualOpEx) * 100).toFixed(1) : '0.0') + '%';
+
+            document.getElementById('sum-mth-c4').innerText = '$' + c4_mth_sub.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('sum-ann-c4').innerText = '$' + c4_ann_sub.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('sum-pct-c4').innerText = (totalAnnualOpEx > 0 ? ((c4_ann_sub / totalAnnualOpEx) * 100).toFixed(1) : '0.0') + '%';
+
+            document.getElementById('sum-mth-c5').innerText = '$' + c5_mth_sub.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('sum-ann-c5').innerText = '$' + c5_ann_sub.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('sum-pct-c5').innerText = (totalAnnualOpEx > 0 ? ((c5_ann_sub / totalAnnualOpEx) * 100).toFixed(1) : '0.0') + '%';
+
+            document.getElementById('sum-mth-c6').innerText = '$' + c6_mth_sub.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('sum-ann-c6').innerText = '$' + c6_ann_sub.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('sum-pct-c6').innerText = (totalAnnualOpEx > 0 ? ((c6_ann_sub / totalAnnualOpEx) * 100).toFixed(1) : '0.0') + '%';
+
+            document.getElementById('sum-mth-total').innerText = '$' + totalMonthlyOpEx.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('sum-ann-total').innerText = '$' + totalAnnualOpEx.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+            // Trigger live recalculation of product landed costs & selling prices
+            renderTable();
+        }
+
+        function resetOpExBudget() {
+            Object.keys(defaultOpExValues).forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.value = defaultOpExValues[id];
+            });
+            updateOpExFromInputs();
+        }
+
         // --- MULTI-LANGUAGE I18N DICTIONARY ---
         let currentLang = 'en';
 
@@ -421,11 +1078,15 @@
                 modal_btn: "Unlock Dashboard",
                 header_sub: "Import & Distribution Landed Cost Intelligence",
                 btn_print: "Print A4 Quotation",
+                lbl_md: "Managing Director:",
                 card_contact_title: "Contact & Web Portal",
                 card_logistics_title: "Import / Logistics Terminal",
                 lbl_discharge_port: "Discharge Port:",
+                val_discharge_port: "Melbourne Swanson Dock / DP World",
                 lbl_standard_unit: "Standard Unit:",
+                val_standard_unit: "20ft FCL Container",
                 lbl_effective_date: "Effective Date:",
+                val_effective_date: "October 2026",
                 card1_title: "Customs Clearance Schedule",
                 tag_fixed_charges: "Fixed Charges",
                 lbl_customs_fee: "Customs Clearance Fee:",
@@ -435,6 +1096,7 @@
                 card2_title: "Freight Baseline (20ft FCL)",
                 tag_route_metrics: "Route Metrics",
                 lbl_route: "Origin - Destination:",
+                val_route: "Sihanoukville → Melb",
                 lbl_ocean_freight: "Baseline Ocean Freight:",
                 lbl_cartage: "VIC Local Cartage:",
                 lbl_fx_rate: "Benchmark FX Rate:",
@@ -455,16 +1117,101 @@
                 doc_empp: "EMPP (Proof Payment)",
                 doc_asic_abn: "ASIC Document (ABN)",
                 doc_asic_stmt: "ASIC Statement (Director Names)",
+                
+                // OpEx Section
+                opex_main_title: "Master Operational Expense Budget & Operating Model",
+                opex_main_subtitle: "Business Entity: Cambodia-to-Melbourne Import & Distribution Business | Location: Melbourne, VIC, Australia (AUD)",
+                lbl_total_opex_banner: "Total OpEx:",
+                lbl_year: "Year",
+                lbl_yr: "yr",
+                btn_reset_opex: "Reset Budget",
+                opex_sec1_title: "1. Executive Summary & Budget Overview",
+                opex_kpi1_lbl: "Monthly Operational Expenses",
+                opex_kpi1_sub: "Excl. GST | All 6 Categories",
+                opex_kpi2_lbl: "Annual Operational Expenses",
+                opex_kpi2_sub: "Excl. GST | Fixed + Salaries + Logistics",
+                opex_kpi3_lbl: "Primary Cost Driver",
+                opex_kpi3_val: "Personnel",
+                opex_kpi3_sub: "$220,950.00 AUD (Salary + Super + WorkCover)",
+                th_opex_cat: "Expense Category",
+                th_opex_mth: "Monthly Cost (ex GST)",
+                th_opex_ann: "Annual Cost (ex GST)",
+                th_opex_pct: "% of Total OpEx",
+                opex_cat1_name: "1. Stated Fixed Overheads (Office, Storage, Rental Car)",
+                opex_cat2_name: "2. Executive & Operational Personnel (Salaries, Super, WorkCover)",
+                opex_cat3_name: "3. Vehicle Running & Transportation Expenses (Fuel, Tolls, Maint.)",
+                opex_cat4_name: "4. IT, Communications & SaaS Stack (Telecoms, Web, Software)",
+                opex_cat5_name: "5. Business Insurance & Compliance (Liability, Transit, Audit)",
+                opex_cat6_name: "6. Estimated Logistics & Customs Administration (Clearance, PSC)",
+                opex_total_lbl: "TOTAL OPERATIONAL EXPENSES (OpEx)",
+                opex_sec2_title: "2. Detailed Expense Itemization (Editable AUD Prices)",
+                c1_hdr: "Category 1: Stated Fixed Overheads",
+                th_item: "Line Item",
+                th_wk: "Weekly AUD",
+                th_mth: "Monthly",
+                th_ann: "Annual",
+                c1_item1: "Office Rent",
+                c1_item2: "Storage Unit / Small Warehouse",
+                c1_item3: "Commercial Vehicle Rental",
+                lbl_subtotal_ex_gst: "Subtotal (excl. GST)",
+                c2_hdr: "Category 2: Personnel Overhead",
+                th_role: "Role / Position",
+                th_base: "Base Salary AUD",
+                th_super: "Super (11.5%)",
+                th_wc: "WorkCover",
+                c2_role1: "Managing Director",
+                c2_role2: "Operations Manager",
+                lbl_subtotal: "Subtotal",
+                c3_hdr: "Category 3: Vehicle Running Expenses",
+                th_desc: "Expense Description",
+                c3_item1: "Fuel (Unleaded / Diesel)",
+                c3_item2: "Transurban Tolls",
+                c3_item3: "Vehicle Maintenance",
+                c4_hdr: "Category 4: IT & SaaS Stack",
+                th_software: "Software / Service",
+                c4_item1: "Telecoms & Mobile Services",
+                c4_item2: "E-Commerce Platform",
+                c4_item3: "Email & Productivity",
+                c4_item4: "Accounting & ERP Integration",
+                c4_item5: "Inventory Management Software",
+                c5_hdr: "Category 5: Insurance & Compliance",
+                th_policy: "Service / Policy Type",
+                th_ex_gst: "Annual ex GST AUD",
+                th_inc_gst: "inc GST (10%)",
+                c5_item1: "Accounting & Tax Compliance Fee",
+                c5_item2: "Public & Products Liability",
+                c5_item3: "Marine Cargo / Transit Insurance",
+                c5_item4: "Management Liability & Cyber",
+                c6_hdr: "Category 6: Import Freight Clearance & Customs",
+                th_service: "Service Component",
+                th_per_shipment: "Per Shipment AUD",
+                th_ann_shipments: "Annual (12 Shipments)",
+                c6_item1: "Customs Brokerage Fees",
+                c6_item2: "Port Service Charges (PSC)",
+                c6_item3: "Cartage / Wharf Transport",
+                lbl_subtotal_ex_ocean: "Subtotal (excl. Ocean & Duty)",
+                opex_sec3_title: "3. Key Compliance & Financial Considerations",
+                opex_note1_title: "Customs Tariffs & FTAs:",
+                opex_note1_body: "Goods originating in Cambodia qualify for duty-free entry into Australia under AANZFTA or RCEP, provided a valid Certificate of Origin (COO) is supplied.",
+                opex_note2_title: "Import GST Deferred Scheme (DGST):",
+                opex_note2_body: "Import GST (10%) is calculated on Customs Value + Duty + Transport/Insurance. Registering for Deferred GST defers border payment to monthly BAS returns.",
+                opex_note3_title: "Superannuation Compliance:",
+                opex_note3_body: "Statutory Employer Superannuation Guarantee (11.5%) must be remitted quarterly to compliant Australian super funds before statutory due dates.",
+
+                // Main Table Headers & Labels
                 tbl_title: "Landed Cost Quotation & Benchmark Schedule",
                 tbl_subtitle: "Rearranged per Two Parrots Quotation (25 Active Products + 5 Upcoming Nov 2026 Launch)",
                 lbl_active: "Active",
                 lbl_upcoming: "Upcoming",
                 th_prod_desc: "Product Description",
                 th_fob_price: "CTN Price Before Delivery",
-                th_total_cost: "Total Cost of Each Pcs",
-                th_itemized_note: "Itemized: Landed Cost | FOB | Ocean Freight | Port & Customs | Local Transp | Selling Price @ Margin",
+                th_fob_sub: "(Adjustable CTN USD → Auto PCS USD/AUD)",
+                th_total_cost: "Total Landed Cost & Selling Prices",
+                th_itemized_note: "Structure: Total Landed Cost (Inc. OpEx) → Itemized CTN Breakdown → Selling Prices",
                 th_asian_bench: "Ethnic & Asian Market Comparisons",
+                th_asian_sub: "(Asian, Indian, Nepalese, Sri Lankan)",
                 th_aus_bench: "Australian Supermarket Prices",
+                th_aus_sub: "(Coles, Woolworths, ALDI, Costco, IGA)",
                 tb_title: "Live Landed Cost Recalculation Engine",
                 tb_desc: "Adjust freight variables & margin percentage to compute live costings",
                 lbl_fx: "FX Rate (AUD/USD)",
@@ -472,13 +1219,19 @@
                 lbl_cartage_tb: "VIC Cartage (AUD)",
                 lbl_margin: "Target Margin (%)",
                 btn_recalc: "Recalculate",
-                // Table Cell Labels
-                lbl_landed_cost_aud: "Landed Cost AUD:",
-                lbl_fob_aud: "FOB AUD:",
-                lbl_ocean_aud: "Ocean Freight AUD:",
-                lbl_customs_aud: "Customs & Port AUD:",
-                lbl_local_aud: "Local Transport AUD:",
-                lbl_selling_price: "Selling Price @"
+                
+                // Detailed Table Row Itemizations
+                lbl_landed_ctn_aud: "Landed Cost AUD (CTN):",
+                lbl_fob_ctn_aud: "FOB AUD (CTN):",
+                lbl_ocean_ctn_aud: "Ocean Freight AUD (CTN):",
+                lbl_customs_ctn_aud: "Customs & Port AUD (CTN):",
+                lbl_local_ctn_aud: "Local Transport AUD (CTN):",
+                lbl_opex_ctn_aud: "OpEx Overhead AUD (CTN):",
+                lbl_sell_ctn: "Selling Price CTN @",
+                lbl_sell_pcs: "Selling Price Pcs @",
+                lbl_pcs_usd: "Pcs USD:",
+                lbl_pcs_aud: "Pcs AUD:",
+                lbl_eq: "Eq"
             },
             km: {
                 modal_title: "ការចូលប្រើប្រាស់ត្រូវបានកំណត់",
@@ -488,11 +1241,15 @@
                 modal_btn: "បើកផ្ទាំងគ្រប់គ្រង",
                 header_sub: "ព័ត៌មានវិភាគថ្លៃដើមនាំចូល និងចែករំលែក",
                 btn_print: "បោះពុម្ពសម្រង់តម្លៃ A4",
+                lbl_md: "នាយកប្រតិបត្តិ:",
                 card_contact_title: "ទំនាក់ទំនង និងវេបសាយ",
                 card_logistics_title: "ស្ថានីយនាំចូល / ឡូជីស្ទិក",
                 lbl_discharge_port: "កំពង់ផែនាំចុះ:",
+                val_discharge_port: "កំពង់ផែម៉ែលប៊ន Swanson Dock / DP World",
                 lbl_standard_unit: "ទំហំស្តង់ដារ:",
+                val_standard_unit: "កុងតឺន័រ 20ft FCL",
                 lbl_effective_date: "កាលបរិច្ឆេទអនុវត្ត:",
+                val_effective_date: "តុលា ២០២៦",
                 card1_title: "កាលវិភាគបង់ពន្ធគយ",
                 tag_fixed_charges: "កម្រៃថេរ",
                 lbl_customs_fee: "កម្រៃរត់ការគយ:",
@@ -502,6 +1259,7 @@
                 card2_title: "មូលដ្ឋានតម្លៃដឹកជញ្ជូន (២០ហ្វ៊ីត)",
                 tag_route_metrics: "សូចនាករផ្លូវដឹកជញ្ជូន",
                 lbl_route: "ប្រភពដើម - គោលដៅ:",
+                val_route: "ក្រុងព្រះសីហនុ → ម៉ែលប៊ន",
                 lbl_ocean_freight: "ថ្លៃដឹកតាមផ្លូវសមុទ្រដើម:",
                 lbl_cartage: "ថ្លៃដឹកក្នុងស្រុក VIC:",
                 lbl_fx_rate: "អត្រាប្តូរប្រាក់គោល:",
@@ -522,16 +1280,101 @@
                 doc_empp: "ភស្តុតាងនៃការទូទាត់ប្រាក់ (EMPP)",
                 doc_asic_abn: "ឯកសារ ASIC សម្រាប់ ABN",
                 doc_asic_stmt: "របាយការណ៍ ASIC (ឈ្មោះនាយក)",
+                
+                // OpEx Section Khmer
+                opex_main_title: "ថវិកាចំណាយប្រតិបត្តិការសរុប និងម៉ូឌែលប្រតិបត្តិការ",
+                opex_main_subtitle: "អង្គភាពអាជីវកម្ម៖ អាជីវកម្មនាំចូល និងចែករំលែកពីកម្ពុជាទៅម៉ែលប៊ន | ទីតាំង៖ ម៉ែលប៊ន វិចតូរីយ៉ា អូស្ត្រាលី (AUD)",
+                lbl_total_opex_banner: "ចំណាយប្រតិបត្តិការសរុប៖",
+                lbl_year: "ឆ្នាំ",
+                lbl_yr: "ឆ្នាំ",
+                btn_reset_opex: "កំណត់ឡើងវិញ",
+                opex_sec1_title: "១. សង្ខេបប្រតិបត្តិ និងទិដ្ឋភាពទូទៅនៃថវិកា",
+                opex_kpi1_lbl: "ចំណាយប្រតិបត្តិការប្រចាំខែ",
+                opex_kpi1_sub: "មិនរាប់បញ្ចូល GST | ទាំង ៦ ប្រភេទ",
+                opex_kpi2_lbl: "ចំណាយប្រតិបត្តិការប្រចាំឆ្នាំ",
+                opex_kpi2_sub: "មិនរាប់បញ្ចូល GST | ថេរ + ប្រាក់ខែ + ឡូជីស្ទិក",
+                opex_kpi3_lbl: "ចំណាយចម្បងជាងគេ",
+                opex_kpi3_val: "បុគ្គលិក",
+                opex_kpi3_sub: "$២២០,៩៥០.០០ AUD (ប្រាក់ខែ + ប្រាក់សោធន + ធានារ៉ាប់រង)",
+                th_opex_cat: "ប្រភេទចំណាយ",
+                th_opex_mth: "ចំណាយប្រចាំខែ (គិតត្រឹម GST)",
+                th_opex_ann: "ចំណាយប្រចាំឆ្នាំ (គិតត្រឹម GST)",
+                th_opex_pct: "ភាគរយចំណាយសរុប",
+                opex_cat1_name: "១. ចំណាយថេរទូទៅ (ការិយាល័យ ឃ្លាំង រថយន្តជួល)",
+                opex_cat2_name: "២. បុគ្គលិកប្រតិបត្តិ និងបច្ចេកទេស (ប្រាក់ខែ សោធន ធានារ៉ាប់រង)",
+                opex_cat3_name: "៣. ចំណាយរថយន្ត និងដឹកជញ្ជូន (ប្រេង សាំង ថ្លៃផ្លូវ)",
+                opex_cat4_name: "៤. ប្រព័ន្ធ IT ប្រព័ន្ធទំនាក់ទំនង និង SaaS (ទូរស័ព្ទ វេបសាយ)",
+                opex_cat5_name: "៥. ធានារ៉ាប់រងអាជីវកម្ម និងអនុលោមភាព (ការទទួលខុសត្រូវ ដឹកជញ្ជូន)",
+                opex_cat6_name: "៦. ចំណាយឡូជីស្ទិក និងរត់ការគយ (ការរត់ការគយ ថ្លៃកំពង់ផែ)",
+                opex_total_lbl: "ចំណាយប្រតិបត្តិការសរុប (OpEx)",
+                opex_sec2_title: "២. បញ្ជីលម្អិតនៃចំណាយ (អាចកែសម្រួលតម្លៃ AUD បាន)",
+                c1_hdr: "ប្រភេទ ១៖ ចំណាយថេរទូទៅ",
+                th_item: "កាតព្វកិច្ច/មុខទំនិញ",
+                th_wk: "ប្រចាំសប្តាហ៍ AUD",
+                th_mth: "ប្រចាំខែ",
+                th_ann: "ប្រចាំឆ្នាំ",
+                c1_item1: "ថ្លៃជួលការិយាល័យ",
+                c1_item2: "ថ្លៃជួលឃ្លាំងស្តុកទំនិញ",
+                c1_item3: "ថ្លៃជួលរថយន្តពាណិជ្ជកម្ម",
+                lbl_subtotal_ex_gst: "សរុបរង (មិនរាប់បញ្ចូល GST)",
+                c2_hdr: "ប្រភេទ ២៖ ចំណាយបុគ្គលិក",
+                th_role: "តួនាទី / តំណែង",
+                th_base: "ប្រាក់ខែសរុប AUD",
+                th_super: "ប្រាក់សោធន (11.5%)",
+                th_wc: "ធានារ៉ាប់រងបុគ្គលិក",
+                c2_role1: "នាយកប្រតិបត្តិ",
+                c2_role2: "អ្នកគ្រប់គ្រងប្រតិបត្តិការ",
+                lbl_subtotal: "សរុបរង",
+                c3_hdr: "ប្រភេទ ៣៖ ចំណាយប្រតិបត្តិការរថយន្ត",
+                th_desc: "ការបរិយាយចំណាយ",
+                c3_item1: "ថ្លៃប្រេងសាំង",
+                c3_item2: "ថ្លៃបង់ផ្លូវ Transurban",
+                c3_item3: "ថ្លៃថែទាំរថយន្ត",
+                c4_hdr: "ប្រភេទ ៤៖ ប្រព័ន្ធបច្ចេកវិទ្យា IT & SaaS",
+                th_software: "កម្មវិធី / សេវាកម្ម",
+                c4_item1: "សេវាទូរស័ព្ទ និងអ៊ីនធឺណិត",
+                c4_item2: "ប្រព័ន្ធលក់អនឡាញ",
+                c4_item3: "អ៊ីមែល និងប្រព័ន្ធការងារ",
+                c4_item4: "ប្រព័ន្ធគណនេយ្យ និង ERP",
+                c4_item5: "កម្មវិធីគ្រប់គ្រងស្តុកទំនិញ",
+                c5_hdr: "ប្រភេទ ៥៖ ធានារ៉ាប់រង និងអនុលោមភាព",
+                th_policy: "ប្រភេទប័ណ្ណសន្យា/សេវាកម្ម",
+                th_ex_gst: "ប្រចាំឆ្នាំ ex GST AUD",
+                th_inc_gst: "រាប់បញ្ចូល GST (10%)",
+                c5_item1: "ថ្លៃសេវាគណនេយ្យ និងពន្ធដារ",
+                c5_item2: "ធានារ៉ាប់រងការទទួលខុសត្រូវសាធារណៈ",
+                c5_item3: "ធានារ៉ាប់រងដឹកជញ្ជូនតាមសមុទ្រ",
+                c5_item4: "ធានារ៉ាប់រងការគ្រប់គ្រង និងសុវត្ថិភាពស៊ីប៊ែរ",
+                c6_hdr: "ប្រភេទ ៦៖ ថ្លៃដឹកជញ្ជូន និងរត់ការគយ",
+                th_service: "សមាសភាគសេវាកម្ម",
+                th_per_shipment: "ក្នុងមួយជើង AUD",
+                th_ann_shipments: "ប្រចាំឆ្នាំ (១២ ជើង)",
+                c6_item1: "ថ្លៃជើងសាគយ",
+                c6_item2: "ថ្លៃសេវាកំពង់ផែ (PSC)",
+                c6_item3: "ថ្លៃដឹកជញ្ជូនពីកំពង់ផែទៅឃ្លាំង",
+                lbl_subtotal_ex_ocean: "សរុបរង (មិនរាប់ថ្លៃដឹកសមុទ្រ និងពន្ធ)",
+                opex_sec3_title: "៣. អនុលោមភាពសំខាន់ៗ និងការពិចារណាផ្នែកហិរញ្ញវត្ថុ",
+                opex_note1_title: "ពន្ធគយ និងកិច្ចព្រមព្រៀងពាណិជ្ជកម្មសេរី៖",
+                opex_note1_body: "ទំនិញដែលមានប្រភពដើមពីប្រទេសកម្ពុជាទទួលបានការលើកលែងពន្ធនាំចូលមកអូស្ត្រាលីក្រោម AANZFTA ឬ RCEP ដោយគ្រាន់តែមានវិញ្ញាបនបត្រប្រភពដើម (COO)។",
+                opex_note2_title: "ប្រព័ន្ធពន្យារការបង់ពន្ធ GST នាំចូល (DGST)៖",
+                opex_note2_body: "ពន្ធ GST នាំចូល 10% ត្រូវគណនាលើតម្លៃគយ + ពន្ធ + ការដឹកជញ្ជូន។ ការចុះឈ្មោះប្រព័ន្ធ DGST អនុញ្ញាតឱ្យពន្យារការបង់ពន្ធរហូតដល់របាយការណ៍ BAS ប្រចាំខែ។",
+                opex_note3_title: "អនុលោមភាពប្រាក់សោធននិវត្តន៍៖",
+                opex_note3_body: "ភាគទានប្រាក់សោធននិវត្តន៍កាតព្វកិច្ចរបស់និយោជក (11.5%) ត្រូវតែបង់ជូនមូលនិធិសោធនអូស្ត្រាលីរៀងរាល់ត្រីមាស។",
+
+                // Main Table Headers Khmer
                 tbl_title: "តារាងសម្រង់តម្លៃដើមនាំចូល និងការប្រៀបធៀប",
                 tbl_subtitle: "រៀបចំឡើងវិញតាមសម្រង់តម្លៃ Two Parrots (២៥ ផលិតផលសកម្ម + ៥ ផលិតផលថ្មី)",
                 lbl_active: "សកម្ម",
                 lbl_upcoming: "ជិតចេញលក់",
                 th_prod_desc: "ការបរិយាយផលិតផល",
                 th_fob_price: "តម្លៃមួយកេសមុនពេលដឹក",
-                th_total_cost: "ថ្លៃដើមសរុបក្នុងមួយដប/កញ្ចប់",
-                th_itemized_note: "លម្អិត៖ ថ្លៃដើមនាំចូល | FOB | ដឹកតាមសមុទ្រ | ពន្ធគយ និងកំពង់ផែ | ដឹកក្នុងស្រុក | តម្លៃលក់តាមចំណេញ",
+                th_fob_sub: "(អាចកែសម្រួលតម្លៃកេស USD → គណនាដប/កញ្ចប់ស្វ័យប្រវត្តិ)",
+                th_total_cost: "ថ្លៃដើមនាំចូលសរុប និងតម្លៃលក់",
+                th_itemized_note: "រចនាសម្ព័ន្ធ៖ ថ្លៃដើមនាំចូលកេស → លម្អិតថ្លៃដើមកេស → តម្លៃលក់ (កេស / ដប)",
                 th_asian_bench: "ការប្រៀបធៀបទីផ្សារអាស៊ី និងអាស៊ីខាងត្បូង",
+                th_asian_sub: "(អាស៊ី ឥណ្ឌា នេប៉ាល់ ស្រីលង្កា)",
                 th_aus_bench: "តម្លៃផ្សារទំនើបអូស្ត្រាលី",
+                th_aus_sub: "(Coles, Woolworths, ALDI, Costco, IGA)",
                 tb_title: "ប្រព័ន្ធគណនាថ្លៃដើមនាំចូលផ្ទាល់",
                 tb_desc: "កែប្រែប្រៀបប្រែប្រួលថ្លៃដឹកជញ្ជូន និងភាគរយចំណេញដើម្បីគណនាភ្លាមៗ",
                 lbl_fx: "អត្រាប្តូរប្រាក់ (AUD/USD)",
@@ -539,12 +1382,17 @@
                 lbl_cartage_tb: "ថ្លៃដឹក VIC (AUD)",
                 lbl_margin: "គោលដៅភាគរយចំណេញ (%)",
                 btn_recalc: "គណនាឡើងវិញ",
-                lbl_landed_cost_aud: "ថ្លៃដើមនាំចូល AUD:",
-                lbl_fob_aud: "FOB AUD:",
-                lbl_ocean_aud: "ថ្លៃដឹកសមុទ្រ AUD:",
-                lbl_customs_aud: "ថ្លៃគយ និងកំពង់ផែ AUD:",
-                lbl_local_aud: "ថ្លៃដឹកក្នុងស្រុក AUD:",
-                lbl_selling_price: "តម្លៃលក់ប្រកាស @"
+                lbl_landed_ctn_aud: "ថ្លៃដើមនាំចូល AUD (កេស):",
+                lbl_fob_ctn_aud: "FOB AUD (កេស):",
+                lbl_ocean_ctn_aud: "ថ្លៃដឹកសមុទ្រ AUD (កេស):",
+                lbl_customs_ctn_aud: "ថ្លៃគយ និងកំពង់ផែ AUD (កេស):",
+                lbl_local_ctn_aud: "ថ្លៃដឹកក្នុងស្រុក AUD (កេស):",
+                lbl_opex_ctn_aud: "ចំណាយប្រតិបត្តិការ AUD (កេស):",
+                lbl_sell_ctn: "តម្លៃលក់មួយកេស @",
+                lbl_sell_pcs: "តម្លៃលក់មួយដប/កញ្ចប់ @",
+                lbl_pcs_usd: "មួយដប/កញ្ចប់ USD:",
+                lbl_pcs_aud: "មួយដប/កញ្ចប់ AUD:",
+                lbl_eq: "តម្លៃស្មើ"
             },
             fr: {
                 modal_title: "Accès Restreint",
@@ -554,11 +1402,15 @@
                 modal_btn: "Déverrouiller le tableau de bord",
                 header_sub: "Intelligence du coût de revient à destination & distribution",
                 btn_print: "Imprimer devis A4",
+                lbl_md: "Directeur Général:",
                 card_contact_title: "Contact & Portail Web",
                 card_logistics_title: "Terminal d'importation / Logistique",
                 lbl_discharge_port: "Port de déchargement:",
+                val_discharge_port: "Melbourne Swanson Dock / DP World",
                 lbl_standard_unit: "Unité standard:",
+                val_standard_unit: "Conteneur 20ft FCL",
                 lbl_effective_date: "Date d'effet:",
+                val_effective_date: "Octobre 2026",
                 card1_title: "Barème de dédouanement",
                 tag_fixed_charges: "Frais Fixes",
                 lbl_customs_fee: "Frais de dédouanement:",
@@ -568,6 +1420,7 @@
                 card2_title: "Base de fret (Conteneur 20 pieds)",
                 tag_route_metrics: "Métriques d'itinéraire",
                 lbl_route: "Origine - Destination:",
+                val_route: "Sihanoukville → Melb",
                 lbl_ocean_freight: "Fret maritime de base:",
                 lbl_cartage: "Camionnage local VIC:",
                 lbl_fx_rate: "Taux de change de référence:",
@@ -588,16 +1441,101 @@
                 doc_empp: "EMPP (Preuve de paiement)",
                 doc_asic_abn: "Document ASIC (ABN)",
                 doc_asic_stmt: "Déclaration ASIC (Noms des directeurs)",
+                
+                // OpEx Section French
+                opex_main_title: "Budget d'Exploitation Master & Modèle Opérationnel",
+                opex_main_subtitle: "Entité commerciale: Import & Distribution Cambodge-Melbourne | Lieu: Melbourne, VIC, Australie (AUD)",
+                lbl_total_opex_banner: "OpEx Total:",
+                lbl_year: "Année",
+                lbl_yr: "an",
+                btn_reset_opex: "Réinitialiser",
+                opex_sec1_title: "1. Résumé Exécutif & Aperçu du Budget",
+                opex_kpi1_lbl: "Dépenses d'Exploitation Mensuelles",
+                opex_kpi1_sub: "Hors GST | Les 6 catégories",
+                opex_kpi2_lbl: "Dépenses d'Exploitation Annuelles",
+                opex_kpi2_sub: "Hors GST | Fixes + Salaires + Logistique",
+                opex_kpi3_lbl: "Principal Facteur de Coût",
+                opex_kpi3_val: "Personnel",
+                opex_kpi3_sub: "220 950,00 $ AUD (Salaire + Retraite + Assurance)",
+                th_opex_cat: "Catégorie de Dépenses",
+                th_opex_mth: "Coût Mensuel (hors GST)",
+                th_opex_ann: "Coût Annuel (hors GST)",
+                th_opex_pct: "% de l'OpEx Total",
+                opex_cat1_name: "1. Frais Fixes Établis (Bureau, Stockage, Véhicule de location)",
+                opex_cat2_name: "2. Personnel Exécutif et Opérationnel (Salaires, Retraite, WorkCover)",
+                opex_cat3_name: "3. Frais de Véhicule et de Transport (Carburant, Péages, Entretien)",
+                opex_cat4_name: "4. IT, Communications et SaaS (Télécoms, Web, Logiciels)",
+                opex_cat5_name: "5. Assurance Entreprise et Conformité (Responsabilité, Transit, Audit)",
+                opex_cat6_name: "6. Administration Logistique et Douanière (Dédouanement, PSC)",
+                opex_total_lbl: "TOTAL DES DÉPENSES D'EXPLOITATION (OpEx)",
+                opex_sec2_title: "2. Dépenses Détaillées (Prix AUD modifiables)",
+                c1_hdr: "Catégorie 1: Frais Fixes Établis",
+                th_item: "Poste de Dépense",
+                th_wk: "Hebdomadaire AUD",
+                th_mth: "Mensuel",
+                th_ann: "Annuel",
+                c1_item1: "Loyer du bureau",
+                c1_item2: "Unité de stockage / Petit entrepôt",
+                c1_item3: "Location de véhicule commercial",
+                lbl_subtotal_ex_gst: "Sous-total (hors GST)",
+                c2_hdr: "Catégorie 2: Frais de Personnel",
+                th_role: "Rôle / Poste",
+                th_base: "Salaire de base AUD",
+                th_super: "Retraite (11.5%)",
+                th_wc: "WorkCover",
+                c2_role1: "Directeur Général",
+                c2_role2: "Responsable des Opérations",
+                lbl_subtotal: "Sous-total",
+                c3_hdr: "Catégorie 3: Frais de Véhicule",
+                th_desc: "Description de la Dépense",
+                c3_item1: "Carburant",
+                c3_item2: "Péages Transurban",
+                c3_item3: "Entretien du véhicule",
+                c4_hdr: "Catégorie 4: Suite IT & SaaS",
+                th_software: "Logiciel / Service",
+                c4_item1: "Services Télécoms & Mobiles",
+                c4_item2: "Plateforme E-Commerce",
+                c4_item3: "E-mail & Productivité",
+                c4_item4: "Comptabilité & Intégration ERP",
+                c4_item5: "Logiciel de gestion des stocks",
+                c5_hdr: "Catégorie 5: Assurance & Conformité",
+                th_policy: "Type de Police / Service",
+                th_ex_gst: "Annuel hors GST AUD",
+                th_inc_gst: "avec GST (10%)",
+                c5_item1: "Frais de conformité comptable et fiscale",
+                c5_item2: "Responsabilité civile et produits",
+                c5_item3: "Assurance fret maritime et transit",
+                c5_item4: "Responsabilité des dirigeants et cyber-assurance",
+                c6_hdr: "Catégorie 6: Dédouanement et Transit",
+                th_service: "Composante du service",
+                th_per_shipment: "Par expédition AUD",
+                th_ann_shipments: "Annuel (12 expéditions)",
+                c6_item1: "Frais de courtage en douane",
+                c6_item2: "Frais de manutention portuaire (PSC)",
+                c6_item3: "Camionnage / Transport du quai au stockage",
+                lbl_subtotal_ex_ocean: "Sous-total (hors fret maritime et droits)",
+                opex_sec3_title: "3. Considérations Financières et de Conformité",
+                opex_note1_title: "Tarifs Douaniers & ALE:",
+                opex_note1_body: "Les marchandises du Cambodge sont exemptées de droits en Australie sous AANZFTA ou RCEP avec un certificat d'origine (COO) valide.",
+                opex_note2_title: "Régime de GST d'Importation Différée (DGST):",
+                opex_note2_body: "La GST d'importation (10%) est calculée sur Valeur en douane + Droits + Transport. L'inscription au DGST reporte le paiement à la déclaration BAS mensuelle.",
+                opex_note3_title: "Conformité de la Retraite (Superannuation):",
+                opex_note3_body: "La contribution légale de l'employeur à la retraite (11,5%) doit être versée chaque trimestre à des fonds de retraite australiens conformes.",
+
+                // Main Table Headers French
                 tbl_title: "Devis des coûts rendus & Tableau comparatif",
                 tbl_subtitle: "Réorganisé selon le devis Two Parrots (25 produits actifs + 5 nouveaux nov. 2026)",
                 lbl_active: "Actifs",
                 lbl_upcoming: "À venir",
                 th_prod_desc: "Description du produit",
                 th_fob_price: "Prix par Carton avant livraison",
-                th_total_cost: "Coût total de chaque pièce",
-                th_itemized_note: "Détaillé: Coût rendu | FOB | Fret maritime | Port & Douane | Transp. local | Prix de vente @ Marge",
+                th_fob_sub: "(Ajustable CTN USD → Auto PCS USD/AUD)",
+                th_total_cost: "Coût rendu total & Prix de vente",
+                th_itemized_note: "Structure: Coût rendu Carton → Détail Coûts Carton → Prix de vente (Carton / Pièce)",
                 th_asian_bench: "Comparaisons du marché asiatique & ethnique",
+                th_asian_sub: "(Asiatique, Indien, Népalais, Sri Lankais)",
                 th_aus_bench: "Prix des supermarchés australiens",
+                th_aus_sub: "(Coles, Woolworths, ALDI, Costco, IGA)",
                 tb_title: "Calculateur de coût rendu en direct",
                 tb_desc: "Ajustez les variables de fret et le pourcentage de marge pour calculer les coûts en direct",
                 lbl_fx: "Taux de change (AUD/USD)",
@@ -605,12 +1543,17 @@
                 lbl_cartage_tb: "Camionnage VIC (AUD)",
                 lbl_margin: "Marge cible (%)",
                 btn_recalc: "Recalculer",
-                lbl_landed_cost_aud: "Coût rendu AUD:",
-                lbl_fob_aud: "FOB AUD:",
-                lbl_ocean_aud: "Fret maritime AUD:",
-                lbl_customs_aud: "Douane & Port AUD:",
-                lbl_local_aud: "Transport local AUD:",
-                lbl_selling_price: "Prix de vente @"
+                lbl_landed_ctn_aud: "Coût rendu AUD (Carton):",
+                lbl_fob_ctn_aud: "FOB AUD (Carton):",
+                lbl_ocean_ctn_aud: "Fret maritime AUD (Carton):",
+                lbl_customs_ctn_aud: "Douane & Port AUD (Carton):",
+                lbl_local_ctn_aud: "Transport local AUD (Carton):",
+                lbl_opex_ctn_aud: "Coûts OpEx AUD (Carton):",
+                lbl_sell_ctn: "Prix de vente Carton @",
+                lbl_sell_pcs: "Prix de vente Pièce @",
+                lbl_pcs_usd: "Pièce USD:",
+                lbl_pcs_aud: "Pièce AUD:",
+                lbl_eq: "Éq"
             },
             zh: {
                 modal_title: "受限访问",
@@ -620,11 +1563,15 @@
                 modal_btn: "解锁控制面板",
                 header_sub: "进口与分销到岸成本情报",
                 btn_print: "打印 A4 报价单",
+                lbl_md: "总经理:",
                 card_contact_title: "联系方式与网站",
                 card_logistics_title: "进口 / 物流枢纽",
                 lbl_discharge_port: "卸货港:",
+                val_discharge_port: "墨尔本 Swanson 码头 / DP World",
                 lbl_standard_unit: "标准集装箱:",
+                val_standard_unit: "20尺整柜集装箱 (FCL)",
                 lbl_effective_date: "生效日期:",
+                val_effective_date: "2026年10月",
                 card1_title: "清关费用明细表",
                 tag_fixed_charges: "固定费用",
                 lbl_customs_fee: "报关清关费:",
@@ -634,6 +1581,7 @@
                 card2_title: "集装箱运费基准 (20尺)",
                 tag_route_metrics: "航线指标",
                 lbl_route: "始发地 - 目的地:",
+                val_route: "西哈努克港 → 墨尔本",
                 lbl_ocean_freight: "基线海运费:",
                 lbl_cartage: "VIC 本地陆运费:",
                 lbl_fx_rate: "基准汇率:",
@@ -654,16 +1602,101 @@
                 doc_empp: "付款凭证 (EMPP)",
                 doc_asic_abn: "ASIC 公司注册文件 (ABN)",
                 doc_asic_stmt: "ASIC 董事名单声明",
+                
+                // OpEx Section Chinese
+                opex_main_title: "总运营费用预算与运营模型",
+                opex_main_subtitle: "业务主体：柬埔寨至墨尔本进口与分销业务 | 业务地点：澳大利亚墨尔本 (AUD)",
+                lbl_total_opex_banner: "总运营支出 (OpEx):",
+                lbl_year: "年",
+                lbl_yr: "年",
+                btn_reset_opex: "重置预算",
+                opex_sec1_title: "1. 执行摘要与预算总览",
+                opex_kpi1_lbl: "每月运营支出",
+                opex_kpi1_sub: "不含 GST | 包含所有 6 个类别",
+                opex_kpi2_lbl: "每年运营支出",
+                opex_kpi2_sub: "不含 GST | 固定成本 + 薪酬 + 物流",
+                opex_kpi3_lbl: "最主要成本驱动因素",
+                opex_kpi3_val: "人员薪酬",
+                opex_kpi3_sub: "$220,950.00 AUD (基本工资 + 养老金 + 工伤险)",
+                th_opex_cat: "费用类别",
+                th_opex_mth: "每月费用 (不含 GST)",
+                th_opex_ann: "每年费用 (不含 GST)",
+                th_opex_pct: "占总支出比例",
+                opex_cat1_name: "1. 规定固定开支 (办公室、仓库、租车)",
+                opex_cat2_name: "2. 管理与运营人员 (薪酬、养老金、工伤险)",
+                opex_cat3_name: "3. 车辆运营与运输费用 (燃油、路桥费、维护)",
+                opex_cat4_name: "4. IT、通讯与 SaaS 软件服务 (网络、软件)",
+                opex_cat5_name: "5. 商业保险与合规费用 (责任险、货运险)",
+                opex_cat6_name: "6. 预估清关与物流管理 (报关费、港口费)",
+                opex_total_lbl: "总运营支出费用 (OpEx)",
+                opex_sec2_title: "2. 详细费用明细表 (可实时修改 AUD 价格)",
+                c1_hdr: "类别 1: 规定固定开支",
+                th_item: "费用项目",
+                th_wk: "每周 AUD",
+                th_mth: "每月",
+                th_ann: "每年",
+                c1_item1: "办公室租金",
+                c1_item2: "迷你仓库/小型仓库租金",
+                c1_item3: "商用车租赁费",
+                lbl_subtotal_ex_gst: "小计 (不含 GST)",
+                c2_hdr: "类别 2: 人员薪酬开支",
+                th_role: "职位 / 岗位",
+                th_base: "基本年薪 AUD",
+                th_super: "养老金 (11.5%)",
+                th_wc: "工伤保险",
+                c2_role1: "总经理",
+                c2_role2: "运营经理",
+                lbl_subtotal: "小计",
+                c3_hdr: "类别 3: 车辆运营费用",
+                th_desc: "费用描述",
+                c3_item1: "燃油费 (无铅汽油/柴油)",
+                c3_item2: "Transurban 高速路桥费",
+                c3_item3: "车辆日常维护费",
+                c4_hdr: "类别 4: IT 与 SaaS 软件服务",
+                th_software: "软件 / 服务",
+                c4_item1: "通讯与移动服务",
+                c4_item2: "电商平台",
+                c4_item3: "企业邮箱与办公软件",
+                c4_item4: "财务与 ERP 软件",
+                c4_item5: "库存管理软件",
+                c5_hdr: "类别 5: 保险与合规费用",
+                th_policy: "服务 / 保单类型",
+                th_ex_gst: "每年不含 GST AUD",
+                th_inc_gst: "含 GST (10%)",
+                c5_item1: "会计与税务合规服务费",
+                c5_item2: "公众与产品责任险",
+                c5_item3: "海运货物与运输险",
+                c5_item4: "高管责任险与网络安全险",
+                c6_hdr: "类别 6: 进口货运清关与海关管理",
+                th_service: "服务组成部分",
+                th_per_shipment: "单次运费 AUD",
+                th_ann_shipments: "每年费用 (12次进口)",
+                c6_item1: "报关行服务费",
+                c6_item2: "港口服务费 (PSC)",
+                c6_item3: "码头至仓库短驳拖车费",
+                lbl_subtotal_ex_ocean: "小计 (不含海运费与关税)",
+                opex_sec3_title: "3. 关键合规与财务注意事项",
+                opex_note1_title: "海关关税与自贸协定:",
+                opex_note1_body: "原产于柬埔寨的货物在提供有效原产地证书 (COO) 的情况下，可通过 AANZFTA 或 RCEP 享受零关税进入澳大利亚。",
+                opex_note2_title: "进口 GST 延期缴纳计划 (DGST):",
+                opex_note2_body: "进口 GST (10%) 按海关价值 + 关税 + 运费/保险计算。注册延期 GST 计划可将清关时的支付延期至每月 BAS 申报时缴纳。",
+                opex_note3_title: "雇主养老金合规要求:",
+                opex_note3_body: "法定雇主养老金 (11.5%) 必须在法定截止日期前按季度缴纳至符合条件的澳大利亚养老金基金中。",
+
+                // Main Table Headers Chinese
                 tbl_title: "到岸成本报价与市场标杆对照表",
                 tbl_subtitle: "根据 Two Parrots 报价单重新排列（25 个在售产品 + 5 个 2026 年 11 月新品）",
                 lbl_active: "在售",
                 lbl_upcoming: "即将上市",
                 th_prod_desc: "产品描述",
                 th_fob_price: "每箱发货前单价 (CTN)",
-                th_total_cost: "每件产品总成本",
-                th_itemized_note: "明细: 到岸成本 | FOB | 海运费 | Port & Customs | Local Transp | Selling Price @ Margin",
+                th_fob_sub: "(可调节箱价 USD → 自动计算单件 USD/AUD)",
+                th_total_cost: "总到岸成本及建议售价",
+                th_itemized_note: "结构: 每箱到岸价 (含运营成本) → 整箱拆解成本 (CTN) → 建议售价 (整箱 / 单件)",
                 th_asian_bench: "族群及亚洲超市标杆对比",
+                th_asian_sub: "(东南亚, 印度, 尼泊尔, 斯里兰卡超市)",
                 th_aus_bench: "澳大利亚主流超市标杆",
+                th_aus_sub: "(Coles, Woolworths, ALDI, Costco, IGA)",
                 tb_title: "实时到岸成本重算引擎",
                 tb_desc: "调整运费变量和目标利润率以计算实时成本",
                 lbl_fx: "汇率 (AUD/USD)",
@@ -671,19 +1704,23 @@
                 lbl_cartage_tb: "VIC 拖车费 (AUD)",
                 lbl_margin: "目标利润率 (%)",
                 btn_recalc: "重新计算",
-                lbl_landed_cost_aud: "到岸成本 AUD:",
-                lbl_fob_aud: "FOB 离岸价 AUD:",
-                lbl_ocean_aud: "海运费 AUD:",
-                lbl_customs_aud: "海关及港口费 AUD:",
-                lbl_local_aud: "本地陆运费 AUD:",
-                lbl_selling_price: "建议售价 @"
+                lbl_landed_ctn_aud: "整箱到岸价 AUD (CTN):",
+                lbl_fob_ctn_aud: "整箱离岸价 AUD (CTN):",
+                lbl_ocean_ctn_aud: "整箱海运费 AUD (CTN):",
+                lbl_customs_ctn_aud: "整箱海关及港口费 AUD (CTN):",
+                lbl_local_ctn_aud: "整箱陆运费 AUD (CTN):",
+                lbl_opex_ctn_aud: "整箱分摊运营成本 AUD (CTN):",
+                lbl_sell_ctn: "整箱建议售价 @",
+                lbl_sell_pcs: "单件建议售价 @",
+                lbl_pcs_usd: "单件 USD:",
+                lbl_pcs_aud: "单件 AUD:",
+                lbl_eq: "等效单价"
             }
         };
 
         function setLanguage(lang) {
             currentLang = lang;
             
-            // Update active mini flag button styles
             ['en', 'km', 'fr', 'zh'].forEach(l => {
                 const btn = document.getElementById(`lang-btn-${l}`);
                 if (l === lang) {
@@ -693,7 +1730,6 @@
                 }
             });
 
-            // Update all DOM elements with data-i18n attribute
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
                 if (translations[lang] && translations[lang][key]) {
@@ -701,7 +1737,6 @@
                 }
             });
 
-            // Re-render table with translated names
             renderTable();
         }
 
@@ -720,7 +1755,6 @@
                 }, 300);
                 content.classList.remove('blur-xl', 'pointer-events-none', 'select-none');
 
-                // Trigger live json fetch upon unlock
                 loadLatestPrices();
             } else {
                 errorMsg.classList.remove('hidden');
@@ -742,13 +1776,12 @@
             }
         }
 
-        // --- Helper function to extract PCS per CTN from spec string ---
         function getPcsPerCtn(specStr) {
             const match = specStr.match(/(\d+)\s*(Pcs|Cans|Bags)/i);
             return match ? parseInt(match[1], 10) : 1;
         }
 
-        // --- EXPANDED 30 PRODUCT DATASET INCLUDING ASIAN, INDIAN, NEPALESE, SRI LANKAN, ALDI, COSTCO, WOOLWORTHS & COLES ---
+        // --- EXPANDED 30 PRODUCT DATASET WITH FULL TRANSLATIONS ---
         const productsData = [
             {
                 id: 1,
@@ -756,7 +1789,7 @@
                 weightG: 500,
                 name: { en: 'Finest Rice Flour 500g', km: 'ម្សៅអង្ករខ្សាយ ៥០០ក្រាម', fr: 'Farine de riz fine 500g', zh: '优质大米粉 500g' },
                 nameKhmer: 'ម្សៅអង្ករខ្សាយ ៥០០ក្រាម',
-                spec: '500g Bag / 20 Pcs (10kg/CTN)',
+                spec: { en: '500g Bag / 20 Pcs (10kg/CTN)', km: 'ថង់ ៥០០ក្រាម / ២០ដប (១០គ.ក/កេស)', fr: 'Sac 500g / 20 Pcs (10kg/CTN)', zh: '500g/袋 / 20包 (10kg/箱)' },
                 fobUsd: 0.36,
                 pcsPer20ft: 20000,
                 asianComps: [
@@ -779,7 +1812,7 @@
                 weightG: 500,
                 name: { en: 'Glutinous Rice Flour 500g', km: 'ម្សៅអង្ករដំណើប ៥០០ក្រាម', fr: 'Farine de riz glutineux 500g', zh: '水磨糯米粉 500g' },
                 nameKhmer: 'ម្សៅអង្ករដំណើប ៥០០ក្រាម',
-                spec: '500g Bag / 20 Pcs (10kg/CTN)',
+                spec: { en: '500g Bag / 20 Pcs (10kg/CTN)', km: 'ថង់ ៥០០ក្រាម / ២០ដប (១០គ.ក/កេស)', fr: 'Sac 500g / 20 Pcs (10kg/CTN)', zh: '500g/袋 / 20包 (10kg/箱)' },
                 fobUsd: 0.58,
                 pcsPer20ft: 20000,
                 asianComps: [
@@ -798,7 +1831,7 @@
                 weightG: 500,
                 name: { en: 'Tapioca Flour 500g', km: 'ម្សៅឆា ៥០០ក្រាម', fr: 'Farine de tapioca 500g', zh: '木薯淀粉 / 生粉 500g' },
                 nameKhmer: 'ម្សៅឆា ៥០០ក្រាម',
-                spec: '500g Bag / 20 Pcs (10kg/CTN)',
+                spec: { en: '500g Bag / 20 Pcs (10kg/CTN)', km: 'ថង់ ៥០០ក្រាម / ២០ដប (១០គ.ក/កេស)', fr: 'Sac 500g / 20 Pcs (10kg/CTN)', zh: '500g/袋 / 20包 (10kg/箱)' },
                 fobUsd: 0.44,
                 pcsPer20ft: 20000,
                 asianComps: [
@@ -818,7 +1851,7 @@
                 weightG: 500,
                 name: { en: 'Pancake Flour (Banh Xeo) 500g', km: 'ម្សៅបាញ់ឆែវ ៥០០ក្រាម', fr: 'Farine pour crêpes asiatiques 500g', zh: '柬式/越式煎饼粉 (Banh Xeo) 500g' },
                 nameKhmer: 'ម្សៅបាញ់ឆែវ ៥០០ក្រាម',
-                spec: '500g Bag / 20 Pcs (10kg/CTN)',
+                spec: { en: '500g Bag / 20 Pcs (10kg/CTN)', km: 'ថង់ ៥០០ក្រាម / ២០ដប (១០គ.ក/កេស)', fr: 'Sac 500g / 20 Pcs (10kg/CTN)', zh: '500g/袋 / 20包 (10kg/箱)' },
                 fobUsd: 0.90,
                 pcsPer20ft: 20000,
                 asianComps: [
@@ -838,7 +1871,7 @@
                 weightG: 1000,
                 name: { en: 'Crispy Tempura Flour 1000g', km: 'ម្សៅបំពងស្រួយ ១០០០ក្រាម', fr: 'Farine à tempura croustillante 1000g', zh: '香酥天妇罗炸粉 1000g' },
                 nameKhmer: 'ម្សៅបំពងស្រួយ ១០០០ក្រាម',
-                spec: '1000g Bag / 10 Pcs (10kg/CTN)',
+                spec: { en: '1000g Bag / 10 Pcs (10kg/CTN)', km: 'ថង់ ១០០០ក្រាម / ១០ដប (១០គ.ក/កេស)', fr: 'Sac 1000g / 10 Pcs (10kg/CTN)', zh: '1000g/袋 / 10包 (10kg/箱)' },
                 fobUsd: 1.25,
                 pcsPer20ft: 10000,
                 asianComps: [
@@ -858,7 +1891,7 @@
                 weightG: 150,
                 name: { en: 'Crispy Tempura Flour 150g', km: 'ម្សៅបំពងស្រួយ ១៥០ក្រាម', fr: 'Farine à tempura croustillante 150g', zh: '香酥天妇罗炸粉 150g' },
                 nameKhmer: 'ម្សៅបំពងស្រួយ ១៥០ក្រាម',
-                spec: '150g Bag / 60 Pcs (6x10pcs/CTN)',
+                spec: { en: '150g Bag / 60 Pcs (6x10pcs/CTN)', km: 'ថង់ ១៥០ក្រាម / ៦០ដប (៦x១០ដប/កេស)', fr: 'Sac 150g / 60 Pcs (6x10pcs/CTN)', zh: '150g/袋 / 60包 (6x10包/箱)' },
                 fobUsd: 0.39,
                 pcsPer20ft: 60000,
                 asianComps: [
@@ -876,7 +1909,7 @@
                 weightG: 500,
                 name: { en: 'Fried Banana Flour 500g', km: 'ម្សៅចេកចៀន ៥០០ក្រាម', fr: 'Farine pour bananes frites 500g', zh: '炸香蕉专用脆粉 500g' },
                 nameKhmer: 'ម្សៅចេកចៀន ៥០០ក្រាម',
-                spec: '500g Bag / 20 Pcs (10kg/CTN)',
+                spec: { en: '500g Bag / 20 Pcs (10kg/CTN)', km: 'ថង់ ៥០០ក្រាម / ២០ដប (១០គ.ក/កេស)', fr: 'Sac 500g / 20 Pcs (10kg/CTN)', zh: '500g/袋 / 20包 (10kg/箱)' },
                 fobUsd: 1.60,
                 pcsPer20ft: 20000,
                 asianComps: [
@@ -894,7 +1927,7 @@
                 weightG: 120,
                 name: { en: 'Black Pepper Whole 120g', km: 'ម្រេចខ្មៅគ្រាប់មូល ១២០ក្រាម', fr: 'Poivre noir entier 120g', zh: '整粒黑胡椒粒 120g' },
                 nameKhmer: 'ម្រេចខ្មៅគ្រាប់មូល ១២០ក្រាម',
-                spec: '120g Can / 12 Cans/CTN',
+                spec: { en: '120g Can / 12 Cans/CTN', km: 'កំប៉ុង ១២០ក្រាម / ១២កំប៉ុង/កេស', fr: 'Boîte 120g / 12 Boîtes/CTN', zh: '120g/罐 / 12罐/箱' },
                 fobUsd: 3.63,
                 pcsPer20ft: 18000,
                 asianComps: [
@@ -916,7 +1949,7 @@
                 weightG: 80,
                 name: { en: 'Fine Ground Black Pepper 80g', km: 'ម្រេចខ្មៅម៉ដ្ឋ ៨០ក្រាម', fr: 'Poivre noir moulu fin 80g', zh: '细磨黑胡椒粉 80g' },
                 nameKhmer: 'ម្រេចខ្មៅម៉ដ្ឋ ៨០ក្រាម',
-                spec: '80g Can / 20 Cans/CTN',
+                spec: { en: '80g Can / 20 Cans/CTN', km: 'កំប៉ុង ៨០ក្រាម / ២០កំប៉ុង/កេស', fr: 'Boîte 80g / 20 Boîtes/CTN', zh: '80g/罐 / 20罐/箱' },
                 fobUsd: 1.43,
                 pcsPer20ft: 24000,
                 asianComps: [
@@ -935,7 +1968,7 @@
                 weightG: 80,
                 name: { en: 'Coarse Ground Black Pepper 80g', km: 'ម្រេចខ្មៅចម្រៀក ៨០ក្រាម', fr: 'Poivre noir concassé 80g', zh: '粗磨黑胡椒碎 80g' },
                 nameKhmer: 'ម្រេចខ្មៅចម្រៀក ៨០ក្រាម',
-                spec: '80g Can / 20 Cans/CTN',
+                spec: { en: '80g Can / 20 Cans/CTN', km: 'កំប៉ុង ៨០ក្រាម / ២០កំប៉ុង/កេស', fr: 'Boîte 80g / 20 Boîtes/CTN', zh: '80g/罐 / 20罐/箱' },
                 fobUsd: 1.43,
                 pcsPer20ft: 24000,
                 asianComps: [
@@ -954,7 +1987,7 @@
                 weightG: 80,
                 name: { en: 'Fine Ground White Pepper 80g', km: 'ម្រេចសចម្រៀក ៨០ក្រាម', fr: 'Poivre blanc moulu fin 80g', zh: '细磨白胡椒粉 80g' },
                 nameKhmer: 'ម្រេចសចម្រៀក ៨០ក្រាម',
-                spec: '80g Can / 20 Cans/CTN',
+                spec: { en: '80g Can / 20 Cans/CTN', km: 'កំប៉ុង ៨០ក្រាម / ២០កំប៉ុង/កេស', fr: 'Boîte 80g / 20 Boîtes/CTN', zh: '80g/罐 / 20罐/箱' },
                 fobUsd: 1.43,
                 pcsPer20ft: 24000,
                 asianComps: [
@@ -972,7 +2005,7 @@
                 weightG: 650,
                 name: { en: 'Coarse Ground Black Pepper 650g', km: 'ម្រេចខ្មៅចម្រៀក ៦៥០ក្រាម', fr: 'Poivre noir concassé 650g', zh: '粗磨黑胡椒碎 650g (餐饮罐装)' },
                 nameKhmer: 'ម្រេចខ្មៅចម្រៀក ៦៥០ក្រាម',
-                spec: '650g Can / 6 Cans/CTN',
+                spec: { en: '650g Can / 6 Cans/CTN', km: 'កំប៉ុង ៦៥០ក្រាម / ៦កំប៉ុង/កេស', fr: 'Boîte 650g / 6 Boîtes/CTN', zh: '650g/罐 / 6罐/箱' },
                 fobUsd: 7.46,
                 pcsPer20ft: 9000,
                 asianComps: [
@@ -991,7 +2024,7 @@
                 weightG: 650,
                 name: { en: 'Fine Ground Black Pepper 650g', km: 'ម្រេចខ្មៅម៉ដ្ឋ ៦៥០ក្រាម', fr: 'Poivre noir moulu fin 650g', zh: '细磨黑胡椒粉 650g (餐饮罐装)' },
                 nameKhmer: 'ម្រេចខ្មៅម៉ដ្ឋ ៦៥០ក្រាម',
-                spec: '650g Can / 6 Cans/CTN',
+                spec: { en: '650g Can / 6 Cans/CTN', km: 'កំប៉ុង ៦៥០ក្រាម / ៦កំប៉ុង/កេស', fr: 'Boîte 650g / 6 Boîtes/CTN', zh: '650g/罐 / 6罐/箱' },
                 fobUsd: 7.46,
                 pcsPer20ft: 9000,
                 asianComps: [
@@ -1010,7 +2043,7 @@
                 weightG: 1000,
                 name: { en: 'Black Pepper Whole 1000g', km: 'ម្រេចខ្មៅគ្រាប់មូល ១០០០ក្រាម', fr: 'Poivre noir entier 1000g', zh: '整粒黑胡椒粒 1000g (大包装)' },
                 nameKhmer: 'ម្រេចខ្មៅគ្រាប់មូល ១០០០ក្រាម',
-                spec: '1000g Bag / 10 Bags (10kg/CTN)',
+                spec: { en: '1000g Bag / 10 Bags (10kg/CTN)', km: 'ថង់ ១០០០ក្រាម / ១០ថង់ (១០គ.ក/កេស)', fr: 'Sac 1000g / 10 Sacs (10kg/CTN)', zh: '1000g/袋 / 10袋 (10kg/箱)' },
                 fobUsd: 9.07,
                 pcsPer20ft: 10000,
                 asianComps: [
@@ -1031,7 +2064,7 @@
                 weightG: 500,
                 name: { en: 'Black Pepper Whole 500g', km: 'ម្រេចខ្មៅគ្រាប់មូល ៥០០ក្រាម', fr: 'Poivre noir entier 500g', zh: '整粒黑胡椒粒 500g' },
                 nameKhmer: 'ម្រេចខ្មៅគ្រាប់មូល ៥០០ក្រាម',
-                spec: '500g Bag / 20 Bags (10kg/CTN)',
+                spec: { en: '500g Bag / 20 Bags (10kg/CTN)', km: 'ថង់ ៥០០ក្រាម / ២០ថង់ (១០គ.ក/កេស)', fr: 'Sac 500g / 20 Sacs (10kg/CTN)', zh: '500g/袋 / 20袋 (10kg/箱)' },
                 fobUsd: 4.60,
                 pcsPer20ft: 20000,
                 asianComps: [
@@ -1049,7 +2082,7 @@
                 weightG: 1000,
                 name: { en: 'Crushed Black Pepper (10-20 Mesh) 1000g', km: 'ម្រេចខ្មៅចម្រៀកកំរិត 10-20 ម៉េស ១០០០ក្រាម', fr: 'Poivre noir concassé (10-20 Mesh) 1000g', zh: '黑胡椒碎 (10-20目) 1000g' },
                 nameKhmer: 'ម្រេចខ្មៅចម្រៀកកំរិត 10-20 ម៉េស ១០០០ក្រាម',
-                spec: '1000g Bag / 10 Bags (10kg/CTN)',
+                spec: { en: '1000g Bag / 10 Bags (10kg/CTN)', km: 'ថង់ ១០០០ក្រាម / ១០ថង់ (១០គ.ក/កេស)', fr: 'Sac 1000g / 10 Sacs (10kg/CTN)', zh: '1000g/袋 / 10袋 (10kg/箱)' },
                 fobUsd: 9.46,
                 pcsPer20ft: 10000,
                 asianComps: [
@@ -1067,7 +2100,7 @@
                 weightG: 500,
                 name: { en: 'Crushed Black Pepper (10-20 Mesh) 500g', km: 'ម្រេចខ្មៅចម្រៀកកំរិត 10-20 ម៉េស ៥០០ក្រាម', fr: 'Poivre noir concassé (10-20 Mesh) 500g', zh: '黑胡椒碎 (10-20目) 500g' },
                 nameKhmer: 'ម្រេចខ្មៅចម្រៀកកំរិត 10-20 ម៉េស ៥០០ក្រាម',
-                spec: '500g Bag / 20 Bags (10kg/CTN)',
+                spec: { en: '500g Bag / 20 Bags (10kg/CTN)', km: 'ថង់ ៥០០ក្រាម / ២០ថង់ (១០គ.ក/កេស)', fr: 'Sac 500g / 20 Sacs (10kg/CTN)', zh: '500g/袋 / 20包 (10kg/箱)' },
                 fobUsd: 4.79,
                 pcsPer20ft: 20000,
                 asianComps: [
@@ -1085,7 +2118,7 @@
                 weightG: 1000,
                 name: { en: 'Fine Ground Black Pepper (40 Mesh) 1000g', km: 'ម្រេចខ្មៅម៉ដ្ឋកំរិត 40 ម៉េស ១០០០ក្រាម', fr: 'Poivre noir moulu fin (40 Mesh) 1000g', zh: '细磨黑胡椒粉 (40目) 1000g' },
                 nameKhmer: 'ម្រេចខ្មៅម៉ដ្ឋកំរិត 40 ម៉េស ១០០០ក្រាម',
-                spec: '1000g Bag / 10 Bags (10kg/CTN)',
+                spec: { en: '1000g Bag / 10 Bags (10kg/CTN)', km: 'ថង់ ១០០០ក្រាម / ១០ថង់ (១០គ.ក/កេស)', fr: 'Sac 1000g / 10 Sacs (10kg/CTN)', zh: '1000g/袋 / 10袋 (10kg/箱)' },
                 fobUsd: 9.46,
                 pcsPer20ft: 10000,
                 asianComps: [
@@ -1103,7 +2136,7 @@
                 weightG: 500,
                 name: { en: 'Fine Ground Black Pepper (40 Mesh) 500g', km: 'ម្រេចខ្មៅម៉ដ្ឋកំរិត 40 ម៉េស ៥០០ក្រាម', fr: 'Poivre noir moulu fin (40 Mesh) 500g', zh: '细磨黑胡椒粉 (40目) 500g' },
                 nameKhmer: 'ម្រេចខ្មៅម៉ដ្ឋកំរិត 40 ម៉េស ៥០០ក្រាម',
-                spec: '500g Bag / 20 Bags (10kg/CTN)',
+                spec: { en: '500g Bag / 20 Bags (10kg/CTN)', km: 'ថង់ ៥០០ក្រាម / ២០ថង់ (១០គ.ក/កេស)', fr: 'Sac 500g / 20 Sacs (10kg/CTN)', zh: '500g/袋 / 20袋 (10kg/箱)' },
                 fobUsd: 4.78,
                 pcsPer20ft: 20000,
                 asianComps: [
@@ -1121,7 +2154,7 @@
                 weightG: 200,
                 name: { en: 'Black Pepper Whole 200g', km: 'ម្រេចខ្មៅគ្រាប់មូល ២០០ក្រាម', fr: 'Poivre noir entier 200g', zh: '整粒黑胡椒粒 200g (罐装)' },
                 nameKhmer: 'ម្រេចខ្មៅគ្រាប់មូល ២០០ក្រាម',
-                spec: '200g Can / 12 Cans/CTN',
+                spec: { en: '200g Can / 12 Cans/CTN', km: 'កំប៉ុង ២០០ក្រាម / ១២កំប៉ុង/កេស', fr: 'Boîte 200g / 12 Boîtes/CTN', zh: '200g/罐 / 12罐/箱' },
                 fobUsd: 2.68,
                 pcsPer20ft: 14400,
                 asianComps: [
@@ -1139,7 +2172,7 @@
                 weightG: 250,
                 name: { en: 'Coarse Ground Black Pepper 250g', km: 'ម្រេចខ្មៅចម្រៀក ២៥០ក្រាម', fr: 'Poivre noir concassé 250g', zh: '粗磨黑胡椒碎 250g (罐装)' },
                 nameKhmer: 'ម្រេចខ្មៅចម្រៀក ២៥០ក្រាម',
-                spec: '250g Can / 12 Cans/CTN',
+                spec: { en: '250g Can / 12 Cans/CTN', km: 'កំប៉ុង ២៥០ក្រាម / ១២កំប៉ុង/កេស', fr: 'Boîte 250g / 12 Boîtes/CTN', zh: '250g/罐 / 12罐/箱' },
                 fobUsd: 3.37,
                 pcsPer20ft: 14400,
                 asianComps: [
@@ -1157,7 +2190,7 @@
                 weightG: 250,
                 name: { en: 'Fine Ground Black Pepper 250g', km: 'ម្រេចខ្មៅម៉ដ្ឋ ២៥០ក្រាម', fr: 'Poivre noir moulu fin 250g', zh: '细磨黑胡椒粉 250g (罐装)' },
                 nameKhmer: 'ម្រេចខ្មៅម៉ដ្ឋ ២៥០ក្រាម',
-                spec: '250g Can / 12 Cans/CTN',
+                spec: { en: '250g Can / 12 Cans/CTN', km: 'កំប៉ុង ២៥០ក្រាម / ១២កំប៉ុង/កេស', fr: 'Boîte 250g / 12 Boîtes/CTN', zh: '250g/罐 / 12罐/箱' },
                 fobUsd: 3.37,
                 pcsPer20ft: 14400,
                 asianComps: [
@@ -1175,7 +2208,7 @@
                 weightG: 350,
                 name: { en: 'Black Pepper Whole 350g', km: 'ម្រេចខ្មៅគ្រាប់មូល ៣៥០ក្រាម', fr: 'Poivre noir entier 350g', zh: '整粒黑胡椒粒 350g (罐装)' },
                 nameKhmer: 'ម្រេចខ្មៅគ្រាប់មូល ៣៥០ក្រាម',
-                spec: '350g Can / 12 Cans/CTN',
+                spec: { en: '350g Can / 12 Cans/CTN', km: 'កំប៉ុង ៣៥០ក្រាម / ១២កំប៉ុង/កេស', fr: 'Boîte 350g / 12 Boîtes/CTN', zh: '350g/罐 / 12罐/箱' },
                 fobUsd: 3.59,
                 pcsPer20ft: 14400,
                 asianComps: [
@@ -1193,7 +2226,7 @@
                 weightG: 360,
                 name: { en: 'Coarse Ground Black Pepper 360g', km: 'ម្រេចខ្មៅចម្រៀក ៣៦០ក្រាម', fr: 'Poivre noir concassé 360g', zh: '粗磨黑胡椒碎 360g (罐装)' },
                 nameKhmer: 'ម្រេចខ្មៅចម្រៀក ៣៦០ក្រាម',
-                spec: '360g Can / 12 Cans/CTN',
+                spec: { en: '360g Can / 12 Cans/CTN', km: 'កំប៉ុង ៣៦០ក្រាម / ១២កំប៉ុង/កេស', fr: 'Boîte 360g / 12 Boîtes/CTN', zh: '360g/罐 / 12罐/箱' },
                 fobUsd: 4.06,
                 pcsPer20ft: 14400,
                 asianComps: [
@@ -1212,7 +2245,7 @@
                 weightG: 360,
                 name: { en: 'Fine Ground Black Pepper 360g', km: 'ម្រេចខ្មៅម៉ដ្ឋ ៣៦០ក្រាម', fr: 'Poivre noir moulu fin 360g', zh: '细磨黑胡椒粉 360g (罐装)' },
                 nameKhmer: 'ម្រេចខ្មៅម៉ដ្ឋ ៣៦០ក្រាម',
-                spec: '360g Can / 12 Cans/CTN',
+                spec: { en: '360g Can / 12 Cans/CTN', km: 'កំប៉ុង ៣៦០ក្រាម / ១២កំប៉ុង/កេស', fr: 'Boîte 360g / 12 Boîtes/CTN', zh: '360g/罐 / 12罐/箱' },
                 fobUsd: 3.89,
                 pcsPer20ft: 14400,
                 asianComps: [
@@ -1233,7 +2266,7 @@
                 weightG: 100,
                 name: { en: 'Instant Rice Stir-Fry Noodle 100g', km: 'មីគោក ១០០ក្រាម', fr: 'Nouilles de riz sautées instantanées 100g', zh: '即食干炒米粉 100g' },
                 nameKhmer: 'មីគោក ១០០ក្រាម',
-                spec: '100g Box / 24 Pcs per CTN',
+                spec: { en: '100g Box / 24 Pcs per CTN', km: 'ប្រអប់ ១០០ក្រាម / ២៤ដប/កេស', fr: 'Boîte 100g / 24 Pcs/CTN', zh: '100g/盒 / 24包/箱' },
                 fobUsd: 0.85,
                 pcsPer20ft: 18000,
                 asianComps: [
@@ -1252,7 +2285,7 @@
                 weightG: 500,
                 name: { en: 'Crispy Rice Cake Flour 500g', km: 'ម្សៅនំគ្រក់ ៥០០ក្រាម', fr: 'Farine pour gâteau de riz croustillant 500g', zh: '柬式香脆米饼粉 (Nom Krok) 500g' },
                 nameKhmer: 'ម្សៅនំគ្រក់ ៥០០ក្រាម',
-                spec: '500g Bag / 20 Pcs (10kg/CTN)',
+                spec: { en: '500g Bag / 20 Pcs (10kg/CTN)', km: 'ថង់ ៥០០ក្រាម / ២០ដប (១០គ.ក/កេស)', fr: 'Sac 500g / 20 Pcs (10kg/CTN)', zh: '500g/袋 / 20包 (10kg/箱)' },
                 fobUsd: 0.95,
                 pcsPer20ft: 20000,
                 asianComps: [
@@ -1270,7 +2303,7 @@
                 weightG: 500,
                 name: { en: 'Chinese Doughnuts Flour 500g', km: 'ម្សៅនំឆា ៥០០ក្រាម', fr: 'Farine pour beignets chinois (Youtiao) 500g', zh: '油条专用预拌粉 500g' },
                 nameKhmer: 'ម្សៅនំឆា ៥០០ក្រាម',
-                spec: '500g Bag / 20 Pcs (10kg/CTN)',
+                spec: { en: '500g Bag / 20 Pcs (10kg/CTN)', km: 'ថង់ ៥០០ក្រាម / ២០ដប (១០គ.ក/កេស)', fr: 'Sac 500g / 20 Pcs (10kg/CTN)', zh: '500g/袋 / 20包 (10kg/箱)' },
                 fobUsd: 0.90,
                 pcsPer20ft: 20000,
                 asianComps: [
@@ -1288,7 +2321,7 @@
                 weightG: 500,
                 name: { en: 'Waffle Flour 500g', km: 'ម្សៅពុម្ព ៥០០ក្រាម', fr: 'Farine pour gaufres asiatiques 500g', zh: '东南亚华夫饼/格仔饼预拌粉 500g' },
                 nameKhmer: 'ម្សៅពុម្ព ៥០០ក្រាម',
-                spec: '500g Bag / 20 Pcs (10kg/CTN)',
+                spec: { en: '500g Bag / 20 Pcs (10kg/CTN)', km: 'ថង់ ៥០០ក្រាម / ២០ដប (១០គ.ក/កេស)', fr: 'Sac 500g / 20 Pcs (10kg/CTN)', zh: '500g/袋 / 20包 (10kg/箱)' },
                 fobUsd: 1.10,
                 pcsPer20ft: 20000,
                 asianComps: [
@@ -1306,11 +2339,11 @@
                 weightG: 500,
                 name: { en: 'Steamed Rice Cake Flour 500g', km: 'ម្សៅនំអាកោ ៥០០ក្រាម', fr: 'Farine pour gâteau de riz à la vapeur 500g', zh: '蒸米糕粉 (Nom Ako) 500g' },
                 nameKhmer: 'ម្សៅនំអាកោ ៥០០ក្រាម',
-                spec: '500g Bag / 20 Pcs (10kg/CTN)',
+                spec: { en: '500g Bag / 20 Pcs (10kg/CTN)', km: 'ថង់ ៥០០ក្រាម / ២០ដប (១០គ.ក/កេស)', fr: 'Sac 500g / 20 Pcs (10kg/CTN)', zh: '500g/袋 / 20包 (10kg/箱)' },
                 fobUsd: 0.85,
                 pcsPer20ft: 20000,
                 asianComps: [
-                    { brand: 'Bot Banh Bo Steamed Cake', weightG: 500, priceAud: 3.50, source: 'Src: KFL Asian Grocery Springvale' },
+                    { brand: 'Bot Banh Khot Cake Flour', weightG: 500, priceAud: 3.50, source: 'Src: KFL Asian Grocery Springvale' },
                     { brand: 'Vinh Thuan Steamed Cake', weightG: 500, priceAud: 3.30, source: 'Src: Minh Phat Market Richmond' }
                 ],
                 ausComps: [
@@ -1327,51 +2360,70 @@
         const MIN_QUARANTINE_CHARGE = 42.00;
         const TOTAL_FIXED_CUSTOMS_AUD = CUSTOMS_CLEARANCE + QUARANTINE_ENTRY + VERIFICATION_FEE + MIN_QUARANTINE_CHARGE; // $297.00 AUD
 
-        // Calculation Function
+        // Calculation Function (Itemized CTN Cost Breakdown WITH DYNAMIC OPEX)
         function calculateProductCosts(product, fx, oceanFreightUsd, localCartageAud, marginPercent) {
-            const fobAud = product.fobUsd / fx;
+            const specStr = typeof product.spec === 'object' ? product.spec.en : product.spec;
+            const pcsPerCtn = getPcsPerCtn(specStr);
+            
+            // Per Piece Direct Import Costs
+            const fobAudPcs = product.fobUsd / fx;
             const oceanFreightAudTotal = oceanFreightUsd / fx;
             const freightAudPerPc = oceanFreightAudTotal / product.pcsPer20ft;
             const customsAudPerPc = TOTAL_FIXED_CUSTOMS_AUD / product.pcsPer20ft;
             const cartageAudPerPc = localCartageAud / product.pcsPer20ft;
-            const landedCostAud = fobAud + freightAudPerPc + customsAudPerPc + cartageAudPerPc;
+            
+            // Dynamic OpEx Allocation per Piece based on active currentOpExPerContainerAUD
+            const opexAudPerPc = currentOpExPerContainerAUD / product.pcsPer20ft;
+
+            // Total Landed Cost per Piece inclusive of OpEx Allocation
+            const landedCostAudPcs = fobAudPcs + freightAudPerPc + customsAudPerPc + cartageAudPerPc + opexAudPerPc;
+            
+            // CTN Level Cost Components
+            const fobAudCtn = fobAudPcs * pcsPerCtn;
+            const freightAudCtn = freightAudPerPc * pcsPerCtn;
+            const customsAudCtn = customsAudPerPc * pcsPerCtn;
+            const cartageAudCtn = cartageAudPerPc * pcsPerCtn;
+            const opexAudCtn = opexAudPerPc * pcsPerCtn;
+            const landedCostAudCtn = landedCostAudPcs * pcsPerCtn;
+
+            // Selling Prices (at Target Margin %) based on True Comprehensive Landed Cost
             const marginDecimal = marginPercent / 100;
-            const sellingPriceAud = marginDecimal < 1 ? landedCostAud / (1 - marginDecimal) : landedCostAud;
+            const sellingPriceAudPcs = marginDecimal < 1 ? landedCostAudPcs / (1 - marginDecimal) : landedCostAudPcs;
+            const sellingPriceAudCtn = sellingPriceAudPcs * pcsPerCtn;
 
             return {
-                fobAud,
-                freightAudPerPc,
-                customsAudPerPc,
-                cartageAudPerPc,
-                landedCostAud,
-                sellingPriceAud
+                fobAudPcs,
+                fobAudCtn,
+                freightAudCtn,
+                customsAudCtn,
+                cartageAudCtn,
+                opexAudCtn,
+                landedCostAudPcs,
+                landedCostAudCtn,
+                sellingPriceAudPcs,
+                sellingPriceAudCtn
             };
         }
 
-        // Handle Individual Product CTN USD Price Update directly in table
         function updateProductCtnUsd(productId, newCtnUsd) {
             const parsedCtnVal = parseFloat(newCtnUsd);
             const product = productsData.find(p => p.id === productId);
             
             if (product && !isNaN(parsedCtnVal) && parsedCtnVal >= 0) {
-                const pcsPerCtn = getPcsPerCtn(product.spec);
+                const specStr = typeof product.spec === 'object' ? product.spec.en : product.spec;
+                const pcsPerCtn = getPcsPerCtn(specStr);
                 const computedPcsUsd = parsedCtnVal / pcsPerCtn;
                 product.fobUsd = computedPcsUsd;
                 
-                // Refresh table to trigger recalculation and badge color updates
                 renderTable();
             }
         }
 
-        // Helper to Generate Competitor HTML Block with Dynamic Color Badges BASED ON WEIGHT EQUIVALENT PRICE COMPARISON
-        function generateCompetitorHtml(compList, targetWeightG, sellingPriceAud, iconClass) {
+        function generateCompetitorHtml(compList, targetWeightG, sellingPriceAudPcs, iconClass) {
+            const t = translations[currentLang];
             return compList.map(comp => {
-                // Calculate weight proportional price equivalent to match Two Parrots' net package size
                 const equivPriceAud = (comp.priceAud / comp.weightG) * targetWeightG;
-                
-                // LIGHT GREEN if Two Parrots Selling Price AUD <= Competitor Equivalent AUD
-                // LIGHT RED if Two Parrots Selling Price AUD > Competitor Equivalent AUD
-                const isBetter = sellingPriceAud <= equivPriceAud;
+                const isBetter = sellingPriceAudPcs <= equivPriceAud;
                 const badgeClass = isBetter 
                     ? 'bg-emerald-100 text-emerald-800 border-emerald-300' 
                     : 'bg-rose-100 text-rose-800 border-rose-300';
@@ -1385,8 +2437,8 @@
                             <span class="source-badge border ${badgeClass}">
                                 <i class="${iconClass} mr-0.5 text-[9px]"></i> ${comp.source}
                             </span>
-                            <span class="text-[10px] text-slate-500 font-mono" title="Normalized price scaled to ${targetWeightG}g">
-                                [Eq: $${equivPriceAud.toFixed(2)}/${targetWeightG}g]
+                            <span class="text-[10px] text-slate-500 font-mono">
+                                [${t.lbl_eq}: $${equivPriceAud.toFixed(2)}/${targetWeightG}g]
                             </span>
                         </div>
                     </div>
@@ -1394,7 +2446,6 @@
             }).join('');
         }
 
-        // Render Function
         function renderTable() {
             const fx = parseFloat(document.getElementById('input-fx').value) || 0.6620;
             const oceanFreightUsd = parseFloat(document.getElementById('input-freight').value) || 1650;
@@ -1414,12 +2465,13 @@
                 const calc = calculateProductCosts(p, fx, oceanFreightUsd, localCartageAud, marginPercent);
                 const isUpcoming = p.status === 'Upcoming';
                 const displayName = p.name[currentLang] || p.name.en;
-                const pcsPerCtn = getPcsPerCtn(p.spec);
+                const displaySpec = typeof p.spec === 'object' ? (p.spec[currentLang] || p.spec.en) : p.spec;
+                const specStrEn = typeof p.spec === 'object' ? p.spec.en : p.spec;
+                const pcsPerCtn = getPcsPerCtn(specStrEn);
                 const ctnUsdVal = p.fobUsd * pcsPerCtn;
 
-                // Weight-normalized color-coded comparison badges based on SELLING PRICE vs COMPETITOR EQUIVALENT
-                const asianCompHtml = generateCompetitorHtml(p.asianComps, p.weightG, calc.sellingPriceAud, 'fa-solid fa-store');
-                const ausCompHtml = generateCompetitorHtml(p.ausComps, p.weightG, calc.sellingPriceAud, 'fa-solid fa-cart-shopping');
+                const asianCompHtml = generateCompetitorHtml(p.asianComps, p.weightG, calc.sellingPriceAudPcs, 'fa-solid fa-store');
+                const ausCompHtml = generateCompetitorHtml(p.ausComps, p.weightG, calc.sellingPriceAudPcs, 'fa-solid fa-cart-shopping');
 
                 const tr = document.createElement('tr');
                 tr.id = `product-row-${p.id}`;
@@ -1437,13 +2489,12 @@
                         <div class="text-slate-600 text-[11px] font-khmer mb-1">${p.nameKhmer}</div>
                         <div class="flex items-center gap-2 text-[10px] text-slate-500">
                             <span class="bg-slate-100 border border-slate-200 px-1.5 py-0.5 rounded font-medium">
-                                <i class="fa-solid fa-weight-hanging text-gold-600 mr-1"></i>${p.spec}
+                                <i class="fa-solid fa-weight-hanging text-gold-600 mr-1"></i>${displaySpec}
                             </span>
                             <span class="text-slate-400">(${p.pcsPer20ft.toLocaleString()} pcs/20ft)</span>
                         </div>
                     </td>
                     
-                    <!-- COLUMN 3: ADJUSTABLE CTN USD INPUT + AUTO PCS USD & AUD DISPLAY -->
                     <td class="py-3 px-3 border-r-2 border-slate-200 text-right font-mono">
                         <div class="flex items-center justify-end gap-1 mb-1">
                             <span class="text-xs text-slate-500 font-bold">$</span>
@@ -1455,44 +2506,60 @@
                         </div>
                         <div class="text-[10px] text-slate-600 space-y-0.5">
                             <div class="flex justify-between items-center gap-2">
-                                <span class="text-slate-400 font-sans">Pcs USD:</span>
+                                <span class="text-slate-400 font-sans">${t.lbl_pcs_usd}</span>
                                 <strong id="pcs-usd-${p.id}" class="text-slate-800">$${p.fobUsd.toFixed(2)} USD</strong>
                             </div>
                             <div class="flex justify-between items-center gap-2">
-                                <span class="text-slate-400 font-sans">Pcs AUD:</span>
-                                <strong id="pcs-aud-${p.id}" class="text-slate-700">$${calc.fobAud.toFixed(2)} AUD</strong>
+                                <span class="text-slate-400 font-sans">${t.lbl_pcs_aud}</span>
+                                <strong id="pcs-aud-${p.id}" class="text-slate-700">$${calc.fobAudPcs.toFixed(2)} AUD</strong>
                             </div>
                         </div>
                     </td>
 
                     <td class="py-3 px-3 border-r-2 border-slate-200 bg-slate-50/80 font-mono">
-                        <div class="flex justify-between items-center border-b border-slate-200 pb-1 mb-1">
-                            <span class="text-slate-700 font-bold text-xs uppercase">${t.lbl_landed_cost_aud}</span>
-                            <span id="landed-cost-${p.id}" class="text-slate-900 font-black text-sm">$${calc.landedCostAud.toFixed(2)}</span>
+                        <!-- TOTAL LANDED COST CTN AUD (INCLUSIVE OF OPEX) -->
+                        <div class="flex justify-between items-center bg-slate-900 text-white p-1.5 rounded mb-1.5 shadow-sm">
+                            <span class="text-[10px] uppercase font-bold text-gold-400 font-sans">${t.lbl_landed_ctn_aud}</span>
+                            <span id="landed-cost-ctn-${p.id}" class="font-black text-xs text-white">$${calc.landedCostAudCtn.toFixed(2)} AUD</span>
                         </div>
-                        <div class="space-y-0.5 text-[10px] text-slate-600 border-b border-dashed border-slate-200 pb-1 mb-1">
-                            <div class="flex justify-between">
-                                <span class="text-slate-500">${t.lbl_fob_aud}</span>
-                                <span id="item-fob-${p.id}">$${calc.fobAud.toFixed(2)}</span>
+
+                        <!-- ITEMIZED COST BREAKDOWN IN CTN AUD INCLUDING OPEX OVERHEAD -->
+                        <div class="space-y-0.5 text-[10px] text-slate-600 border-b border-dashed border-slate-300 pb-1.5 mb-1.5">
+                            <div class="flex justify-between pl-1">
+                                <span class="text-slate-600 font-semibold font-sans">${t.lbl_fob_ctn_aud}</span>
+                                <strong class="text-slate-800">$${calc.fobAudCtn.toFixed(2)}</strong>
                             </div>
-                            <div class="flex justify-between">
-                                <span class="text-slate-500">${t.lbl_ocean_aud}</span>
-                                <span>$${calc.freightAudPerPc.toFixed(3)}</span>
+                            <div class="flex justify-between pl-1">
+                                <span class="text-slate-500 font-sans">${t.lbl_ocean_ctn_aud}</span>
+                                <span>$${calc.freightAudCtn.toFixed(2)}</span>
                             </div>
-                            <div class="flex justify-between">
-                                <span class="text-slate-500">${t.lbl_customs_aud}</span>
-                                <span>$${calc.customsAudPerPc.toFixed(3)}</span>
+                            <div class="flex justify-between pl-1">
+                                <span class="text-slate-500 font-sans">${t.lbl_customs_ctn_aud}</span>
+                                <span>$${calc.customsAudCtn.toFixed(2)}</span>
                             </div>
-                            <div class="flex justify-between">
-                                <span class="text-slate-500">${t.lbl_local_aud}</span>
-                                <span>$${calc.cartageAudPerPc.toFixed(3)}</span>
+                            <div class="flex justify-between pl-1">
+                                <span class="text-slate-500 font-sans">${t.lbl_local_ctn_aud}</span>
+                                <span>$${calc.cartageAudCtn.toFixed(2)}</span>
+                            </div>
+                            <div class="flex justify-between pl-1 text-amber-700 bg-amber-50/60 font-semibold rounded px-0.5">
+                                <span class="font-sans">${t.lbl_opex_ctn_aud}</span>
+                                <span>+$${calc.opexAudCtn.toFixed(2)}</span>
                             </div>
                         </div>
-                        <div class="flex justify-between items-center bg-gold-50 border border-gold-200 p-1 rounded">
-                            <span class="text-gold-800 font-bold text-[10px]">${t.lbl_selling_price} ${marginPercent}%:</span>
-                            <span id="selling-price-${p.id}" class="text-gold-700 font-bold text-xs">$${calc.sellingPriceAud.toFixed(2)}</span>
+
+                        <!-- RECOMPUTED SELLING PRICES AT TARGET MARGIN % -->
+                        <div class="bg-gold-50 border border-gold-300 p-1.5 rounded space-y-1">
+                            <div class="flex justify-between items-center text-[10px]">
+                                <span class="text-gold-900 font-bold font-sans">${t.lbl_sell_ctn} ${marginPercent}%:</span>
+                                <span id="selling-price-ctn-${p.id}" class="text-gold-800 font-extrabold text-xs">$${calc.sellingPriceAudCtn.toFixed(2)}</span>
+                            </div>
+                            <div class="flex justify-between items-center text-[10px] border-t border-gold-200/80 pt-0.5">
+                                <span class="text-gold-800 font-bold font-sans">${t.lbl_sell_pcs} ${marginPercent}%:</span>
+                                <span id="selling-price-pcs-${p.id}" class="text-gold-700 font-bold text-xs">$${calc.sellingPriceAudPcs.toFixed(2)}</span>
+                            </div>
                         </div>
                     </td>
+
                     <td class="py-3 px-3 border-r-2 border-slate-200">
                         ${asianCompHtml}
                     </td>
@@ -1509,10 +2576,8 @@
             renderTable();
         }
 
-        // Async function to load prices.json before rendering
         async function loadLatestPrices() {
             try {
-                // Prevent browser caching by appending timestamp parameter Date.now()
                 const response = await fetch('./prices.json?t=' + Date.now());
                 if (!response.ok) throw new Error('Could not load prices.json');
 
@@ -1532,18 +2597,15 @@
             } catch (err) {
                 console.warn('Using default local pricing fallback:', err);
             } finally {
-                // Render table after applying latest JSON prices
-                renderTable();
+                updateOpExFromInputs();
             }
         }
 
-        // Live Event Listeners for Bottom Toolbar
         document.getElementById('input-fx').addEventListener('input', renderTable);
         document.getElementById('input-freight').addEventListener('input', renderTable);
         document.getElementById('input-cartage').addEventListener('input', renderTable);
         document.getElementById('input-margin').addEventListener('input', renderTable);
 
-        // Fetch latest prices and render on load
         window.onload = function() {
             loadLatestPrices();
         };
