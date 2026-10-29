@@ -175,25 +175,45 @@
                     </ul>
                 </div>
 
-                <!-- Card 2: Freight & Terminal Baseline -->
-                <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200 hover:shadow-md transition">
-                    <div class="flex items-center justify-between mb-3 border-b border-slate-100 pb-2">
-                        <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
-                            <i class="fa-solid fa-truck-ramp-box text-gold-600"></i> <span data-i18n="card2_header">Freight & Terminal Baseline</span>
-                        </h3>
-                        <span class="bg-slate-100 text-slate-700 text-xs font-semibold px-2 py-0.5 rounded" data-i18n="card2_tag">20ft FCL Pricing Model</span>
-                    </div>
-                    <ul class="text-xs text-slate-600 space-y-1.5">
-                        <li class="flex justify-between"><span data-i18n="lbl_supplier">Supplier:</span> <strong class="text-slate-800">Two Parrots Trading Co., Ltd.</strong></li>
-                        <li class="flex justify-between"><span data-i18n="lbl_route">Route:</span> <strong class="text-slate-800" data-i18n="val_route_short">Kampong Saom → Melb</strong></li>
-                        <li class="flex justify-between"><span data-i18n="lbl_ocean_freight">Ocean Freight Benchmark:</span> <strong class="text-gold-700 font-bold" id="card-ocean-freight">$1,580.00 USD</strong></li>
-                        <li class="flex justify-between"><span data-i18n="lbl_port_handling">Port Handling & Infrastructure:</span> <strong class="text-slate-800">$1,695.00 + GST</strong></li>
-                        <li class="flex justify-between"><span data-i18n="lbl_wharf_cartage">Wharf Cartage & Sideloader:</span> <strong class="text-slate-800" id="card-local-cartage">$1,030.00 + GST</strong></li>
-                        <li class="flex justify-between border-t border-dashed border-slate-200 pt-1">
-                            <span class="text-slate-500" data-i18n="lbl_fx_rate">Customs N10 FX Rate:</span> <strong class="text-slate-700" id="card-fx-rate">0.6984 AUD/USD</strong>
-                        </li>
-                    </ul>
-                </div>
+<!-- Card 2: Warehouse Delivery Landed Cost Model -->
+<div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5">
+    <div class="flex items-center justify-between mb-4 border-b pb-3">
+        <div>
+            <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                <i class="fa-solid fa-truck-ramp-box text-emerald-600"></i>
+                <span data-i18n="card2_header">Warehouse Delivery Landed Cost Model</span>
+            </h3>
+            <p class="text-xs text-slate-500">Total freight, terminal & cartage to clear & land cargo to Melbourne warehouse</p>
+        </div>
+        <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded border border-emerald-300">
+            TOTAL TO WAREHOUSE
+        </span>
+    </div>
+
+    <div class="bg-slate-900 text-white p-3 rounded-lg flex items-center justify-between mb-4">
+        <span class="text-xs font-medium text-slate-300">Warehouse Delivery Total (per Shipment):</span>
+        <span id="card2-total-warehouse-cost" class="font-mono font-black text-base text-gold-400">$3,742.30 AUD</span>
+    </div>
+
+    <div class="space-y-2 text-xs">
+        <div class="flex justify-between items-center py-1 border-b border-slate-100">
+            <span class="text-slate-600"><span data-i18n="lbl_ocean_freight">Ocean Freight Benchmark</span>:</span>
+            <span id="card-ocean-freight" class="font-mono font-bold text-slate-900">$1,650.00 USD</span>
+        </div>
+        <div class="flex justify-between items-center py-1 border-b border-slate-100">
+            <span class="text-slate-600"><span data-i18n="lbl_port_handling">Port Handling & Terminal (DP World)</span>:</span>
+            <span id="card-local-cartage" class="font-mono font-bold text-slate-900">$450.00 AUD</span>
+        </div>
+        <div class="flex justify-between items-center py-1 border-b border-slate-100">
+            <span class="text-slate-600"><span data-i18n="lbl_wharf_cartage">Wharf Cartage & Warehouse Sideloader</span>:</span>
+            <span id="card-wharf-cartage" class="font-mono font-bold text-slate-900">$750.00 AUD</span>
+        </div>
+        <div class="flex justify-between items-center py-1">
+            <span class="text-slate-600"><span data-i18n="lbl_fx_rate">Customs N10 Settlement Rate</span>:</span>
+            <span id="card-fx-rate" class="font-mono font-bold text-emerald-700">0.6620 AUD/USD</span>
+        </div>
+    </div>
+</div>
 
                 <!-- Card 3: Compliance & Quotation Framework -->
                 <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200 hover:shadow-md transition">
