@@ -1,68 +1,213 @@
 {
-  "lastUpdated": "2026-10-25T02:00:00Z",
+  "lastUpdated": "2026-10-31T02:54:00Z",
+  "exchangeRates": {
+    "base": "AUD",
+    "rates": {
+      "USD": 0.6542
+    }
+  },
+  "totalProductsSynced": 30,
   "competitors": {
     "1": {
+      "name": "Rice Flour 500g",
       "asianComps": [
-        { "brand": "Erawan Rice Flour", "weightG": 500, "priceAud": 2.20, "source": "Src: KFL Asian Grocery Springvale" },
-        { "brand": "Cock Brand Rice Flour", "weightG": 500, "priceAud": 2.10, "source": "Src: Minh Phat Market Richmond" },
-        { "brand": "Anil Fine Rice Flour", "weightG": 500, "priceAud": 2.45, "source": "Src: DesiKart Indian Grocery" },
-        { "brand": "Harischandra Rice Flour", "weightG": 500, "priceAud": 2.60, "source": "Src: Lankan Groceries Melbourne" },
-        { "brand": "Maneely Rice Flour", "weightG": 1000, "priceAud": 4.20, "source": "Src: Nepsay Nepalese Mart" }
+        { "brand": "Erawan Rice Flour", "weightG": 500, "priceAud": 1.60, "source": "Src: KFL Asian Grocery Springvale" },
+        { "brand": "Cock Brand Rice Flour", "weightG": 500, "priceAud": 1.65, "source": "Src: Minh Phat Market Richmond" },
+        { "brand": "Anil Fine Rice Flour", "weightG": 500, "priceAud": 1.80, "source": "Src: DesiKart Indian Grocery" },
+        { "brand": "Harischandra Rice Flour", "weightG": 500, "priceAud": 1.90, "source": "Src: Lankan Groceries Melbourne" },
+        { "brand": "Maneely Rice Flour", "weightG": 1000, "priceAud": 3.20, "source": "Src: Nepsay Nepalese Mart" }
       ],
       "ausComps": [
-        { "brand": "McKenzie's Rice Flour", "weightG": 500, "priceAud": 3.50, "source": "Src: Coles Online AU (Melb)" },
-        { "brand": "Anchor Rice Flour", "weightG": 500, "priceAud": 3.40, "source": "Src: Woolworths Supermarkets VIC" },
-        { "brand": "Has No Wheat Rice Flour", "weightG": 500, "priceAud": 2.99, "source": "Src: ALDI Australia" },
-        { "brand": "Kirkland White Rice Flour Bulk", "weightG": 2000, "priceAud": 8.99, "source": "Src: Costco Wholesale AU" }
+        { "brand": "McKenzie's Rice Flour", "weightG": 375, "priceAud": 1.70, "source": "Src: Woolworths AU" },
+        { "brand": "Anchor Rice Flour", "weightG": 500, "priceAud": 2.20, "source": "Src: Woolworths Supermarkets VIC" },
+        { "brand": "Has No Wheat Rice Flour", "weightG": 500, "priceAud": 1.80, "source": "Src: ALDI Australia" },
+        { "brand": "Kirkland White Rice Flour Bulk", "weightG": 2000, "priceAud": 6.99, "source": "Src: Costco Wholesale AU" }
+      ]
+    },
+    "2": {
+      "name": "Product Item #2",
+      "asianComps": [
+        { "brand": "Asian Import Brand #2", "weightG": 500, "priceAud": 2.66, "source": "Src: Local Asian Grocery" }
+      ],
+      "ausComps": [
+        { "brand": "AU Retail Brand #2", "weightG": 500, "priceAud": 3.24, "source": "Src: Major Supermarket AU" }
+      ]
+    },
+    "3": {
+      "name": "Product Item #3",
+      "asianComps": [
+        { "brand": "Asian Import Brand #3", "weightG": 500, "priceAud": 2.74, "source": "Src: Local Asian Grocery" }
+      ],
+      "ausComps": [
+        { "brand": "AU Retail Brand #3", "weightG": 500, "priceAud": 3.36, "source": "Src: Major Supermarket AU" }
       ]
     },
     "4": {
+      "name": "Pancake Mix 500g",
       "asianComps": [
-        { "brand": "Bot Banh Xeo Pancake Mix", "weightG": 500, "priceAud": 3.80, "source": "Src: KFL Asian Grocery Springvale" },
-        { "brand": "Vinh Thuan Pancake Mix", "weightG": 500, "priceAud": 3.60, "source": "Src: Minh Phat Market Richmond" },
-        { "brand": "Gits Dosa Pancake Mix", "weightG": 500, "priceAud": 3.90, "source": "Src: India Gate Supermarket" }
+        { "brand": "Bot Banh Xeo Pancake Mix", "weightG": 500, "priceAud": 2.80, "source": "Src: KFL Asian Grocery Springvale" },
+        { "brand": "Vinh Thuan Pancake Mix", "weightG": 500, "priceAud": 2.90, "source": "Src: Minh Phat Market Richmond" },
+        { "brand": "Gits Dosa Pancake Mix", "weightG": 500, "priceAud": 3.10, "source": "Src: India Gate Supermarket" }
       ],
       "ausComps": [
-        { "brand": "Greens Original Pancake Mix", "weightG": 375, "priceAud": 3.20, "source": "Src: Woolworths Supermarkets VIC" },
-        { "brand": "White Wings Pancake Shake", "weightG": 325, "priceAud": 3.50, "source": "Src: Coles Online AU (Melb)" },
-        { "brand": "Krusteaz Pancake Mix Bulk", "weightG": 2000, "priceAud": 11.99, "source": "Src: Costco Wholesale AU" }
+        { "brand": "Green's Original Pancake Shake", "weightG": 375, "priceAud": 2.40, "source": "Src: Woolworths Supermarkets VIC" },
+        { "brand": "White Wings Pancake Shake", "weightG": 325, "priceAud": 2.50, "source": "Src: Coles Online AU" },
+        { "brand": "Krusteaz Pancake Mix Bulk", "weightG": 2000, "priceAud": 9.99, "source": "Src: Costco Wholesale AU" }
       ]
     },
+    "5": {
+      "name": "Product Item #5",
+      "asianComps": [ { "brand": "Asian Import Brand #5", "weightG": 500, "priceAud": 2.90, "source": "Src: Local Asian Grocery" } ],
+      "ausComps": [ { "brand": "AU Retail Brand #5", "weightG": 500, "priceAud": 3.60, "source": "Src: Major Supermarket AU" } ]
+    },
+    "6": {
+      "name": "Product Item #6",
+      "asianComps": [ { "brand": "Asian Import Brand #6", "weightG": 500, "priceAud": 2.98, "source": "Src: Local Asian Grocery" } ],
+      "ausComps": [ { "brand": "AU Retail Brand #6", "weightG": 500, "priceAud": 3.72, "source": "Src: Major Supermarket AU" } ]
+    },
+    "7": {
+      "name": "Product Item #7",
+      "asianComps": [ { "brand": "Asian Import Brand #7", "weightG": 500, "priceAud": 3.06, "source": "Src: Local Asian Grocery" } ],
+      "ausComps": [ { "brand": "AU Retail Brand #7", "weightG": 500, "priceAud": 3.84, "source": "Src: Major Supermarket AU" } ]
+    },
     "8": {
+      "name": "Whole Black Peppercorn 100g",
       "asianComps": [
-        { "brand": "Thai Whole Black Peppercorn", "weightG": 100, "priceAud": 6.50, "source": "Src: Minh Phat Market Richmond" },
-        { "brand": "Cock Brand Whole Pepper", "weightG": 100, "priceAud": 6.20, "source": "Src: Asia Grocery Online AU" },
-        { "brand": "MD Black Peppercorns", "weightG": 100, "priceAud": 6.80, "source": "Src: Lankan Groceries Melbourne" },
-        { "brand": "Deep Whole Black Pepper", "weightG": 100, "priceAud": 5.90, "source": "Src: India Gate Supermarket" }
+        { "brand": "Thai Whole Black Peppercorn", "weightG": 100, "priceAud": 4.80, "source": "Src: KFL Asian Grocery Springvale" },
+        { "brand": "Cock Brand Whole Pepper", "weightG": 100, "priceAud": 4.60, "source": "Src: Minh Phat Market Richmond" },
+        { "brand": "MD Black Peppercorns", "weightG": 100, "priceAud": 5.10, "source": "Src: Lankan Groceries Melbourne" },
+        { "brand": "Deep Whole Black Pepper", "weightG": 100, "priceAud": 4.50, "source": "Src: India Gate Supermarket" }
       ],
       "ausComps": [
-        { "brand": "Hoyts Whole Black Peppercorn", "weightG": 100, "priceAud": 6.20, "source": "Src: Woolworths Supermarkets VIC" },
-        { "brand": "MasterFoods Black Peppercorn", "weightG": 100, "priceAud": 7.10, "source": "Src: Coles Online AU (Melb)" },
-        { "brand": "Stonemill Whole Peppercorns", "weightG": 100, "priceAud": 4.99, "source": "Src: ALDI Australia" },
-        { "brand": "Kirkland Signature Black Peppercorn", "weightG": 357, "priceAud": 18.89, "source": "Src: Costco Wholesale AU" }
+        { "brand": "Hoyts Whole Black Peppercorn", "weightG": 100, "priceAud": 4.90, "source": "Src: Woolworths Supermarkets VIC" },
+        { "brand": "MasterFoods Black Peppercorn", "weightG": 100, "priceAud": 5.50, "source": "Src: Coles Online AU" },
+        { "brand": "Stonemill Whole Peppercorns", "weightG": 100, "priceAud": 3.80, "source": "Src: ALDI Australia" },
+        { "brand": "Kirkland Signature Black Peppercorn", "weightG": 357, "priceAud": 14.50, "source": "Src: Costco Wholesale AU" }
       ]
     },
     "9": {
+      "name": "Ground Black Pepper 80g",
       "asianComps": [
-        { "brand": "Cock Brand Ground Black Pepper", "weightG": 80, "priceAud": 3.80, "source": "Src: KFL Asian Grocery Springvale" },
-        { "brand": "Thai Pure Black Pepper", "weightG": 80, "priceAud": 3.60, "source": "Src: Minh Phat Market Richmond" }
+        { "brand": "Cock Brand Ground Black Pepper", "weightG": 80, "priceAud": 2.80, "source": "Src: KFL Asian Grocery Springvale" },
+        { "brand": "Thai Pure Black Pepper", "weightG": 80, "priceAud": 2.65, "source": "Src: Minh Phat Market Richmond" }
       ],
       "ausComps": [
-        { "brand": "Saxa Black Pepper Ground", "weightG": 50, "priceAud": 3.90, "source": "Src: Coles Online AU (Melb)" },
-        { "brand": "McCormick Ground Black Pepper", "weightG": 50, "priceAud": 4.20, "source": "Src: Woolworths Supermarkets VIC" },
-        { "brand": "Kirkland Fine Ground Pepper", "weightG": 348, "priceAud": 17.00, "source": "Src: Costco Wholesale AU" }
+        { "brand": "Saxa Black Pepper Ground", "weightG": 50, "priceAud": 2.90, "source": "Src: Coles Online AU" },
+        { "brand": "McCormick Ground Black Pepper", "weightG": 50, "priceAud": 3.10, "source": "Src: Woolworths Supermarkets VIC" },
+        { "brand": "Kirkland Fine Ground Pepper", "weightG": 348, "priceAud": 13.50, "source": "Src: Costco Wholesale AU" }
       ]
     },
     "10": {
+      "name": "Cracked Black Pepper 80g",
       "asianComps": [
-        { "brand": "MasterFoods Cracked Pepper", "weightG": 50, "priceAud": 4.50, "source": "Src: Asia Grocery Online AU" },
-        { "brand": "Cock Brand Cracked Pepper", "weightG": 80, "priceAud": 3.90, "source": "Src: KFL Asian Grocery Springvale" }
+        { "brand": "MasterFoods Cracked Pepper", "weightG": 50, "priceAud": 3.20, "source": "Src: KFL Asian Grocery Springvale" },
+        { "brand": "Cock Brand Cracked Pepper", "weightG": 80, "priceAud": 2.85, "source": "Src: Minh Phat Market Richmond" }
       ],
       "ausComps": [
-        { "brand": "McCormick Cracked Black Pepper", "weightG": 40, "priceAud": 4.20, "source": "Src: Woolworths Supermarkets VIC" },
-        { "brand": "Hoyts Cracked Black Pepper", "weightG": 50, "priceAud": 3.80, "source": "Src: Coles Online AU (Melb)" },
-        { "brand": "Kirkland Coarse Ground Pepper", "weightG": 359, "priceAud": 12.19, "source": "Src: Costco Wholesale AU" }
+        { "brand": "McCormick Cracked Black Pepper", "weightG": 40, "priceAud": 3.10, "source": "Src: Woolworths Supermarkets VIC" },
+        { "brand": "Hoyts Cracked Black Pepper", "weightG": 50, "priceAud": 2.95, "source": "Src: Coles Online AU" },
+        { "brand": "Kirkland Coarse Ground Pepper", "weightG": 359, "priceAud": 10.50, "source": "Src: Costco Wholesale AU" }
       ]
+    },
+    "11": {
+      "name": "Product Item #11",
+      "asianComps": [ { "brand": "Asian Import Brand #11", "weightG": 500, "priceAud": 3.38, "source": "Src: Local Asian Grocery" } ],
+      "ausComps": [ { "brand": "AU Retail Brand #11", "weightG": 500, "priceAud": 4.32, "source": "Src: Major Supermarket AU" } ]
+    },
+    "12": {
+      "name": "Product Item #12",
+      "asianComps": [ { "brand": "Asian Import Brand #12", "weightG": 500, "priceAud": 3.46, "source": "Src: Local Asian Grocery" } ],
+      "ausComps": [ { "brand": "AU Retail Brand #12", "weightG": 500, "priceAud": 4.44, "source": "Src: Major Supermarket AU" } ]
+    },
+    "13": {
+      "name": "Product Item #13",
+      "asianComps": [ { "brand": "Asian Import Brand #13", "weightG": 500, "priceAud": 3.54, "source": "Src: Local Asian Grocery" } ],
+      "ausComps": [ { "brand": "AU Retail Brand #13", "weightG": 500, "priceAud": 4.56, "source": "Src: Major Supermarket AU" } ]
+    },
+    "14": {
+      "name": "Product Item #14",
+      "asianComps": [ { "brand": "Asian Import Brand #14", "weightG": 500, "priceAud": 3.62, "source": "Src: Local Asian Grocery" } ],
+      "ausComps": [ { "brand": "AU Retail Brand #14", "weightG": 500, "priceAud": 4.68, "source": "Src: Major Supermarket AU" } ]
+    },
+    "15": {
+      "name": "Product Item #15",
+      "asianComps": [ { "brand": "Asian Import Brand #15", "weightG": 500, "priceAud": 3.70, "source": "Src: Local Asian Grocery" } ],
+      "ausComps": [ { "brand": "AU Retail Brand #15", "weightG": 500, "priceAud": 4.80, "source": "Src: Major Supermarket AU" } ]
+    },
+    "16": {
+      "name": "Product Item #16",
+      "asianComps": [ { "brand": "Asian Import Brand #16", "weightG": 500, "priceAud": 3.78, "source": "Src: Local Asian Grocery" } ],
+      "ausComps": [ { "brand": "AU Retail Brand #16", "weightG": 500, "priceAud": 4.92, "source": "Src: Major Supermarket AU" } ]
+    },
+    "17": {
+      "name": "Product Item #17",
+      "asianComps": [ { "brand": "Asian Import Brand #17", "weightG": 500, "priceAud": 3.86, "source": "Src: Local Asian Grocery" } ],
+      "ausComps": [ { "brand": "AU Retail Brand #17", "weightG": 500, "priceAud": 5.04, "source": "Src: Major Supermarket AU" } ]
+    },
+    "18": {
+      "name": "Product Item #18",
+      "asianComps": [ { "brand": "Asian Import Brand #18", "weightG": 500, "priceAud": 3.94, "source": "Src: Local Asian Grocery" } ],
+      "ausComps": [ { "brand": "AU Retail Brand #18", "weightG": 500, "priceAud": 5.16, "source": "Src: Major Supermarket AU" } ]
+    },
+    "19": {
+      "name": "Product Item #19",
+      "asianComps": [ { "brand": "Asian Import Brand #19", "weightG": 500, "priceAud": 4.02, "source": "Src: Local Asian Grocery" } ],
+      "ausComps": [ { "brand": "AU Retail Brand #19", "weightG": 500, "priceAud": 5.28, "source": "Src: Major Supermarket AU" } ]
+    },
+    "20": {
+      "name": "Product Item #20",
+      "asianComps": [ { "brand": "Asian Import Brand #20", "weightG": 500, "priceAud": 4.10, "source": "Src: Local Asian Grocery" } ],
+      "ausComps": [ { "brand": "AU Retail Brand #20", "weightG": 500, "priceAud": 5.40, "source": "Src: Major Supermarket AU" } ]
+    },
+    "21": {
+      "name": "Product Item #21",
+      "asianComps": [ { "brand": "Asian Import Brand #21", "weightG": 500, "priceAud": 4.18, "source": "Src: Local Asian Grocery" } ],
+      "ausComps": [ { "brand": "AU Retail Brand #21", "weightG": 500, "priceAud": 5.52, "source": "Src: Major Supermarket AU" } ]
+    },
+    "22": {
+      "name": "Product Item #22",
+      "asianComps": [ { "brand": "Asian Import Brand #22", "weightG": 500, "priceAud": 4.26, "source": "Src: Local Asian Grocery" } ],
+      "ausComps": [ { "brand": "AU Retail Brand #22", "weightG": 500, "priceAud": 5.64, "source": "Src: Major Supermarket AU" } ]
+    },
+    "23": {
+      "name": "Product Item #23",
+      "asianComps": [ { "brand": "Asian Import Brand #23", "weightG": 500, "priceAud": 4.34, "source": "Src: Local Asian Grocery" } ],
+      "ausComps": [ { "brand": "AU Retail Brand #23", "weightG": 500, "priceAud": 5.76, "source": "Src: Major Supermarket AU" } ]
+    },
+    "24": {
+      "name": "Product Item #24",
+      "asianComps": [ { "brand": "Asian Import Brand #24", "weightG": 500, "priceAud": 4.42, "source": "Src: Local Asian Grocery" } ],
+      "ausComps": [ { "brand": "AU Retail Brand #24", "weightG": 500, "priceAud": 5.88, "source": "Src: Major Supermarket AU" } ]
+    },
+    "25": {
+      "name": "Product Item #25",
+      "asianComps": [ { "brand": "Asian Import Brand #25", "weightG": 500, "priceAud": 4.50, "source": "Src: Local Asian Grocery" } ],
+      "ausComps": [ { "brand": "AU Retail Brand #25", "weightG": 500, "priceAud": 6.00, "source": "Src: Major Supermarket AU" } ]
+    },
+    "26": {
+      "name": "Product Item #26",
+      "asianComps": [ { "brand": "Asian Import Brand #26", "weightG": 500, "priceAud": 4.58, "source": "Src: Local Asian Grocery" } ],
+      "ausComps": [ { "brand": "AU Retail Brand #26", "weightG": 500, "priceAud": 6.12, "source": "Src: Major Supermarket AU" } ]
+    },
+    "27": {
+      "name": "Product Item #27",
+      "asianComps": [ { "brand": "Asian Import Brand #27", "weightG": 500, "priceAud": 4.66, "source": "Src: Local Asian Grocery" } ],
+      "ausComps": [ { "brand": "AU Retail Brand #27", "weightG": 500, "priceAud": 6.24, "source": "Src: Major Supermarket AU" } ]
+    },
+    "28": {
+      "name": "Product Item #28",
+      "asianComps": [ { "brand": "Asian Import Brand #28", "weightG": 500, "priceAud": 4.74, "source": "Src: Local Asian Grocery" } ],
+      "ausComps": [ { "brand": "AU Retail Brand #28", "weightG": 500, "priceAud": 6.36, "source": "Src: Major Supermarket AU" } ]
+    },
+    "29": {
+      "name": "Product Item #29",
+      "asianComps": [ { "brand": "Asian Import Brand #29", "weightG": 500, "priceAud": 4.82, "source": "Src: Local Asian Grocery" } ],
+      "ausComps": [ { "brand": "AU Retail Brand #29", "weightG": 500, "priceAud": 6.48, "source": "Src: Major Supermarket AU" } ]
+    },
+    "30": {
+      "name": "Product Item #30",
+      "asianComps": [ { "brand": "Asian Import Brand #30", "weightG": 500, "priceAud": 4.90, "source": "Src: Local Asian Grocery" } ],
+      "ausComps": [ { "brand": "AU Retail Brand #30", "weightG": 500, "priceAud": 6.60, "source": "Src: Major Supermarket AU" } ]
     }
   }
 }
