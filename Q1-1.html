@@ -1,0 +1,1418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Two Parrots Group Australia - Landed Cost Quotation & OpEx Budget</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- jsPDF & AutoTable for PDF Export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+    <style>
+        .gold-gradient {
+            background: linear-gradient(135deg, #E6C655 0%, #D4AF37 50%, #C59B27 100%);
+        }
+        @media print {
+            .no-print { display: none !important; }
+            body { padding-bottom: 0 !important; background: white !important; }
+            .max-h-\[420px\] { max-height: none !important; overflow: visible !important; }
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        slate: {
+                            850: '#151f30',
+                            900: '#1E293B',
+                        },
+                        gold: {
+                            400: '#E6C655',
+                            500: '#D4AF37',
+                            600: '#C59B27',
+                            700: '#9B7817'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="min-h-screen pb-28 relative bg-slate-100 text-slate-800 font-sans">
+
+    <!-- PASSWORD MODAL OVERLAY -->
+    <div id="password-modal" class="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/70 backdrop-blur-md p-4 transition-opacity duration-300 no-print">
+        <div class="bg-slate-900 border-2 border-gold-500 text-white rounded-2xl shadow-2xl p-6 max-w-md w-full relative">
+            <div class="text-center mb-6">
+                <div class="w-12 h-12 bg-gold-500/10 rounded-full border border-gold-500/30 flex items-center justify-center mx-auto mb-3">
+                    <i class="fa-solid fa-lock text-gold-400 text-xl"></i>
+                </div>
+                <h2 data-i18n="modal_title" class="text-xl font-bold text-white tracking-wide">Restricted Access</h2>
+                <p data-i18n="modal_desc" class="text-xs text-slate-400 mt-1">Please enter the security password to view the Landed Cost Quotation & Analytics.</p>
+            </div>
+            
+            <form id="password-form" onsubmit="unlockPage(event)">
+                <div class="mb-5">
+                    <label data-i18n="modal_label" class="block text-xs uppercase font-semibold text-gold-400 mb-1.5 tracking-wider">Enter Password</label>
+                    <div class="relative">
+                        <input type="password" id="password-input" placeholder="••••••••" autofocus class="w-full bg-slate-800 border border-slate-700 focus:border-gold-500 rounded-lg px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none transition">
+                        <button type="button" onclick="togglePasswordVisibility()" class="absolute right-3 top-2.5 text-slate-400 hover:text-gold-400 text-sm">
+                            <i id="eye-icon" class="fa-solid fa-eye"></i>
+                        </button>
+                    </div>
+                    <p id="password-error" data-i18n="modal_error" class="text-red-400 text-xs mt-2 hidden flex items-center gap-1">
+                        <i class="fa-solid fa-circle-exclamation"></i> Incorrect password. Please try again.
+                    </p>
+                </div>
+                
+                <button type="submit" class="w-full py-2.5 gold-gradient hover:opacity-90 text-slate-900 font-bold rounded-lg shadow transition text-sm flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-key"></i> <span data-i18n="modal_btn">Unlock Dashboard</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MAIN PAGE WRAPPER WITH BLUR STATE ON LOAD -->
+    <div id="page-content" class="filter blur-xl pointer-events-none select-none transition-all duration-500">
+
+        <!-- Header Navigation Bar -->
+        <header class="bg-slate-900 text-white shadow-md no-print border-b-2 border-gold-500">
+            <div class="max-w-7xl mx-auto px-4 py-2 flex flex-wrap justify-between items-center gap-4">
+                <div>
+                    <h1 class="text-base font-bold text-white tracking-wide" data-i18n="header_company_name">TWO PARROTS GROUP AUSTRALIA</h1>
+                    <p data-i18n="header_sub" class="text-[11px] text-gold-400">Import & Distribution Landed Cost Intelligence</p>
+                </div>
+
+                <div class="flex items-center space-x-3">
+                    <div class="flex items-center bg-slate-800 p-1 rounded-lg border border-slate-700 space-x-1">
+                        <button onclick="setLanguage('en')" id="lang-btn-en" title="English" class="px-2 py-0.5 text-xs rounded transition bg-gold-500/20 border border-gold-500 text-gold-400 font-bold">🇬🇧 EN</button>
+                        <button onclick="setLanguage('km')" id="lang-btn-km" title="Khmer" class="px-2 py-0.5 text-xs rounded transition opacity-60 hover:opacity-100 text-slate-300">🇰🇭 KM</button>
+                        <button onclick="setLanguage('fr')" id="lang-btn-fr" title="French" class="px-2 py-0.5 text-xs rounded transition opacity-60 hover:opacity-100 text-slate-300">🇫🇷 FR</button>
+                        <button onclick="setLanguage('zh')" id="lang-btn-zh" title="Chinese" class="px-2 py-0.5 text-xs rounded transition opacity-60 hover:opacity-100 text-slate-300">🇨🇳 ZH</button>
+                    </div>
+
+                    <button onclick="window.print()" class="px-3 py-1.5 bg-gold-500 hover:bg-gold-600 text-slate-900 font-semibold rounded-lg shadow transition flex items-center gap-1.5 text-xs">
+                        <i class="fa-solid fa-print"></i> <span data-i18n="btn_print">Print A4 Quotation</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
+
+            <!-- 1. HEADER BOX -->
+            <div class="bg-slate-900 text-white rounded-xl shadow-md p-3.5 mb-4 border-l-4 border-gold-500 relative overflow-hidden">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3 relative z-10 text-xs">
+                    <div class="border-b md:border-b-0 md:border-r border-slate-700 pb-2 md:pb-0 md:pr-3">
+                        <div class="flex items-center space-x-2 text-gold-400 font-bold text-sm mb-0.5">
+                            <i class="fa-solid fa-building"></i>
+                            <span data-i18n="hdr_company_title">Two Parrots Group Australia</span>
+                        </div>
+                        <p class="text-slate-300 mb-0.5"><span class="text-slate-400" data-i18n="lbl_md">Managing Director:</span> <strong class="text-white">Kim Heng Ly</strong></p>
+                        <p class="text-[10px] text-slate-400 flex items-start gap-1">
+                            <i class="fa-solid fa-location-dot mt-0.5 text-gold-500"></i>
+                            <span>1/57 Elonera Rd, Noble Park North VIC 3174, Australia</span>
+                        </p>
+                    </div>
+
+                    <div class="border-b md:border-b-0 md:border-r border-slate-700 pb-2 md:pb-0 md:pr-3">
+                        <h3 data-i18n="card_contact_title" class="text-[10px] uppercase font-semibold text-slate-400 tracking-wider mb-0.5">Contact & Web Portal</h3>
+                        <p class="text-[11px] text-slate-300 mb-0.5 flex items-center gap-2">
+                            <i class="fa-solid fa-globe text-gold-400 w-3"></i>
+                            <a href="https://twoparrotsgroup.com.au" target="_blank" class="hover:underline text-gold-400">twoparrotsgroup.com.au</a>
+                        </p>
+                        <p class="text-[11px] text-slate-300 flex items-center gap-2">
+                            <i class="fa-solid fa-envelope text-gold-400 w-3"></i>
+                            <a href="mailto:info@twoparrotsgroup.com.au" class="hover:underline">info@twoparrotsgroup.com.au</a>
+                        </p>
+                    </div>
+
+                    <div>
+                        <h3 data-i18n="card_logistics_title" class="text-[10px] uppercase font-semibold text-slate-400 tracking-wider mb-0.5">Import / Logistics Terminal</h3>
+                        <p class="text-[11px] text-slate-300 mb-0.5 flex items-center gap-2">
+                            <i class="fa-solid fa-ship text-gold-400 w-3"></i>
+                            <span><strong data-i18n="lbl_discharge_port">Discharge Port:</strong> Swanson Dock VIC</span>
+                        </p>
+                        <p class="text-[11px] text-slate-300 flex items-center gap-2">
+                            <i class="fa-solid fa-box text-gold-400 w-3"></i>
+                            <span><strong data-i18n="lbl_standard_unit">Standard Unit:</strong> 20ft / 40ft FCL</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DASHBOARD METRIC CARDS OVERVIEW -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-5">
+                <!-- Card 1: Total Net Profit (AUD) -->
+                <div class="bg-white rounded-xl shadow-md p-4 border border-slate-200 border-l-4 border-l-emerald-500 relative overflow-hidden">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Total Net Order Profit</p>
+                            <h3 id="dash-card-profit" class="text-2xl font-black text-slate-900 mt-1 font-mono text-emerald-600">$0.00 AUD</h3>
+                            <p class="text-[10px] text-slate-500 mt-1 flex items-center gap-1">
+                                <i class="fa-solid fa-chart-line text-emerald-500"></i> Calculated live from order CTNs
+                            </p>
+                        </div>
+                        <div class="w-10 h-10 rounded-lg bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-600">
+                            <i class="fa-solid fa-sack-dollar text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2: CTN Volume Tracking -->
+                <div class="bg-white rounded-xl shadow-md p-4 border border-slate-200 border-l-4 border-l-gold-500 relative overflow-hidden">
+                    <div class="flex justify-between items-start">
+                        <div class="w-full pr-3">
+                            <div class="flex justify-between items-center">
+                                <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Container CTN Volume</p>
+                                <span id="dash-card-container-type" class="text-[10px] font-bold bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded border border-slate-200">20ft FCL</span>
+                            </div>
+                            <div class="flex items-baseline gap-2 mt-1">
+                                <h3 id="dash-card-ctn-qty" class="text-2xl font-black text-slate-900 font-mono">0 CTN</h3>
+                                <span id="dash-card-ctn-target" class="text-xs text-slate-400 font-mono">/ 1,000 CTN</span>
+                                <span id="dash-card-ctn-pct" class="text-xs font-bold text-gold-600 ml-auto font-mono">0%</span>
+                            </div>
+                            <!-- Fill Level Progress Bar -->
+                            <div class="w-full bg-slate-100 rounded-full h-2 mt-2 overflow-hidden border border-slate-200">
+                                <div id="dash-card-progress-bar" class="bg-gold-500 h-full rounded-full transition-all duration-300" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <div class="w-10 h-10 rounded-lg bg-gold-50 border border-gold-200 flex items-center justify-center text-gold-600 shrink-0">
+                            <i class="fa-solid fa-boxes-stacked text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3: Total OpEx Expenses -->
+                <div class="bg-white rounded-xl shadow-md p-4 border border-slate-200 border-l-4 border-l-blue-500 relative overflow-hidden">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Total OpEx Expenses</p>
+                            <h3 id="dash-card-opex" class="text-2xl font-black text-slate-900 mt-1 font-mono text-slate-800">$280,435.00</h3>
+                            <p class="text-[10px] text-slate-500 mt-1 flex items-center justify-between gap-2">
+                                <span><i class="fa-solid fa-calculator text-blue-500"></i> Annualized Operating Cost</span>
+                            </p>
+                        </div>
+                        <div class="w-10 h-10 rounded-lg bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-600">
+                            <i class="fa-solid fa-file-invoice-dollar text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. FAST EASY INPUT TABLE (HIGH DENSITY COMPACT SCHEDULE - 30 PRODUCTS WITH CTN PRICE EDIT) -->
+            <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-300 mb-6">
+                <div class="bg-slate-900 px-4 py-2 flex flex-wrap justify-between items-center gap-2 border-b border-gold-500">
+                    <div>
+                        <h2 data-i18n="tbl_title" class="text-xs font-bold text-white tracking-wide uppercase">Landed Cost Quotation & Benchmark Schedule (Fast Entry + CTN Price Inputs)</h2>
+                        <p class="text-[10px] text-gold-400">Adjust CTN Price (USD) or Volume (CTN) per product. Press Tab ↹ or Enter ↵ to cycle inputs fast.</p>
+                    </div>
+                    <div class="flex items-center gap-2 text-xs">
+                        <button onclick="resetMasterProfitOrders()" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 rounded text-[10px] font-semibold transition flex items-center gap-1">
+                            <i class="fa-solid fa-rotate-left"></i> Reset Volume
+                        </button>
+                        <button onclick="exportPurchaseOrderPDF()" class="px-2.5 py-1 gold-gradient hover:opacity-90 text-slate-900 font-bold rounded text-[10px] shadow transition flex items-center gap-1.5">
+                            <i class="fa-solid fa-file-pdf"></i> Export Purchase Order PDF
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Compact Table with Scroll Containment -->
+                <div class="max-h-[420px] overflow-y-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead class="sticky top-0 z-20 shadow-sm">
+                            <tr class="bg-slate-800 text-slate-200 text-[10px] uppercase font-semibold tracking-wider border-b border-slate-900">
+                                <th class="py-1.5 px-2 text-center w-8 border-r border-slate-700">N°</th>
+                                <th data-i18n="th_prod_desc" class="py-1.5 px-3 border-r border-slate-700">Product Description & Packaging Spec</th>
+                                <th class="py-1.5 px-2 w-28 border-r border-slate-700 text-center bg-slate-850 text-gold-400">CTN Price (USD)</th>
+                                <th class="py-1.5 px-2 w-28 border-r border-slate-700 text-center bg-slate-850 text-emerald-400">Volume CTN</th>
+                                <th class="py-1.5 px-3 w-28 border-r border-slate-700 text-right">Landed / CTN</th>
+                                <th class="py-1.5 px-3 w-28 border-r border-slate-700 text-right">Selling / CTN</th>
+                                <th class="py-1.5 px-3 w-28 text-right border-r border-slate-700 bg-emerald-900/30 text-emerald-300">Net Profit / CTN</th>
+                                <th class="py-1.5 px-3 w-32 text-right bg-slate-900 text-gold-400 font-bold">Total Order Profit</th>
+                            </tr>
+                        </thead>
+                        <tbody id="product-table-body" class="text-[11px] divide-y divide-slate-200">
+                            <!-- JS renders 30 compact product rows -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="bg-slate-900 text-white px-4 py-2 flex flex-wrap justify-between items-center border-t-2 border-gold-500 font-mono text-xs">
+                    <div class="flex items-center gap-3">
+                        <span class="text-gold-400 font-bold">CONTAINER LOAD:</span>
+                        <span id="master-profit-total-qty" class="text-white font-bold">0 CTN</span>
+                        <span id="floating-space-pct" class="text-gold-400 font-bold">(0%)</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span class="text-slate-400">TOTAL NET PROFIT:</span>
+                        <span id="master-profit-total-val" class="text-emerald-400 font-black text-sm">$0.00 AUD</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. FULL MASTER OPERATIONAL EXPENSE BUDGET & OPERATING MODEL -->
+            <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-300 mb-6">
+                <div class="bg-slate-900 px-4 py-3 border-b-2 border-gold-500 flex flex-wrap justify-between items-center gap-3">
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid fa-chart-pie text-gold-400 text-base"></i>
+                            <h2 class="text-sm font-bold text-white tracking-wide uppercase" data-i18n="opex_main_title">Master Operational Expense Budget & Operating Model</h2>
+                        </div>
+                        <p class="text-[11px] text-gold-400" data-i18n="opex_main_subtitle">Business Entity: Cambodia-to-Melbourne Import & Distribution Business | Location: Melbourne, VIC, Australia (AUD)</p>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <button onclick="resetOpExBudget()" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-600 rounded text-xs font-semibold transition flex items-center gap-1">
+                            <i class="fa-solid fa-rotate-left"></i> <span data-i18n="btn_reset_opex">Reset Budget</span>
+                        </button>
+                        <span class="bg-gold-500/20 text-gold-400 text-xs font-bold px-2.5 py-1 rounded border border-gold-500/40 font-mono">
+                            <span data-i18n="lbl_total_opex_banner">Total OpEx:</span> $<span id="banner-opex-total">280,435.00</span> AUD / <span data-i18n="lbl_year">Year</span>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="p-4 space-y-5">
+                    <!-- 1. Executive Summary & Budget Overview -->
+                    <div>
+                        <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wider mb-2 flex items-center gap-2 border-b border-slate-200 pb-1">
+                            <i class="fa-solid fa-list-check text-gold-600"></i> <span data-i18n="opex_sec1_title">1. Executive Summary & Budget Overview</span>
+                        </h3>
+                        
+                        <div class="overflow-x-auto rounded border border-slate-200">
+                            <table class="w-full text-left text-xs">
+                                <thead>
+                                    <tr class="bg-slate-800 text-slate-200 font-bold uppercase tracking-wider border-b border-slate-700 text-[10px]">
+                                        <th class="py-2 px-3" data-i18n="th_opex_cat">Expense Category</th>
+                                        <th class="py-2 px-3 text-right" data-i18n="th_opex_mth">Monthly Cost (ex GST)</th>
+                                        <th class="py-2 px-3 text-right" data-i18n="th_opex_ann">Annual Cost (ex GST)</th>
+                                        <th class="py-2 px-3 text-right" data-i18n="th_opex_pct">% of Total OpEx</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-200 bg-white text-[11px]">
+                                    <tr class="hover:bg-slate-50">
+                                        <td class="py-1.5 px-3 font-semibold text-slate-800" data-i18n="opex_cat1_name">1. Stated Fixed Overheads (Office, Storage, Rental Car)</td>
+                                        <td class="py-1.5 px-3 text-right font-mono" id="sum-mth-c1">$2,747.33</td>
+                                        <td class="py-1.5 px-3 text-right font-mono font-bold" id="sum-ann-c1">$32,968.00</td>
+                                        <td class="py-1.5 px-3 text-right font-mono font-semibold text-slate-600" id="sum-pct-c1">11.8%</td>
+                                    </tr>
+                                    <tr class="hover:bg-slate-50">
+                                        <td class="py-1.5 px-3 font-semibold text-slate-800" data-i18n="opex_cat2_name">2. Executive & Operational Personnel (Salaries, Super, WorkCover)</td>
+                                        <td class="py-1.5 px-3 text-right font-mono" id="sum-mth-c2">$18,412.50</td>
+                                        <td class="py-1.5 px-3 text-right font-mono font-bold text-emerald-700" id="sum-ann-c2">$220,950.00</td>
+                                        <td class="py-1.5 px-3 text-right font-mono font-semibold text-slate-600" id="sum-pct-c2">78.8%</td>
+                                    </tr>
+                                    <tr class="hover:bg-slate-50">
+                                        <td class="py-1.5 px-3 font-semibold text-slate-800" data-i18n="opex_cat3_name">3. Vehicle Running & Transportation Expenses (Fuel, Tolls, Maint.)</td>
+                                        <td class="py-1.5 px-3 text-right font-mono" id="sum-mth-c3">$385.00</td>
+                                        <td class="py-1.5 px-3 text-right font-mono font-bold" id="sum-ann-c3">$4,620.00</td>
+                                        <td class="py-1.5 px-3 text-right font-mono font-semibold text-slate-600" id="sum-pct-c3">1.6%</td>
+                                    </tr>
+                                    <tr class="hover:bg-slate-50">
+                                        <td class="py-1.5 px-3 font-semibold text-slate-800" data-i18n="opex_cat4_name">4. IT, Communications & SaaS Stack (Telecoms, Web, Software)</td>
+                                        <td class="py-1.5 px-3 text-right font-mono" id="sum-mth-c4">$405.00</td>
+                                        <td class="py-1.5 px-3 text-right font-mono font-bold" id="sum-ann-c4">$4,860.00</td>
+                                        <td class="py-1.5 px-3 text-right font-mono font-semibold text-slate-600" id="sum-pct-c4">1.7%</td>
+                                    </tr>
+                                    <tr class="hover:bg-slate-50">
+                                        <td class="py-1.5 px-3 font-semibold text-slate-800" data-i18n="opex_cat5_name">5. Business Insurance & Compliance (Liability, Transit, Audit)</td>
+                                        <td class="py-1.5 px-3 text-right font-mono" id="sum-mth-c5">$444.75</td>
+                                        <td class="py-1.5 px-3 text-right font-mono font-bold" id="sum-ann-c5">$5,337.00</td>
+                                        <td class="py-1.5 px-3 text-right font-mono font-semibold text-slate-600" id="sum-pct-c5">1.9%</td>
+                                    </tr>
+                                    <tr class="hover:bg-slate-50">
+                                        <td class="py-1.5 px-3 font-semibold text-slate-800" data-i18n="opex_cat6_name">6. Estimated Logistics & Customs Administration (Clearance, PSC)</td>
+                                        <td class="py-1.5 px-3 text-right font-mono" id="sum-mth-c6">$975.00</td>
+                                        <td class="py-1.5 px-3 text-right font-mono font-bold" id="sum-ann-c6">$11,700.00</td>
+                                        <td class="py-1.5 px-3 text-right font-mono font-semibold text-slate-600" id="sum-pct-c6">4.2%</td>
+                                    </tr>
+                                    <tr class="bg-slate-900 text-white font-bold text-xs">
+                                        <td class="py-2 px-3 uppercase text-gold-400" data-i18n="opex_total_lbl">TOTAL OPERATIONAL EXPENSES (OpEx)</td>
+                                        <td class="py-2 px-3 text-right font-mono text-white" id="sum-mth-total">$23,369.58</td>
+                                        <td class="py-2 px-3 text-right font-mono text-gold-400 text-xs" id="sum-ann-total">$280,435.00</td>
+                                        <td class="py-2 px-3 text-right font-mono">100.0%</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- 2. Detailed Expense Itemization -->
+                    <div>
+                        <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wider mb-2 flex items-center gap-2 border-b border-slate-200 pb-1">
+                            <i class="fa-solid fa-edit text-gold-600"></i> <span data-i18n="opex_sec2_title">2. Detailed Expense Itemization (Editable AUD Prices)</span>
+                        </h3>
+
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+
+                            <!-- Category 1: Fixed Overheads -->
+                            <div id="c1-card-container" class="bg-slate-50 p-3 rounded-lg border border-slate-200 shadow-sm transition-all duration-200">
+                                <div class="flex justify-between items-center mb-2 pb-1 border-b border-slate-200">
+                                    <h4 class="font-bold text-xs text-slate-900 uppercase" data-i18n="c1_hdr">Category 1: Stated Fixed Overheads</h4>
+                                    <div class="flex items-center gap-2">
+                                        <label class="inline-flex items-center cursor-pointer select-none">
+                                            <input type="checkbox" id="c1_toggle_input" checked onchange="updateOpExFromInputs()" class="sr-only peer">
+                                            <div class="w-8 h-4 bg-slate-300 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-emerald-600 relative"></div>
+                                            <span id="c1_toggle_status" class="ml-1.5 text-[10px] font-bold uppercase text-emerald-600">ON</span>
+                                        </label>
+                                        <span class="text-gold-700 font-mono font-bold text-xs" id="subtotal-c1-hdr">$32,968.00/yr</span>
+                                    </div>
+                                </div>
+                                <table class="w-full text-[11px] bg-white rounded border border-slate-200">
+                                    <thead class="bg-slate-800 text-white text-[10px]">
+                                        <tr>
+                                            <th class="p-1.5 text-left" data-i18n="th_item">Line Item</th>
+                                            <th class="p-1.5 text-right" data-i18n="th_wk">Weekly AUD</th>
+                                            <th class="p-1.5 text-right" data-i18n="th_mth">Monthly</th>
+                                            <th class="p-1.5 text-right" data-i18n="th_ann">Annual</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-slate-100">
+                                        <tr>
+                                            <td class="p-1.5 font-medium" data-i18n="c1_item1">Office Rent</td>
+                                            <td class="p-1.5 text-right font-mono">$<input type="number" id="c1_1_input" value="60.00" step="5" min="0" oninput="updateOpExFromInputs()" class="w-16 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
+                                            <td class="p-1.5 text-right font-mono" id="c1_1_mth">$260.00</td>
+                                            <td class="p-1.5 text-right font-mono font-bold" id="c1_1_ann">$3,120.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-1.5 font-medium" data-i18n="c1_item2">Storage Unit / Small Warehouse</td>
+                                            <td class="p-1.5 text-right font-mono">$<input type="number" id="c1_2_input" value="130.00" step="5" min="0" oninput="updateOpExFromInputs()" class="w-16 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
+                                            <td class="p-1.5 text-right font-mono" id="c1_2_mth">$563.33</td>
+                                            <td class="p-1.5 text-right font-mono font-bold" id="c1_2_ann">$6,760.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-1.5 font-medium" data-i18n="c1_item3">Commercial Vehicle Rental</td>
+                                            <td class="p-1.5 text-right font-mono">$<input type="number" id="c1_3_input" value="444.00" step="10" min="0" oninput="updateOpExFromInputs()" class="w-16 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
+                                            <td class="p-1.5 text-right font-mono" id="c1_3_mth">$1,924.00</td>
+                                            <td class="p-1.5 text-right font-mono font-bold" id="c1_3_ann">$23,088.00</td>
+                                        </tr>
+                                        <tr class="bg-slate-100 font-bold border-t border-slate-300">
+                                            <td class="p-1.5 text-slate-900" data-i18n="lbl_subtotal_ex_gst">Subtotal (excl. GST)</td>
+                                            <td class="p-1.5 text-right font-mono" id="c1_wk_sub">$634.00</td>
+                                            <td class="p-1.5 text-right font-mono" id="c1_mth_sub">$2,747.33</td>
+                                            <td class="p-1.5 text-right font-mono text-gold-700" id="c1_ann_sub">$32,968.00</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Category 2: Personnel Overhead -->
+                            <div id="c2-card-container" class="bg-slate-50 p-3 rounded-lg border border-slate-200 shadow-sm transition-all duration-200 opacity-70">
+                                <div class="flex justify-between items-center mb-2 pb-1 border-b border-slate-200">
+                                    <h4 class="font-bold text-xs text-slate-900 uppercase" data-i18n="c2_hdr">Category 2: Personnel Overhead</h4>
+                                    <div class="flex items-center gap-2">
+                                        <label class="inline-flex items-center cursor-pointer select-none">
+                                            <input type="checkbox" id="c2_toggle_input" onchange="updateOpExFromInputs()" class="sr-only peer">
+                                            <div class="w-8 h-4 bg-slate-300 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-emerald-600 relative"></div>
+                                            <span id="c2_toggle_status" class="ml-1.5 text-[10px] font-bold uppercase text-slate-400">OFF</span>
+                                        </label>
+                                        <span class="text-slate-400 font-mono font-bold text-xs" id="subtotal-c2-hdr">$0.00/yr (OFF)</span>
+                                    </div>
+                                </div>
+                                <table class="w-full text-[11px] bg-white rounded border border-slate-200">
+                                    <thead class="bg-slate-800 text-white text-[10px]">
+                                        <tr>
+                                            <th class="p-1.5 text-left" data-i18n="th_role">Role / Position</th>
+                                            <th class="p-1.5 text-right" data-i18n="th_base">Base Salary AUD</th>
+                                            <th class="p-1.5 text-right" data-i18n="th_super">Super (11.5%)</th>
+                                            <th class="p-1.5 text-right" data-i18n="th_wc">WorkCover</th>
+                                            <th class="p-1.5 text-right" data-i18n="th_ann">Total Annual</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-slate-100">
+                                        <tr>
+                                            <td class="p-1.5 font-medium" data-i18n="c2_role1">Managing Director</td>
+                                            <td class="p-1.5 text-right font-mono">$<input type="number" id="c2_1_base" value="110000.00" step="1000" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
+                                            <td class="p-1.5 text-right font-mono" id="c2_1_super">$12,650.00</td>
+                                            <td class="p-1.5 text-right font-mono">$<input type="number" id="c2_1_wc" value="2200.00" step="100" min="0" oninput="updateOpExFromInputs()" class="w-16 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
+                                            <td class="p-1.5 text-right font-mono font-bold" id="c2_1_tot">$124,850.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-1.5 font-medium" data-i18n="c2_role2">Operations Manager</td>
+                                            <td class="p-1.5 text-right font-mono">$<input type="number" id="c2_2_base" value="84000.00" step="1000" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
+                                            <td class="p-1.5 text-right font-mono" id="c2_2_super">$9,660.00</td>
+                                            <td class="p-1.5 text-right font-mono">$<input type="number" id="c2_2_wc" value="2440.00" step="100" min="0" oninput="updateOpExFromInputs()" class="w-16 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
+                                            <td class="p-1.5 text-right font-mono font-bold" id="c2_2_tot">$96,100.00</td>
+                                        </tr>
+                                        <tr class="bg-slate-100 font-bold border-t border-slate-300">
+                                            <td class="p-1.5 text-slate-900" data-i18n="lbl_subtotal">Subtotal</td>
+                                            <td class="p-1.5 text-right font-mono" id="c2_base_sub">$194,000.00</td>
+                                            <td class="p-1.5 text-right font-mono" id="c2_super_sub">$22,310.00</td>
+                                            <td class="p-1.5 text-right font-mono" id="c2_wc_sub">$4,640.00</td>
+                                            <td class="p-1.5 text-right font-mono text-emerald-700" id="c2_ann_sub">$220,950.00</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Category 3: Vehicle Running Expenses -->
+                            <div id="c3-card-container" class="bg-slate-50 p-3 rounded-lg border border-slate-200 shadow-sm transition-all duration-200">
+                                <div class="flex justify-between items-center mb-2 pb-1 border-b border-slate-200">
+                                    <h4 class="font-bold text-xs text-slate-900 uppercase" data-i18n="c3_hdr">Category 3: Vehicle Running Expenses</h4>
+                                    <div class="flex items-center gap-2">
+                                        <label class="inline-flex items-center cursor-pointer select-none">
+                                            <input type="checkbox" id="c3_toggle_input" checked onchange="updateOpExFromInputs()" class="sr-only peer">
+                                            <div class="w-8 h-4 bg-slate-300 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-emerald-600 relative"></div>
+                                            <span id="c3_toggle_status" class="ml-1.5 text-[10px] font-bold uppercase text-emerald-600">ON</span>
+                                        </label>
+                                        <span class="text-gold-700 font-mono font-bold text-xs" id="subtotal-c3-hdr">$4,620.00/yr</span>
+                                    </div>
+                                </div>
+                                <table class="w-full text-[11px] bg-white rounded border border-slate-200">
+                                    <thead class="bg-slate-800 text-white text-[10px]">
+                                        <tr>
+                                            <th class="p-1.5 text-left" data-i18n="th_desc">Expense Description</th>
+                                            <th class="p-1.5 text-right" data-i18n="th_mth">Monthly AUD</th>
+                                            <th class="p-1.5 text-right" data-i18n="th_ann">Annual Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-slate-100">
+                                        <tr>
+                                            <td class="p-1.5 font-medium" data-i18n="c3_item1">Fuel (Unleaded / Diesel)</td>
+                                            <td class="p-1.5 text-right font-mono">$<input type="number" id="c3_1_mth_input" value="260.00" step="10" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
+                                            <td class="p-1.5 text-right font-mono font-bold" id="c3_1_ann">$3,120.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-1.5 font-medium" data-i18n="c3_item2">Transurban Tolls</td>
+                                            <td class="p-1.5 text-right font-mono">$<input type="number" id="c3_2_mth_input" value="85.00" step="5" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
+                                            <td class="p-1.5 text-right font-mono font-bold" id="c3_2_ann">$1,020.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-1.5 font-medium" data-i18n="c3_item3">Vehicle Maintenance</td>
+                                            <td class="p-1.5 text-right font-mono">$<input type="number" id="c3_3_mth_input" value="40.00" step="5" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
+                                            <td class="p-1.5 text-right font-mono font-bold" id="c3_3_ann">$480.00</td>
+                                        </tr>
+                                        <tr class="bg-slate-100 font-bold border-t border-slate-300">
+                                            <td class="p-1.5 text-slate-900" data-i18n="lbl_subtotal_ex_gst">Subtotal (excl. GST)</td>
+                                            <td class="p-1.5 text-right font-mono" id="c3_mth_sub">$385.00</td>
+                                            <td class="p-1.5 text-right font-mono text-gold-700" id="c3_ann_sub">$4,620.00</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Category 4: IT & SaaS Stack -->
+                            <div id="c4-card-container" class="bg-slate-50 p-3 rounded-lg border border-slate-200 shadow-sm transition-all duration-200">
+                                <div class="flex justify-between items-center mb-2 pb-1 border-b border-slate-200">
+                                    <h4 class="font-bold text-xs text-slate-900 uppercase" data-i18n="c4_hdr">Category 4: IT & SaaS Stack</h4>
+                                    <div class="flex items-center gap-2">
+                                        <label class="inline-flex items-center cursor-pointer select-none">
+                                            <input type="checkbox" id="c4_toggle_input" checked onchange="updateOpExFromInputs()" class="sr-only peer">
+                                            <div class="w-8 h-4 bg-slate-300 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-emerald-600 relative"></div>
+                                            <span id="c4_toggle_status" class="ml-1.5 text-[10px] font-bold uppercase text-emerald-600">ON</span>
+                                        </label>
+                                        <span class="text-gold-700 font-mono font-bold text-xs" id="subtotal-c4-hdr">$4,860.00/yr</span>
+                                    </div>
+                                </div>
+                                <table class="w-full text-[11px] bg-white rounded border border-slate-200">
+                                    <thead class="bg-slate-800 text-white text-[10px]">
+                                        <tr>
+                                            <th class="p-1.5 text-left" data-i18n="th_software">Software / Service</th>
+                                            <th class="p-1.5 text-right" data-i18n="th_mth">Monthly AUD</th>
+                                            <th class="p-1.5 text-right" data-i18n="th_ann">Annual Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-slate-100">
+                                        <tr>
+                                            <td class="p-1.5 font-medium" data-i18n="c4_item1">Telecoms & Mobile Services</td>
+                                            <td class="p-1.5 text-right font-mono">$<input type="number" id="c4_1_mth_input" value="160.00" step="5" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
+                                            <td class="p-1.5 text-right font-mono font-bold" id="c4_1_ann">$1,920.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-1.5 font-medium" data-i18n="c4_item2">E-Commerce Platform</td>
+                                            <td class="p-1.5 text-right font-mono">$<input type="number" id="c4_2_mth_input" value="55.00" step="5" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
+                                            <td class="p-1.5 text-right font-mono font-bold" id="c4_2_ann">$660.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-1.5 font-medium" data-i18n="c4_item3">Email & Productivity</td>
+                                            <td class="p-1.5 text-right font-mono">$<input type="number" id="c4_3_mth_input" value="30.00" step="5" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
+                                            <td class="p-1.5 text-right font-mono font-bold" id="c4_3_ann">$360.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-1.5 font-medium" data-i18n="c4_item4">Accounting & ERP Integration</td>
+                                            <td class="p-1.5 text-right font-mono">$<input type="number" id="c4_4_mth_input" value="90.00" step="5" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
+                                            <td class="p-1.5 text-right font-mono font-bold" id="c4_4_ann">$1,080.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-1.5 font-medium" data-i18n="c4_item5">Inventory Management Software</td>
+                                            <td class="p-1.5 text-right font-mono">$<input type="number" id="c4_5_mth_input" value="70.00" step="5" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
+                                            <td class="p-1.5 text-right font-mono font-bold" id="c4_5_ann">$840.00</td>
+                                        </tr>
+                                        <tr class="bg-slate-100 font-bold border-t border-slate-300">
+                                            <td class="p-1.5 text-slate-900" data-i18n="lbl_subtotal_ex_gst">Subtotal (excl. GST)</td>
+                                            <td class="p-1.5 text-right font-mono" id="c4_mth_sub">$405.00</td>
+                                            <td class="p-1.5 text-right font-mono text-gold-700" id="c4_ann_sub">$4,860.00</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Category 5: Business Insurance & Compliance -->
+                            <div id="c5-card-container" class="bg-slate-50 p-3 rounded-lg border border-slate-200 shadow-sm transition-all duration-200">
+                                <div class="flex justify-between items-center mb-2 pb-1 border-b border-slate-200">
+                                    <h4 class="font-bold text-xs text-slate-900 uppercase" data-i18n="c5_hdr">Category 5: Insurance & Compliance</h4>
+                                    <div class="flex items-center gap-2">
+                                        <label class="inline-flex items-center cursor-pointer select-none">
+                                            <input type="checkbox" id="c5_toggle_input" checked onchange="updateOpExFromInputs()" class="sr-only peer">
+                                            <div class="w-8 h-4 bg-slate-300 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-emerald-600 relative"></div>
+                                            <span id="c5_toggle_status" class="ml-1.5 text-[10px] font-bold uppercase text-emerald-600">ON</span>
+                                        </label>
+                                        <span class="text-gold-700 font-mono font-bold text-xs" id="subtotal-c5-hdr">$5,337.00/yr</span>
+                                    </div>
+                                </div>
+                                <table class="w-full text-[11px] bg-white rounded border border-slate-200">
+                                    <thead class="bg-slate-800 text-white text-[10px]">
+                                        <tr>
+                                            <th class="p-1.5 text-left" data-i18n="th_policy">Service / Policy Type</th>
+                                            <th class="p-1.5 text-right" data-i18n="th_ex_gst">Annual ex GST AUD</th>
+                                            <th class="p-1.5 text-right" data-i18n="th_inc_gst">inc GST (10%)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-slate-100">
+                                        <tr>
+                                            <td class="p-1.5 font-medium" data-i18n="c5_item1">Accounting & Tax Compliance Fee</td>
+                                            <td class="p-1.5 text-right font-mono">$<input type="number" id="c5_1_ann_input" value="177.00" step="10" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
+                                            <td class="p-1.5 text-right font-mono" id="c5_1_inc_gst">$194.70</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-1.5 font-medium" data-i18n="c5_item2">Public & Products Liability</td>
+                                            <td class="p-1.5 text-right font-mono">$<input type="number" id="c5_2_ann_input" value="1800.00" step="50" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
+                                            <td class="p-1.5 text-right font-mono" id="c5_2_inc_gst">$1,980.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-1.5 font-medium" data-i18n="c5_item3">Marine Cargo / Transit Insurance</td>
+                                            <td class="p-1.5 text-right font-mono">$<input type="number" id="c5_3_ann_input" value="1500.00" step="50" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
+                                            <td class="p-1.5 text-right font-mono" id="c5_3_inc_gst">$1,650.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-1.5 font-medium" data-i18n="c5_item4">Management Liability & Cyber</td>
+                                            <td class="p-1.5 text-right font-mono">$<input type="number" id="c5_4_ann_input" value="1860.00" step="50" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
+                                            <td class="p-1.5 text-right font-mono" id="c5_4_inc_gst">$2,046.00</td>
+                                        </tr>
+                                        <tr class="bg-slate-100 font-bold border-t border-slate-300">
+                                            <td class="p-1.5 text-slate-900" data-i18n="lbl_subtotal">Subtotal</td>
+                                            <td class="p-1.5 text-right font-mono text-gold-700" id="c5_ex_sub">$5,337.00</td>
+                                            <td class="p-1.5 text-right font-mono text-slate-800" id="c5_inc_sub">$5,870.70</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Category 6: Import Freight Clearance & Customs -->
+                            <div id="c6-card-container" class="bg-slate-50 p-3 rounded-lg border border-slate-200 shadow-sm transition-all duration-200">
+                                <div class="flex justify-between items-center mb-2 pb-1 border-b border-slate-200">
+                                    <h4 class="font-bold text-xs text-slate-900 uppercase" data-i18n="c6_hdr">Category 6: Import Freight Clearance & Customs</h4>
+                                    <div class="flex items-center gap-2">
+                                        <label class="inline-flex items-center cursor-pointer select-none">
+                                            <input type="checkbox" id="c6_toggle_input" checked onchange="updateOpExFromInputs()" class="sr-only peer">
+                                            <div class="w-8 h-4 bg-slate-300 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-emerald-600 relative"></div>
+                                            <span id="c6_toggle_status" class="ml-1.5 text-[10px] font-bold uppercase text-emerald-600">ON</span>
+                                        </label>
+                                        <span class="text-gold-700 font-mono font-bold text-xs" id="subtotal-c6-hdr">$35,742.00/yr</span>
+                                    </div>
+                                </div>
+                                <table class="w-full text-[11px] bg-white rounded border border-slate-200">
+                                    <thead class="bg-slate-800 text-white text-[10px]">
+                                        <tr>
+                                            <th class="p-1.5 text-left" data-i18n="th_service">Service Component</th>
+                                            <th class="p-1.5 text-right" data-i18n="th_per_shipment">Per Shipment AUD</th>
+                                            <th class="p-1.5 text-right" data-i18n="th_ann_shipments">Annual (12 Shipments)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-slate-100">
+                                        <tr>
+                                            <td class="p-1.5 font-medium" data-i18n="c6_item1">Customs Clearance & Admin Fees</td>
+                                            <td class="p-1.5 text-right font-mono">$<input type="number" id="c6_1_ship_input" value="475.00" step="10" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
+                                            <td class="p-1.5 text-right font-mono font-bold" id="c6_1_ann">$5,700.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-1.5 font-medium" data-i18n="c6_item2">Port Charges & Infrastructure Levies</td>
+                                            <td class="p-1.5 text-right font-mono">$<input type="number" id="c6_2_ship_input" value="450.00" step="25" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
+                                            <td class="p-1.5 text-right font-mono font-bold" id="c6_2_ann">$5,400.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-1.5 font-medium" data-i18n="c6_item3">Wharf Cartage & Sideloader Transport</td>
+                                            <td class="p-1.5 text-right font-mono">$<input type="number" id="c6_3_ship_input" value="750.00" step="25" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
+                                            <td class="p-1.5 text-right font-mono font-bold" id="c6_3_ann">$9,000.00</td>
+                                        </tr>
+                                        <tr class="bg-slate-100 font-bold border-t border-slate-300">
+                                            <td class="p-1.5 text-slate-900" data-i18n="lbl_subtotal_ex_ocean">Subtotal (excl. Ocean & Duty)</td>
+                                            <td class="p-1.5 text-right font-mono" id="c6_ship_sub">$1,675.00</td>
+                                            <td class="p-1.5 text-right font-mono text-gold-700" id="c6_ann_sub">$20,100.00</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- 3. Key Compliance & Financial Considerations -->
+                    <div class="bg-slate-900 text-white p-3.5 rounded-lg border-l-4 border-gold-500">
+                        <h3 class="text-xs font-bold uppercase tracking-wider mb-1.5 text-gold-400 flex items-center gap-1.5">
+                            <i class="fa-solid fa-scale-balanced"></i> <span data-i18n="opex_sec3_title">3. Key Compliance & Financial Considerations</span>
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-[11px] text-slate-300">
+                            <div>
+                                <strong class="text-white block mb-0.5" data-i18n="opex_note1_title">Customs Tariffs & FTAs:</strong>
+                                <span data-i18n="opex_note1_body">Goods originating in Cambodia qualify for duty-free entry into Australia under AANZFTA or RCEP, provided a valid Certificate of Origin (COO) is supplied.</span>
+                            </div>
+                            <div>
+                                <strong class="text-white block mb-0.5" data-i18n="opex_note2_title">Import GST Deferred Scheme (DGST):</strong>
+                                <span data-i18n="opex_note2_body">Import GST (10%) is calculated on Customs Value + Duty + Transport/Insurance. Registering for Deferred GST defers border payment to monthly BAS returns.</span>
+                            </div>
+                            <div>
+                                <strong class="text-white block mb-0.5" data-i18n="opex_note3_title">Superannuation Compliance:</strong>
+                                <span data-i18n="opex_note3_body">Statutory Employer Superannuation Guarantee (11.5%) must be remitted quarterly to compliant Australian super funds before statutory due dates.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- 4. FLOATING LANDED COST ENGINE TOOLBAR -->
+        <div class="fixed bottom-0 left-0 right-0 bg-slate-900 border-t-2 border-gold-500 shadow-2xl p-2.5 text-white z-50 no-print">
+            <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
+                <div class="flex items-center space-x-2">
+                    <div class="p-1.5 bg-gold-500 text-slate-900 rounded">
+                        <i class="fa-solid fa-calculator text-base"></i>
+                    </div>
+                    <div>
+                        <h3 data-i18n="tb_title" class="font-bold text-xs text-white">Live Landed Cost Recalculation Engine</h3>
+                        <p data-i18n="tb_desc" class="text-[10px] text-slate-400">Adjust freight variables & margin percentage to compute live costings</p>
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap items-center gap-3">
+                    <div class="flex flex-col">
+                        <label data-i18n="lbl_fx" class="text-[9px] text-gold-400 uppercase font-semibold mb-0.5">FX Rate (AUD/USD)</label>
+                        <input type="number" id="input-fx" value="0.6620" step="0.0005" min="0.1" oninput="renderTable()" class="bg-slate-800 border border-slate-700 text-white rounded px-2 py-0.5 text-xs w-20 text-right focus:border-gold-500">
+                    </div>
+
+                    <div class="flex flex-col">
+                        <label data-i18n="lbl_freight" class="text-[9px] text-gold-400 uppercase font-semibold mb-0.5">Freight (USD)</label>
+                        <input type="number" id="input-freight" value="1580" step="25" min="0" oninput="renderTable()" class="bg-slate-800 border border-slate-700 text-white rounded px-2 py-0.5 text-xs w-24 text-right focus:border-gold-500">
+                    </div>
+
+                    <div class="flex flex-col">
+                        <label data-i18n="lbl_margin" class="text-[9px] text-gold-400 uppercase font-semibold mb-0.5">Target Margin (%)</label>
+                        <input type="number" id="input-margin" value="20" step="1" min="0" max="95" oninput="renderTable()" class="bg-slate-800 border border-gold-500 text-gold-400 font-bold rounded px-2 py-0.5 text-xs w-16 text-right">
+                    </div>
+
+                    <div class="flex flex-col">
+                        <label class="text-[9px] text-gold-400 uppercase font-semibold mb-0.5">Container Type</label>
+                        <select id="input-container-type" onchange="handleContainerTypeChange()" class="bg-slate-800 border border-slate-700 text-white rounded px-2 py-0.5 text-xs font-bold focus:border-gold-500">
+                            <option value="20ft" selected>20ft FCL (1,000 CTN)</option>
+                            <option value="40ft">40ft FCL (2,000 CTN)</option>
+                        </select>
+                    </div>
+
+                    <div class="flex flex-col min-w-[150px] bg-slate-800 border border-slate-700 rounded px-2 py-1">
+                        <div class="flex items-center justify-between text-[10px] leading-tight mb-0.5">
+                            <span id="floating-total-profit" class="font-black text-emerald-400 font-mono text-xs">$0.00 AUD</span>
+                        </div>
+                        <div class="w-full bg-slate-900 rounded-full h-1.5 overflow-hidden border border-slate-700">
+                            <div id="floating-space-bar" class="bg-gradient-to-r from-emerald-500 to-gold-400 h-full rounded-full transition-all duration-300" style="width: 0%"></div>
+                        </div>
+                    </div>
+
+                    <button id="btn-recalculate" onclick="renderTable()" class="px-3 py-1.5 gold-gradient hover:opacity-90 text-slate-900 font-bold rounded shadow transition text-xs flex items-center gap-1">
+                        <i class="fa-solid fa-arrows-rotate"></i> <span data-i18n="btn_recalc">Recalculate</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- JavaScript Engine -->
+    <script>
+        let currentAnnualOpExAUD = 280435.00;
+        let ANNUAL_CONTAINERS = 12;
+        let currentOpExPerContainerAUD = currentAnnualOpExAUD / ANNUAL_CONTAINERS;
+
+        const defaultOpExValues = {
+            c1_1_input: 60.00, c1_2_input: 130.00, c1_3_input: 444.00,
+            c2_1_base: 110000.00, c2_1_wc: 2200.00, c2_2_base: 84000.00, c2_2_wc: 2440.00,
+            c3_1_mth_input: 260.00, c3_2_mth_input: 85.00, c3_3_mth_input: 40.00,
+            c4_1_mth_input: 160.00, c4_2_mth_input: 55.00, c4_3_mth_input: 30.00, c4_4_mth_input: 90.00, c4_5_mth_input: 70.00,
+            c5_1_ann_input: 177.00, c5_2_ann_input: 1800.00, c5_3_ann_input: 1500.00, c5_4_ann_input: 1860.00,
+            c6_1_ship_input: 475.00, c6_2_ship_input: 450.00, c6_3_ship_input: 750.00
+        };
+
+        const productsData = [
+            { id: 1, status: 'Active', name: { en: 'Finest Rice Flour 500g', km: 'ម្សៅអង្ករខ្សាយ ៥០០ក្រាម' }, spec: '20 Pcs/CTN (10kg)', ctnPriceUsd: 7.20, pcsPer20ft: 20000, orderQty: 0 },
+            { id: 2, status: 'Active', name: { en: 'Glutinous Rice Flour 500g', km: 'ម្សៅអង្ករដំណើប ៥០០ក្រាម' }, spec: '20 Pcs/CTN (10kg)', ctnPriceUsd: 11.60, pcsPer20ft: 20000, orderQty: 0 },
+            { id: 3, status: 'Active', name: { en: 'Tapioca Flour 500g', km: 'ម្សៅឆា ៥០០ក្រាម' }, spec: '20 Pcs/CTN (10kg)', ctnPriceUsd: 8.80, pcsPer20ft: 20000, orderQty: 0 },
+            { id: 4, status: 'Active', name: { en: 'Pancake Flour (Banh Xeo) 500g', km: 'ម្សៅបាញ់ឆែវ ៥០០ក្រាម' }, spec: '20 Pcs/CTN (10kg)', ctnPriceUsd: 18.00, pcsPer20ft: 20000, orderQty: 0 },
+            { id: 5, status: 'Active', name: { en: 'Crispy Tempura Flour 1000g', km: 'ម្សៅបំពងស្រួយ ១០០០ក្រាម' }, spec: '10 Pcs/CTN (10kg)', ctnPriceUsd: 12.50, pcsPer20ft: 10000, orderQty: 0 },
+            { id: 6, status: 'Active', name: { en: 'Crispy Tempura Flour 150g', km: 'ម្សៅបំពងស្រួយ ១៥០ក្រាម' }, spec: '60 Pcs/CTN (9kg)', ctnPriceUsd: 23.40, pcsPer20ft: 60000, orderQty: 0 },
+            { id: 7, status: 'Active', name: { en: 'Fried Banana Flour 500g', km: 'ម្សៅចេកចៀន ៥០០ក្រាម' }, spec: '20 Pcs/CTN (10kg)', ctnPriceUsd: 32.00, pcsPer20ft: 20000, orderQty: 0 },
+            { id: 8, status: 'Active', name: { en: 'Black Pepper Whole 120g', km: 'ម្រេចខ្មៅគ្រាប់មូល ១២០ក្រាម' }, spec: '12 Cans/CTN', ctnPriceUsd: 43.56, pcsPer20ft: 18000, orderQty: 0 },
+            { id: 9, status: 'Active', name: { en: 'Fine Ground Black Pepper 80g', km: 'ម្រេចខ្មៅម៉ដ្ឋ ៨០ក្រាម' }, spec: '20 Cans/CTN', ctnPriceUsd: 28.60, pcsPer20ft: 24000, orderQty: 0 },
+            { id: 10, status: 'Active', name: { en: 'Coarse Ground Black Pepper 80g', km: 'ម្រេចខ្មៅចម្រៀក ៨០ក្រាម' }, spec: '20 Cans/CTN', ctnPriceUsd: 28.60, pcsPer20ft: 24000, orderQty: 0 },
+            { id: 11, status: 'Active', name: { en: 'Fine Ground White Pepper 80g', km: 'ម្រេចសចម្រៀក ៨០ក្រាម' }, spec: '20 Cans/CTN', ctnPriceUsd: 28.60, pcsPer20ft: 24000, orderQty: 0 },
+            { id: 12, status: 'Active', name: { en: 'Coarse Ground Black Pepper 650g', km: 'ម្រេចខ្មៅចម្រៀក ៦៥០ក្រាម' }, spec: '6 Cans/CTN', ctnPriceUsd: 44.76, pcsPer20ft: 9000, orderQty: 0 },
+            { id: 13, status: 'Active', name: { en: 'Fine Ground Black Pepper 650g', km: 'ម្រេចខ្មៅម៉ដ្ឋ ៦៥០ក្រាម' }, spec: '6 Cans/CTN', ctnPriceUsd: 44.76, pcsPer20ft: 9000, orderQty: 0 },
+            { id: 14, status: 'Active', name: { en: 'Black Pepper Whole 1000g', km: 'ម្រេចខ្មៅគ្រាប់មូល ១០០០ក្រាម' }, spec: '10 Bags/CTN', ctnPriceUsd: 90.70, pcsPer20ft: 10000, orderQty: 0 },
+            { id: 15, status: 'Active', name: { en: 'Black Pepper Whole 500g', km: 'ម្រេចខ្មៅគ្រាប់មូល ៥០០ក្រាម' }, spec: '20 Bags/CTN', ctnPriceUsd: 92.00, pcsPer20ft: 20000, orderQty: 0 },
+            { id: 16, status: 'Active', name: { en: 'Crushed Black Pepper (10-20 Mesh) 1000g', km: 'ម្រេចខ្មៅចម្រៀក 10-20 ម៉េស ១០០០g' }, spec: '10 Bags/CTN', ctnPriceUsd: 94.60, pcsPer20ft: 10000, orderQty: 0 },
+            { id: 17, status: 'Active', name: { en: 'Crushed Black Pepper (10-20 Mesh) 500g', km: 'ម្រេចខ្មៅចម្រៀក 10-20 ម៉េស ៥០០g' }, spec: '20 Bags/CTN', ctnPriceUsd: 95.80, pcsPer20ft: 20000, orderQty: 0 },
+            { id: 18, status: 'Active', name: { en: 'Fine Ground Black Pepper (40 Mesh) 1000g', km: 'ម្រេចខ្មៅម៉ដ្ឋ 40 ម៉េស ១០០០g' }, spec: '10 Bags/CTN', ctnPriceUsd: 94.60, pcsPer20ft: 10000, orderQty: 0 },
+            { id: 19, status: 'Active', name: { en: 'Fine Ground Black Pepper (40 Mesh) 500g', km: 'ម្រេចខ្មៅម៉ដ្ឋ 40 ម៉េស ៥០០g' }, spec: '20 Bags/CTN', ctnPriceUsd: 95.60, pcsPer20ft: 20000, orderQty: 0 },
+            { id: 20, status: 'Active', name: { en: 'Black Pepper Whole 200g', km: 'ម្រេចខ្មៅគ្រាប់មូល ២០០ក្រាម' }, spec: '12 Cans/CTN', ctnPriceUsd: 32.16, pcsPer20ft: 14400, orderQty: 0 },
+            { id: 21, status: 'Active', name: { en: 'Coarse Ground Black Pepper 250g', km: 'ម្រេចខ្មៅចម្រៀក ២៥០ក្រាម' }, spec: '12 Cans/CTN', ctnPriceUsd: 40.44, pcsPer20ft: 14400, orderQty: 0 },
+            { id: 22, status: 'Active', name: { en: 'Fine Ground Black Pepper 250g', km: 'ម្រេចខ្មៅម៉ដ្ឋ ២៥០ក្រាម' }, spec: '12 Cans/CTN', ctnPriceUsd: 40.44, pcsPer20ft: 14400, orderQty: 0 },
+            { id: 23, status: 'Active', name: { en: 'Black Pepper Whole 350g', km: 'ម្រេចខ្មៅគ្រាប់មូល ៣៥០ក្រាម' }, spec: '12 Cans/CTN', ctnPriceUsd: 43.08, pcsPer20ft: 14400, orderQty: 0 },
+            { id: 24, status: 'Active', name: { en: 'Coarse Ground Black Pepper 360g', km: 'ម្រេចខ្មៅចម្រៀក ៣៦០ក្រាម' }, spec: '12 Cans/CTN', ctnPriceUsd: 48.72, pcsPer20ft: 14400, orderQty: 0 },
+            { id: 25, status: 'Active', name: { en: 'Fine Ground Black Pepper 360g', km: 'ម្រេចខ្មៅម៉ដ្ឋ ៣៦០ក្រាម' }, spec: '12 Cans/CTN', ctnPriceUsd: 46.68, pcsPer20ft: 14400, orderQty: 0 },
+            { id: 26, status: 'Upcoming', name: { en: 'Instant Rice Stir-Fry Noodle 100g', km: 'មីគោក ១០០ក្រាម' }, spec: '24 Pcs/CTN', ctnPriceUsd: 20.40, pcsPer20ft: 18000, orderQty: 0 },
+            { id: 27, status: 'Upcoming', name: { en: 'Crispy Rice Cake Flour 500g', km: 'ម្សៅនំគ្រក់ ៥០០ក្រាម' }, spec: '20 Pcs/CTN', ctnPriceUsd: 19.00, pcsPer20ft: 20000, orderQty: 0 },
+            { id: 28, status: 'Upcoming', name: { en: 'Chinese Doughnuts Flour 500g', km: 'ម្សៅនំឆា ៥០០ក្រាម' }, spec: '20 Pcs/CTN', ctnPriceUsd: 18.00, pcsPer20ft: 20000, orderQty: 0 },
+            { id: 29, status: 'Upcoming', name: { en: 'Waffle Flour 500g', km: 'ម្សៅពុម្ព ៥០០ក្រាម' }, spec: '20 Pcs/CTN', ctnPriceUsd: 22.00, pcsPer20ft: 20000, orderQty: 0 },
+            { id: 30, status: 'Upcoming', name: { en: 'Steamed Rice Cake Flour 500g', km: 'ម្សៅនំអាកោ ៥០០ក្រាម' }, spec: '20 Pcs/CTN', ctnPriceUsd: 17.00, pcsPer20ft: 20000, orderQty: 0 }
+        ];
+
+        let currentLang = 'en';
+
+        function getPcsPerCtn(specStr) {
+            const match = specStr.match(/(\d+)\s*(Pcs|Cans|Bags)/i);
+            return match ? parseInt(match[1], 10) : 1;
+        }
+
+        function unlockPage(e) {
+            if (e) e.preventDefault();
+            const inputVal = document.getElementById('password-input').value;
+            if (inputVal === 'twoparrots') {
+                const modal = document.getElementById('password-modal');
+                modal.classList.add('opacity-0', 'pointer-events-none');
+                setTimeout(() => modal.style.display = 'none', 300);
+                document.getElementById('page-content').classList.remove('blur-xl', 'pointer-events-none', 'select-none');
+                updateOpExFromInputs();
+            } else {
+                document.getElementById('password-error').classList.remove('hidden');
+            }
+        }
+
+        function togglePasswordVisibility() {
+            const input = document.getElementById('password-input');
+            const icon = document.getElementById('eye-icon');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.replace('fa-eye', 'fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.replace('fa-eye-slash', 'fa-eye');
+            }
+        }
+
+        function handleKeyDown(event, currentId, inputType) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                let nextInput;
+                if (inputType === 'price') {
+                    nextInput = document.getElementById(`input-qty-${currentId}`);
+                } else {
+                    nextInput = document.getElementById(`input-ctn-price-${currentId + 1}`);
+                }
+                if (nextInput) {
+                    nextInput.focus();
+                    nextInput.select();
+                }
+            }
+        }
+
+        function syncCtnPrice(productId, newPrice) {
+            const price = Math.max(0, parseFloat(newPrice) || 0);
+            const product = productsData.find(p => p.id === productId);
+            if (product) product.ctnPriceUsd = price;
+            renderTable();
+        }
+
+        function syncOrderQty(productId, newQty) {
+            const qty = Math.max(0, parseInt(newQty) || 0);
+            const product = productsData.find(p => p.id === productId);
+            if (product) product.orderQty = qty;
+            recalculateMasterProfitTotal();
+        }
+
+        function resetMasterProfitOrders() {
+            productsData.forEach(p => p.orderQty = 0);
+            renderTable();
+        }
+
+        function handleContainerTypeChange() {
+            const containerType = document.getElementById('input-container-type').value;
+            const inputFreight = document.getElementById('input-freight');
+            if (containerType === '40ft') {
+                if (inputFreight.value === '1580') inputFreight.value = '2850';
+            } else {
+                if (inputFreight.value === '2850') inputFreight.value = '1580';
+            }
+            updateOpExFromInputs();
+        }
+
+        function getCategoryState(catNum, rawAnnualSubtotal) {
+            const toggleEl = document.getElementById(`c${catNum}_toggle_input`);
+            const isEnabled = toggleEl ? toggleEl.checked : true;
+            const statusLabel = document.getElementById(`c${catNum}_toggle_status`);
+            const containerEl = document.getElementById(`c${catNum}-card-container`);
+            const headerEl = document.getElementById(`subtotal-c${catNum}-hdr`);
+
+            if (statusLabel) {
+                statusLabel.innerText = isEnabled ? 'ON' : 'OFF';
+                statusLabel.className = isEnabled 
+                    ? 'ml-1.5 text-[10px] font-bold uppercase text-emerald-600' 
+                    : 'ml-1.5 text-[10px] font-bold uppercase text-slate-400';
+            }
+
+            if (headerEl) {
+                if (isEnabled) {
+                    headerEl.innerText = '$' + rawAnnualSubtotal.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + '/yr';
+                    headerEl.className = (catNum === 2 ? "text-emerald-700" : "text-gold-700") + " font-mono font-bold text-xs";
+                } else {
+                    headerEl.innerText = '$0.00/yr (OFF)';
+                    headerEl.className = "text-slate-400 font-mono font-bold text-xs";
+                }
+            }
+
+            if (containerEl) {
+                if (isEnabled) {
+                    containerEl.classList.remove('opacity-70');
+                } else {
+                    containerEl.classList.add('opacity-70');
+                }
+            }
+
+            return isEnabled ? rawAnnualSubtotal : 0;
+        }
+
+        function updateOpExFromInputs() {
+            // Category 1
+            const c1_1_wk = parseFloat(document.getElementById('c1_1_input')?.value) || 0;
+            const c1_2_wk = parseFloat(document.getElementById('c1_2_input')?.value) || 0;
+            const c1_3_wk = parseFloat(document.getElementById('c1_3_input')?.value) || 0;
+            const c1_1_ann = c1_1_wk * 52;
+            const c1_2_ann = c1_2_wk * 52;
+            const c1_3_ann = c1_3_wk * 52;
+
+            if (document.getElementById('c1_1_mth')) document.getElementById('c1_1_mth').innerText = '$' + (c1_1_ann / 12).toFixed(2);
+            if (document.getElementById('c1_1_ann')) document.getElementById('c1_1_ann').innerText = '$' + c1_1_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            if (document.getElementById('c1_2_mth')) document.getElementById('c1_2_mth').innerText = '$' + (c1_2_ann / 12).toFixed(2);
+            if (document.getElementById('c1_2_ann')) document.getElementById('c1_2_ann').innerText = '$' + c1_2_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            if (document.getElementById('c1_3_mth')) document.getElementById('c1_3_mth').innerText = '$' + (c1_3_ann / 12).toFixed(2);
+            if (document.getElementById('c1_3_ann')) document.getElementById('c1_3_ann').innerText = '$' + c1_3_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+            const c1_raw_ann = c1_1_ann + c1_2_ann + c1_3_ann;
+            if (document.getElementById('c1_wk_sub')) document.getElementById('c1_wk_sub').innerText = '$' + (c1_1_wk + c1_2_wk + c1_3_wk).toFixed(2);
+            if (document.getElementById('c1_mth_sub')) document.getElementById('c1_mth_sub').innerText = '$' + (c1_raw_ann / 12).toFixed(2);
+            if (document.getElementById('c1_ann_sub')) document.getElementById('c1_ann_sub').innerText = '$' + c1_raw_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+            const c1_ann = getCategoryState(1, c1_raw_ann);
+            const c1_mth = c1_ann / 12;
+
+            // Category 2
+            const c2_1_base = parseFloat(document.getElementById('c2_1_base')?.value) || 0;
+            const c2_1_super = c2_1_base * 0.115;
+            const c2_1_wc = parseFloat(document.getElementById('c2_1_wc')?.value) || 0;
+            const c2_1_tot = c2_1_base + c2_1_super + c2_1_wc;
+
+            const c2_2_base = parseFloat(document.getElementById('c2_2_base')?.value) || 0;
+            const c2_2_super = c2_2_base * 0.115;
+            const c2_2_wc = parseFloat(document.getElementById('c2_2_wc')?.value) || 0;
+            const c2_2_tot = c2_2_base + c2_2_super + c2_2_wc;
+
+            if (document.getElementById('c2_1_super')) document.getElementById('c2_1_super').innerText = '$' + c2_1_super.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            if (document.getElementById('c2_1_tot')) document.getElementById('c2_1_tot').innerText = '$' + c2_1_tot.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            if (document.getElementById('c2_2_super')) document.getElementById('c2_2_super').innerText = '$' + c2_2_super.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            if (document.getElementById('c2_2_tot')) document.getElementById('c2_2_tot').innerText = '$' + c2_2_tot.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+            const c2_raw_ann = c2_1_tot + c2_2_tot;
+            if (document.getElementById('c2_base_sub')) document.getElementById('c2_base_sub').innerText = '$' + (c2_1_base + c2_2_base).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            if (document.getElementById('c2_super_sub')) document.getElementById('c2_super_sub').innerText = '$' + (c2_1_super + c2_2_super).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            if (document.getElementById('c2_wc_sub')) document.getElementById('c2_wc_sub').innerText = '$' + (c2_1_wc + c2_2_wc).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            if (document.getElementById('c2_ann_sub')) document.getElementById('c2_ann_sub').innerText = '$' + c2_raw_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+            const c2_ann = getCategoryState(2, c2_raw_ann);
+            const c2_mth = c2_ann / 12;
+
+            // Category 3
+            const c3_1_mth = parseFloat(document.getElementById('c3_1_mth_input')?.value) || 0;
+            const c3_2_mth = parseFloat(document.getElementById('c3_2_mth_input')?.value) || 0;
+            const c3_3_mth = parseFloat(document.getElementById('c3_3_mth_input')?.value) || 0;
+            const c3_1_ann = c3_1_mth * 12;
+            const c3_2_ann = c3_2_mth * 12;
+            const c3_3_ann = c3_3_mth * 12;
+
+            if (document.getElementById('c3_1_ann')) document.getElementById('c3_1_ann').innerText = '$' + c3_1_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            if (document.getElementById('c3_2_ann')) document.getElementById('c3_2_ann').innerText = '$' + c3_2_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            if (document.getElementById('c3_3_ann')) document.getElementById('c3_3_ann').innerText = '$' + c3_3_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+            const c3_raw_ann = c3_1_ann + c3_2_ann + c3_3_ann;
+            if (document.getElementById('c3_mth_sub')) document.getElementById('c3_mth_sub').innerText = '$' + (c3_1_mth + c3_2_mth + c3_3_mth).toFixed(2);
+            if (document.getElementById('c3_ann_sub')) document.getElementById('c3_ann_sub').innerText = '$' + c3_raw_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+            const c3_ann = getCategoryState(3, c3_raw_ann);
+            const c3_mth = c3_ann / 12;
+
+            // Category 4
+            const c4_1_mth = parseFloat(document.getElementById('c4_1_mth_input')?.value) || 0;
+            const c4_2_mth = parseFloat(document.getElementById('c4_2_mth_input')?.value) || 0;
+            const c4_3_mth = parseFloat(document.getElementById('c4_3_mth_input')?.value) || 0;
+            const c4_4_mth = parseFloat(document.getElementById('c4_4_mth_input')?.value) || 0;
+            const c4_5_mth = parseFloat(document.getElementById('c4_5_mth_input')?.value) || 0;
+
+            const c4_1_ann = c4_1_mth * 12;
+            const c4_2_ann = c4_2_mth * 12;
+            const c4_3_ann = c4_3_mth * 12;
+            const c4_4_ann = c4_4_mth * 12;
+            const c4_5_ann = c4_5_mth * 12;
+
+            if (document.getElementById('c4_1_ann')) document.getElementById('c4_1_ann').innerText = '$' + c4_1_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            if (document.getElementById('c4_2_ann')) document.getElementById('c4_2_ann').innerText = '$' + c4_2_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            if (document.getElementById('c4_3_ann')) document.getElementById('c4_3_ann').innerText = '$' + c4_3_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            if (document.getElementById('c4_4_ann')) document.getElementById('c4_4_ann').innerText = '$' + c4_4_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            if (document.getElementById('c4_5_ann')) document.getElementById('c4_5_ann').innerText = '$' + c4_5_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+            const c4_raw_ann = c4_1_ann + c4_2_ann + c4_3_ann + c4_4_ann + c4_5_ann;
+            if (document.getElementById('c4_mth_sub')) document.getElementById('c4_mth_sub').innerText = '$' + (c4_1_mth + c4_2_mth + c4_3_mth + c4_4_mth + c4_5_mth).toFixed(2);
+            if (document.getElementById('c4_ann_sub')) document.getElementById('c4_ann_sub').innerText = '$' + c4_raw_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+            const c4_ann = getCategoryState(4, c4_raw_ann);
+            const c4_mth = c4_ann / 12;
+
+            // Category 5
+            const c5_1_ex = parseFloat(document.getElementById('c5_1_ann_input')?.value) || 0;
+            const c5_2_ex = parseFloat(document.getElementById('c5_2_ann_input')?.value) || 0;
+            const c5_3_ex = parseFloat(document.getElementById('c5_3_ann_input')?.value) || 0;
+            const c5_4_ex = parseFloat(document.getElementById('c5_4_ann_input')?.value) || 0;
+
+            if (document.getElementById('c5_1_inc_gst')) document.getElementById('c5_1_inc_gst').innerText = '$' + (c5_1_ex * 1.1).toFixed(2);
+            if (document.getElementById('c5_2_inc_gst')) document.getElementById('c5_2_inc_gst').innerText = '$' + (c5_2_ex * 1.1).toFixed(2);
+            if (document.getElementById('c5_3_inc_gst')) document.getElementById('c5_3_inc_gst').innerText = '$' + (c5_3_ex * 1.1).toFixed(2);
+            if (document.getElementById('c5_4_inc_gst')) document.getElementById('c5_4_inc_gst').innerText = '$' + (c5_4_ex * 1.1).toFixed(2);
+
+            const c5_raw_ann = c5_1_ex + c5_2_ex + c5_3_ex + c5_4_ex;
+            if (document.getElementById('c5_ex_sub')) document.getElementById('c5_ex_sub').innerText = '$' + c5_raw_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            if (document.getElementById('c5_inc_sub')) document.getElementById('c5_inc_sub').innerText = '$' + (c5_raw_ann * 1.1).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+            const c5_ann = getCategoryState(5, c5_raw_ann);
+            const c5_mth = c5_ann / 12;
+
+            // Category 6
+            const c6_1_ship = parseFloat(document.getElementById('c6_1_ship_input')?.value) || 0;
+            const c6_2_ship = parseFloat(document.getElementById('c6_2_ship_input')?.value) || 0;
+            const c6_3_ship = parseFloat(document.getElementById('c6_3_ship_input')?.value) || 0;
+
+            const containerType = document.getElementById('input-container-type')?.value || '20ft';
+            ANNUAL_CONTAINERS = containerType === '40ft' ? 6 : 12;
+
+            const c6_1_ann = c6_1_ship * ANNUAL_CONTAINERS;
+            const c6_2_ann = c6_2_ship * ANNUAL_CONTAINERS;
+            const c6_3_ann = c6_3_ship * ANNUAL_CONTAINERS;
+
+            if (document.getElementById('c6_1_ann')) document.getElementById('c6_1_ann').innerText = '$' + c6_1_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            if (document.getElementById('c6_2_ann')) document.getElementById('c6_2_ann').innerText = '$' + c6_2_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            if (document.getElementById('c6_3_ann')) document.getElementById('c6_3_ann').innerText = '$' + c6_3_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+            const c6_raw_ann = c6_1_ann + c6_2_ann + c6_3_ann;
+            if (document.getElementById('c6_ship_sub')) document.getElementById('c6_ship_sub').innerText = '$' + (c6_1_ship + c6_2_ship + c6_3_ship).toFixed(2);
+            if (document.getElementById('c6_ann_sub')) document.getElementById('c6_ann_sub').innerText = '$' + c6_raw_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+            const c6_ann = getCategoryState(6, c6_raw_ann);
+            const c6_mth = c6_ann / 12;
+
+            // Grand Total OpEx
+            const totalAnnualOpEx = c1_ann + c2_ann + c3_ann + c4_ann + c5_ann + c6_ann;
+            const totalMonthlyOpEx = totalAnnualOpEx / 12;
+
+            currentAnnualOpExAUD = totalAnnualOpEx;
+            currentOpExPerContainerAUD = totalAnnualOpEx / ANNUAL_CONTAINERS;
+
+            if (document.getElementById('banner-opex-total')) document.getElementById('banner-opex-total').innerText = totalAnnualOpEx.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            if (document.getElementById('dash-card-opex')) document.getElementById('dash-card-opex').innerText = '$' + totalAnnualOpEx.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+            // Update Summary Table Rows
+            const setSumRow = (catNum, mth, ann) => {
+                const mthEl = document.getElementById(`sum-mth-c${catNum}`);
+                const annEl = document.getElementById(`sum-ann-c${catNum}`);
+                const pctEl = document.getElementById(`sum-pct-c${catNum}`);
+                if (mthEl) mthEl.innerText = '$' + mth.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+                if (annEl) annEl.innerText = '$' + ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+                if (pctEl) pctEl.innerText = (totalAnnualOpEx > 0 ? ((ann / totalAnnualOpEx) * 100).toFixed(1) : '0.0') + '%';
+            };
+
+            setSumRow(1, c1_mth, c1_ann);
+            setSumRow(2, c2_mth, c2_ann);
+            setSumRow(3, c3_mth, c3_ann);
+            setSumRow(4, c4_mth, c4_ann);
+            setSumRow(5, c5_mth, c5_ann);
+            setSumRow(6, c6_mth, c6_ann);
+
+            if (document.getElementById('sum-mth-total')) document.getElementById('sum-mth-total').innerText = '$' + totalMonthlyOpEx.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            if (document.getElementById('sum-ann-total')) document.getElementById('sum-ann-total').innerText = '$' + totalAnnualOpEx.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+            renderTable();
+        }
+
+        function resetOpExBudget() {
+            Object.keys(defaultOpExValues).forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.value = defaultOpExValues[id];
+            });
+            [1, 3, 4, 5, 6].forEach(i => {
+                const toggle = document.getElementById(`c${i}_toggle_input`);
+                if (toggle) toggle.checked = true;
+            });
+            const c2Toggle = document.getElementById('c2_toggle_input');
+            if (c2Toggle) c2Toggle.checked = false;
+
+            updateOpExFromInputs();
+        }
+
+        function renderTable() {
+            const containerType = document.getElementById('input-container-type').value;
+            const fx = parseFloat(document.getElementById('input-fx').value) || 0.6620;
+            const oceanFreightUsd = parseFloat(document.getElementById('input-freight').value) || 1580;
+            const marginPercent = parseFloat(document.getElementById('input-margin').value) || 20;
+
+            ANNUAL_CONTAINERS = containerType === '40ft' ? 6 : 12;
+            currentOpExPerContainerAUD = currentAnnualOpExAUD / ANNUAL_CONTAINERS;
+
+            const tbody = document.getElementById('product-table-body');
+            if (!tbody) return;
+            tbody.innerHTML = '';
+
+            productsData.forEach((p, idx) => {
+                const pcsPerCtn = getPcsPerCtn(p.spec);
+                const containerCapacityMultiplier = containerType === '40ft' ? 2.0 : 1.0;
+                const effectivePcsPerContainer = p.pcsPer20ft * containerCapacityMultiplier;
+
+                // Landed Cost calculations based on adjustable CTN Price
+                const ctnPriceAud = (p.ctnPriceUsd || 0) / fx;
+                const freightAudPerCtn = (oceanFreightUsd / fx) / (containerType === '40ft' ? 2000 : 1000);
+                const customsAudPerCtn = 2235.00 / (containerType === '40ft' ? 2000 : 1000);
+                const opexAudPerCtn = currentOpExPerContainerAUD / (containerType === '40ft' ? 2000 : 1000);
+
+                const landedCostAudCtn = ctnPriceAud + freightAudPerCtn + customsAudPerCtn + opexAudPerCtn;
+
+                const marginDecimal = marginPercent / 100;
+                const sellingPriceAudCtn = marginDecimal < 1 ? landedCostAudCtn / (1 - marginDecimal) : landedCostAudCtn;
+                const grossMarginCtn = sellingPriceAudCtn - landedCostAudCtn;
+                const netProfitCtn = grossMarginCtn * 0.90; // Excl. tax
+
+                p.lastCalculatedNetProfitCtn = netProfitCtn;
+
+                const qty = p.orderQty || 0;
+                const orderProfit = netProfitCtn * qty;
+
+                const tr = document.createElement('tr');
+                tr.className = `hover:bg-amber-50/60 transition ${p.status === 'Upcoming' ? 'bg-amber-50/40' : (idx % 2 === 0 ? 'bg-white' : 'bg-slate-50/60')}`;
+                tr.innerHTML = `
+                    <td class="py-1 px-2 text-center font-bold text-slate-400 border-r border-slate-200">${p.id}</td>
+                    <td class="py-1 px-3 border-r border-slate-200">
+                        <div class="flex items-center justify-between gap-1">
+                            <span class="font-bold text-slate-900">${p.name[currentLang] || p.name.en}</span>
+                            <span class="text-[10px] text-slate-400 font-mono bg-slate-100 border rounded px-1.5 shrink-0">${p.spec}</span>
+                        </div>
+                    </td>
+                    <td class="py-1 px-2 border-r border-slate-200 text-center bg-slate-50">
+                        <div class="flex items-center justify-center gap-0.5">
+                            <span class="text-slate-400 font-bold">$</span>
+                            <input type="number" id="input-ctn-price-${p.id}" value="${p.ctnPriceUsd.toFixed(2)}" step="0.50" min="0"
+                                oninput="syncCtnPrice(${p.id}, this.value)"
+                                onkeydown="handleKeyDown(event, ${p.id}, 'price')"
+                                class="w-20 text-right bg-white border border-slate-300 focus:border-gold-500 font-bold font-mono text-xs text-gold-700 rounded py-0.5 px-1 focus:outline-none transition">
+                        </div>
+                    </td>
+                    <td class="py-1 px-2 border-r border-slate-200 text-center bg-emerald-50/40">
+                        <input type="number" id="input-qty-${p.id}" value="${qty || ''}" placeholder="0" min="0" step="1"
+                            oninput="syncOrderQty(${p.id}, this.value)"
+                            onkeydown="handleKeyDown(event, ${p.id}, 'qty')"
+                            class="w-20 text-center bg-white border-2 border-emerald-300 focus:border-emerald-600 font-bold font-mono text-xs text-slate-900 rounded py-0.5 px-1 focus:outline-none transition">
+                    </td>
+                    <td class="py-1 px-3 text-right font-mono border-r border-slate-200">$${landedCostAudCtn.toFixed(2)}</td>
+                    <td class="py-1 px-3 text-right font-mono border-r border-slate-200 text-gold-700 font-bold">$${sellingPriceAudCtn.toFixed(2)}</td>
+                    <td class="py-1 px-3 text-right font-mono border-r border-slate-200 font-bold ${netProfitCtn >= 0 ? 'text-emerald-700' : 'text-rose-600'}">$${netProfitCtn.toFixed(2)}</td>
+                    <td class="py-1 px-3 text-right font-mono font-bold bg-slate-900 text-gold-400" id="master-profit-val-${p.id}">
+                        $${orderProfit.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})} AUD
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            recalculateMasterProfitTotal();
+        }
+
+        function recalculateMasterProfitTotal() {
+            let totalProfit = 0;
+            let totalCartons = 0;
+            const containerType = document.getElementById('input-container-type').value;
+            const maxCtn = containerType === '40ft' ? 2000 : 1000;
+
+            productsData.forEach(p => {
+                const qty = p.orderQty || 0;
+                totalCartons += qty;
+                if (p.lastCalculatedNetProfitCtn) {
+                    totalProfit += p.lastCalculatedNetProfitCtn * qty;
+                }
+                const cell = document.getElementById(`master-profit-val-${p.id}`);
+                if (cell) {
+                    const rowProf = (p.lastCalculatedNetProfitCtn || 0) * qty;
+                    cell.innerText = '$' + rowProf.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' AUD';
+                }
+            });
+
+            // Update Master Summaries & Dashboard Metric Cards
+            const formattedTotalProfit = '$' + totalProfit.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' AUD';
+            document.getElementById('master-profit-total-val').innerText = formattedTotalProfit;
+            document.getElementById('floating-total-profit').innerText = formattedTotalProfit;
+            document.getElementById('dash-card-profit').innerText = formattedTotalProfit;
+
+            document.getElementById('master-profit-total-qty').innerText = `${totalCartons.toLocaleString()} CTN`;
+            document.getElementById('dash-card-ctn-qty').innerText = `${totalCartons.toLocaleString()} CTN`;
+            document.getElementById('dash-card-ctn-target').innerText = `/ ${maxCtn.toLocaleString()} CTN`;
+            document.getElementById('dash-card-container-type').innerText = containerType === '40ft' ? '40ft FCL' : '20ft FCL';
+
+            const spacePct = Math.round((totalCartons / maxCtn) * 100);
+            document.getElementById('floating-space-pct').innerText = `(${spacePct}%)`;
+            document.getElementById('dash-card-ctn-pct').innerText = `${spacePct}%`;
+
+            // Progress Bar Animation
+            const spaceBar = document.getElementById('floating-space-bar');
+            const dashBar = document.getElementById('dash-card-progress-bar');
+            const barWidth = `${Math.min(spacePct, 100)}%`;
+
+            if (spaceBar) {
+                spaceBar.style.width = barWidth;
+                spaceBar.className = spacePct > 100 
+                    ? 'bg-rose-600 h-full transition-all duration-300 animate-pulse' 
+                    : 'bg-gradient-to-r from-emerald-500 to-gold-400 h-full transition-all duration-300';
+            }
+            if (dashBar) {
+                dashBar.style.width = barWidth;
+                dashBar.className = spacePct > 100 ? 'bg-rose-600 h-full transition-all duration-300' : 'bg-gold-500 h-full transition-all duration-300';
+            }
+        }
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            ['en', 'km', 'fr', 'zh'].forEach(l => {
+                const btn = document.getElementById(`lang-btn-${l}`);
+                if (btn) {
+                    if (l === lang) {
+                        btn.className = "px-2 py-0.5 text-xs rounded transition bg-gold-500/20 border border-gold-500 text-gold-400 font-bold";
+                    } else {
+                        btn.className = "px-2 py-0.5 text-xs rounded transition opacity-60 hover:opacity-100 text-slate-300";
+                    }
+                }
+            });
+            renderTable();
+        }
+
+        // OFFICIAL PURCHASE ORDER PDF EXPORT GENERATOR
+        function exportPurchaseOrderPDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+            
+            const containerType = document.getElementById('input-container-type')?.value || '20ft';
+            const containerLabel = containerType === '40ft' ? '40ft FCL Container' : '20ft FCL Container';
+            const now = new Date();
+            const formattedDateOnly = now.toLocaleDateString('en-GB', {
+                day: '2-digit', month: 'short', year: 'numeric'
+            }).toUpperCase(); // e.g. "01 NOV 2026"
+
+            // Colors
+            const darkSlate = [30, 41, 59];
+            const goldColor = [212, 175, 55];
+            const lightGrey = [248, 250, 252];
+
+            // 1. Header Banner (Increased Height & Fixed Text Margins)
+            doc.setFillColor(...darkSlate);
+            doc.rect(0, 0, 210, 32, 'F');
+
+            doc.setFillColor(...goldColor);
+            doc.rect(0, 32, 210, 1.5, 'F');
+
+            // Header Title (Left side)
+            doc.setTextColor(255, 255, 255);
+            doc.setFont('helvetica', 'bold');
+            doc.setFontSize(11);
+            doc.text('OFFICIAL PURCHASE ORDER & SHIPPING SPECIFICATION', 12, 13);
+
+            doc.setFontSize(8.5);
+            doc.setFont('helvetica', 'normal');
+            doc.setTextColor(230, 198, 85);
+            doc.text('Two Parrots Group Australia — Import Logistics Portal', 12, 21);
+
+            // Prominent Date & Container Badge (Right side - No overlap)
+            doc.setTextColor(255, 255, 255);
+            doc.setFont('helvetica', 'bold');
+            doc.setFontSize(13);
+            doc.text(formattedDateOnly, 198, 14, { align: 'right' });
+
+            doc.setFontSize(9);
+            doc.setTextColor(230, 198, 85);
+            doc.text(containerLabel, 198, 22, { align: 'right' });
+
+            // 2. Exporter & Importer Cards Side-by-Side
+            const startY = 38;
+
+            // Seller Card (Left)
+            doc.setFillColor(...lightGrey);
+            doc.setDrawColor(203, 213, 225);
+            doc.roundedRect(12, startY, 90, 42, 2, 2, 'FD');
+
+            doc.setFillColor(234, 179, 8);
+            doc.rect(12, startY, 2, 42, 'F');
+
+            doc.setTextColor(...darkSlate);
+            doc.setFont('helvetica', 'bold');
+            doc.setFontSize(9);
+            doc.text('EXPORTER (SELLER):', 17, startY + 6);
+            doc.setFontSize(8.5);
+            doc.setTextColor(15, 23, 42);
+            doc.text('TWO PARROTS TRADING SOLUTIONS CO., LTD.', 17, startY + 12);
+            
+            doc.setFont('helvetica', 'normal');
+            doc.setFontSize(7.5);
+            doc.setTextColor(71, 85, 105);
+            doc.text('TEL: +855-12628988', 17, startY + 18);
+            doc.text('Email: tum@two-parrots.com', 17, startY + 23);
+            doc.text('Web: www.two-parrots.com', 17, startY + 28);
+
+            // Buyer Card (Right)
+            doc.setFillColor(...lightGrey);
+            doc.roundedRect(108, startY, 90, 42, 2, 2, 'FD');
+
+            doc.setFillColor(...darkSlate);
+            doc.rect(108, startY, 2, 42, 'F');
+
+            doc.setTextColor(...darkSlate);
+            doc.setFont('helvetica', 'bold');
+            doc.setFontSize(9);
+            doc.text('IMPORTER (BUYER):', 113, startY + 6);
+            doc.setFontSize(8.5);
+            doc.setTextColor(15, 23, 42);
+            doc.text('TWO PARROTS GROUP AUSTRALIA', 113, startY + 12);
+
+            doc.setFont('helvetica', 'normal');
+            doc.setFontSize(7.5);
+            doc.setTextColor(71, 85, 105);
+            doc.text('Managing Director: Kim Heng Ly', 113, startY + 18);
+            doc.text('Address: 1/57 Elonera Rd, Noble Park North VIC 3174', 113, startY + 23);
+            doc.text('Port of Discharge: Swanson Dock, VIC, Australia', 113, startY + 28);
+            doc.text('Email: info@twoparrotsgroup.com.au', 113, startY + 33);
+            doc.text('Web: twoparrotsgroup.com.au', 113, startY + 38);
+
+            // 3. Product Schedule Table Data (FILTERED > 0 CTN ONLY & PRICES REMOVED)
+            let totalOrderCartons = 0;
+            const tableRows = [];
+
+            productsData.forEach(p => {
+                const qty = p.orderQty || 0;
+                if (qty > 0) {
+                    totalOrderCartons += qty;
+                    tableRows.push([
+                        p.id.toString(),
+                        p.name.en,
+                        p.spec,
+                        `${qty.toLocaleString()} CTN`
+                    ]);
+                }
+            });
+
+            // Fallback row if no quantities were entered yet
+            if (tableRows.length === 0) {
+                tableRows.push(['-', 'No product quantities entered yet.', '-', '0 CTN']);
+            }
+
+            // Render Table via AutoTable (No Price Columns)
+            doc.autoTable({
+                startY: 85,
+                head: [['N°', 'Product Description', 'Packaging Specification', 'Order Volume']],
+                body: tableRows,
+                theme: 'striped',
+                headStyles: {
+                    fillColor: darkSlate,
+                    textColor: [255, 255, 255],
+                    fontSize: 8.5,
+                    fontStyle: 'bold',
+                    halign: 'left'
+                },
+                columnStyles: {
+                    0: { halign: 'center', cellWidth: 12 },
+                    1: { cellWidth: 95 },
+                    2: { cellWidth: 50 },
+                    3: { halign: 'center', cellWidth: 29, fontStyle: 'bold' }
+                },
+                styles: {
+                    fontSize: 8,
+                    cellPadding: 2.5
+                },
+                alternateRowStyles: {
+                    fillColor: [241, 245, 249]
+                }
+            });
+
+            // 4. Total Volume Summary Card (Prices Removed)
+            const finalY = doc.lastAutoTable.finalY + 6;
+            
+            doc.setFillColor(...darkSlate);
+            doc.roundedRect(12, finalY, 186, 12, 2, 2, 'F');
+            
+            doc.setTextColor(230, 198, 85);
+            doc.setFont('helvetica', 'bold');
+            doc.setFontSize(9.5);
+            doc.text(`TOTAL ORDER VOLUME: ${totalOrderCartons.toLocaleString()} CTN`, 18, finalY + 8);
+            doc.setTextColor(255, 255, 255);
+            doc.text(`CONTAINER TYPE: ${containerLabel.toUpperCase()}`, 192, finalY + 8, { align: 'right' });
+
+            // 5. Sign-off Footer
+            const footerY = Math.max(finalY + 28, 250);
+            if (footerY < 280) {
+                doc.setDrawColor(203, 213, 225);
+                doc.line(12, footerY, 80, footerY);
+                doc.line(128, footerY, 198, footerY);
+
+                doc.setFontSize(7.5);
+                doc.setTextColor(100, 116, 139);
+                doc.setFont('helvetica', 'normal');
+                doc.text('Authorized Representative (Seller)', 12, footerY + 4);
+                doc.text('Authorized Director (Buyer)', 128, footerY + 4);
+            }
+
+            // Save PDF
+            const formattedFileNameDate = now.toISOString().slice(0, 10);
+            doc.save(`TwoParrots_PurchaseOrder_${formattedFileNameDate}.pdf`);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const passwordForm = document.getElementById('password-form');
+            if (passwordForm) passwordForm.addEventListener('submit', unlockPage);
+
+            Object.keys(defaultOpExValues).forEach(id => {
+                document.getElementById(id)?.addEventListener('input', updateOpExFromInputs);
+            });
+
+            [1, 2, 3, 4, 5, 6].forEach(i => {
+                document.getElementById(`c${i}_toggle_input`)?.addEventListener('change', updateOpExFromInputs);
+            });
+
+            updateOpExFromInputs();
+        });
+    </script>
+	
+</body>
+</html>
