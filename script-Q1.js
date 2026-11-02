@@ -640,7 +640,7 @@ const translations = {
         lbl_md: "នាយកប្រតិបត្តិ:",
         card_contact_title: "ទំនាក់ទំនង និងវេបសាយ",
         card_logistics_title: "ស្ថានីយនាំចូល / ឡូជីស្ទិក",
-        lbl_discharge_port: "កំពង់ផែនាំចុះ:",
+        lbl_discharge_port: "កំពង់ផែននាំចុះ:",
         val_discharge_port: "កំពង់ផែម៉ែលប៊ន Swanson Dock / DP World",
         lbl_standard_unit: "ទំហំស្តង់ដារ:",
         val_standard_unit: "កុងតឺន័រ 20ft FCL",
@@ -1609,7 +1609,7 @@ function handleContainerTypeChange() {
     updateOpExFromInputs();
 }
 
-// --- RENDER TABLE (ADAPTS COMPACT OR DETAILED LAYOUT DEPENDING ON DOM STRUCTURE) ---
+// --- RENDER TABLE (EXPLICITLY DETECTS COMPACT Q1-1.html VS DETAILED Q1.html) ---
 function renderTable() {
     const inputContainerType = document.getElementById('input-container-type');
     const inputFx = document.getElementById('input-fx');
@@ -1636,8 +1636,9 @@ function renderTable() {
 
     const t = translations[currentLang] || translations.en;
 
-    // Detect layout style based on table headers
-    const isCompactView = !!document.querySelector('th[data-i18n="th_prod_desc"]')?.innerText.includes('Packaging Spec');
+    // Direct, explicit detection of Q1 vs Q1-1 table types
+    const hasBenchmarkColumns = document.querySelector('th.asian-comp-header') !== null || document.querySelector('th[data-i18n="th_asian_bench"]') !== null;
+    const isCompactView = !hasBenchmarkColumns;
 
     productsData.forEach((p, idx) => {
         const specStrEn = typeof p.spec === 'object' ? p.spec.en : p.spec;
@@ -1666,7 +1667,7 @@ function renderTable() {
         const tr = document.createElement('tr');
 
         if (isCompactView) {
-            // COMPACT FAST ENTRY ROW (Q1-1)
+            // COMPACT FAST ENTRY ROW (Q1-1.html)
             tr.className = `hover:bg-amber-50/60 transition ${p.status === 'Upcoming' ? 'bg-amber-50/40' : (idx % 2 === 0 ? 'bg-white' : 'bg-slate-50/60')}`;
             tr.innerHTML = `
                 <td class="py-1 px-2 text-center font-bold text-slate-400 border-r border-slate-200">${p.id}</td>
@@ -1699,7 +1700,7 @@ function renderTable() {
                 </td>
             `;
         } else {
-            // FULL DETAILED BENCHMARK SCHEDULE ROW (Q1)
+            // FULL DETAILED BENCHMARK SCHEDULE ROW (Q1.html)
             const calc = calculateProductCosts(p, fx, oceanFreightUsd, localCartageAud, marginPercent, containerType);
             const displayName = p.name[currentLang] || p.name.en;
             const displaySpec = typeof p.spec === 'object' ? (p.spec[currentLang] || p.spec.en) : p.spec;
