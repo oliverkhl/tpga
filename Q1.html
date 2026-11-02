@@ -150,96 +150,56 @@
                 </div>
             </div>
 
-            <!-- SUMMARY CARDS (PRICING & LANDING QUOTATION MODEL) -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-6">
-                <!-- Card 1: Customs & Biosecurity Clearance Baseline -->
-                <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200 hover:shadow-md transition">
-                    <div class="flex items-center justify-between mb-3 border-b border-slate-100 pb-2">
-                        <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
-                            <i class="fa-solid fa-file-invoice-dollar text-gold-600"></i> <span data-i18n="card1_header">Customs & Import Entry</span>
-                        </h3>
-                        <span class="bg-gold-100 text-gold-700 text-xs font-semibold px-2 py-0.5 rounded" data-i18n="card1_tag">Quotation Baseline</span>
+            <!-- 3. MAIN PRODUCT QUOTATION TABLE -->
+            <div class="bg-white rounded-xl shadow-md overflow-hidden border-2 border-slate-300 mb-8">
+                <div class="bg-slate-900 px-6 py-4 flex flex-wrap justify-between items-center gap-4">
+                    <div>
+                        <h2 data-i18n="tbl_title" class="text-base font-bold text-white tracking-wide uppercase">Landed Cost Quotation & Benchmark Schedule</h2>
+                        <p data-i18n="tbl_subtitle" class="text-xs text-gold-400">Rearranged per Two Parrots Quotation (25 Active Products + 5 Upcoming Nov 2026 Launch)</p>
                     </div>
-                    <ul class="text-xs text-slate-600 space-y-1.5">
-                        <li class="flex justify-between"><span data-i18n="lbl_importer">Importer:</span> <strong class="text-slate-800">Two Parrots Group Australia</strong></li>
-                        <li class="flex justify-between"><span data-i18n="lbl_contact_phone">Contact Phone:</span> <strong class="text-slate-800">+6146 882 99 88</strong></li>
-                        <li class="flex justify-between"><span data-i18n="lbl_customs_fee">Customs Clearance Fee:</span> <strong class="text-slate-800">$253.50 + GST</strong></li>
-                        <li class="flex justify-between"><span data-i18n="lbl_quarantine_fee">Biosecurity Inspection / Doc:</span> <strong class="text-slate-800">$154.00 AUD</strong></li>
-                        <li class="flex justify-between"><span data-i18n="lbl_quarantine_release">Quarantine Release & Assessment:</span> <strong class="text-slate-800">$67.50 + GST</strong></li>
-                        <li class="flex justify-between border-t border-dashed border-slate-200 pt-1">
-                            <span class="text-slate-500" data-i18n="lbl_import_duty">Customs Import Duty (LDC P50):</span> <strong class="text-emerald-700 font-bold" data-i18n="val_duty_free">$0.00 AUD (Duty Free)</strong>
-                        </li>
-                        <li class="flex justify-between">
-                            <span class="text-slate-500" data-i18n="lbl_border_gst">Border Import GST (10% Deferred):</span> <strong class="text-slate-800">$2,113.81 AUD</strong>
-                        </li>
-                    </ul>
+                    <div class="flex items-center space-x-2 text-xs">
+                        <span class="px-2.5 py-1 bg-slate-800 text-slate-300 rounded border border-slate-700">
+                            <i class="fa-solid fa-tag text-gold-400 mr-1"></i> <span data-i18n="lbl_active">Active</span>: <strong>25</strong>
+                        </span>
+                        <span class="px-2.5 py-1 bg-gold-500/20 text-gold-400 rounded border border-gold-500/40">
+                            <i class="fa-solid fa-rocket mr-1"></i> <span data-i18n="lbl_upcoming">Upcoming</span>: <strong>5</strong>
+                        </span>
+                    </div>
                 </div>
 
-<!-- Card 2: Warehouse Delivery Landed Cost Model -->
-<div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5">
-    <div class="flex items-center justify-between mb-4 border-b pb-3">
-        <div>
-            <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
-                <i class="fa-solid fa-truck-ramp-box text-emerald-600"></i>
-                <span data-i18n="card2_header">Warehouse Delivery Landed Cost Model</span>
-            </h3>
-            <p class="text-xs text-slate-500">Total freight, terminal & cartage to clear & land cargo to Melbourne warehouse</p>
-        </div>
-        <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded border border-emerald-300">
-            TOTAL TO WAREHOUSE
-        </span>
-    </div>
-
-    <div class="bg-slate-900 text-white p-3 rounded-lg flex items-center justify-between mb-4">
-        <span class="text-xs font-medium text-slate-300">Warehouse Delivery Total (per Shipment):</span>
-        <span id="card2-total-warehouse-cost" class="font-mono font-black text-base text-gold-400">$3,742.30 AUD</span>
-    </div>
-
-    <div class="space-y-2 text-xs">
-        <div class="flex justify-between items-center py-1 border-b border-slate-100">
-            <span class="text-slate-600"><span data-i18n="lbl_ocean_freight">Ocean Freight Benchmark</span>:</span>
-            <span id="card-ocean-freight" class="font-mono font-bold text-slate-900">$1,650.00 USD</span>
-        </div>
-        <div class="flex justify-between items-center py-1 border-b border-slate-100">
-            <span class="text-slate-600"><span data-i18n="lbl_port_handling">Port Handling & Terminal (DP World)</span>:</span>
-            <span id="card-local-cartage" class="font-mono font-bold text-slate-900">$450.00 AUD</span>
-        </div>
-        <div class="flex justify-between items-center py-1 border-b border-slate-100">
-            <span class="text-slate-600"><span data-i18n="lbl_wharf_cartage">Wharf Cartage & Warehouse Sideloader</span>:</span>
-            <span id="card-wharf-cartage" class="font-mono font-bold text-slate-900">$750.00 AUD</span>
-        </div>
-        <div class="flex justify-between items-center py-1">
-            <span class="text-slate-600"><span data-i18n="lbl_fx_rate">Customs N10 Settlement Rate</span>:</span>
-            <span id="card-fx-rate" class="font-mono font-bold text-emerald-700">0.6620 AUD/USD</span>
-        </div>
-    </div>
-</div>
-
-                <!-- Card 3: Compliance & Quotation Framework -->
-                <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200 hover:shadow-md transition">
-                    <div class="flex items-center justify-between mb-2.5 border-b border-slate-100 pb-2">
-                        <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
-                            <i class="fa-solid fa-clipboard-check text-gold-600"></i> <span data-i18n="card3_header">Compliance Framework</span>
-                        </h3>
-                        <span class="bg-emerald-50 text-emerald-700 text-xs font-semibold px-2 py-0.5 rounded" data-i18n="card3_tag">Landed Cost Model</span>
-                    </div>
-                    <div class="space-y-2.5 text-xs">
-                        <div>
-                            <h4 class="font-bold text-slate-800 text-[11px] uppercase tracking-wider mb-1 text-gold-700 flex items-center gap-1">
-                                <i class="fa-solid fa-file-export text-gold-600"></i> <span data-i18n="card3_subhdr">Landing Cost Benchmarks</span>
-                            </h4>
-                            <ul class="grid grid-cols-2 gap-x-2 gap-y-0.5 text-[11px] text-slate-700">
-                                <li class="flex items-center gap-1"><i class="fa-solid fa-circle-check text-emerald-500 text-[9px]"></i> <span data-i18n="chk_bol_rates">Bill of Lading Rates</span></li>
-                                <li class="flex items-center gap-1"><i class="fa-solid fa-circle-check text-emerald-500 text-[9px]"></i> <span data-i18n="chk_fob_pricing">FOB Benchmark Pricing</span></li>
-                                <li class="flex items-center gap-1"><i class="fa-solid fa-circle-check text-emerald-500 text-[9px]"></i> <span data-i18n="chk_carton_metrics">Carton/Pack Metrics</span></li>
-                                <li class="flex items-center gap-1"><i class="fa-solid fa-circle-check text-emerald-500 text-[9px]"></i> <span data-i18n="chk_customs_rates">Customs N10 Rates</span></li>
-                                <li class="flex items-center gap-1"><i class="fa-solid fa-circle-check text-emerald-500 text-[9px]"></i> <span data-i18n="chk_phyto_protocols">Phytosanitary Protocols</span></li>
-                                <li class="flex items-center gap-1"><i class="fa-solid fa-circle-check text-emerald-500 text-[9px]"></i> <span data-i18n="chk_daff_fees">DAFF Inspection Fees</span></li>
-                            </ul>
-                        </div>
-                    </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-slate-800 text-slate-200 text-xs uppercase font-semibold tracking-wider border-b-2 border-slate-900">
+                                <th class="py-3 px-2 text-center w-[3%] border-r-2 border-slate-700">N°</th>
+                                <th data-i18n="th_prod_desc" class="py-3 px-3 w-[19%] border-r-2 border-slate-700">Product Description</th>
+                                <th class="py-3 px-3 w-[15%] border-r-2 border-slate-700 text-right">
+                                    <span data-i18n="th_fob_price">CTN Price Before Delivery</span>
+                                    <span class="block text-[10px] text-gold-400 normal-case font-normal" data-i18n="th_fob_sub">(Adjustable CTN USD → Auto PCS USD/AUD)</span>
+                                </th>
+                                <th class="py-3 px-3 w-[23%] border-r-2 border-slate-700 bg-slate-850">
+                                    <div data-i18n="th_total_cost" class="text-gold-400 font-bold">Total Landed Cost, Prices & Profit</div>
+                                    <span data-i18n="th_itemized_note" class="block text-[9px] text-slate-400 normal-case font-normal leading-tight">
+                                        Structure: Total Landed CTN → Itemized Costs → Selling Prices → Net Profit (CTN - Landed - 10% Tax)
+                                    </span>
+                                </th>
+                                <th class="py-3 px-3 w-[20%] border-r-2 border-slate-700">
+                                    <span data-i18n="th_asian_bench">Ethnic & Asian Market Comparisons</span>
+                                    <span class="block text-[10px] text-slate-400 normal-case font-normal" data-i18n="th_asian_sub">(Asian, Indian, Nepalese, Sri Lankan)</span>
+                                </th>
+                                <th class="py-3 px-3 w-[20%]">
+                                    <span data-i18n="th_aus_bench">Australian Supermarket Prices</span>
+                                    <span class="block text-[10px] text-slate-400 normal-case font-normal" data-i18n="th_aus_sub">(Coles, Woolworths, ALDI, Costco, IGA)</span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="product-table-body" class="text-xs">
+                            <!-- JS renders 30 products here -->
+                        </tbody>
+                    </table>
                 </div>
             </div>
+			
 
             <!-- SECTION: INTERACTIVE OPERATIONAL EXPENSE BUDGET BREAKDOWN -->
             <div class="bg-white rounded-xl shadow-md overflow-hidden border-2 border-slate-300 mb-8">
@@ -262,30 +222,12 @@
                 </div>
 
                 <div class="p-6 space-y-6">
-                    <!-- 1. Executive Summary Cards & Dynamic Summary Table -->
+                    <!-- 1. Executive Summary & Dynamic Summary Table -->
                     <div>
                         <h3 class="text-sm font-bold text-slate-900 uppercase tracking-wider mb-3 flex items-center gap-2 border-b border-slate-200 pb-2">
                             <i class="fa-solid fa-list-check text-gold-600"></i> <span data-i18n="opex_sec1_title">1. Executive Summary & Budget Overview</span>
                         </h3>
                         
-                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
-                            <div class="bg-slate-900 text-white p-4 rounded-lg border-l-4 border-gold-500">
-                                <span class="text-[10px] uppercase font-bold text-slate-400" data-i18n="opex_kpi1_lbl">Monthly Operational Expenses</span>
-                                <div id="kpi-monthly-opex" class="text-xl font-black text-gold-400 font-mono mt-0.5">$23,369.58 AUD</div>
-                                <span class="text-[10px] text-slate-400" data-i18n="opex_kpi1_sub">Excl. GST | All 6 Categories</span>
-                            </div>
-                            <div class="bg-slate-900 text-white p-4 rounded-lg border-l-4 border-gold-500">
-                                <span class="text-[10px] uppercase font-bold text-slate-400" data-i18n="opex_kpi2_lbl">Annual Operational Expenses</span>
-                                <div id="kpi-annual-opex" class="text-xl font-black text-white font-mono mt-0.5">$280,435.00 AUD</div>
-                                <span class="text-[10px] text-slate-400" data-i18n="opex_kpi2_sub">Excl. GST | Fixed + Salaries + Logistics</span>
-                            </div>
-                            <div class="bg-slate-900 text-white p-4 rounded-lg border-l-4 border-gold-500">
-                                <span class="text-[10px] uppercase font-bold text-slate-400" data-i18n="opex_kpi3_lbl">Primary Cost Driver</span>
-                                <div class="text-lg font-bold text-emerald-400 font-mono mt-0.5"><span data-i18n="opex_kpi3_val">Personnel</span> (<span id="kpi-personnel-pct">78.8%</span>)</div>
-                                <span id="kpi-personnel-amt" class="text-[10px] text-slate-400">$220,950.00 AUD (Salary + Super + WorkCover)</span>
-                            </div>
-                        </div>
-
                         <div class="overflow-x-auto rounded-lg border border-slate-200">
                             <table class="w-full text-left text-xs">
                                 <thead>
@@ -733,102 +675,7 @@
 
                 </div>
             </div>
-			
-            <!-- SECTION: MASTER PROFIT MODEL -->
-            <div class="bg-white rounded-xl shadow-md overflow-hidden border-2 border-slate-300 mb-8">
-                <div class="bg-slate-900 px-6 py-4 border-b-2 border-gold-500 flex flex-wrap justify-between items-center gap-4">
-                    <div>
-                        <div class="flex items-center gap-2">
-                            <i class="fa-solid fa-sack-dollar text-gold-400 text-lg"></i>
-                            <h2 class="text-base font-bold text-white tracking-wide uppercase" data-i18n="master_profit_title">Master Profit Model</h2>
-                        </div>
-                        <p class="text-xs text-gold-400 mt-0.5" data-i18n="master_profit_subtitle">Business Entity: Cambodia-to-Melbourne Import & Distribution Business | Location: Melbourne, VIC, Australia (AUD)</p>
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <button onclick="resetMasterProfitOrders()" class="px-3 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-600 rounded text-xs font-semibold transition flex items-center gap-1">
-                            <i class="fa-solid fa-rotate-left"></i> <span data-i18n="btn_reset_master_profit">Reset Orders</span>
-                        </button>
-                        <span class="bg-gold-500/20 text-gold-400 text-xs font-bold px-3 py-1 rounded border border-gold-500/40 font-mono">
-                            <span data-i18n="lbl_total_net_profit_banner">Total Net Profit:</span> $<span id="banner-master-profit-total">0.00</span> AUD / <span data-i18n="lbl_shipment">Shipment</span>
-                        </span>
-                    </div>
-                </div>
 
-                <div class="p-6">
-                    <div class="overflow-x-auto rounded-lg border border-slate-200">
-                        <table class="w-full text-left text-xs">
-                            <thead>
-                                <tr class="bg-slate-800 text-slate-200 font-bold uppercase tracking-wider border-b border-slate-700">
-                                    <th class="py-2.5 px-3 text-center w-[5%]">N°</th>
-                                    <th class="py-2.5 px-4 w-[45%]" data-i18n="th_prod_desc">Product Description</th>
-                                    <th class="py-2.5 px-4 text-right w-[25%]" data-i18n="th_order_qty">Order Qty (Cartons)</th>
-                                    <th class="py-2.5 px-4 text-right w-[25%]" data-i18n="th_order_profit">Order Net Profit (AUD)</th>
-                                </tr>
-                            </thead>
-                            <tbody id="master-profit-table-body" class="divide-y divide-slate-200 bg-white">
-                                <!-- Rendered & Synced via JavaScript (Products 1-30) -->
-                            </tbody>
-                            <tfoot>
-                                <tr class="bg-slate-900 text-white font-bold text-xs">
-                                    <td colspan="2" class="py-2.5 px-4 uppercase text-gold-400" data-i18n="lbl_total_shipment_profit">Total Shipment Order Profit</td>
-                                    <td class="py-2.5 px-4 text-right font-mono text-slate-300" id="master-profit-total-qty">0 CTNs</td>
-                                    <td class="py-2.5 px-4 text-right font-mono text-gold-400 text-sm" id="master-profit-total-val">$0.00 AUD</td>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 3. MAIN PRODUCT QUOTATION TABLE -->
-            <div class="bg-white rounded-xl shadow-md overflow-hidden border-2 border-slate-300 mb-8">
-                <div class="bg-slate-900 px-6 py-4 flex flex-wrap justify-between items-center gap-4">
-                    <div>
-                        <h2 data-i18n="tbl_title" class="text-base font-bold text-white tracking-wide uppercase">Landed Cost Quotation & Benchmark Schedule</h2>
-                        <p data-i18n="tbl_subtitle" class="text-xs text-gold-400">Rearranged per Two Parrots Quotation (25 Active Products + 5 Upcoming Nov 2026 Launch)</p>
-                    </div>
-                    <div class="flex items-center space-x-2 text-xs">
-                        <span class="px-2.5 py-1 bg-slate-800 text-slate-300 rounded border border-slate-700">
-                            <i class="fa-solid fa-tag text-gold-400 mr-1"></i> <span data-i18n="lbl_active">Active</span>: <strong>25</strong>
-                        </span>
-                        <span class="px-2.5 py-1 bg-gold-500/20 text-gold-400 rounded border border-gold-500/40">
-                            <i class="fa-solid fa-rocket mr-1"></i> <span data-i18n="lbl_upcoming">Upcoming</span>: <strong>5</strong>
-                        </span>
-                    </div>
-                </div>
-
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse">
-                        <thead>
-                            <tr class="bg-slate-800 text-slate-200 text-xs uppercase font-semibold tracking-wider border-b-2 border-slate-900">
-                                <th class="py-3 px-2 text-center w-[3%] border-r-2 border-slate-700">N°</th>
-                                <th data-i18n="th_prod_desc" class="py-3 px-3 w-[19%] border-r-2 border-slate-700">Product Description</th>
-                                <th class="py-3 px-3 w-[15%] border-r-2 border-slate-700 text-right">
-                                    <span data-i18n="th_fob_price">CTN Price Before Delivery</span>
-                                    <span class="block text-[10px] text-gold-400 normal-case font-normal" data-i18n="th_fob_sub">(Adjustable CTN USD → Auto PCS USD/AUD)</span>
-                                </th>
-                                <th class="py-3 px-3 w-[23%] border-r-2 border-slate-700 bg-slate-850">
-                                    <div data-i18n="th_total_cost" class="text-gold-400 font-bold">Total Landed Cost, Prices & Profit</div>
-                                    <span data-i18n="th_itemized_note" class="block text-[9px] text-slate-400 normal-case font-normal leading-tight">
-                                        Structure: Total Landed CTN → Itemized Costs → Selling Prices → Net Profit (CTN - Landed - 10% Tax)
-                                    </span>
-                                </th>
-                                <th class="py-3 px-3 w-[20%] border-r-2 border-slate-700">
-                                    <span data-i18n="th_asian_bench">Ethnic & Asian Market Comparisons</span>
-                                    <span class="block text-[10px] text-slate-400 normal-case font-normal" data-i18n="th_asian_sub">(Asian, Indian, Nepalese, Sri Lankan)</span>
-                                </th>
-                                <th class="py-3 px-3 w-[20%]">
-                                    <span data-i18n="th_aus_bench">Australian Supermarket Prices</span>
-                                    <span class="block text-[10px] text-slate-400 normal-case font-normal" data-i18n="th_aus_sub">(Coles, Woolworths, ALDI, Costco, IGA)</span>
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody id="product-table-body" class="text-xs">
-                            <!-- JS renders 30 products here -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
 
         </div>
 
