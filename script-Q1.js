@@ -1,13 +1,8 @@
-// ==========================================================================
-// TWO PARROTS GROUP AUSTRALIA - MASTER APPLICATION ENGINE (script-Q1.js)
-// ==========================================================================
-
 // --- DYNAMIC OPEX BUDGET ENGINE STATE ---
 let currentAnnualOpExAUD = 280435.00;
 let ANNUAL_CONTAINERS = 12; // Default: 12 x 20ft FCL Shipments per year
 let currentOpExPerContainerAUD = currentAnnualOpExAUD / ANNUAL_CONTAINERS;
 let containerOverCapacityAlertShown = false; // Tracks alert state to prevent repeated triggers
-let currentLang = 'en';
 
 // Default OpEx Baseline Values for Reset Button
 const defaultOpExValues = {
@@ -35,429 +30,328 @@ const defaultOpExValues = {
     c6_3_ship_input: 750.00   // Synchronized Wharf Cartage (tied to input-cartage)
 };
 
-// --- FULL 30 PRODUCT DATASET WITH COMPETITOR PRICE DATA & PERSISTED ORDER STATE ---
-const productsData = [
-    {
-        id: 1, status: 'Active', weightG: 500, orderQty: 0,
-        name: { en: 'Finest Rice Flour 500g', km: 'ម្សៅអង្ករខ្សាយ ៥០០ក្រាម', fr: 'Farine de riz fine 500g', zh: '优质大米粉 500g' },
-        nameKhmer: 'ម្សៅអង្ករខ្សាយ ៥០០ក្រាម', spec: { en: '500g Bag / 20 Pcs (10kg/CTN)', km: 'ថង់ ៥០០ក្រាម / ២០ កញ្ចប់ (១០គីឡូ/កេស)', fr: 'Sac de 500g / 20 Pcs (10kg/CTN)', zh: '500g/袋 / 20包 (10kg/箱)' }, fobUsd: 0.36, ctnPriceUsd: 7.20, pcsPer20ft: 20000,
-        asianComps: [
-            { brand: 'Erawan Rice Flour', weightG: 500, priceAud: 1.60, source: 'Src: KFL Asian Grocery Springvale' },
-            { brand: 'Cock Brand Rice Flour', weightG: 500, priceAud: 1.65, source: 'Src: Minh Phat Market Richmond' },
-            { brand: 'Anil Fine Rice Flour', weightG: 500, priceAud: 1.80, source: 'Src: DesiKart Indian Grocery' },
-            { brand: 'Harischandra Rice Flour', weightG: 500, priceAud: 1.90, source: 'Src: Lankan Groceries Melbourne' },
-            { brand: 'Maneely Rice Flour', weightG: 1000, priceAud: 3.20, source: 'Src: Nepsay Nepalese Mart' }
-        ],
-        ausComps: [
-            { brand: 'McKenzie\'s Rice Flour', weightG: 375, priceAud: 1.70, source: 'Src: Woolworths Online AU (Melb)' },
-            { brand: 'Anchor Rice Flour', weightG: 500, priceAud: 2.20, source: 'Src: Woolworths Supermarkets VIC' },
-            { brand: 'Has No Wheat Rice Flour', weightG: 500, priceAud: 1.80, source: 'Src: ALDI Australia' },
-            { brand: 'Kirkland White Rice Flour Bulk', weightG: 2000, priceAud: 6.99, source: 'Src: Costco Wholesale AU' }
-        ]
-    },
-    {
-        id: 2, status: 'Active', weightG: 500, orderQty: 0,
-        name: { en: 'Glutinous Rice Flour 500g', km: 'ម្សៅអង្ករដំណើប ៥០០ក្រាម', fr: 'Farine de riz glutineux 500g', zh: '水磨糯米粉 500g' },
-        nameKhmer: 'ម្សៅអង្ករដំណើប ៥០០ក្រាម', spec: { en: '500g Bag / 20 Pcs (10kg/CTN)', km: 'ថង់ ៥០០ក្រាម / ២០ កញ្ចប់ (១០គីឡូ/កេស)', fr: 'Sac de 500g / 20 Pcs (10kg/CTN)', zh: '500g/袋 / 20包 (10kg/箱)' }, fobUsd: 0.58, ctnPriceUsd: 11.60, pcsPer20ft: 20000,
-        asianComps: [
-            { brand: 'Erawan Glutinous Flour', weightG: 500, priceAud: 1.75, source: 'Src: KFL Asian Grocery Springvale' },
-            { brand: 'Three Rings Glutinous', weightG: 500, priceAud: 1.80, source: 'Src: Minh Phat Market Richmond' },
-            { brand: 'Heera Sticky Rice Flour', weightG: 500, priceAud: 2.10, source: 'Src: Radhe Indian Grocery' }
-        ],
-        ausComps: [
-            { brand: 'Cock Brand Glutinous', weightG: 500, priceAud: 2.20, source: 'Src: Woolworths Supermarkets VIC' },
-            { brand: 'McKenzie\'s Glutinous', weightG: 500, priceAud: 2.50, source: 'Src: Coles Online AU (Melb)' }
-        ]
-    },
-    {
-        id: 3, status: 'Active', weightG: 500, orderQty: 0,
-        name: { en: 'Tapioca Flour 500g', km: 'ម្សៅឆា ៥០០ក្រាម', fr: 'Farine de tapioca 500g', zh: '木薯淀粉 / 生粉 500g' },
-        nameKhmer: 'ម្សៅឆា ៥០០ក្រាម', spec: { en: '500g Bag / 20 Pcs (10kg/CTN)', km: 'ថង់ ៥០០ក្រាម / ២០ កញ្ចប់ (១០គីឡូ/កេស)', fr: 'Sac de 500g / 20 Pcs (10kg/CTN)', zh: '500g/袋 / 20包 (10kg/箱)' }, fobUsd: 0.44, ctnPriceUsd: 8.80, pcsPer20ft: 20000,
-        asianComps: [
-            { brand: 'Cock Brand Tapioca Starch', weightG: 500, priceAud: 1.50, source: 'Src: KFL Asian Grocery Springvale' },
-            { brand: 'Panda Tapioca Flour', weightG: 500, priceAud: 1.45, source: 'Src: Minh Phat Market Richmond' },
-            { brand: 'Swagat Tapioca Flour', weightG: 500, priceAud: 1.70, source: 'Src: Spice World Indian Mart' },
-            { brand: 'Elephant House Tapioca', weightG: 500, priceAud: 1.80, source: 'Src: Ceylon Supermarket VIC' }
-        ],
-        ausComps: [
-            { brand: 'McKenzie\'s Tapioca Flour', weightG: 300, priceAud: 1.70, source: 'Src: Woolworths Online AU (Melb)' },
-            { brand: 'Lotus Tapioca Flour', weightG: 500, priceAud: 2.20, source: 'Src: Coles Supermarkets VIC' }
-        ]
-    },
-    {
-        id: 4, status: 'Active', weightG: 500, orderQty: 0,
-        name: { en: 'Pancake Flour (Banh Xeo) 500g', km: 'ម្សៅបាញ់ឆែវ ៥០០ក្រាម', fr: 'Farine pour crêpes asiatiques 500g', zh: '柬式/越式煎饼粉 (Banh Xeo) 500g' },
-        nameKhmer: 'ម្សៅបាញ់ឆែវ ៥០០ក្រាម', spec: { en: '500g Bag / 20 Pcs (10kg/CTN)', km: 'ថង់ ៥០០ក្រាម / ២០ កញ្ចប់ (១០គីឡូ/កេស)', fr: 'Sac de 500g / 20 Pcs (10kg/CTN)', zh: '500g/袋 / 20包 (10kg/箱)' }, fobUsd: 0.90, ctnPriceUsd: 18.00, pcsPer20ft: 20000,
-        asianComps: [
-            { brand: 'Bot Banh Xeo Pancake Mix', weightG: 500, priceAud: 2.80, source: 'Src: KFL Asian Grocery Springvale' },
-            { brand: 'Vinh Thuan Pancake Mix', weightG: 500, priceAud: 2.90, source: 'Src: Minh Phat Market Richmond' },
-            { brand: 'Gits Dosa Pancake Mix', weightG: 500, priceAud: 3.10, source: 'Src: India Gate Supermarket' }
-        ],
-        ausComps: [
-            { brand: 'Greens Original Pancake Mix', weightG: 375, priceAud: 2.40, source: 'Src: Woolworths Supermarkets VIC' },
-            { brand: 'White Wings Pancake Shake', weightG: 325, priceAud: 2.50, source: 'Src: Coles Online AU (Melb)' },
-            { brand: 'Krusteaz Pancake Mix Bulk', weightG: 2000, priceAud: 9.99, source: 'Src: Costco Wholesale AU' }
-        ]
-    },
-    {
-        id: 5, status: 'Active', weightG: 1000, orderQty: 0,
-        name: { en: 'Crispy Tempura Flour 1000g', km: 'ម្សៅបំពងស្រួយ ១០០០ក្រាម', fr: 'Farine à tempura croustillante 1000g', zh: '香酥天妇罗炸粉 1000g' },
-        nameKhmer: 'ម្សៅបំពងស្រួយ ១០០០ក្រាម', spec: { en: '1000g Bag / 10 Pcs (10kg/CTN)', km: 'ថង់ ១០០០ក្រាម / ១០ កញ្ចប់ (១០គីឡូ/កេស)', fr: 'Sac de 1000g / 10 Pcs (10kg/CTN)', zh: '1000g/袋 / 10包 (10kg/箱)' }, fobUsd: 1.25, ctnPriceUsd: 12.50, pcsPer20ft: 10000,
-        asianComps: [
-            { brand: 'Gogi Tempura Batter Mix', weightG: 500, priceAud: 2.20, source: 'Src: Minh Phat Market Richmond' },
-            { brand: 'Showa Tempura Flour', weightG: 1000, priceAud: 4.10, source: 'Src: KFL Asian Grocery Springvale' },
-            { brand: 'L3 Bajji / Bonda Batter Mix', weightG: 500, priceAud: 2.50, source: 'Src: DesiKart Indian Grocery' },
-            { brand: 'Ceylon Crispy Fry Flour', weightG: 1000, priceAud: 4.30, source: 'Src: Lankan Groceries Melbourne' }
-        ],
-        ausComps: [
-            { brand: 'White Wings Tempura Batter', weightG: 300, priceAud: 2.80, source: 'Src: Coles Online AU (Melb)' },
-            { brand: 'Knorr Crispy Tempura Mix', weightG: 500, priceAud: 3.60, source: 'Src: Woolworths Supermarkets VIC' }
-        ]
-    },
-    {
-        id: 6, status: 'Active', weightG: 150, orderQty: 0,
-        name: { en: 'Crispy Tempura Flour 150g', km: 'ម្សៅបំពងស្រួយ ១៥០ក្រាម', fr: 'Farine à tempura croustillante 150g', zh: '香酥天妇罗炸粉 150g' },
-        nameKhmer: 'ម្សៅបំពងស្រួយ ១៥០ក្រាម', spec: { en: '150g Bag / 60 Pcs (6x10pcs/CTN)', km: 'ថង់ ១៥០ក្រាម / ៦០ កញ្ចប់ (៦x១០កញ្ចប់/កេស)', fr: 'Sac de 150g / 60 Pcs (6x10pcs/CTN)', zh: '150g/袋 / 60包 (6x10包/箱)' }, fobUsd: 0.39, ctnPriceUsd: 23.40, pcsPer20ft: 60000,
-        asianComps: [
-            { brand: 'Gogi Crispy Batter Pack', weightG: 150, priceAud: 1.10, source: 'Src: KFL Asian Grocery Springvale' },
-            { brand: 'Aroma Crispy Coating', weightG: 150, priceAud: 1.05, source: 'Src: Minh Phat Market Richmond' }
-        ],
-        ausComps: [
-            { brand: 'Knorr Crispy Seasoned', weightG: 150, priceAud: 1.80, source: 'Src: Woolworths Supermarkets VIC' },
-            { brand: 'MasterFoods Seasoned Batter', weightG: 150, priceAud: 1.95, source: 'Src: Coles Online AU (Melb)' }
-        ]
-    },
-    {
-        id: 7, status: 'Active', weightG: 500, orderQty: 0,
-        name: { en: 'Fried Banana Flour 500g', km: 'ម្សៅចេកចៀន ៥០០ក្រាម', fr: 'Farine pour bananes frites 500g', zh: '炸香蕉专用脆粉 500g' },
-        nameKhmer: 'ម្សៅចេកចៀន ៥០០ក្រាម', spec: { en: '500g Bag / 20 Pcs (10kg/CTN)', km: 'ថង់ ៥០០ក្រាម / ២០ កញ្ចប់ (១០គីឡូ/កេស)', fr: 'Sac de 500g / 20 Pcs (10kg/CTN)', zh: '500g/袋 / 20包 (10kg/箱)' }, fobUsd: 1.60, ctnPriceUsd: 32.00, pcsPer20ft: 20000,
-        asianComps: [
-            { brand: 'Bot Chien Chuoi Banana Mix', weightG: 500, priceAud: 3.20, source: 'Src: KFL Asian Grocery Springvale' },
-            { brand: 'Thai Banana Fritter Mix', weightG: 500, priceAud: 3.10, source: 'Src: Minh Phat Market Richmond' }
-        ],
-        ausComps: [
-            { brand: 'Asian Specialty Dessert Batter', weightG: 400, priceAud: 3.80, source: 'Src: Coles Online AU (Melb)' },
-            { brand: 'Golden Fry Sweet Batter', weightG: 400, priceAud: 3.60, source: 'Src: Woolworths Supermarkets VIC' }
-        ]
-    },
-    {
-        id: 8, status: 'Active', weightG: 120, orderQty: 0,
-        name: { en: 'Black Pepper Whole 120g', km: 'ម្រេចខ្មៅគ្រាប់មូល ១២០ក្រាម', fr: 'Poivre noir entier 120g', zh: '整粒黑胡椒粒 120g' },
-        nameKhmer: 'ម្រេចខ្មៅគ្រាប់មូល ១២០ក្រាម', spec: { en: '120g Can / 12 Cans/CTN', km: 'កំប៉ុង ១២០ក្រាម / ១២ កំប៉ុង/កេស', fr: 'Boîte de 120g / 12 Boîtes/CTN', zh: '120g/罐 / 12罐/箱' }, fobUsd: 3.63, ctnPriceUsd: 43.56, pcsPer20ft: 18000,
-        asianComps: [
-            { brand: 'Thai Whole Black Peppercorn', weightG: 100, priceAud: 4.80, source: 'Src: KFL Asian Grocery Springvale' },
-            { brand: 'Cock Brand Whole Pepper', weightG: 100, priceAud: 4.60, source: 'Src: Minh Phat Market Richmond' },
-            { brand: 'MD Black Peppercorns', weightG: 100, priceAud: 5.10, source: 'Src: Lankan Groceries Melbourne' },
-            { brand: 'Deep Whole Black Pepper', weightG: 100, priceAud: 4.50, source: 'Src: India Gate Supermarket' }
-        ],
-        ausComps: [
-            { brand: 'Hoyts Whole Black Peppercorn', weightG: 100, priceAud: 4.90, source: 'Src: Woolworths Supermarkets VIC' },
-            { brand: 'MasterFoods Black Peppercorn', weightG: 100, priceAud: 5.50, source: 'Src: Coles Online AU (Melb)' },
-            { brand: 'Stonemill Whole Peppercorns', weightG: 100, priceAud: 3.80, source: 'Src: ALDI Australia' },
-            { brand: 'Kirkland Signature Black Peppercorn', weightG: 357, priceAud: 14.50, source: 'Src: Costco Wholesale AU' }
-        ]
-    },
-    {
-        id: 9, status: 'Active', weightG: 80, orderQty: 0,
-        name: { en: 'Fine Ground Black Pepper 80g', km: 'ម្រេចខ្មៅម៉ដ្ឋ ៨០ក្រាម', fr: 'Poivre noir moulu fin 80g', zh: '细磨黑胡椒粉 80g' },
-        nameKhmer: 'ម្រេចខ្មៅម៉ដ្ឋ ៨០ក្រាម', spec: { en: '80g Can / 20 Cans/CTN', km: 'កំប៉ុង ៨០ក្រាម / ២០ កំប៉ុង/កេស', fr: 'Boîte de 80g / 20 Boîtes/CTN', zh: '80g/罐 / 20罐/箱' }, fobUsd: 1.43, ctnPriceUsd: 28.60, pcsPer20ft: 24000,
-        asianComps: [
-            { brand: 'Cock Brand Ground Black Pepper', weightG: 80, priceAud: 2.80, source: 'Src: KFL Asian Grocery Springvale' },
-            { brand: 'Thai Pure Black Pepper', weightG: 80, priceAud: 2.65, source: 'Src: Minh Phat Market Richmond' }
-        ],
-        ausComps: [
-            { brand: 'Saxa Black Pepper Ground', weightG: 50, priceAud: 2.90, source: 'Src: Coles Online AU (Melb)' },
-            { brand: 'McCormick Ground Black Pepper', weightG: 50, priceAud: 3.10, source: 'Src: Woolworths Supermarkets VIC' },
-            { brand: 'Kirkland Fine Ground Pepper', weightG: 348, priceAud: 13.50, source: 'Src: Costco Wholesale AU' }
-        ]
-    },
-    {
-        id: 10, status: 'Active', weightG: 80, orderQty: 0,
-        name: { en: 'Coarse Ground Black Pepper 80g', km: 'ម្រេចខ្មៅចម្រៀក ៨០ក្រាម', fr: 'Poivre noir concassé 80g', zh: '粗磨黑胡椒碎 80g' },
-        nameKhmer: 'ម្រេចខ្មៅចម្រៀក ៨០ក្រាម', spec: { en: '80g Can / 20 Cans/CTN', km: 'កំប៉ុង ៨០ក្រាម / ២០ កំប៉ុង/កេស', fr: 'Boîte de 80g / 20 Boîtes/CTN', zh: '80g/罐 / 20罐/箱' }, fobUsd: 1.43, ctnPriceUsd: 28.60, pcsPer20ft: 24000,
-        asianComps: [
-            { brand: 'MasterFoods Cracked Pepper', weightG: 50, priceAud: 3.20, source: 'Src: KFL Asian Grocery Springvale' },
-            { brand: 'Cock Brand Cracked Pepper', weightG: 80, priceAud: 2.85, source: 'Src: Minh Phat Market Richmond' }
-        ],
-        ausComps: [
-            { brand: 'McCormick Cracked Black Pepper', weightG: 40, priceAud: 3.10, source: 'Src: Woolworths Supermarkets VIC' },
-            { brand: 'Hoyts Cracked Black Pepper', weightG: 50, priceAud: 2.95, source: 'Src: Coles Online AU (Melb)' },
-            { brand: 'Kirkland Coarse Ground Pepper', weightG: 359, priceAud: 10.50, source: 'Src: Costco Wholesale AU' }
-        ]
-    },
-    {
-        id: 11, status: 'Active', weightG: 80, orderQty: 0,
-        name: { en: 'Fine Ground White Pepper 80g', km: 'ម្រេចសចម្រៀក ៨០ក្រាម', fr: 'Poivre blanc moulu fin 80g', zh: '细磨白胡椒粉 80g' },
-        nameKhmer: 'ម្រេចសចម្រៀក ៨០ក្រាម', spec: { en: '80g Can / 20 Cans/CTN', km: 'កំប៉ុង ៨០ក្រាម / ២០ កំប៉ុង/កេស', fr: 'Boîte de 80g / 20 Boîtes/CTN', zh: '80g/罐 / 20罐/箱' }, fobUsd: 1.43, ctnPriceUsd: 28.60, pcsPer20ft: 24000,
-        asianComps: [
-            { brand: 'Cock Brand White Pepper Powder', weightG: 100, priceAud: 3.90, source: 'Src: KFL Asian Grocery Springvale' },
-            { brand: 'Erawan White Pepper Powder', weightG: 80, priceAud: 3.60, source: 'Src: Minh Phat Market Richmond' }
-        ],
-        ausComps: [
-            { brand: 'Hoyts White Pepper Ground', weightG: 100, priceAud: 4.50, source: 'Src: Coles Online AU (Melb)' },
-            { brand: 'Saxa Ground White Pepper', weightG: 50, priceAud: 3.20, source: 'Src: Woolworths Supermarkets VIC' }
-        ]
-    },
-    {
-        id: 12, status: 'Active', weightG: 650, orderQty: 0,
-        name: { en: 'Coarse Ground Black Pepper 650g', km: 'ម្រេចខ្មៅចម្រៀក ៦៥០ក្រាម', fr: 'Poivre noir concassé 650g', zh: '粗磨黑胡椒碎 650g (餐饮罐装)' },
-        nameKhmer: 'ម្រេចខ្មៅចម្រៀក ៦៥០ក្រាម', spec: { en: '650g Can / 6 Cans/CTN', km: 'កំប៉ុង ៦៥០ក្រាម / ៦ កំប៉ុង/កេស', fr: 'Boîte de 650g / 6 Boîtes/CTN', zh: '650g/罐 / 6罐/箱' }, fobUsd: 7.46, ctnPriceUsd: 44.76, pcsPer20ft: 9000,
-        asianComps: [
-            { brand: 'Chef Choice Coarse Pepper', weightG: 500, priceAud: 12.50, source: 'Src: Minh Phat Market Richmond' },
-            { brand: 'Thai Catering Cracked Pepper', weightG: 600, priceAud: 13.80, source: 'Src: KFL Asian Grocery Springvale' }
-        ],
-        ausComps: [
-            { brand: 'MasterFoods Pepper Catering', weightG: 500, priceAud: 14.50, source: 'Src: Woolworths Supermarkets VIC' },
-            { brand: 'McCormick Catering Cracked', weightG: 500, priceAud: 15.20, source: 'Src: Coles Online AU (Melb)' },
-            { brand: 'Kirkland Coarse Pepper Bulk Container', weightG: 359, priceAud: 10.50, source: 'Src: Costco Wholesale AU' }
-        ]
-    },
-    {
-        id: 13, status: 'Active', weightG: 650, orderQty: 0,
-        name: { en: 'Fine Ground Black Pepper 650g', km: 'ម្រេចខ្មៅម៉ដ្ឋ ៦៥០ក្រាម', fr: 'Poivre noir moulu fin 650g', zh: '细磨黑胡椒粉 650g (餐饮罐装)' },
-        nameKhmer: 'ម្រេចខ្មៅម៉ដ្ឋ ៦៥០ក្រាម', spec: { en: '650g Can / 6 Cans/CTN', km: 'កំប៉ុង ៦៥០ក្រាម / ៦ កំប៉ុង/កេស', fr: 'Boîte de 650g / 6 Boîtes/CTN', zh: '650g/罐 / 6罐/箱' }, fobUsd: 7.46, ctnPriceUsd: 44.76, pcsPer20ft: 9000,
-        asianComps: [
-            { brand: 'Thai Pure Ground Pepper', weightG: 500, priceAud: 12.00, source: 'Src: KFL Asian Grocery Springvale' },
-            { brand: 'Cock Brand Fine Pepper', weightG: 600, priceAud: 13.20, source: 'Src: Minh Phat Market Richmond' }
-        ],
-        ausComps: [
-            { brand: 'Hoyts Catering Ground Pepper', weightG: 500, priceAud: 13.80, source: 'Src: Coles Online AU (Melb)' },
-            { brand: 'Saxa Fine Pepper Catering', weightG: 500, priceAud: 14.20, source: 'Src: Woolworths Supermarkets VIC' },
-            { brand: 'Kirkland Ground Pepper Bulk', weightG: 348, priceAud: 13.50, source: 'Src: Costco Wholesale AU' }
-        ]
-    },
-    {
-        id: 14, status: 'Active', weightG: 1000, orderQty: 0,
-        name: { en: 'Black Pepper Whole 1000g', km: 'ម្រេចខ្មៅគ្រាប់មូល ១០០០ក្រាម', fr: 'Poivre noir entier 1000g', zh: '整粒黑胡椒粒 1000g (大包装)' },
-        nameKhmer: 'ម្រេចខ្មៅគ្រាប់មូល ១០០០ក្រាម', spec: { en: '1000g Bag / 10 Bags (10kg/CTN)', km: 'ថង់ ១០០០ក្រាម / ១០ ថង់ (១០គីឡូ/កេស)', fr: 'Sac de 1000g / 10 Sacs (10kg/CTN)', zh: '1000g/袋 / 10袋 (10kg/箱)' }, fobUsd: 9.07, ctnPriceUsd: 90.70, pcsPer20ft: 10000,
-        asianComps: [
-            { brand: 'VN Premium Whole Pepper', weightG: 1000, priceAud: 16.50, source: 'Src: KFL Asian Grocery Springvale' },
-            { brand: 'Erawan Whole Pepper', weightG: 1000, priceAud: 15.90, source: 'Src: Minh Phat Market Richmond' },
-            { brand: 'Deep Black Peppercorns Bulk', weightG: 1000, priceAud: 17.50, source: 'Src: Radhe Indian Grocery' },
-            { brand: 'MD Sri Lankan Peppercorn Bulk', weightG: 1000, priceAud: 18.20, source: 'Src: Ceylon Supermarket VIC' }
-        ],
-        ausComps: [
-            { brand: 'MasterFoods Peppercorns Bulk', weightG: 1000, priceAud: 21.50, source: 'Src: Woolworths Supermarkets VIC' },
-            { brand: 'Hoyts Whole Pepper Bulk', weightG: 1000, priceAud: 19.80, source: 'Src: Coles Online AU (Melb)' },
-            { brand: 'Kirkland Whole Peppercorn Jar', weightG: 357, priceAud: 14.50, source: 'Src: Costco Wholesale AU' }
-        ]
-    },
-    {
-        id: 15, status: 'Active', weightG: 500, orderQty: 0,
-        name: { en: 'Black Pepper Whole 500g', km: 'ម្រេចខ្មៅគ្រាប់មូល ៥០០ក្រាម', fr: 'Poivre noir entier 500g', zh: '整粒黑胡椒粒 500g' },
-        nameKhmer: 'ម្រេចខ្មៅគ្រាប់មូល ៥០០ក្រាម', spec: { en: '500g Bag / 20 Bags (10kg/CTN)', km: 'ថង់ ៥០០ក្រាម / ២០ ថង់ (១០គីឡូ/កេស)', fr: 'Sac de 500g / 20 Sacs (10kg/CTN)', zh: '500g/袋 / 20包 (10kg/箱)' }, fobUsd: 4.60, ctnPriceUsd: 92.00, pcsPer20ft: 20000,
-        asianComps: [
-            { brand: 'Erawan Whole Black Pepper', weightG: 500, priceAud: 8.80, source: 'Src: KFL Asian Grocery Springvale' },
-            { brand: 'Cock Brand Whole Pepper', weightG: 500, priceAud: 8.50, source: 'Src: Minh Phat Market Richmond' }
-        ],
-        ausComps: [
-            { brand: 'Hoyts Black Peppercorn', weightG: 500, priceAud: 10.50, source: 'Src: Coles Online AU (Melb)' },
-            { brand: 'McCormick Peppercorn Bag', weightG: 500, priceAud: 11.20, source: 'Src: Woolworths Supermarkets VIC' }
-        ]
-    },
-    {
-        id: 16, status: 'Active', weightG: 1000, orderQty: 0,
-        name: { en: 'Crushed Black Pepper (10-20 Mesh) 1000g', km: 'ម្រេចខ្មៅចម្រៀកកំរិត 10-20 ម៉េស ១០០០ក្រាម', fr: 'Poivre noir concassé (10-20 Mesh) 1000g', zh: '黑胡椒碎 (10-20目) 1000g' },
-        nameKhmer: 'ម្រេចខ្មៅចម្រៀកកំរិត 10-20 ម៉េស ១០០០ក្រាម', spec: { en: '1000g Bag / 10 Bags (10kg/CTN)', km: 'ថង់ ១០០០ក្រាម / ១០ ថង់ (១០គីឡូ/កេស)', fr: 'Sac de 1000g / 10 Bags (10kg/CTN)', zh: '1000g/袋 / 10袋 (10kg/箱)' }, fobUsd: 9.46, ctnPriceUsd: 94.60, pcsPer20ft: 10000,
-        asianComps: [
-            { brand: 'VN Cracked Black Pepper', weightG: 1000, priceAud: 17.50, source: 'Src: KFL Asian Grocery Springvale' },
-            { brand: 'Thai Chef Cracked Pepper', weightG: 1000, priceAud: 16.90, source: 'Src: Minh Phat Market Richmond' }
-        ],
-        ausComps: [
-            { brand: 'McCormick Cracked Pepper', weightG: 1000, priceAud: 22.50, source: 'Src: Woolworths Supermarkets VIC' },
-            { brand: 'MasterFoods Cracked Pepper', weightG: 1000, priceAud: 23.90, source: 'Src: Coles Online AU (Melb)' }
-        ]
-    },
-    {
-        id: 17, status: 'Active', weightG: 500, orderQty: 0,
-        name: { en: 'Crushed Black Pepper (10-20 Mesh) 500g', km: 'ម្រេចខ្មៅចម្រៀកកំរិត 10-20 ម៉េស ៥០០ក្រាម', fr: 'Poivre noir concassé (10-20 Mesh) 500g', zh: '黑胡椒碎 (10-20目) 500g' },
-        nameKhmer: 'ម្រេចខ្មៅចម្រៀកកំរិត 10-20 ម៉េស ៥០០ក្រាម', spec: { en: '500g Bag / 20 Bags (10kg/CTN)', km: 'ថង់ ៥០០ក្រាម / ២០ ថង់ (១០គីឡូ/កេស)', fr: 'Sac de 500g / 20 Bags (10kg/CTN)', zh: '500g/袋 / 20包 (10kg/箱)' }, fobUsd: 4.79, ctnPriceUsd: 95.80, pcsPer20ft: 20000,
-        asianComps: [
-            { brand: 'Cock Brand Crushed Pepper', weightG: 500, priceAud: 9.20, source: 'Src: KFL Asian Grocery Springvale' },
-            { brand: 'Erawan Crushed Pepper', weightG: 500, priceAud: 8.90, source: 'Src: Minh Phat Market Richmond' }
-        ],
-        ausComps: [
-            { brand: 'MasterFoods Cracked Pepper', weightG: 500, priceAud: 11.50, source: 'Src: Coles Online AU (Melb)' },
-            { brand: 'Hoyts Cracked Black Pepper', weightG: 500, priceAud: 10.90, source: 'Src: Woolworths Supermarkets VIC' }
-        ]
-    },
-    {
-        id: 18, status: 'Active', weightG: 1000, orderQty: 0,
-        name: { en: 'Fine Ground Black Pepper (40 Mesh) 1000g', km: 'ម្រេចខ្មៅម៉ដ្ឋកំរិត 40 ម៉េស ១០០០ក្រាម', fr: 'Poivre noir moulu fin (40 Mesh) 1000g', zh: '细磨黑胡椒粉 (40目) 1000g' },
-        nameKhmer: 'ម្រេចខ្មៅម៉ដ្ឋកំរិត 40 ម៉េស ១០០០ក្រាម', spec: { en: '1000g Bag / 10 Bags (10kg/CTN)', km: 'ថង់ ១០០០ក្រាម / ១០ ថង់ (១០គីឡូ/កេស)', fr: 'Sac de 1000g / 10 Bags (10kg/CTN)', zh: '1000g/袋 / 10袋 (10kg/箱)' }, fobUsd: 9.46, ctnPriceUsd: 94.60, pcsPer20ft: 10000,
-        asianComps: [
-            { brand: 'Thai Pure Pepper Powder', weightG: 1000, priceAud: 17.20, source: 'Src: KFL Asian Grocery Springvale' },
-            { brand: 'Cock Brand Ground Pepper', weightG: 1000, priceAud: 16.80, source: 'Src: Minh Phat Market Richmond' }
-        ],
-        ausComps: [
-            { brand: 'Saxa Ground Black Pepper', weightG: 1000, priceAud: 21.90, source: 'Src: Woolworths Supermarkets VIC' },
-            { brand: 'Hoyts Fine Ground Pepper', weightG: 1000, priceAud: 20.50, source: 'Src: Coles Online AU (Melb)' }
-        ]
-    },
-    {
-        id: 19, status: 'Active', weightG: 500, orderQty: 0,
-        name: { en: 'Fine Ground Black Pepper (40 Mesh) 500g', km: 'ម្រេចខ្មៅម៉ដ្ឋកំរិត 40 ម៉េស ៥០០ក្រាម', fr: 'Poivre noir moulu fin (40 Mesh) 500g', zh: '细磨黑胡椒粉 (40目) 500g' },
-        nameKhmer: 'ម្រេចខ្មៅម៉ដ្ឋកំរិត 40 ម៉េស ៥០០ក្រាម', spec: { en: '500g Bag / 20 Bags (10kg/CTN)', km: 'ថង់ ៥០០ក្រាម / ២០ ថង់ (១០គីឡូ/កេស)', fr: 'Sac de 500g / 20 Bags (10kg/CTN)', zh: '500g/袋 / 20包 (10kg/箱)' }, fobUsd: 4.78, ctnPriceUsd: 95.60, pcsPer20ft: 20000,
-        asianComps: [
-            { brand: 'Cock Brand Fine Pepper', weightG: 500, priceAud: 8.90, source: 'Src: KFL Asian Grocery Springvale' },
-            { brand: 'Erawan Fine Pepper', weightG: 500, priceAud: 8.50, source: 'Src: Minh Phat Market Richmond' }
-        ],
-        ausComps: [
-            { brand: 'Hoyts Fine Black Pepper', weightG: 500, priceAud: 10.80, source: 'Src: Coles Online AU (Melb)' },
-            { brand: 'Saxa Ground Pepper Bag', weightG: 500, priceAud: 10.50, source: 'Src: Woolworths Supermarkets VIC' }
-        ]
-    },
-    {
-        id: 20, status: 'Active', weightG: 200, orderQty: 0,
-        name: { en: 'Black Pepper Whole 200g', km: 'ម្រេចខ្មៅគ្រាប់មូល ២០០ក្រាម', fr: 'Poivre noir entier 200g', zh: '整粒黑胡椒粒 200g (罐装)' },
-        nameKhmer: 'ម្រេចខ្មៅគ្រាប់មូល ២០០ក្រាម', spec: { en: '200g Can / 12 Cans/CTN', km: 'កំប៉ុង ២០០ក្រាម / ១២ កំប៉ុង/កេស', fr: 'Boîte de 200g / 12 Boîtes/CTN', zh: '200g/罐 / 12罐/箱' }, fobUsd: 2.68, ctnPriceUsd: 32.16, pcsPer20ft: 14400,
-        asianComps: [
-            { brand: 'Thai Whole Pepper Can', weightG: 200, priceAud: 5.20, source: 'Src: KFL Asian Grocery Springvale' },
-            { brand: 'Cock Brand Peppercorn Can', weightG: 200, priceAud: 4.90, source: 'Src: Minh Phat Market Richmond' }
-        ],
-        ausComps: [
-            { brand: 'McCormick Peppercorn Can', weightG: 200, priceAud: 6.20, source: 'Src: Woolworths Supermarkets VIC' },
-            { brand: 'MasterFoods Peppercorn Shaker', weightG: 200, priceAud: 6.50, source: 'Src: Coles Online AU (Melb)' }
-        ]
-    },
-    {
-        id: 21, status: 'Active', weightG: 250, orderQty: 0,
-        name: { en: 'Coarse Ground Black Pepper 250g', km: 'ម្រេចខ្មៅចម្រៀក ២៥០ក្រាម', fr: 'Poivre noir concassé 250g', zh: '粗磨黑胡椒碎 250g (罐装)' },
-        nameKhmer: 'ម្រេចខ្មៅចម្រៀក ២៥០ក្រាម', spec: { en: '250g Can / 12 Cans/CTN', km: 'កំប៉ុង ២៥០ក្រាម / ១២ កំប៉ុង/កេស', fr: 'Boîte de 250g / 12 Boîtes/CTN', zh: '250g/罐 / 12罐/箱' }, fobUsd: 3.37, ctnPriceUsd: 40.44, pcsPer20ft: 14400,
-        asianComps: [
-            { brand: 'Cock Brand Coarse Pepper', weightG: 250, priceAud: 5.80, source: 'Src: KFL Asian Grocery Springvale' },
-            { brand: 'Thai Chef Coarse Pepper', weightG: 250, priceAud: 5.60, source: 'Src: Minh Phat Market Richmond' }
-        ],
-        ausComps: [
-            { brand: 'MasterFoods Cracked Pepper', weightG: 250, priceAud: 6.90, source: 'Src: Coles Online AU (Melb)' },
-            { brand: 'Hoyts Cracked Pepper Can', weightG: 250, priceAud: 6.50, source: 'Src: Woolworths Supermarkets VIC' }
-        ]
-    },
-    {
-        id: 22, status: 'Active', weightG: 250, orderQty: 0,
-        name: { en: 'Fine Ground Black Pepper 250g', km: 'ម្រេចខ្មៅម៉ដ្ឋ ២៥០ក្រាម', fr: 'Poivre noir moulu fin 250g', zh: '细磨黑胡椒粉 250g (罐装)' },
-        nameKhmer: 'ម្រេចខ្មៅម៉ដ្ឋ ២៥០ក្រាម', spec: { en: '250g Can / 12 Cans/CTN', km: 'កំប៉ុង ២៥០ក្រាម / ១២ កំប៉ុង/កេស', fr: 'Boîte de 250g / 12 Boîtes/CTN', zh: '250g/罐 / 12罐/箱' }, fobUsd: 3.37, ctnPriceUsd: 40.44, pcsPer20ft: 14400,
-        asianComps: [
-            { brand: 'Erawan Ground Black Pepper', weightG: 250, priceAud: 5.60, source: 'Src: KFL Asian Grocery Springvale' },
-            { brand: 'Cock Brand Fine Pepper', weightG: 250, priceAud: 5.40, source: 'Src: Minh Phat Market Richmond' }
-        ],
-        ausComps: [
-            { brand: 'Saxa Pepper Shaker', weightG: 250, priceAud: 6.80, source: 'Src: Woolworths Supermarkets VIC' },
-            { brand: 'McCormick Ground Pepper', weightG: 250, priceAud: 7.10, source: 'Src: Coles Online AU (Melb)' }
-        ]
-    },
-    {
-        id: 23, status: 'Active', weightG: 350, orderQty: 0,
-        name: { en: 'Black Pepper Whole 350g', km: 'ម្រេចខ្មៅគ្រាប់មូល ៣៥០ក្រាម', fr: 'Poivre noir entier 350g', zh: '整粒黑胡椒粒 350g (罐装)' },
-        nameKhmer: 'ម្រេចខ្មៅគ្រាប់មូល ៣៥០ក្រាម', spec: { en: '350g Can / 12 Cans/CTN', km: 'កំប៉ុង ៣៥០ក្រាម / ១២ កំប៉ុង/កេស', fr: 'Boîte de 350g / 12 Boîtes/CTN', zh: '350g/罐 / 12罐/箱' }, fobUsd: 3.59, ctnPriceUsd: 43.08, pcsPer20ft: 14400,
-        asianComps: [
-            { brand: 'Thai Whole Peppercorn Can', weightG: 350, priceAud: 7.50, source: 'Src: KFL Asian Grocery Springvale' },
-            { brand: 'VN Whole Peppercorn Can', weightG: 350, priceAud: 7.20, source: 'Src: Minh Phat Market Richmond' }
-        ],
-        ausComps: [
-            { brand: 'Hoyts Peppercorns Can', weightG: 350, priceAud: 8.80, source: 'Src: Coles Online AU (Melb)' },
-            { brand: 'MasterFoods Peppercorns', weightG: 350, priceAud: 9.20, source: 'Src: Woolworths Supermarkets VIC' }
-        ]
-    },
-    {
-        id: 24, status: 'Active', weightG: 360, orderQty: 0,
-        name: { en: 'Coarse Ground Black Pepper 360g', km: 'ម្រេចខ្មៅចម្រៀក ៣៦០ក្រាម', fr: 'Poivre noir concassé 360g', zh: '粗磨黑胡椒碎 360g (罐装)' },
-        nameKhmer: 'ម្រេចខ្មៅចម្រៀក ៣៦០ក្រាម', spec: { en: '360g Can / 12 Cans/CTN', km: 'កំប៉ុង ៣៦០ក្រាម / ១២ កំប៉ុង/កេស', fr: 'Boîte de 360g / 12 Boîtes/CTN', zh: '360g/罐 / 12罐/箱' }, fobUsd: 4.06, ctnPriceUsd: 48.72, pcsPer20ft: 14400,
-        asianComps: [
-            { brand: 'VN Cracked Black Pepper Can', weightG: 360, priceAud: 8.20, source: 'Src: KFL Asian Grocery Springvale' },
-            { brand: 'Cock Brand Cracked Pepper', weightG: 360, priceAud: 7.90, source: 'Src: Minh Phat Market Richmond' }
-        ],
-        ausComps: [
-            { brand: 'MasterFoods Cracked Pepper Can', weightG: 360, priceAud: 9.90, source: 'Src: Woolworths Supermarkets VIC' },
-            { brand: 'McCormick Cracked Pepper Can', weightG: 360, priceAud: 10.20, source: 'Src: Coles Online AU (Melb)' },
-            { brand: 'Kirkland Coarse Pepper Shaker', weightG: 359, priceAud: 10.50, source: 'Src: Costco Wholesale AU' }
-        ]
-    },
-    {
-        id: 25, status: 'Active', weightG: 360, orderQty: 0,
-        name: { en: 'Fine Ground Black Pepper 360g', km: 'ម្រេចខ្មៅម៉ដ្ឋ ៣៦០ក្រាម', fr: 'Poivre noir moulu fin 360g', zh: '细磨黑胡椒粉 360g (罐装)' },
-        nameKhmer: 'ម្រេចខ្មៅម៉ដ្ឋ ៣៦០ក្រាម', spec: { en: '360g Can / 12 Cans/CTN', km: 'កំប៉ុង ៣៦០ក្រាម / ១២ កំប៉ុង/កេស', fr: 'Boîte de 360g / 12 Boîtes/CTN', zh: '360g/罐 / 12罐/箱' }, fobUsd: 3.89, ctnPriceUsd: 46.68, pcsPer20ft: 14400,
-        asianComps: [
-            { brand: 'Cock Brand Fine Pepper Can', weightG: 360, priceAud: 7.90, source: 'Src: KFL Asian Grocery Springvale' },
-            { brand: 'Erawan Fine Pepper Can', weightG: 360, priceAud: 7.60, source: 'Src: Minh Phat Market Richmond' }
-        ],
-        ausComps: [
-            { brand: 'Saxa Ground Black Pepper Can', weightG: 360, priceAud: 9.50, source: 'Src: Coles Online AU (Melb)' },
-            { brand: 'Hoyts Ground Pepper Can', weightG: 360, priceAud: 9.10, source: 'Src: Woolworths Supermarkets VIC' },
-            { brand: 'Kirkland Fine Pepper Shaker', weightG: 348, priceAud: 13.50, source: 'Src: Costco Wholesale AU' }
-        ]
-    },
-    {
-        id: 26, status: 'Upcoming', weightG: 100, orderQty: 0,
-        name: { en: 'Instant Rice Stir-Fry Noodle 100g', km: 'មីគោក ១០០ក្រាម', fr: 'Nouilles de riz sautées instantanées 100g', zh: '即食干炒米粉 100g' },
-        nameKhmer: 'មីគោក ១០០ក្រាម', spec: { en: '100g Box / 24 Pcs per CTN', km: 'ប្រអប់ ១០០ក្រាម / ២៤ កញ្ចប់/កេស', fr: 'Boîte de 100g / 24 Pcs/CTN', zh: '100g/盒 / 24包/箱' }, fobUsd: 0.85, ctnPriceUsd: 20.40, pcsPer20ft: 18000,
-        asianComps: [
-            { brand: 'Mama Instant Rice Noodle Pack', weightG: 100, priceAud: 1.50, source: 'Src: KFL Asian Grocery Springvale' },
-            { brand: 'Wai Wai Rice Noodle', weightG: 100, priceAud: 1.40, source: 'Src: Minh Phat Market Richmond' },
-            { brand: 'Maggi Fusian Noodles', weightG: 100, priceAud: 1.60, source: 'Src: DesiKart Indian Grocery' }
-        ],
-        ausComps: [
-            { brand: 'Trident Instant Rice Noodle Bowl', weightG: 100, priceAud: 1.95, source: 'Src: Woolworths Supermarkets VIC' },
-            { brand: 'Suimin Noodle Cup', weightG: 100, priceAud: 1.80, source: 'Src: Coles Online AU (Melb)' }
-        ]
-    },
-    {
-        id: 27, status: 'Upcoming', weightG: 500, orderQty: 0,
-        name: { en: 'Crispy Rice Cake Flour 500g', km: 'ម្សៅនំគ្រក់ ៥០០ក្រាម', fr: 'Farine pour gâteau de riz croustillant 500g', zh: '柬式香脆米饼粉 (Nom Krok) 500g' },
-        nameKhmer: 'ម្សៅនំគ្រក់ ៥០០ក្រាម', spec: { en: '500g Bag / 20 Pcs (10kg/CTN)', km: 'ថង់ ៥០០ក្រាម / ២០ កញ្ចប់ (១០គីឡូ/កេស)', fr: 'Sac de 500g / 20 Pcs (10kg/CTN)', zh: '500g/袋 / 20包 (10kg/箱)' }, fobUsd: 0.95, ctnPriceUsd: 19.00, pcsPer20ft: 20000,
-        asianComps: [
-            { brand: 'Bot Banh Khot Cake Flour', weightG: 500, priceAud: 2.70, source: 'Src: KFL Asian Grocery Springvale' },
-            { brand: 'Vinh Thuan Rice Cake Premix', weightG: 500, priceAud: 2.60, source: 'Src: Minh Phat Market Richmond' }
-        ],
-        ausComps: [
-            { brand: 'Asian Specialty Rice Cake Premix', weightG: 500, priceAud: 3.40, source: 'Src: Coles Online AU (Melb)' },
-            { brand: 'Lian How Rice Flour Premix', weightG: 500, priceAud: 3.20, source: 'Src: Woolworths Supermarkets VIC' }
-        ]
-    },
-    {
-        id: 28, status: 'Upcoming', weightG: 500, orderQty: 0,
-        name: { en: 'Chinese Doughnuts Flour 500g', km: 'ម្សៅនំឆា ៥០០ក្រាម', fr: 'Farine pour beignets chinois (Youtiao) 500g', zh: '油条专用预拌粉 500g' },
-        nameKhmer: 'ម្សៅនំឆា ៥០០ក្រាម', spec: { en: '500g Bag / 20 Pcs (10kg/CTN)', km: 'ថង់ ៥០០ក្រាម / ២០ កញ្ចប់ (១០គីឡូ/កេស)', fr: 'Sac de 500g / 20 Pcs (10kg/CTN)', zh: '500g/袋 / 20包 (10kg/箱)' }, fobUsd: 0.90, ctnPriceUsd: 18.00, pcsPer20ft: 20000,
-        asianComps: [
-            { brand: 'Youtiao Chinese Donut Premix', weightG: 500, priceAud: 2.50, source: 'Src: KFL Asian Grocery Springvale' },
-            { brand: 'San Gaou Youtiao Mix', weightG: 500, priceAud: 2.40, source: 'Src: Minh Phat Market Richmond' }
-        ],
-        ausComps: [
-            { brand: 'Defiance Specialty Flour Mix', weightG: 500, priceAud: 3.10, source: 'Src: Woolworths Supermarkets VIC' },
-            { brand: 'Laucke Sweet Dough Premix', weightG: 500, priceAud: 3.30, source: 'Src: Coles Online AU (Melb)' }
-        ]
-    },
-    {
-        id: 29, status: 'Upcoming', weightG: 500, orderQty: 0,
-        name: { en: 'Waffle Flour 500g', km: 'ម្សៅពុម្ព ៥០០ក្រាម', fr: 'Farine pour gaufres asiatiques 500g', zh: '东南亚华夫饼/格仔饼预拌粉 500g' },
-        nameKhmer: 'ម្សៅពុម្ព ៥០០ក្រាម', spec: { en: '500g Bag / 20 Pcs (10kg/CTN)', km: 'ថង់ ៥០០ក្រាម / ២០ កញ្ចប់ (១០គីឡូ/កេស)', fr: 'Sac de 500g / 20 Pcs (10kg/CTN)', zh: '500g/袋 / 20包 (10kg/箱)' }, fobUsd: 1.10, ctnPriceUsd: 22.00, pcsPer20ft: 20000,
-        asianComps: [
-            { brand: 'Thai Pandan Waffle Premix', weightG: 500, priceAud: 2.90, source: 'Src: Minh Phat Market Richmond' },
-            { brand: 'Erawan Waffle Mix', weightG: 500, priceAud: 2.80, source: 'Src: KFL Asian Grocery Springvale' }
-        ],
-        ausComps: [
-            { brand: 'Greens Belgian Waffle Mix', weightG: 400, priceAud: 3.20, source: 'Src: Coles Online AU (Melb)' },
-            { brand: 'White Wings Waffle Mix', weightG: 400, priceAud: 3.40, source: 'Src: Woolworths Supermarkets VIC' }
-        ]
-    },
-    {
-        id: 30, status: 'Upcoming', weightG: 500, orderQty: 0,
-        name: { en: 'Steamed Rice Cake Flour 500g', km: 'ម្សៅនំអាកោ ៥០០ក្រាម', fr: 'Farine pour gâteau de riz à la vapeur 500g', zh: '蒸米糕粉 (Nom Ako) 500g' },
-        nameKhmer: 'ម្សៅនំអាកោ ៥០០ក្រាម', spec: { en: '500g Bag / 20 Pcs (10kg/CTN)', km: 'ថង់ ៥០០ក្រាម / ២០ កញ្ចប់ (១០គីឡូ/កេស)', fr: 'Sac de 500g / 20 Pcs (10kg/CTN)', zh: '500g/袋 / 20包 (10kg/箱)' }, fobUsd: 0.85, ctnPriceUsd: 17.00, pcsPer20ft: 20000,
-        asianComps: [
-            { brand: 'Bot Banh Khot Cake Flour', weightG: 500, priceAud: 2.40, source: 'Src: KFL Asian Grocery Springvale' },
-            { brand: 'Vinh Thuan Steamed Cake', weightG: 500, priceAud: 2.30, source: 'Src: Minh Phat Market Richmond' }
-        ],
-        ausComps: [
-            { brand: 'Asian Rice Cake Premix', weightG: 500, priceAud: 3.10, source: 'Src: Woolworths Supermarkets VIC' },
-            { brand: 'Lian How Steamed Cake Mix', weightG: 500, priceAud: 3.25, source: 'Src: Coles Online AU (Melb)' }
-        ]
-    }
-];
+// --- REAL-TIME OPEX CALCULATOR & RE-ALLOCATION WITH TOGGLE SWITCHES FOR ALL CATEGORIES ---
+function updateOpExFromInputs() {
+    function getCategoryState(catNum, rawAnnualSubtotal) {
+        const toggleEl = document.getElementById(`c${catNum}_toggle_input`);
+        const isEnabled = toggleEl ? toggleEl.checked : true;
+        const statusLabel = document.getElementById(`c${catNum}_toggle_status`);
+        const containerEl = document.getElementById(`c${catNum}-card-container`);
+        const headerEl = document.getElementById(`subtotal-c${catNum}-hdr`);
 
-const TOTAL_FIXED_CUSTOMS_AUD = 253.50 + 154.00 + 67.50 + 1695.00 + 65.00;
+        if (statusLabel) {
+            statusLabel.innerText = isEnabled ? 'ON' : 'OFF';
+            statusLabel.className = isEnabled 
+                ? 'ml-2 text-[10px] font-bold uppercase tracking-wider text-emerald-600' 
+                : 'ml-2 text-[10px] font-bold uppercase tracking-wider text-slate-400';
+        }
+
+        if (headerEl) {
+            if (isEnabled) {
+                headerEl.innerText = '$' + rawAnnualSubtotal.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + '/yr';
+                headerEl.className = (catNum === 2 ? "text-emerald-700" : "text-gold-700") + " font-mono font-bold text-xs";
+            } else {
+                headerEl.innerText = '$0.00/yr (OFF)';
+                headerEl.className = "text-slate-400 font-mono font-bold text-xs";
+            }
+        }
+
+        if (containerEl) {
+            if (isEnabled) {
+                containerEl.classList.remove('opacity-70');
+            } else {
+                containerEl.classList.add('opacity-70');
+            }
+        }
+
+        return isEnabled ? rawAnnualSubtotal : 0;
+    }
+
+    // Category 1
+    const c1_1_wk = parseFloat(document.getElementById('c1_1_input')?.value) || 0;
+    const c1_2_wk = parseFloat(document.getElementById('c1_2_input')?.value) || 0;
+    const c1_3_wk = parseFloat(document.getElementById('c1_3_input')?.value) || 0;
+
+    const c1_1_ann = c1_1_wk * 52;
+    const c1_2_ann = c1_2_wk * 52;
+    const c1_3_ann = c1_3_wk * 52;
+
+    if (document.getElementById('c1_1_mth')) document.getElementById('c1_1_mth').innerText = '$' + (c1_1_ann / 12).toFixed(2);
+    if (document.getElementById('c1_1_ann')) document.getElementById('c1_1_ann').innerText = '$' + c1_1_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    if (document.getElementById('c1_2_mth')) document.getElementById('c1_2_mth').innerText = '$' + (c1_2_ann / 12).toFixed(2);
+    if (document.getElementById('c1_2_ann')) document.getElementById('c1_2_ann').innerText = '$' + c1_2_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    if (document.getElementById('c1_3_mth')) document.getElementById('c1_3_mth').innerText = '$' + (c1_3_ann / 12).toFixed(2);
+    if (document.getElementById('c1_3_ann')) document.getElementById('c1_3_ann').innerText = '$' + c1_3_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+    const c1_raw_ann_sub = c1_1_ann + c1_2_ann + c1_3_ann;
+    const c1_wk_sub = c1_1_wk + c1_2_wk + c1_3_wk;
+    if (document.getElementById('c1_wk_sub')) document.getElementById('c1_wk_sub').innerText = '$' + c1_wk_sub.toFixed(2);
+    if (document.getElementById('c1_mth_sub')) document.getElementById('c1_mth_sub').innerText = '$' + (c1_raw_ann_sub / 12).toFixed(2);
+    if (document.getElementById('c1_ann_sub')) document.getElementById('c1_ann_sub').innerText = '$' + c1_raw_ann_sub.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+    const c1_ann_sub = getCategoryState(1, c1_raw_ann_sub);
+    const c1_mth_sub = c1_ann_sub / 12;
+
+    // Category 2
+    const c2_1_base = parseFloat(document.getElementById('c2_1_base')?.value) || 0;
+    const c2_1_super = c2_1_base * 0.115;
+    const c2_1_wc = parseFloat(document.getElementById('c2_1_wc')?.value) || 0;
+    const c2_1_tot = c2_1_base + c2_1_super + c2_1_wc;
+
+    const c2_2_base = parseFloat(document.getElementById('c2_2_base')?.value) || 0;
+    const c2_2_super = c2_2_base * 0.115;
+    const c2_2_wc = parseFloat(document.getElementById('c2_2_wc')?.value) || 0;
+    const c2_2_tot = c2_2_base + c2_2_super + c2_2_wc;
+
+    if (document.getElementById('c2_1_super')) document.getElementById('c2_1_super').innerText = '$' + c2_1_super.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    if (document.getElementById('c2_1_tot')) document.getElementById('c2_1_tot').innerText = '$' + c2_1_tot.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    if (document.getElementById('c2_2_super')) document.getElementById('c2_2_super').innerText = '$' + c2_2_super.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    if (document.getElementById('c2_2_tot')) document.getElementById('c2_2_tot').innerText = '$' + c2_2_tot.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+    const c2_base_sub = c2_1_base + c2_2_base;
+    const c2_super_sub = c2_1_super + c2_2_super;
+    const c2_wc_sub = c2_1_wc + c2_2_wc;
+    const c2_raw_ann_sub = c2_1_tot + c2_2_tot;
+
+    if (document.getElementById('c2_base_sub')) document.getElementById('c2_base_sub').innerText = '$' + c2_base_sub.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    if (document.getElementById('c2_super_sub')) document.getElementById('c2_super_sub').innerText = '$' + c2_super_sub.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    if (document.getElementById('c2_wc_sub')) document.getElementById('c2_wc_sub').innerText = '$' + c2_wc_sub.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    if (document.getElementById('c2_ann_sub')) document.getElementById('c2_ann_sub').innerText = '$' + c2_raw_ann_sub.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+    const c2_ann_sub = getCategoryState(2, c2_raw_ann_sub);
+    const c2_mth_sub = c2_ann_sub / 12;
+
+    // Category 3
+    const c3_1_mth = parseFloat(document.getElementById('c3_1_mth_input')?.value) || 0;
+    const c3_2_mth = parseFloat(document.getElementById('c3_2_mth_input')?.value) || 0;
+    const c3_3_mth = parseFloat(document.getElementById('c3_3_mth_input')?.value) || 0;
+
+    const c3_1_ann = c3_1_mth * 12;
+    const c3_2_ann = c3_2_mth * 12;
+    const c3_3_ann = c3_3_mth * 12;
+
+    if (document.getElementById('c3_1_ann')) document.getElementById('c3_1_ann').innerText = '$' + c3_1_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    if (document.getElementById('c3_2_ann')) document.getElementById('c3_2_ann').innerText = '$' + c3_2_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    if (document.getElementById('c3_3_ann')) document.getElementById('c3_3_ann').innerText = '$' + c3_3_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+    const c3_raw_mth_sub = c3_1_mth + c3_2_mth + c3_3_mth;
+    const c3_raw_ann_sub = c3_1_ann + c3_2_ann + c3_3_ann;
+
+    if (document.getElementById('c3_mth_sub')) document.getElementById('c3_mth_sub').innerText = '$' + c3_raw_mth_sub.toFixed(2);
+    if (document.getElementById('c3_ann_sub')) document.getElementById('c3_ann_sub').innerText = '$' + c3_raw_ann_sub.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+    const c3_ann_sub = getCategoryState(3, c3_raw_ann_sub);
+    const c3_mth_sub = c3_ann_sub / 12;
+
+    // Category 4
+    const c4_1_mth = parseFloat(document.getElementById('c4_1_mth_input')?.value) || 0;
+    const c4_2_mth = parseFloat(document.getElementById('c4_2_mth_input')?.value) || 0;
+    const c4_3_mth = parseFloat(document.getElementById('c4_3_mth_input')?.value) || 0;
+    const c4_4_mth = parseFloat(document.getElementById('c4_4_mth_input')?.value) || 0;
+    const c4_5_mth = parseFloat(document.getElementById('c4_5_mth_input')?.value) || 0;
+
+    const c4_1_ann = c4_1_mth * 12;
+    const c4_2_ann = c4_2_mth * 12;
+    const c4_3_ann = c4_3_mth * 12;
+    const c4_4_ann = c4_4_mth * 12;
+    const c4_5_ann = c4_5_mth * 12;
+
+    if (document.getElementById('c4_1_ann')) document.getElementById('c4_1_ann').innerText = '$' + c4_1_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    if (document.getElementById('c4_2_ann')) document.getElementById('c4_2_ann').innerText = '$' + c4_2_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    if (document.getElementById('c4_3_ann')) document.getElementById('c4_3_ann').innerText = '$' + c4_3_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    if (document.getElementById('c4_4_ann')) document.getElementById('c4_4_ann').innerText = '$' + c4_4_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    if (document.getElementById('c4_5_ann')) document.getElementById('c4_5_ann').innerText = '$' + c4_5_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+    const c4_raw_mth_sub = c4_1_mth + c4_2_mth + c4_3_mth + c4_4_mth + c4_5_mth;
+    const c4_raw_ann_sub = c4_1_ann + c4_2_ann + c4_3_ann + c4_4_ann + c4_5_ann;
+
+    if (document.getElementById('c4_mth_sub')) document.getElementById('c4_mth_sub').innerText = '$' + c4_raw_mth_sub.toFixed(2);
+    if (document.getElementById('c4_ann_sub')) document.getElementById('c4_ann_sub').innerText = '$' + c4_raw_ann_sub.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+    const c4_ann_sub = getCategoryState(4, c4_raw_ann_sub);
+    const c4_mth_sub = c4_ann_sub / 12;
+
+    // Category 5
+    const c5_1_ex = parseFloat(document.getElementById('c5_1_ann_input')?.value) || 0;
+    const c5_2_ex = parseFloat(document.getElementById('c5_2_ann_input')?.value) || 0;
+    const c5_3_ex = parseFloat(document.getElementById('c5_3_ann_input')?.value) || 0;
+    const c5_4_ex = parseFloat(document.getElementById('c5_4_ann_input')?.value) || 0;
+
+    if (document.getElementById('c5_1_inc_gst')) document.getElementById('c5_1_inc_gst').innerText = '$' + (c5_1_ex * 1.1).toFixed(2);
+    if (document.getElementById('c5_2_inc_gst')) document.getElementById('c5_2_inc_gst').innerText = '$' + (c5_2_ex * 1.1).toFixed(2);
+    if (document.getElementById('c5_3_inc_gst')) document.getElementById('c5_3_inc_gst').innerText = '$' + (c5_3_ex * 1.1).toFixed(2);
+    if (document.getElementById('c5_4_inc_gst')) document.getElementById('c5_4_inc_gst').innerText = '$' + (c5_4_ex * 1.1).toFixed(2);
+
+    const c5_raw_ann_sub = c5_1_ex + c5_2_ex + c5_3_ex + c5_4_ex;
+    const c5_inc_sub = c5_raw_ann_sub * 1.1;
+
+    if (document.getElementById('c5_ex_sub')) document.getElementById('c5_ex_sub').innerText = '$' + c5_raw_ann_sub.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    if (document.getElementById('c5_inc_sub')) document.getElementById('c5_inc_sub').innerText = '$' + c5_inc_sub.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+    const c5_ann_sub = getCategoryState(5, c5_raw_ann_sub);
+    const c5_mth_sub = c5_ann_sub / 12;
+
+// --- CATEGORY 6 (FULLY SYNCHRONIZED WITH FREIGHT & TERMINAL BASELINE) ---
+    const containerType = document.getElementById('input-container-type')?.value || '20ft';
+    const is40ft = containerType === '40ft';
+
+    // 1. Dynamic Cartage Sync with Card 2 / Live Control Panel
+    const currentCartageVal = parseFloat(document.getElementById('input-cartage')?.value) || (is40ft ? 1450.00 : 750.00);
+    const c6_3_input_el = document.getElementById('c6_3_ship_input');
+    if (c6_3_input_el && document.activeElement !== c6_3_input_el) {
+        c6_3_input_el.value = currentCartageVal.toFixed(2);
+    }
+
+    // 2. Dynamic Port Charges Sync (Default: $450 AUD for 20ft, $850 AUD for 40ft)
+    const defaultPortCharge = is40ft ? 850.00 : 450.00;
+    const c6_2_input_el = document.getElementById('c6_2_ship_input');
+    if (c6_2_input_el && document.activeElement !== c6_2_input_el && (!c6_2_input_el.value || c6_2_input_el.getAttribute('data-container-type') !== containerType)) {
+        c6_2_input_el.value = defaultPortCharge.toFixed(2);
+        c6_2_input_el.setAttribute('data-container-type', containerType);
+    }
+
+    // 3. Read Active Inputs
+    const c6_1_ship = parseFloat(document.getElementById('c6_1_ship_input')?.value) || 475.00;
+    const c6_2_ship = parseFloat(c6_2_input_el?.value) || defaultPortCharge;
+    const c6_3_ship = parseFloat(c6_3_input_el?.value) || currentCartageVal;
+
+    // 4. Calculate Annual Totals using Live Annual Container Count (12 for 20ft, 6 for 40ft)
+    const c6_1_ann = c6_1_ship * ANNUAL_CONTAINERS;
+    const c6_2_ann = c6_2_ship * ANNUAL_CONTAINERS;
+    const c6_3_ann = c6_3_ship * ANNUAL_CONTAINERS;
+
+    // Update UI Annual Labels
+    if (document.getElementById('c6_1_ann')) document.getElementById('c6_1_ann').innerText = '$' + c6_1_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    if (document.getElementById('c6_2_ann')) document.getElementById('c6_2_ann').innerText = '$' + c6_2_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    if (document.getElementById('c6_3_ann')) document.getElementById('c6_3_ann').innerText = '$' + c6_3_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+    const c6_ship_sub = c6_1_ship + c6_2_ship + c6_3_ship;
+    const c6_raw_ann_sub = c6_1_ann + c6_2_ann + c6_3_ann;
+
+    if (document.getElementById('c6_ship_sub')) document.getElementById('c6_ship_sub').innerText = '$' + c6_ship_sub.toFixed(2);
+    if (document.getElementById('c6_ann_sub')) document.getElementById('c6_ann_sub').innerText = '$' + c6_raw_ann_sub.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+    const c6_ann_sub = getCategoryState(6, c6_raw_ann_sub);
+    const c6_mth_sub = c6_ann_sub / 12;
+
+    // GRAND TOTAL OPEX RECALCULATION
+    const totalAnnualOpEx = c1_ann_sub + c2_ann_sub + c3_ann_sub + c4_ann_sub + c5_ann_sub + c6_ann_sub;
+    const totalMonthlyOpEx = totalAnnualOpEx / 12;
+
+    currentAnnualOpExAUD = totalAnnualOpEx;
+    currentOpExPerContainerAUD = totalAnnualOpEx / ANNUAL_CONTAINERS;
+
+    // Update Summary Banner & Top Cards
+    if (document.getElementById('banner-opex-total')) document.getElementById('banner-opex-total').innerText = totalAnnualOpEx.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    if (document.getElementById('kpi-monthly-opex')) document.getElementById('kpi-monthly-opex').innerText = '$' + totalMonthlyOpEx.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' AUD';
+    if (document.getElementById('kpi-annual-opex')) document.getElementById('kpi-annual-opex').innerText = '$' + totalAnnualOpEx.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' AUD';
+
+    // Dynamic Top Cost Driver Calculation
+    const categories = [
+        { name: 'Fixed Overheads', amt: c1_ann_sub, sub: '$' + c1_ann_sub.toLocaleString('en-US', {minimumFractionDigits: 2}) + ' AUD (Office, Storage, Car)' },
+        { name: 'Personnel', amt: c2_ann_sub, sub: '$' + c2_ann_sub.toLocaleString('en-US', {minimumFractionDigits: 2}) + ' AUD (Salary + Super + WorkCover)' },
+        { name: 'Vehicle Running', amt: c3_ann_sub, sub: '$' + c3_ann_sub.toLocaleString('en-US', {minimumFractionDigits: 2}) + ' AUD (Fuel, Tolls, Maint.)' },
+        { name: 'IT & SaaS Stack', amt: c4_ann_sub, sub: '$' + c4_ann_sub.toLocaleString('en-US', {minimumFractionDigits: 2}) + ' AUD (Software & Telecoms)' },
+        { name: 'Insurance & Compliance', amt: c5_ann_sub, sub: '$' + c5_ann_sub.toLocaleString('en-US', {minimumFractionDigits: 2}) + ' AUD (Liability, Transit, Audit)' },
+        { name: 'Import Clearance & Port', amt: c6_ann_sub, sub: '$' + c6_ann_sub.toLocaleString('en-US', {minimumFractionDigits: 2}) + ' AUD (Clearance & Cartage)' }
+    ];
+
+    const topCategory = categories.reduce((max, cat) => cat.amt > max.amt ? cat : max, categories[0]);
+    const topPct = totalAnnualOpEx > 0 ? ((topCategory.amt / totalAnnualOpEx) * 100).toFixed(1) : '0.0';
+
+    const kpiValEl = document.querySelector('[data-i18n="opex_kpi3_val"]');
+    if (kpiValEl) kpiValEl.innerText = topCategory.amt > 0 ? topCategory.name : 'None';
+    if (document.getElementById('kpi-personnel-pct')) document.getElementById('kpi-personnel-pct').innerText = topPct + '%';
+    if (document.getElementById('kpi-personnel-amt')) document.getElementById('kpi-personnel-amt').innerText = topCategory.amt > 0 ? topCategory.sub : 'No Active Expense Categories';
+
+    // Executive Summary Table Updates
+    if (document.getElementById('sum-mth-c1')) document.getElementById('sum-mth-c1').innerText = '$' + c1_mth_sub.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    if (document.getElementById('sum-ann-c1')) document.getElementById('sum-ann-c1').innerText = '$' + c1_ann_sub.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    if (document.getElementById('sum-pct-c1')) document.getElementById('sum-pct-c1').innerText = (totalAnnualOpEx > 0 ? ((c1_ann_sub / totalAnnualOpEx) * 100).toFixed(1) : '0.0') + '%';
+
+    if (document.getElementById('sum-mth-c2')) document.getElementById('sum-mth-c2').innerText = '$' + c2_mth_sub.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    if (document.getElementById('sum-ann-c2')) document.getElementById('sum-ann-c2').innerText = '$' + c2_ann_sub.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    if (document.getElementById('sum-pct-c2')) document.getElementById('sum-pct-c2').innerText = (totalAnnualOpEx > 0 ? ((c2_ann_sub / totalAnnualOpEx) * 100).toFixed(1) : '0.0') + '%';
+
+    if (document.getElementById('sum-mth-c3')) document.getElementById('sum-mth-c3').innerText = '$' + c3_mth_sub.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    if (document.getElementById('sum-ann-c3')) document.getElementById('sum-ann-c3').innerText = '$' + c3_ann_sub.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    if (document.getElementById('sum-pct-c3')) document.getElementById('sum-pct-c3').innerText = (totalAnnualOpEx > 0 ? ((c3_ann_sub / totalAnnualOpEx) * 100).toFixed(1) : '0.0') + '%';
+
+    if (document.getElementById('sum-mth-c4')) document.getElementById('sum-mth-c4').innerText = '$' + c4_mth_sub.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    if (document.getElementById('sum-ann-c4')) document.getElementById('sum-ann-c4').innerText = '$' + c4_ann_sub.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    if (document.getElementById('sum-pct-c4')) document.getElementById('sum-pct-c4').innerText = (totalAnnualOpEx > 0 ? ((c4_ann_sub / totalAnnualOpEx) * 100).toFixed(1) : '0.0') + '%';
+
+    if (document.getElementById('sum-mth-c5')) document.getElementById('sum-mth-c5').innerText = '$' + c5_mth_sub.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    if (document.getElementById('sum-ann-c5')) document.getElementById('sum-ann-c5').innerText = '$' + c5_ann_sub.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    if (document.getElementById('sum-pct-c5')) document.getElementById('sum-pct-c5').innerText = (totalAnnualOpEx > 0 ? ((c5_ann_sub / totalAnnualOpEx) * 100).toFixed(1) : '0.0') + '%';
+
+    if (document.getElementById('sum-mth-c6')) document.getElementById('sum-mth-c6').innerText = '$' + c6_mth_sub.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    if (document.getElementById('sum-ann-c6')) document.getElementById('sum-ann-c6').innerText = '$' + c6_ann_sub.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    if (document.getElementById('sum-pct-c6')) document.getElementById('sum-pct-c6').innerText = (totalAnnualOpEx > 0 ? ((c6_ann_sub / totalAnnualOpEx) * 100).toFixed(1) : '0.0') + '%';
+
+    if (document.getElementById('sum-mth-total')) document.getElementById('sum-mth-total').innerText = '$' + totalMonthlyOpEx.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    if (document.getElementById('sum-ann-total')) document.getElementById('sum-ann-total').innerText = '$' + totalAnnualOpEx.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+    renderTable();
+}
+
+function resetOpExBudget() {
+    Object.keys(defaultOpExValues).forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = defaultOpExValues[id];
+    });
+
+    [1, 3, 4, 5, 6].forEach(i => {
+        const toggle = document.getElementById(`c${i}_toggle_input`);
+        if (toggle) toggle.checked = true;
+    });
+    const c2Toggle = document.getElementById('c2_toggle_input');
+    if (c2Toggle) c2Toggle.checked = false;
+
+    updateOpExFromInputs();
+}
+
+function resetMasterProfitOrders() {
+    productsData.forEach(p => {
+        p.orderQty = 0;
+        syncOrderQty(p.id, 0);
+    });
+}
+
+// --- AUTOMATED DAILY FX RATE FETCHER ---
+async function fetchLiveFxRate() {
+    const statusTag = document.getElementById('fx-status-tag');
+    try {
+        if (statusTag) {
+            statusTag.innerText = 'Updating...';
+            statusTag.className = 'text-[9px] text-amber-400 font-mono ml-1';
+        }
+        const response = await fetch('https://open.er-api.com/v6/latest/AUD');
+        if (!response.ok) throw new Error('Live FX Rate fetch failed');
+        
+        const data = await response.json();
+        if (data && data.rates && data.rates.USD) {
+            const liveUsdRate = data.rates.USD;
+            const inputFx = document.getElementById('input-fx');
+            if (inputFx) inputFx.value = liveUsdRate.toFixed(4);
+            if (statusTag) {
+                statusTag.innerText = 'Live Daily Updated';
+                statusTag.className = 'text-[9px] text-emerald-400 font-mono ml-1';
+            }
+            renderTable();
+        }
+    } catch (err) {
+        console.warn('Could not fetch daily live FX rate, using benchmark fallback:', err);
+        if (statusTag) {
+            statusTag.innerText = 'Benchmark FX';
+            statusTag.className = 'text-[9px] text-slate-400 font-mono ml-1';
+        }
+    }
+}
 
 // --- MULTI-LANGUAGE I18N DICTIONARY ENGINE ---
+let currentLang = 'en';
+
 const translations = {
     en: {
         modal_title: "Restricted Access",
@@ -640,7 +534,7 @@ const translations = {
         lbl_md: "នាយកប្រតិបត្តិ:",
         card_contact_title: "ទំនាក់ទំនង និងវេបសាយ",
         card_logistics_title: "ស្ថានីយនាំចូល / ឡូជីស្ទិក",
-        lbl_discharge_port: "កំពង់ផែននាំចុះ:",
+        lbl_discharge_port: "កំពង់ផែនាំចុះ:",
         val_discharge_port: "កំពង់ផែម៉ែលប៊ន Swanson Dock / DP World",
         lbl_standard_unit: "ទំហំស្តង់ដារ:",
         val_standard_unit: "កុងតឺន័រ 20ft FCL",
@@ -1133,7 +1027,31 @@ const translations = {
     }
 };
 
-// --- SECURITY LOGIN & PASSWORD MODAL LOGIC ---
+function setLanguage(lang) {
+    currentLang = lang;
+    
+    ['en', 'km', 'fr', 'zh'].forEach(l => {
+        const btn = document.getElementById(`lang-btn-${l}`);
+        if (btn) {
+            if (l === lang) {
+                btn.className = "px-2.5 py-1 text-base rounded transition bg-gold-500/20 border border-gold-500 shadow";
+            } else {
+                btn.className = "px-2.5 py-1 text-base rounded transition opacity-60 hover:opacity-100";
+            }
+        }
+    });
+
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[lang] && translations[lang][key]) {
+            el.innerText = translations[lang][key];
+        }
+    });
+
+    renderTable();
+}
+
+// --- RESTORED SECURITY LOGIN & PASSWORD MODAL LOGIC ---
 function unlockPage(e) {
     if (e) e.preventDefault();
     const inputVal = document.getElementById('password-input')?.value;
@@ -1173,342 +1091,434 @@ function togglePasswordVisibility() {
     }
 }
 
-// --- HELPER FUNCTIONS ---
 function getPcsPerCtn(specStr) {
     if (!specStr) return 1;
     const match = specStr.match(/(\d+)\s*(Pcs|Cans|Bags)/i);
     return match ? parseInt(match[1], 10) : 1;
 }
 
-function handleKeyDown(event, currentId, inputType) {
-    if (event.key === 'Enter') {
-        event.preventDefault();
-        let nextInput;
-        if (inputType === 'price') {
-            nextInput = document.getElementById(`input-qty-${currentId}`) || document.getElementById(`input-order-qty-${currentId}`);
-        } else {
-            nextInput = document.getElementById(`input-ctn-price-${currentId + 1}`);
-        }
-        if (nextInput) {
-            nextInput.focus();
-            nextInput.select();
-        }
+// --- FULL 30 PRODUCT DATASET WITH COMPETITOR PRICE DATA & PERSISTED ORDER STATE ---
+const productsData = [
+    {
+        id: 1, status: 'Active', weightG: 500, orderQty: 0,
+        name: { en: 'Finest Rice Flour 500g', km: 'ម្សៅអង្ករខ្សាយ ៥០០ក្រាម', fr: 'Farine de riz fine 500g', zh: '优质大米粉 500g' },
+        nameKhmer: 'ម្សៅអង្ករខ្សាយ ៥០០ក្រាម', spec: { en: '500g Bag / 20 Pcs (10kg/CTN)', km: 'ថង់ ៥០០ក្រាម / ២០ កញ្ចប់ (១០គីឡូ/កេស)', fr: 'Sac de 500g / 20 Pcs (10kg/CTN)', zh: '500g/袋 / 20包 (10kg/箱)' }, fobUsd: 0.36, pcsPer20ft: 20000,
+        asianComps: [
+            { brand: 'Erawan Rice Flour', weightG: 500, priceAud: 1.60, source: 'Src: KFL Asian Grocery Springvale' },
+            { brand: 'Cock Brand Rice Flour', weightG: 500, priceAud: 1.65, source: 'Src: Minh Phat Market Richmond' },
+            { brand: 'Anil Fine Rice Flour', weightG: 500, priceAud: 1.80, source: 'Src: DesiKart Indian Grocery' },
+            { brand: 'Harischandra Rice Flour', weightG: 500, priceAud: 1.90, source: 'Src: Lankan Groceries Melbourne' },
+            { brand: 'Maneely Rice Flour', weightG: 1000, priceAud: 3.20, source: 'Src: Nepsay Nepalese Mart' }
+        ],
+        ausComps: [
+            { brand: 'McKenzie\'s Rice Flour', weightG: 375, priceAud: 1.70, source: 'Src: Woolworths Online AU (Melb)' },
+            { brand: 'Anchor Rice Flour', weightG: 500, priceAud: 2.20, source: 'Src: Woolworths Supermarkets VIC' },
+            { brand: 'Has No Wheat Rice Flour', weightG: 500, priceAud: 1.80, source: 'Src: ALDI Australia' },
+            { brand: 'Kirkland White Rice Flour Bulk', weightG: 2000, priceAud: 6.99, source: 'Src: Costco Wholesale AU' }
+        ]
+    },
+    {
+        id: 2, status: 'Active', weightG: 500, orderQty: 0,
+        name: { en: 'Glutinous Rice Flour 500g', km: 'ម្សៅអង្ករដំណើប ៥០០ក្រាម', fr: 'Farine de riz glutineux 500g', zh: '水磨糯米粉 500g' },
+        nameKhmer: 'ម្សៅអង្ករដំណើប ៥០០ក្រាម', spec: { en: '500g Bag / 20 Pcs (10kg/CTN)', km: 'ថង់ ៥០០ក្រាម / ២០ កញ្ចប់ (១០គីឡូ/កេស)', fr: 'Sac de 500g / 20 Pcs (10kg/CTN)', zh: '500g/袋 / 20包 (10kg/箱)' }, fobUsd: 0.58, pcsPer20ft: 20000,
+        asianComps: [
+            { brand: 'Erawan Glutinous Flour', weightG: 500, priceAud: 1.75, source: 'Src: KFL Asian Grocery Springvale' },
+            { brand: 'Three Rings Glutinous', weightG: 500, priceAud: 1.80, source: 'Src: Minh Phat Market Richmond' },
+            { brand: 'Heera Sticky Rice Flour', weightG: 500, priceAud: 2.10, source: 'Src: Radhe Indian Grocery' }
+        ],
+        ausComps: [
+            { brand: 'Cock Brand Glutinous', weightG: 500, priceAud: 2.20, source: 'Src: Woolworths Supermarkets VIC' },
+            { brand: 'McKenzie\'s Glutinous', weightG: 500, priceAud: 2.50, source: 'Src: Coles Online AU (Melb)' }
+        ]
+    },
+    {
+        id: 3, status: 'Active', weightG: 500, orderQty: 0,
+        name: { en: 'Tapioca Flour 500g', km: 'ម្សៅឆា ៥០០ក្រាម', fr: 'Farine de tapioca 500g', zh: '木薯淀粉 / 生粉 500g' },
+        nameKhmer: 'ម្សៅឆា ៥០០ក្រាម', spec: { en: '500g Bag / 20 Pcs (10kg/CTN)', km: 'ថង់ ៥០០ក្រាម / ២០ កញ្ចប់ (១០គីឡូ/កេស)', fr: 'Sac de 500g / 20 Pcs (10kg/CTN)', zh: '500g/袋 / 20包 (10kg/箱)' }, fobUsd: 0.44, pcsPer20ft: 20000,
+        asianComps: [
+            { brand: 'Cock Brand Tapioca Starch', weightG: 500, priceAud: 1.50, source: 'Src: KFL Asian Grocery Springvale' },
+            { brand: 'Panda Tapioca Flour', weightG: 500, priceAud: 1.45, source: 'Src: Minh Phat Market Richmond' },
+            { brand: 'Swagat Tapioca Flour', weightG: 500, priceAud: 1.70, source: 'Src: Spice World Indian Mart' },
+            { brand: 'Elephant House Tapioca', weightG: 500, priceAud: 1.80, source: 'Src: Ceylon Supermarket VIC' }
+        ],
+        ausComps: [
+            { brand: 'McKenzie\'s Tapioca Flour', weightG: 300, priceAud: 1.70, source: 'Src: Woolworths Online AU (Melb)' },
+            { brand: 'Lotus Tapioca Flour', weightG: 500, priceAud: 2.20, source: 'Src: Coles Supermarkets VIC' }
+        ]
+    },
+    {
+        id: 4, status: 'Active', weightG: 500, orderQty: 0,
+        name: { en: 'Pancake Flour (Banh Xeo) 500g', km: 'ម្សៅបាញ់ឆែវ ៥០០ក្រាម', fr: 'Farine pour crêpes asiatiques 500g', zh: '柬式/越式煎饼粉 (Banh Xeo) 500g' },
+        nameKhmer: 'ម្សៅបាញ់ឆែវ ៥០០ក្រាម', spec: { en: '500g Bag / 20 Pcs (10kg/CTN)', km: 'ថង់ ៥០០ក្រាម / ២០ កញ្ចប់ (១០គីឡូ/កេស)', fr: 'Sac de 500g / 20 Pcs (10kg/CTN)', zh: '500g/袋 / 20包 (10kg/箱)' }, fobUsd: 0.90, pcsPer20ft: 20000,
+        asianComps: [
+            { brand: 'Bot Banh Xeo Pancake Mix', weightG: 500, priceAud: 2.80, source: 'Src: KFL Asian Grocery Springvale' },
+            { brand: 'Vinh Thuan Pancake Mix', weightG: 500, priceAud: 2.90, source: 'Src: Minh Phat Market Richmond' },
+            { brand: 'Gits Dosa Pancake Mix', weightG: 500, priceAud: 3.10, source: 'Src: India Gate Supermarket' }
+        ],
+        ausComps: [
+            { brand: 'Greens Original Pancake Mix', weightG: 375, priceAud: 2.40, source: 'Src: Woolworths Supermarkets VIC' },
+            { brand: 'White Wings Pancake Shake', weightG: 325, priceAud: 2.50, source: 'Src: Coles Online AU (Melb)' },
+            { brand: 'Krusteaz Pancake Mix Bulk', weightG: 2000, priceAud: 9.99, source: 'Src: Costco Wholesale AU' }
+        ]
+    },
+    {
+        id: 5, status: 'Active', weightG: 1000, orderQty: 0,
+        name: { en: 'Crispy Tempura Flour 1000g', km: 'ម្សៅបំពងស្រួយ ១០០០ក្រាម', fr: 'Farine à tempura croustillante 1000g', zh: '香酥天妇罗炸粉 1000g' },
+        nameKhmer: 'ម្សៅបំពងស្រួយ ១០០០ក្រាម', spec: { en: '1000g Bag / 10 Pcs (10kg/CTN)', km: 'ថង់ ១០០០ក្រាម / ១០ កញ្ចប់ (១០គីឡូ/កេស)', fr: 'Sac de 1000g / 10 Pcs (10kg/CTN)', zh: '1000g/袋 / 10包 (10kg/箱)' }, fobUsd: 1.25, pcsPer20ft: 10000,
+        asianComps: [
+            { brand: 'Gogi Tempura Batter Mix', weightG: 500, priceAud: 2.20, source: 'Src: Minh Phat Market Richmond' },
+            { brand: 'Showa Tempura Flour', weightG: 1000, priceAud: 4.10, source: 'Src: KFL Asian Grocery Springvale' },
+            { brand: 'L3 Bajji / Bonda Batter Mix', weightG: 500, priceAud: 2.50, source: 'Src: DesiKart Indian Grocery' },
+            { brand: 'Ceylon Crispy Fry Flour', weightG: 1000, priceAud: 4.30, source: 'Src: Lankan Groceries Melbourne' }
+        ],
+        ausComps: [
+            { brand: 'White Wings Tempura Batter', weightG: 300, priceAud: 2.80, source: 'Src: Coles Online AU (Melb)' },
+            { brand: 'Knorr Crispy Tempura Mix', weightG: 500, priceAud: 3.60, source: 'Src: Woolworths Supermarkets VIC' }
+        ]
+    },
+    {
+        id: 6, status: 'Active', weightG: 150, orderQty: 0,
+        name: { en: 'Crispy Tempura Flour 150g', km: 'ម្សៅបំពងស្រួយ ១៥០ក្រាម', fr: 'Farine à tempura croustillante 150g', zh: '香酥天妇罗炸粉 150g' },
+        nameKhmer: 'ម្សៅបំពងស្រួយ ១៥០ក្រាម', spec: { en: '150g Bag / 60 Pcs (6x10pcs/CTN)', km: 'ថង់ ១៥០ក្រាម / ៦០ កញ្ចប់ (៦x១០កញ្ចប់/កេស)', fr: 'Sac de 150g / 60 Pcs (6x10pcs/CTN)', zh: '150g/袋 / 60包 (6x10包/箱)' }, fobUsd: 0.39, pcsPer20ft: 60000,
+        asianComps: [
+            { brand: 'Gogi Crispy Batter Pack', weightG: 150, priceAud: 1.10, source: 'Src: KFL Asian Grocery Springvale' },
+            { brand: 'Aroma Crispy Coating', weightG: 150, priceAud: 1.05, source: 'Src: Minh Phat Market Richmond' }
+        ],
+        ausComps: [
+            { brand: 'Knorr Crispy Seasoned', weightG: 150, priceAud: 1.80, source: 'Src: Woolworths Supermarkets VIC' },
+            { brand: 'MasterFoods Seasoned Batter', weightG: 150, priceAud: 1.95, source: 'Src: Coles Online AU (Melb)' }
+        ]
+    },
+    {
+        id: 7, status: 'Active', weightG: 500, orderQty: 0,
+        name: { en: 'Fried Banana Flour 500g', km: 'ម្សៅចេកចៀន ៥០០ក្រាម', fr: 'Farine pour bananes frites 500g', zh: '炸香蕉专用脆粉 500g' },
+        nameKhmer: 'ម្សៅចេកចៀន ៥០០ក្រាម', spec: { en: '500g Bag / 20 Pcs (10kg/CTN)', km: 'ថង់ ៥០០ក្រាម / ២០ កញ្ចប់ (១០គីឡូ/កេស)', fr: 'Sac de 500g / 20 Pcs (10kg/CTN)', zh: '500g/袋 / 20包 (10kg/箱)' }, fobUsd: 1.60, pcsPer20ft: 20000,
+        asianComps: [
+            { brand: 'Bot Chien Chuoi Banana Mix', weightG: 500, priceAud: 3.20, source: 'Src: KFL Asian Grocery Springvale' },
+            { brand: 'Thai Banana Fritter Mix', weightG: 500, priceAud: 3.10, source: 'Src: Minh Phat Market Richmond' }
+        ],
+        ausComps: [
+            { brand: 'Asian Specialty Dessert Batter', weightG: 400, priceAud: 3.80, source: 'Src: Coles Online AU (Melb)' },
+            { brand: 'Golden Fry Sweet Batter', weightG: 400, priceAud: 3.60, source: 'Src: Woolworths Supermarkets VIC' }
+        ]
+    },
+    {
+        id: 8, status: 'Active', weightG: 120, orderQty: 0,
+        name: { en: 'Black Pepper Whole 120g', km: 'ម្រេចខ្មៅគ្រាប់មូល ១២០ក្រាម', fr: 'Poivre noir entier 120g', zh: '整粒黑胡椒粒 120g' },
+        nameKhmer: 'ម្រេចខ្មៅគ្រាប់មូល ១២០ក្រាម', spec: { en: '120g Can / 12 Cans/CTN', km: 'កំប៉ុង ១២០ក្រាម / ១២ កំប៉ុង/កេស', fr: 'Boîte de 120g / 12 Boîtes/CTN', zh: '120g/罐 / 12罐/箱' }, fobUsd: 3.63, pcsPer20ft: 18000,
+        asianComps: [
+            { brand: 'Thai Whole Black Peppercorn', weightG: 100, priceAud: 4.80, source: 'Src: KFL Asian Grocery Springvale' },
+            { brand: 'Cock Brand Whole Pepper', weightG: 100, priceAud: 4.60, source: 'Src: Minh Phat Market Richmond' },
+            { brand: 'MD Black Peppercorns', weightG: 100, priceAud: 5.10, source: 'Src: Lankan Groceries Melbourne' },
+            { brand: 'Deep Whole Black Pepper', weightG: 100, priceAud: 4.50, source: 'Src: India Gate Supermarket' }
+        ],
+        ausComps: [
+            { brand: 'Hoyts Whole Black Peppercorn', weightG: 100, priceAud: 4.90, source: 'Src: Woolworths Supermarkets VIC' },
+            { brand: 'MasterFoods Black Peppercorn', weightG: 100, priceAud: 5.50, source: 'Src: Coles Online AU (Melb)' },
+            { brand: 'Stonemill Whole Peppercorns', weightG: 100, priceAud: 3.80, source: 'Src: ALDI Australia' },
+            { brand: 'Kirkland Signature Black Peppercorn', weightG: 357, priceAud: 14.50, source: 'Src: Costco Wholesale AU' }
+        ]
+    },
+    {
+        id: 9, status: 'Active', weightG: 80, orderQty: 0,
+        name: { en: 'Fine Ground Black Pepper 80g', km: 'ម្រេចខ្មៅម៉ដ្ឋ ៨០ក្រាម', fr: 'Poivre noir moulu fin 80g', zh: '细磨黑胡椒粉 80g' },
+        nameKhmer: 'ម្រេចខ្មៅម៉ដ្ឋ ៨០ក្រាម', spec: { en: '80g Can / 20 Cans/CTN', km: 'កំប៉ុង ៨០ក្រាម / ២០ កំប៉ុង/កេស', fr: 'Boîte de 80g / 20 Boîtes/CTN', zh: '80g/罐 / 20罐/箱' }, fobUsd: 1.43, pcsPer20ft: 24000,
+        asianComps: [
+            { brand: 'Cock Brand Ground Black Pepper', weightG: 80, priceAud: 2.80, source: 'Src: KFL Asian Grocery Springvale' },
+            { brand: 'Thai Pure Black Pepper', weightG: 80, priceAud: 2.65, source: 'Src: Minh Phat Market Richmond' }
+        ],
+        ausComps: [
+            { brand: 'Saxa Black Pepper Ground', weightG: 50, priceAud: 2.90, source: 'Src: Coles Online AU (Melb)' },
+            { brand: 'McCormick Ground Black Pepper', weightG: 50, priceAud: 3.10, source: 'Src: Woolworths Supermarkets VIC' },
+            { brand: 'Kirkland Fine Ground Pepper', weightG: 348, priceAud: 13.50, source: 'Src: Costco Wholesale AU' }
+        ]
+    },
+    {
+        id: 10, status: 'Active', weightG: 80, orderQty: 0,
+        name: { en: 'Coarse Ground Black Pepper 80g', km: 'ម្រេចខ្មៅចម្រៀក ៨០ក្រាម', fr: 'Poivre noir concassé 80g', zh: '粗磨黑胡椒碎 80g' },
+        nameKhmer: 'ម្រេចខ្មៅចម្រៀក ៨០ក្រាម', spec: { en: '80g Can / 20 Cans/CTN', km: 'កំប៉ុង ៨០ក្រាម / ២០ កំប៉ុង/កេស', fr: 'Boîte de 80g / 20 Boîtes/CTN', zh: '80g/罐 / 20罐/箱' }, fobUsd: 1.43, pcsPer20ft: 24000,
+        asianComps: [
+            { brand: 'MasterFoods Cracked Pepper', weightG: 50, priceAud: 3.20, source: 'Src: KFL Asian Grocery Springvale' },
+            { brand: 'Cock Brand Cracked Pepper', weightG: 80, priceAud: 2.85, source: 'Src: Minh Phat Market Richmond' }
+        ],
+        ausComps: [
+            { brand: 'McCormick Cracked Black Pepper', weightG: 40, priceAud: 3.10, source: 'Src: Woolworths Supermarkets VIC' },
+            { brand: 'Hoyts Cracked Black Pepper', weightG: 50, priceAud: 2.95, source: 'Src: Coles Online AU (Melb)' },
+            { brand: 'Kirkland Coarse Ground Pepper', weightG: 359, priceAud: 10.50, source: 'Src: Costco Wholesale AU' }
+        ]
+    },
+    {
+        id: 11, status: 'Active', weightG: 80, orderQty: 0,
+        name: { en: 'Fine Ground White Pepper 80g', km: 'ម្រេចសចម្រៀក ៨០ក្រាម', fr: 'Poivre blanc moulu fin 80g', zh: '细磨白胡椒粉 80g' },
+        nameKhmer: 'ម្រេចសចម្រៀក ៨០ក្រាម', spec: { en: '80g Can / 20 Cans/CTN', km: 'កំប៉ុង ៨០ក្រាម / ២០ កំប៉ុង/កេស', fr: 'Boîte de 80g / 20 Boîtes/CTN', zh: '80g/罐 / 20罐/箱' }, fobUsd: 1.43, pcsPer20ft: 24000,
+        asianComps: [
+            { brand: 'Cock Brand White Pepper Powder', weightG: 100, priceAud: 3.90, source: 'Src: KFL Asian Grocery Springvale' },
+            { brand: 'Erawan White Pepper Powder', weightG: 80, priceAud: 3.60, source: 'Src: Minh Phat Market Richmond' }
+        ],
+        ausComps: [
+            { brand: 'Hoyts White Pepper Ground', weightG: 100, priceAud: 4.50, source: 'Src: Coles Online AU (Melb)' },
+            { brand: 'Saxa Ground White Pepper', weightG: 50, priceAud: 3.20, source: 'Src: Woolworths Supermarkets VIC' }
+        ]
+    },
+    {
+        id: 12, status: 'Active', weightG: 650, orderQty: 0,
+        name: { en: 'Coarse Ground Black Pepper 650g', km: 'ម្រេចខ្មៅចម្រៀក ៦៥០ក្រាម', fr: 'Poivre noir concassé 650g', zh: '粗磨黑胡椒碎 650g (餐饮罐装)' },
+        nameKhmer: 'ម្រេចខ្មៅចម្រៀក ៦៥០ក្រាម', spec: { en: '650g Can / 6 Cans/CTN', km: 'កំប៉ុង ៦៥០ក្រាម / ៦ កំប៉ុង/កេស', fr: 'Boîte de 650g / 6 Boîtes/CTN', zh: '650g/罐 / 6罐/箱' }, fobUsd: 7.46, pcsPer20ft: 9000,
+        asianComps: [
+            { brand: 'Chef Choice Coarse Pepper', weightG: 500, priceAud: 12.50, source: 'Src: Minh Phat Market Richmond' },
+            { brand: 'Thai Catering Cracked Pepper', weightG: 600, priceAud: 13.80, source: 'Src: KFL Asian Grocery Springvale' }
+        ],
+        ausComps: [
+            { brand: 'MasterFoods Pepper Catering', weightG: 500, priceAud: 14.50, source: 'Src: Woolworths Supermarkets VIC' },
+            { brand: 'McCormick Catering Cracked', weightG: 500, priceAud: 15.20, source: 'Src: Coles Online AU (Melb)' },
+            { brand: 'Kirkland Coarse Pepper Bulk Container', weightG: 359, priceAud: 10.50, source: 'Src: Costco Wholesale AU' }
+        ]
+    },
+    {
+        id: 13, status: 'Active', weightG: 650, orderQty: 0,
+        name: { en: 'Fine Ground Black Pepper 650g', km: 'ម្រេចខ្មៅម៉ដ្ឋ ៦៥០ក្រាម', fr: 'Poivre noir moulu fin 650g', zh: '细磨黑胡椒粉 650g (餐饮罐装)' },
+        nameKhmer: 'ម្រេចខ្មៅម៉ដ្ឋ ៦៥០ក្រាម', spec: { en: '650g Can / 6 Cans/CTN', km: 'កំប៉ុង ៦៥០ក្រាម / ៦ កំប៉ុង/កេស', fr: 'Boîte de 650g / 6 Boîtes/CTN', zh: '650g/罐 / 6罐/箱' }, fobUsd: 7.46, pcsPer20ft: 9000,
+        asianComps: [
+            { brand: 'Thai Pure Ground Pepper', weightG: 500, priceAud: 12.00, source: 'Src: KFL Asian Grocery Springvale' },
+            { brand: 'Cock Brand Fine Pepper', weightG: 600, priceAud: 13.20, source: 'Src: Minh Phat Market Richmond' }
+        ],
+        ausComps: [
+            { brand: 'Hoyts Catering Ground Pepper', weightG: 500, priceAud: 13.80, source: 'Src: Coles Online AU (Melb)' },
+            { brand: 'Saxa Fine Pepper Catering', weightG: 500, priceAud: 14.20, source: 'Src: Woolworths Supermarkets VIC' },
+            { brand: 'Kirkland Ground Pepper Bulk', weightG: 348, priceAud: 13.50, source: 'Src: Costco Wholesale AU' }
+        ]
+    },
+    {
+        id: 14, status: 'Active', weightG: 1000, orderQty: 0,
+        name: { en: 'Black Pepper Whole 1000g', km: 'ម្រេចខ្មៅគ្រាប់មូល ១០០០ក្រាម', fr: 'Poivre noir entier 1000g', zh: '整粒黑胡椒粒 1000g (大包装)' },
+        nameKhmer: 'ម្រេចខ្មៅគ្រាប់មូល ១០០០ក្រាម', spec: { en: '1000g Bag / 10 Bags (10kg/CTN)', km: 'ថង់ ១០០០ក្រាម / ១០ ថង់ (១០គីឡូ/កេស)', fr: 'Sac de 1000g / 10 Sacs (10kg/CTN)', zh: '1000g/袋 / 10袋 (10kg/箱)' }, fobUsd: 9.07, pcsPer20ft: 10000,
+        asianComps: [
+            { brand: 'VN Premium Whole Pepper', weightG: 1000, priceAud: 16.50, source: 'Src: KFL Asian Grocery Springvale' },
+            { brand: 'Erawan Whole Pepper', weightG: 1000, priceAud: 15.90, source: 'Src: Minh Phat Market Richmond' },
+            { brand: 'Deep Black Peppercorns Bulk', weightG: 1000, priceAud: 17.50, source: 'Src: Radhe Indian Grocery' },
+            { brand: 'MD Sri Lankan Peppercorn Bulk', weightG: 1000, priceAud: 18.20, source: 'Src: Ceylon Supermarket VIC' }
+        ],
+        ausComps: [
+            { brand: 'MasterFoods Peppercorns Bulk', weightG: 1000, priceAud: 21.50, source: 'Src: Woolworths Supermarkets VIC' },
+            { brand: 'Hoyts Whole Pepper Bulk', weightG: 1000, priceAud: 19.80, source: 'Src: Coles Online AU (Melb)' },
+            { brand: 'Kirkland Whole Peppercorn Jar', weightG: 357, priceAud: 14.50, source: 'Src: Costco Wholesale AU' }
+        ]
+    },
+    {
+        id: 15, status: 'Active', weightG: 500, orderQty: 0,
+        name: { en: 'Black Pepper Whole 500g', km: 'ម្រេចខ្មៅគ្រាប់មូល ៥០០ក្រាម', fr: 'Poivre noir entier 500g', zh: '整粒黑胡椒粒 500g' },
+        nameKhmer: 'ម្រេចខ្មៅគ្រាប់មូល ៥០០ក្រាម', spec: { en: '500g Bag / 20 Bags (10kg/CTN)', km: 'ថង់ ៥០០ក្រាម / ២០ ថង់ (១០គីឡូ/កេស)', fr: 'Sac de 500g / 20 Sacs (10kg/CTN)', zh: '500g/袋 / 20包 (10kg/箱)' }, fobUsd: 4.60, pcsPer20ft: 20000,
+        asianComps: [
+            { brand: 'Erawan Whole Black Pepper', weightG: 500, priceAud: 8.80, source: 'Src: KFL Asian Grocery Springvale' },
+            { brand: 'Cock Brand Whole Pepper', weightG: 500, priceAud: 8.50, source: 'Src: Minh Phat Market Richmond' }
+        ],
+        ausComps: [
+            { brand: 'Hoyts Black Peppercorn', weightG: 500, priceAud: 10.50, source: 'Src: Coles Online AU (Melb)' },
+            { brand: 'McCormick Peppercorn Bag', weightG: 500, priceAud: 11.20, source: 'Src: Woolworths Supermarkets VIC' }
+        ]
+    },
+    {
+        id: 16, status: 'Active', weightG: 1000, orderQty: 0,
+        name: { en: 'Crushed Black Pepper (10-20 Mesh) 1000g', km: 'ម្រេចខ្មៅចម្រៀកកំរិត 10-20 ម៉េស ១០០០ក្រាម', fr: 'Poivre noir concassé (10-20 Mesh) 1000g', zh: '黑胡椒碎 (10-20目) 1000g' },
+        nameKhmer: 'ម្រេចខ្មៅចម្រៀកកំរិត 10-20 ម៉េស ១០០០ក្រាម', spec: { en: '1000g Bag / 10 Bags (10kg/CTN)', km: 'ថង់ ១០០០ក្រាម / ១០ ថង់ (១០គីឡូ/កេស)', fr: 'Sac de 1000g / 10 Bags (10kg/CTN)', zh: '1000g/袋 / 10袋 (10kg/箱)' }, fobUsd: 9.46, pcsPer20ft: 10000,
+        asianComps: [
+            { brand: 'VN Cracked Black Pepper', weightG: 1000, priceAud: 17.50, source: 'Src: KFL Asian Grocery Springvale' },
+            { brand: 'Thai Chef Cracked Pepper', weightG: 1000, priceAud: 16.90, source: 'Src: Minh Phat Market Richmond' }
+        ],
+        ausComps: [
+            { brand: 'McCormick Cracked Pepper', weightG: 1000, priceAud: 22.50, source: 'Src: Woolworths Supermarkets VIC' },
+            { brand: 'MasterFoods Cracked Pepper', weightG: 1000, priceAud: 23.90, source: 'Src: Coles Online AU (Melb)' }
+        ]
+    },
+    {
+        id: 17, status: 'Active', weightG: 500, orderQty: 0,
+        name: { en: 'Crushed Black Pepper (10-20 Mesh) 500g', km: 'ម្រេចខ្មៅចម្រៀកកំរិត 10-20 ម៉េស ៥០០ក្រាម', fr: 'Poivre noir concassé (10-20 Mesh) 500g', zh: '黑胡椒碎 (10-20目) 500g' },
+        nameKhmer: 'ម្រេចខ្មៅចម្រៀកកំរិត 10-20 ម៉េស ៥០០ក្រាម', spec: { en: '500g Bag / 20 Bags (10kg/CTN)', km: 'ថង់ ៥០០ក្រាម / ២០ ថង់ (១០គីឡូ/កេស)', fr: 'Sac de 500g / 20 Bags (10kg/CTN)', zh: '500g/袋 / 20包 (10kg/箱)' }, fobUsd: 4.79, pcsPer20ft: 20000,
+        asianComps: [
+            { brand: 'Cock Brand Crushed Pepper', weightG: 500, priceAud: 9.20, source: 'Src: KFL Asian Grocery Springvale' },
+            { brand: 'Erawan Crushed Pepper', weightG: 500, priceAud: 8.90, source: 'Src: Minh Phat Market Richmond' }
+        ],
+        ausComps: [
+            { brand: 'MasterFoods Cracked Pepper', weightG: 500, priceAud: 11.50, source: 'Src: Coles Online AU (Melb)' },
+            { brand: 'Hoyts Cracked Black Pepper', weightG: 500, priceAud: 10.90, source: 'Src: Woolworths Supermarkets VIC' }
+        ]
+    },
+    {
+        id: 18, status: 'Active', weightG: 1000, orderQty: 0,
+        name: { en: 'Fine Ground Black Pepper (40 Mesh) 1000g', km: 'ម្រេចខ្មៅម៉ដ្ឋកំរិត 40 ម៉េស ១០០០ក្រាម', fr: 'Poivre noir moulu fin (40 Mesh) 1000g', zh: '细磨黑胡椒粉 (40目) 1000g' },
+        nameKhmer: 'ម្រេចខ្មៅម៉ដ្ឋកំរិត 40 ម៉េស ១០០០ក្រាម', spec: { en: '1000g Bag / 10 Bags (10kg/CTN)', km: 'ថង់ ១០០០ក្រាម / ១០ ថង់ (១០គីឡូ/កេស)', fr: 'Sac de 1000g / 10 Bags (10kg/CTN)', zh: '1000g/袋 / 10袋 (10kg/箱)' }, fobUsd: 9.46, pcsPer20ft: 10000,
+        asianComps: [
+            { brand: 'Thai Pure Pepper Powder', weightG: 1000, priceAud: 17.20, source: 'Src: KFL Asian Grocery Springvale' },
+            { brand: 'Cock Brand Ground Pepper', weightG: 1000, priceAud: 16.80, source: 'Src: Minh Phat Market Richmond' }
+        ],
+        ausComps: [
+            { brand: 'Saxa Ground Black Pepper', weightG: 1000, priceAud: 21.90, source: 'Src: Woolworths Supermarkets VIC' },
+            { brand: 'Hoyts Fine Ground Pepper', weightG: 1000, priceAud: 20.50, source: 'Src: Coles Online AU (Melb)' }
+        ]
+    },
+    {
+        id: 19, status: 'Active', weightG: 500, orderQty: 0,
+        name: { en: 'Fine Ground Black Pepper (40 Mesh) 500g', km: 'ម្រេចខ្មៅម៉ដ្ឋកំរិត 40 ម៉េស ៥០០ក្រាម', fr: 'Poivre noir moulu fin (40 Mesh) 500g', zh: '细磨黑胡椒粉 (40目) 500g' },
+        nameKhmer: 'ម្រេចខ្មៅម៉ដ្ឋកំរិត 40 ម៉េស ៥០០ក្រាម', spec: { en: '500g Bag / 20 Bags (10kg/CTN)', km: 'ថង់ ៥០០ក្រាម / ២០ ថង់ (១០គីឡូ/កេស)', fr: 'Sac de 500g / 20 Bags (10kg/CTN)', zh: '500g/袋 / 20包 (10kg/箱)' }, fobUsd: 4.78, pcsPer20ft: 20000,
+        asianComps: [
+            { brand: 'Cock Brand Fine Pepper', weightG: 500, priceAud: 8.90, source: 'Src: KFL Asian Grocery Springvale' },
+            { brand: 'Erawan Fine Pepper', weightG: 500, priceAud: 8.50, source: 'Src: Minh Phat Market Richmond' }
+        ],
+        ausComps: [
+            { brand: 'Hoyts Fine Black Pepper', weightG: 500, priceAud: 10.80, source: 'Src: Coles Online AU (Melb)' },
+            { brand: 'Saxa Ground Pepper Bag', weightG: 500, priceAud: 10.50, source: 'Src: Woolworths Supermarkets VIC' }
+        ]
+    },
+    {
+        id: 20, status: 'Active', weightG: 200, orderQty: 0,
+        name: { en: 'Black Pepper Whole 200g', km: 'ម្រេចខ្មៅគ្រាប់មូល ២០០ក្រាម', fr: 'Poivre noir entier 200g', zh: '整粒黑胡椒粒 200g (罐装)' },
+        nameKhmer: 'ម្រេចខ្មៅគ្រាប់មូល ២០០ក្រាម', spec: { en: '200g Can / 12 Cans/CTN', km: 'កំប៉ុង ២០០ក្រាម / ១២ កំប៉ុង/កេស', fr: 'Boîte de 200g / 12 Boîtes/CTN', zh: '200g/罐 / 12罐/箱' }, fobUsd: 2.68, pcsPer20ft: 14400,
+        asianComps: [
+            { brand: 'Thai Whole Pepper Can', weightG: 200, priceAud: 5.20, source: 'Src: KFL Asian Grocery Springvale' },
+            { brand: 'Cock Brand Peppercorn Can', weightG: 200, priceAud: 4.90, source: 'Src: Minh Phat Market Richmond' }
+        ],
+        ausComps: [
+            { brand: 'McCormick Peppercorn Can', weightG: 200, priceAud: 6.20, source: 'Src: Woolworths Supermarkets VIC' },
+            { brand: 'MasterFoods Peppercorn Shaker', weightG: 200, priceAud: 6.50, source: 'Src: Coles Online AU (Melb)' }
+        ]
+    },
+    {
+        id: 21, status: 'Active', weightG: 250, orderQty: 0,
+        name: { en: 'Coarse Ground Black Pepper 250g', km: 'ម្រេចខ្មៅចម្រៀក ២៥០ក្រាម', fr: 'Poivre noir concassé 250g', zh: '粗磨黑胡椒碎 250g (罐装)' },
+        nameKhmer: 'ម្រេចខ្មៅចម្រៀក ២៥០ក្រាម', spec: { en: '250g Can / 12 Cans/CTN', km: 'កំប៉ុង ២៥០ក្រាម / ១២ កំប៉ុង/កេស', fr: 'Boîte de 250g / 12 Boîtes/CTN', zh: '250g/罐 / 12罐/箱' }, fobUsd: 3.37, pcsPer20ft: 14400,
+        asianComps: [
+            { brand: 'Cock Brand Coarse Pepper', weightG: 250, priceAud: 5.80, source: 'Src: KFL Asian Grocery Springvale' },
+            { brand: 'Thai Chef Coarse Pepper', weightG: 250, priceAud: 5.60, source: 'Src: Minh Phat Market Richmond' }
+        ],
+        ausComps: [
+            { brand: 'MasterFoods Cracked Pepper', weightG: 250, priceAud: 6.90, source: 'Src: Coles Online AU (Melb)' },
+            { brand: 'Hoyts Cracked Pepper Can', weightG: 250, priceAud: 6.50, source: 'Src: Woolworths Supermarkets VIC' }
+        ]
+    },
+    {
+        id: 22, status: 'Active', weightG: 250, orderQty: 0,
+        name: { en: 'Fine Ground Black Pepper 250g', km: 'ម្រេចខ្មៅម៉ដ្ឋ ២៥០ក្រាម', fr: 'Poivre noir moulu fin 250g', zh: '细磨黑胡椒粉 250g (罐装)' },
+        nameKhmer: 'ម្រេចខ្មៅម៉ដ្ឋ ២៥០ក្រាម', spec: { en: '250g Can / 12 Cans/CTN', km: 'កំប៉ុង ២៥០ក្រាម / ១២ កំប៉ុង/កេស', fr: 'Boîte de 250g / 12 Boîtes/CTN', zh: '250g/罐 / 12罐/箱' }, fobUsd: 3.37, pcsPer20ft: 14400,
+        asianComps: [
+            { brand: 'Erawan Ground Black Pepper', weightG: 250, priceAud: 5.60, source: 'Src: KFL Asian Grocery Springvale' },
+            { brand: 'Cock Brand Fine Pepper', weightG: 250, priceAud: 5.40, source: 'Src: Minh Phat Market Richmond' }
+        ],
+        ausComps: [
+            { brand: 'Saxa Pepper Shaker', weightG: 250, priceAud: 6.80, source: 'Src: Woolworths Supermarkets VIC' },
+            { brand: 'McCormick Ground Pepper', weightG: 250, priceAud: 7.10, source: 'Src: Coles Online AU (Melb)' }
+        ]
+    },
+    {
+        id: 23, status: 'Active', weightG: 350, orderQty: 0,
+        name: { en: 'Black Pepper Whole 350g', km: 'ម្រេចខ្មៅគ្រាប់មូល ៣៥០ក្រាម', fr: 'Poivre noir entier 350g', zh: '整粒黑胡椒粒 350g (罐装)' },
+        nameKhmer: 'ម្រេចខ្មៅគ្រាប់មូល ៣៥០ក្រាម', spec: { en: '350g Can / 12 Cans/CTN', km: 'កំប៉ុង ៣៥០ក្រាម / ១២ កំប៉ុង/កេស', fr: 'Boîte de 350g / 12 Boîtes/CTN', zh: '350g/罐 / 12罐/箱' }, fobUsd: 3.59, pcsPer20ft: 14400,
+        asianComps: [
+            { brand: 'Thai Whole Peppercorn Can', weightG: 350, priceAud: 7.50, source: 'Src: KFL Asian Grocery Springvale' },
+            { brand: 'VN Whole Peppercorn Can', weightG: 350, priceAud: 7.20, source: 'Src: Minh Phat Market Richmond' }
+        ],
+        ausComps: [
+            { brand: 'Hoyts Peppercorns Can', weightG: 350, priceAud: 8.80, source: 'Src: Coles Online AU (Melb)' },
+            { brand: 'MasterFoods Peppercorns', weightG: 350, priceAud: 9.20, source: 'Src: Woolworths Supermarkets VIC' }
+        ]
+    },
+    {
+        id: 24, status: 'Active', weightG: 360, orderQty: 0,
+        name: { en: 'Coarse Ground Black Pepper 360g', km: 'ម្រេចខ្មៅចម្រៀក ៣៦០ក្រាម', fr: 'Poivre noir concassé 360g', zh: '粗磨黑胡椒碎 360g (罐装)' },
+        nameKhmer: 'ម្រេចខ្មៅចម្រៀក ៣៦០ក្រាម', spec: { en: '360g Can / 12 Cans/CTN', km: 'កំប៉ុង ៣៦០ក្រាម / ១២ កំប៉ុង/កេស', fr: 'Boîte de 360g / 12 Boîtes/CTN', zh: '360g/罐 / 12罐/箱' }, fobUsd: 4.06, pcsPer20ft: 14400,
+        asianComps: [
+            { brand: 'VN Cracked Black Pepper Can', weightG: 360, priceAud: 8.20, source: 'Src: KFL Asian Grocery Springvale' },
+            { brand: 'Cock Brand Cracked Pepper', weightG: 360, priceAud: 7.90, source: 'Src: Minh Phat Market Richmond' }
+        ],
+        ausComps: [
+            { brand: 'MasterFoods Cracked Pepper Can', weightG: 360, priceAud: 9.90, source: 'Src: Woolworths Supermarkets VIC' },
+            { brand: 'McCormick Cracked Pepper Can', weightG: 360, priceAud: 10.20, source: 'Src: Coles Online AU (Melb)' },
+            { brand: 'Kirkland Coarse Pepper Shaker', weightG: 359, priceAud: 10.50, source: 'Src: Costco Wholesale AU' }
+        ]
+    },
+    {
+        id: 25, status: 'Active', weightG: 360, orderQty: 0,
+        name: { en: 'Fine Ground Black Pepper 360g', km: 'ម្រេចខ្មៅម៉ដ្ឋ ៣៦០ក្រាម', fr: 'Poivre noir moulu fin 360g', zh: '细磨黑胡椒粉 360g (罐装)' },
+        nameKhmer: 'ម្រេចខ្មៅម៉ដ្ឋ ៣៦០ក្រាម', spec: { en: '360g Can / 12 Cans/CTN', km: 'កំប៉ុង ៣៦០ក្រាម / ១២ កំប៉ុង/កេស', fr: 'Boîte de 360g / 12 Boîtes/CTN', zh: '360g/罐 / 12罐/箱' }, fobUsd: 3.89, pcsPer20ft: 14400,
+        asianComps: [
+            { brand: 'Cock Brand Fine Pepper Can', weightG: 360, priceAud: 7.90, source: 'Src: KFL Asian Grocery Springvale' },
+            { brand: 'Erawan Fine Pepper Can', weightG: 360, priceAud: 7.60, source: 'Src: Minh Phat Market Richmond' }
+        ],
+        ausComps: [
+            { brand: 'Saxa Ground Black Pepper Can', weightG: 360, priceAud: 9.50, source: 'Src: Coles Online AU (Melb)' },
+            { brand: 'Hoyts Ground Pepper Can', weightG: 360, priceAud: 9.10, source: 'Src: Woolworths Supermarkets VIC' },
+            { brand: 'Kirkland Fine Pepper Shaker', weightG: 348, priceAud: 13.50, source: 'Src: Costco Wholesale AU' }
+        ]
+    },
+    {
+        id: 26, status: 'Upcoming', weightG: 100, orderQty: 0,
+        name: { en: 'Instant Rice Stir-Fry Noodle 100g', km: 'មីគោក ១០០ក្រាម', fr: 'Nouilles de riz sautées instantanées 100g', zh: '即食干炒米粉 100g' },
+        nameKhmer: 'មីគោក ១០០ក្រាម', spec: { en: '100g Box / 24 Pcs per CTN', km: 'ប្រអប់ ១០០ក្រាម / ២៤ កញ្ចប់/កេស', fr: 'Boîte de 100g / 24 Pcs/CTN', zh: '100g/盒 / 24包/箱' }, fobUsd: 0.85, pcsPer20ft: 18000,
+        asianComps: [
+            { brand: 'Mama Instant Rice Noodle Pack', weightG: 100, priceAud: 1.50, source: 'Src: KFL Asian Grocery Springvale' },
+            { brand: 'Wai Wai Rice Noodle', weightG: 100, priceAud: 1.40, source: 'Src: Minh Phat Market Richmond' },
+            { brand: 'Maggi Fusian Noodles', weightG: 100, priceAud: 1.60, source: 'Src: DesiKart Indian Grocery' }
+        ],
+        ausComps: [
+            { brand: 'Trident Instant Rice Noodle Bowl', weightG: 100, priceAud: 1.95, source: 'Src: Woolworths Supermarkets VIC' },
+            { brand: 'Suimin Noodle Cup', weightG: 100, priceAud: 1.80, source: 'Src: Coles Online AU (Melb)' }
+        ]
+    },
+    {
+        id: 27, status: 'Upcoming', weightG: 500, orderQty: 0,
+        name: { en: 'Crispy Rice Cake Flour 500g', km: 'ម្សៅនំគ្រក់ ៥០០ក្រាម', fr: 'Farine pour gâteau de riz croustillant 500g', zh: '柬式香脆米饼粉 (Nom Krok) 500g' },
+        nameKhmer: 'ម្សៅនំគ្រក់ ៥០០ក្រាម', spec: { en: '500g Bag / 20 Pcs (10kg/CTN)', km: 'ថង់ ៥០០ក្រាម / ២០ កញ្ចប់ (១០គីឡូ/កេស)', fr: 'Sac de 500g / 20 Pcs (10kg/CTN)', zh: '500g/袋 / 20包 (10kg/箱)' }, fobUsd: 0.95, pcsPer20ft: 20000,
+        asianComps: [
+            { brand: 'Bot Banh Khot Cake Flour', weightG: 500, priceAud: 2.70, source: 'Src: KFL Asian Grocery Springvale' },
+            { brand: 'Vinh Thuan Rice Cake Premix', weightG: 500, priceAud: 2.60, source: 'Src: Minh Phat Market Richmond' }
+        ],
+        ausComps: [
+            { brand: 'Asian Specialty Rice Cake Premix', weightG: 500, priceAud: 3.40, source: 'Src: Coles Online AU (Melb)' },
+            { brand: 'Lian How Rice Flour Premix', weightG: 500, priceAud: 3.20, source: 'Src: Woolworths Supermarkets VIC' }
+        ]
+    },
+    {
+        id: 28, status: 'Upcoming', weightG: 500, orderQty: 0,
+        name: { en: 'Chinese Doughnuts Flour 500g', km: 'ម្សៅនំឆា ៥០០ក្រាម', fr: 'Farine pour beignets chinois (Youtiao) 500g', zh: '油条专用预拌粉 500g' },
+        nameKhmer: 'ម្សៅនំឆា ៥០០ក្រាម', spec: { en: '500g Bag / 20 Pcs (10kg/CTN)', km: 'ថង់ ៥០០ក្រាម / ២០ កញ្ចប់ (១០គីឡូ/កេស)', fr: 'Sac de 500g / 20 Pcs (10kg/CTN)', zh: '500g/袋 / 20包 (10kg/箱)' }, fobUsd: 0.90, pcsPer20ft: 20000,
+        asianComps: [
+            { brand: 'Youtiao Chinese Donut Premix', weightG: 500, priceAud: 2.50, source: 'Src: KFL Asian Grocery Springvale' },
+            { brand: 'San Gaou Youtiao Mix', weightG: 500, priceAud: 2.40, source: 'Src: Minh Phat Market Richmond' }
+        ],
+        ausComps: [
+            { brand: 'Defiance Specialty Flour Mix', weightG: 500, priceAud: 3.10, source: 'Src: Woolworths Supermarkets VIC' },
+            { brand: 'Laucke Sweet Dough Premix', weightG: 500, priceAud: 3.30, source: 'Src: Coles Online AU (Melb)' }
+        ]
+    },
+    {
+        id: 29, status: 'Upcoming', weightG: 500, orderQty: 0,
+        name: { en: 'Waffle Flour 500g', km: 'ម្សៅពុម្ព ៥០០ក្រាម', fr: 'Farine pour gaufres asiatiques 500g', zh: '东南亚华夫饼/格仔饼预拌粉 500g' },
+        nameKhmer: 'ម្សៅពុម្ព ៥០០ក្រាម', spec: { en: '500g Bag / 20 Pcs (10kg/CTN)', km: 'ថង់ ៥០០ក្រាម / ២០ កញ្ចប់ (១០គីឡូ/កេស)', fr: 'Sac de 500g / 20 Pcs (10kg/CTN)', zh: '500g/袋 / 20包 (10kg/箱)' }, fobUsd: 1.10, pcsPer20ft: 20000,
+        asianComps: [
+            { brand: 'Thai Pandan Waffle Premix', weightG: 500, priceAud: 2.90, source: 'Src: Minh Phat Market Richmond' },
+            { brand: 'Erawan Waffle Mix', weightG: 500, priceAud: 2.80, source: 'Src: KFL Asian Grocery Springvale' }
+        ],
+        ausComps: [
+            { brand: 'Greens Belgian Waffle Mix', weightG: 400, priceAud: 3.20, source: 'Src: Coles Online AU (Melb)' },
+            { brand: 'White Wings Waffle Mix', weightG: 400, priceAud: 3.40, source: 'Src: Woolworths Supermarkets VIC' }
+        ]
+    },
+    {
+        id: 30, status: 'Upcoming', weightG: 500, orderQty: 0,
+        name: { en: 'Steamed Rice Cake Flour 500g', km: 'ម្សៅនំអាកោ ៥០០ក្រាម', fr: 'Farine pour gâteau de riz à la vapeur 500g', zh: '蒸米糕粉 (Nom Ako) 500g' },
+        nameKhmer: 'ម្សៅនំអាកោ ៥០០ក្រាម', spec: { en: '500g Bag / 20 Pcs (10kg/CTN)', km: 'ថង់ ៥០០ក្រាម / ២០ កញ្ចប់ (១០គីឡូ/កេស)', fr: 'Sac de 500g / 20 Pcs (10kg/CTN)', zh: '500g/袋 / 20包 (10kg/箱)' }, fobUsd: 0.85, pcsPer20ft: 20000,
+        asianComps: [
+            { brand: 'Bot Banh Khot Cake Flour', weightG: 500, priceAud: 2.40, source: 'Src: KFL Asian Grocery Springvale' },
+            { brand: 'Vinh Thuan Steamed Cake', weightG: 500, priceAud: 2.30, source: 'Src: Minh Phat Market Richmond' }
+        ],
+        ausComps: [
+            { brand: 'Asian Rice Cake Premix', weightG: 500, priceAud: 3.10, source: 'Src: Woolworths Supermarkets VIC' },
+            { brand: 'Lian How Steamed Cake Mix', weightG: 500, priceAud: 3.25, source: 'Src: Coles Online AU (Melb)' }
+        ]
     }
-}
+];
 
-function setLanguage(lang) {
-    currentLang = lang;
-    
-    ['en', 'km', 'fr', 'zh'].forEach(l => {
-        const btn = document.getElementById(`lang-btn-${l}`);
-        if (btn) {
-            if (l === lang) {
-                btn.className = "px-2.5 py-1 text-base rounded transition bg-gold-500/20 border border-gold-500 shadow";
-            } else {
-                btn.className = "px-2.5 py-1 text-base rounded transition opacity-60 hover:opacity-100";
-            }
-        }
-    });
+const TOTAL_FIXED_CUSTOMS_AUD = 253.50 + 154.00 + 67.50 + 1695.00 + 65.00;
 
-    document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.getAttribute('data-i18n');
-        if (translations[lang] && translations[lang][key]) {
-            el.innerText = translations[lang][key];
-        }
-    });
-
-    renderTable();
-}
-
-// --- REAL-TIME OPEX CALCULATOR & RE-ALLOCATION ENGINE ---
-function updateOpExFromInputs() {
-    function getCategoryState(catNum, rawAnnualSubtotal) {
-        const toggleEl = document.getElementById(`c${catNum}_toggle_input`);
-        const isEnabled = toggleEl ? toggleEl.checked : true;
-        const statusLabel = document.getElementById(`c${catNum}_toggle_status`);
-        const containerEl = document.getElementById(`c${catNum}-card-container`);
-        const headerEl = document.getElementById(`subtotal-c${catNum}-hdr`);
-
-        if (statusLabel) {
-            statusLabel.innerText = isEnabled ? 'ON' : 'OFF';
-            statusLabel.className = isEnabled 
-                ? 'ml-2 text-[10px] font-bold uppercase tracking-wider text-emerald-600' 
-                : 'ml-2 text-[10px] font-bold uppercase tracking-wider text-slate-400';
-        }
-
-        if (headerEl) {
-            if (isEnabled) {
-                headerEl.innerText = '$' + rawAnnualSubtotal.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + '/yr';
-                headerEl.className = (catNum === 2 ? "text-emerald-700" : "text-gold-700") + " font-mono font-bold text-xs";
-            } else {
-                headerEl.innerText = '$0.00/yr (OFF)';
-                headerEl.className = "text-slate-400 font-mono font-bold text-xs";
-            }
-        }
-
-        if (containerEl) {
-            if (isEnabled) {
-                containerEl.classList.remove('opacity-70');
-            } else {
-                containerEl.classList.add('opacity-70');
-            }
-        }
-
-        return isEnabled ? rawAnnualSubtotal : 0;
-    }
-
-    // Category 1
-    const c1_1_wk = parseFloat(document.getElementById('c1_1_input')?.value) || 0;
-    const c1_2_wk = parseFloat(document.getElementById('c1_2_input')?.value) || 0;
-    const c1_3_wk = parseFloat(document.getElementById('c1_3_input')?.value) || 0;
-
-    const c1_1_ann = c1_1_wk * 52;
-    const c1_2_ann = c1_2_wk * 52;
-    const c1_3_ann = c1_3_wk * 52;
-
-    if (document.getElementById('c1_1_mth')) document.getElementById('c1_1_mth').innerText = '$' + (c1_1_ann / 12).toFixed(2);
-    if (document.getElementById('c1_1_ann')) document.getElementById('c1_1_ann').innerText = '$' + c1_1_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-    if (document.getElementById('c1_2_mth')) document.getElementById('c1_2_mth').innerText = '$' + (c1_2_ann / 12).toFixed(2);
-    if (document.getElementById('c1_2_ann')) document.getElementById('c1_2_ann').innerText = '$' + c1_2_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-    if (document.getElementById('c1_3_mth')) document.getElementById('c1_3_mth').innerText = '$' + (c1_3_ann / 12).toFixed(2);
-    if (document.getElementById('c1_3_ann')) document.getElementById('c1_3_ann').innerText = '$' + c1_3_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-
-    const c1_raw_ann_sub = c1_1_ann + c1_2_ann + c1_3_ann;
-    const c1_wk_sub = c1_1_wk + c1_2_wk + c1_3_wk;
-    if (document.getElementById('c1_wk_sub')) document.getElementById('c1_wk_sub').innerText = '$' + c1_wk_sub.toFixed(2);
-    if (document.getElementById('c1_mth_sub')) document.getElementById('c1_mth_sub').innerText = '$' + (c1_raw_ann_sub / 12).toFixed(2);
-    if (document.getElementById('c1_ann_sub')) document.getElementById('c1_ann_sub').innerText = '$' + c1_raw_ann_sub.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-
-    const c1_ann_sub = getCategoryState(1, c1_raw_ann_sub);
-    const c1_mth_sub = c1_ann_sub / 12;
-
-    // Category 2
-    const c2_1_base = parseFloat(document.getElementById('c2_1_base')?.value) || 0;
-    const c2_1_super = c2_1_base * 0.115;
-    const c2_1_wc = parseFloat(document.getElementById('c2_1_wc')?.value) || 0;
-    const c2_1_tot = c2_1_base + c2_1_super + c2_1_wc;
-
-    const c2_2_base = parseFloat(document.getElementById('c2_2_base')?.value) || 0;
-    const c2_2_super = c2_2_base * 0.115;
-    const c2_2_wc = parseFloat(document.getElementById('c2_2_wc')?.value) || 0;
-    const c2_2_tot = c2_2_base + c2_2_super + c2_2_wc;
-
-    if (document.getElementById('c2_1_super')) document.getElementById('c2_1_super').innerText = '$' + c2_1_super.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-    if (document.getElementById('c2_1_tot')) document.getElementById('c2_1_tot').innerText = '$' + c2_1_tot.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-    if (document.getElementById('c2_2_super')) document.getElementById('c2_2_super').innerText = '$' + c2_2_super.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-    if (document.getElementById('c2_2_tot')) document.getElementById('c2_2_tot').innerText = '$' + c2_2_tot.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-
-    const c2_base_sub = c2_1_base + c2_2_base;
-    const c2_super_sub = c2_1_super + c2_2_super;
-    const c2_wc_sub = c2_1_wc + c2_2_wc;
-    const c2_raw_ann_sub = c2_1_tot + c2_2_tot;
-
-    if (document.getElementById('c2_base_sub')) document.getElementById('c2_base_sub').innerText = '$' + c2_base_sub.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-    if (document.getElementById('c2_super_sub')) document.getElementById('c2_super_sub').innerText = '$' + c2_super_sub.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-    if (document.getElementById('c2_wc_sub')) document.getElementById('c2_wc_sub').innerText = '$' + c2_wc_sub.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-    if (document.getElementById('c2_ann_sub')) document.getElementById('c2_ann_sub').innerText = '$' + c2_raw_ann_sub.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-
-    const c2_ann_sub = getCategoryState(2, c2_raw_ann_sub);
-    const c2_mth_sub = c2_ann_sub / 12;
-
-    // Category 3
-    const c3_1_mth = parseFloat(document.getElementById('c3_1_mth_input')?.value) || 0;
-    const c3_2_mth = parseFloat(document.getElementById('c3_2_mth_input')?.value) || 0;
-    const c3_3_mth = parseFloat(document.getElementById('c3_3_mth_input')?.value) || 0;
-
-    const c3_1_ann = c3_1_mth * 12;
-    const c3_2_ann = c3_2_mth * 12;
-    const c3_3_ann = c3_3_mth * 12;
-
-    if (document.getElementById('c3_1_ann')) document.getElementById('c3_1_ann').innerText = '$' + c3_1_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-    if (document.getElementById('c3_2_ann')) document.getElementById('c3_2_ann').innerText = '$' + c3_2_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-    if (document.getElementById('c3_3_ann')) document.getElementById('c3_3_ann').innerText = '$' + c3_3_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-
-    const c3_raw_mth_sub = c3_1_mth + c3_2_mth + c3_3_mth;
-    const c3_raw_ann_sub = c3_1_ann + c3_2_ann + c3_3_ann;
-
-    if (document.getElementById('c3_mth_sub')) document.getElementById('c3_mth_sub').innerText = '$' + c3_raw_mth_sub.toFixed(2);
-    if (document.getElementById('c3_ann_sub')) document.getElementById('c3_ann_sub').innerText = '$' + c3_raw_ann_sub.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-
-    const c3_ann_sub = getCategoryState(3, c3_raw_ann_sub);
-    const c3_mth_sub = c3_ann_sub / 12;
-
-    // Category 4
-    const c4_1_mth = parseFloat(document.getElementById('c4_1_mth_input')?.value) || 0;
-    const c4_2_mth = parseFloat(document.getElementById('c4_2_mth_input')?.value) || 0;
-    const c4_3_mth = parseFloat(document.getElementById('c4_3_mth_input')?.value) || 0;
-    const c4_4_mth = parseFloat(document.getElementById('c4_4_mth_input')?.value) || 0;
-    const c4_5_mth = parseFloat(document.getElementById('c4_5_mth_input')?.value) || 0;
-
-    const c4_1_ann = c4_1_mth * 12;
-    const c4_2_ann = c4_2_mth * 12;
-    const c4_3_ann = c4_3_mth * 12;
-    const c4_4_ann = c4_4_mth * 12;
-    const c4_5_ann = c4_5_mth * 12;
-
-    if (document.getElementById('c4_1_ann')) document.getElementById('c4_1_ann').innerText = '$' + c4_1_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-    if (document.getElementById('c4_2_ann')) document.getElementById('c4_2_ann').innerText = '$' + c4_2_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-    if (document.getElementById('c4_3_ann')) document.getElementById('c4_3_ann').innerText = '$' + c4_3_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-    if (document.getElementById('c4_4_ann')) document.getElementById('c4_4_ann').innerText = '$' + c4_4_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-    if (document.getElementById('c4_5_ann')) document.getElementById('c4_5_ann').innerText = '$' + c4_5_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-
-    const c4_raw_mth_sub = c4_1_mth + c4_2_mth + c4_3_mth + c4_4_mth + c4_5_mth;
-    const c4_raw_ann_sub = c4_1_ann + c4_2_ann + c4_3_ann + c4_4_ann + c4_5_ann;
-
-    if (document.getElementById('c4_mth_sub')) document.getElementById('c4_mth_sub').innerText = '$' + c4_raw_mth_sub.toFixed(2);
-    if (document.getElementById('c4_ann_sub')) document.getElementById('c4_ann_sub').innerText = '$' + c4_raw_ann_sub.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-
-    const c4_ann_sub = getCategoryState(4, c4_raw_ann_sub);
-    const c4_mth_sub = c4_ann_sub / 12;
-
-    // Category 5
-    const c5_1_ex = parseFloat(document.getElementById('c5_1_ann_input')?.value) || 0;
-    const c5_2_ex = parseFloat(document.getElementById('c5_2_ann_input')?.value) || 0;
-    const c5_3_ex = parseFloat(document.getElementById('c5_3_ann_input')?.value) || 0;
-    const c5_4_ex = parseFloat(document.getElementById('c5_4_ann_input')?.value) || 0;
-
-    if (document.getElementById('c5_1_inc_gst')) document.getElementById('c5_1_inc_gst').innerText = '$' + (c5_1_ex * 1.1).toFixed(2);
-    if (document.getElementById('c5_2_inc_gst')) document.getElementById('c5_2_inc_gst').innerText = '$' + (c5_2_ex * 1.1).toFixed(2);
-    if (document.getElementById('c5_3_inc_gst')) document.getElementById('c5_3_inc_gst').innerText = '$' + (c5_3_ex * 1.1).toFixed(2);
-    if (document.getElementById('c5_4_inc_gst')) document.getElementById('c5_4_inc_gst').innerText = '$' + (c5_4_ex * 1.1).toFixed(2);
-
-    const c5_raw_ann_sub = c5_1_ex + c5_2_ex + c5_3_ex + c5_4_ex;
-    const c5_inc_sub = c5_raw_ann_sub * 1.1;
-
-    if (document.getElementById('c5_ex_sub')) document.getElementById('c5_ex_sub').innerText = '$' + c5_raw_ann_sub.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-    if (document.getElementById('c5_inc_sub')) document.getElementById('c5_inc_sub').innerText = '$' + c5_inc_sub.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-
-    const c5_ann_sub = getCategoryState(5, c5_raw_ann_sub);
-    const c5_mth_sub = c5_ann_sub / 12;
-
-    // Category 6
-    const containerType = document.getElementById('input-container-type')?.value || '20ft';
-    const is40ft = containerType === '40ft';
-
-    const currentCartageVal = parseFloat(document.getElementById('input-cartage')?.value) || (is40ft ? 1450.00 : 750.00);
-    const c6_3_input_el = document.getElementById('c6_3_ship_input');
-    if (c6_3_input_el && document.activeElement !== c6_3_input_el) {
-        c6_3_input_el.value = currentCartageVal.toFixed(2);
-    }
-
-    const defaultPortCharge = is40ft ? 850.00 : 450.00;
-    const c6_2_input_el = document.getElementById('c6_2_ship_input');
-    if (c6_2_input_el && document.activeElement !== c6_2_input_el && (!c6_2_input_el.value || c6_2_input_el.getAttribute('data-container-type') !== containerType)) {
-        c6_2_input_el.value = defaultPortCharge.toFixed(2);
-        c6_2_input_el.setAttribute('data-container-type', containerType);
-    }
-
-    const c6_1_ship = parseFloat(document.getElementById('c6_1_ship_input')?.value) || 475.00;
-    const c6_2_ship = parseFloat(c6_2_input_el?.value) || defaultPortCharge;
-    const c6_3_ship = parseFloat(c6_3_input_el?.value) || currentCartageVal;
-
-    ANNUAL_CONTAINERS = is40ft ? 6 : 12;
-
-    const c6_1_ann = c6_1_ship * ANNUAL_CONTAINERS;
-    const c6_2_ann = c6_2_ship * ANNUAL_CONTAINERS;
-    const c6_3_ann = c6_3_ship * ANNUAL_CONTAINERS;
-
-    if (document.getElementById('c6_1_ann')) document.getElementById('c6_1_ann').innerText = '$' + c6_1_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-    if (document.getElementById('c6_2_ann')) document.getElementById('c6_2_ann').innerText = '$' + c6_2_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-    if (document.getElementById('c6_3_ann')) document.getElementById('c6_3_ann').innerText = '$' + c6_3_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-
-    const c6_ship_sub = c6_1_ship + c6_2_ship + c6_3_ship;
-    const c6_raw_ann_sub = c6_1_ann + c6_2_ann + c6_3_ann;
-
-    if (document.getElementById('c6_ship_sub')) document.getElementById('c6_ship_sub').innerText = '$' + c6_ship_sub.toFixed(2);
-    if (document.getElementById('c6_ann_sub')) document.getElementById('c6_ann_sub').innerText = '$' + c6_raw_ann_sub.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-
-    const c6_ann_sub = getCategoryState(6, c6_raw_ann_sub);
-    const c6_mth_sub = c6_ann_sub / 12;
-
-    // Grand Total OpEx
-    const totalAnnualOpEx = c1_ann_sub + c2_ann_sub + c3_ann_sub + c4_ann_sub + c5_ann_sub + c6_ann_sub;
-    const totalMonthlyOpEx = totalAnnualOpEx / 12;
-
-    currentAnnualOpExAUD = totalAnnualOpEx;
-    currentOpExPerContainerAUD = totalAnnualOpEx / ANNUAL_CONTAINERS;
-
-    if (document.getElementById('banner-opex-total')) document.getElementById('banner-opex-total').innerText = totalAnnualOpEx.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-    if (document.getElementById('dash-card-opex')) document.getElementById('dash-card-opex').innerText = '$' + totalAnnualOpEx.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-
-    const setSumRow = (catNum, mth, ann) => {
-        const mthEl = document.getElementById(`sum-mth-c${catNum}`);
-        const annEl = document.getElementById(`sum-ann-c${catNum}`);
-        const pctEl = document.getElementById(`sum-pct-c${catNum}`);
-        if (mthEl) mthEl.innerText = '$' + mth.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-        if (annEl) annEl.innerText = '$' + ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-        if (pctEl) pctEl.innerText = (totalAnnualOpEx > 0 ? ((ann / totalAnnualOpEx) * 100).toFixed(1) : '0.0') + '%';
-    };
-
-    setSumRow(1, c1_mth_sub, c1_ann_sub);
-    setSumRow(2, c2_mth_sub, c2_ann_sub);
-    setSumRow(3, c3_mth_sub, c3_ann_sub);
-    setSumRow(4, c4_mth_sub, c4_ann_sub);
-    setSumRow(5, c5_mth_sub, c5_ann_sub);
-    setSumRow(6, c6_mth_sub, c6_ann_sub);
-
-    if (document.getElementById('sum-mth-total')) document.getElementById('sum-mth-total').innerText = '$' + totalMonthlyOpEx.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-    if (document.getElementById('sum-ann-total')) document.getElementById('sum-ann-total').innerText = '$' + totalAnnualOpEx.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-
-    renderTable();
-}
-
-function resetOpExBudget() {
-    Object.keys(defaultOpExValues).forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.value = defaultOpExValues[id];
-    });
-
-    [1, 3, 4, 5, 6].forEach(i => {
-        const toggle = document.getElementById(`c${i}_toggle_input`);
-        if (toggle) toggle.checked = true;
-    });
-    const c2Toggle = document.getElementById('c2_toggle_input');
-    if (c2Toggle) c2Toggle.checked = false;
-
-    updateOpExFromInputs();
-}
-
-function resetMasterProfitOrders() {
-    productsData.forEach(p => {
-        p.orderQty = 0;
-        syncOrderQty(p.id, 0);
-    });
-    renderTable();
-}
-
-// --- AUTOMATED DAILY FX RATE FETCHER ---
-async function fetchLiveFxRate() {
-    const statusTag = document.getElementById('fx-status-tag');
-    try {
-        if (statusTag) {
-            statusTag.innerText = 'Updating...';
-            statusTag.className = 'text-[9px] text-amber-400 font-mono ml-1';
-        }
-        const response = await fetch('https://open.er-api.com/v6/latest/AUD');
-        if (!response.ok) throw new Error('Live FX Rate fetch failed');
-        
-        const data = await response.json();
-        if (data && data.rates && data.rates.USD) {
-            const liveUsdRate = data.rates.USD;
-            const inputFx = document.getElementById('input-fx');
-            if (inputFx) inputFx.value = liveUsdRate.toFixed(4);
-            if (statusTag) {
-                statusTag.innerText = 'Live Daily Updated';
-                statusTag.className = 'text-[9px] text-emerald-400 font-mono ml-1';
-            }
-            renderTable();
-        }
-    } catch (err) {
-        console.warn('Could not fetch daily live FX rate, using benchmark fallback:', err);
-        if (statusTag) {
-            statusTag.innerText = 'Benchmark FX';
-            statusTag.className = 'text-[9px] text-slate-400 font-mono ml-1';
-        }
-    }
-}
-
-// --- PRODUCT COST COMPUTATION ---
 function calculateProductCosts(product, fx, oceanFreightUsd, localCartageAud, marginPercent, containerType) {
     const specStr = typeof product.spec === 'object' ? product.spec.en : product.spec;
     const pcsPerCtn = getPcsPerCtn(specStr);
@@ -1516,7 +1526,7 @@ function calculateProductCosts(product, fx, oceanFreightUsd, localCartageAud, ma
     const containerCapacityMultiplier = containerType === '40ft' ? 2.0 : 1.0;
     const effectivePcsPerContainer = product.pcsPer20ft * containerCapacityMultiplier;
 
-    const fobAudPcs = (product.fobUsd || 0) / fx;
+    const fobAudPcs = product.fobUsd / fx;
     const oceanFreightAudTotal = oceanFreightUsd / fx;
     const freightAudPerPc = oceanFreightAudTotal / effectivePcsPerContainer;
     const customsAudPerPc = TOTAL_FIXED_CUSTOMS_AUD / effectivePcsPerContainer;
@@ -1553,20 +1563,16 @@ function calculateProductCosts(product, fx, oceanFreightUsd, localCartageAud, ma
     };
 }
 
-function syncCtnPrice(productId, newPrice) {
-    const price = Math.max(0, parseFloat(newPrice) || 0);
+function updateProductCtnUsd(productId, newCtnUsd) {
+    const parsedCtnVal = parseFloat(newCtnUsd);
     const product = productsData.find(p => p.id === productId);
-    if (product) {
-        product.ctnPriceUsd = price;
+    
+    if (product && !isNaN(parsedCtnVal) && parsedCtnVal >= 0) {
         const specStr = typeof product.spec === 'object' ? product.spec.en : product.spec;
         const pcsPerCtn = getPcsPerCtn(specStr);
-        product.fobUsd = price / pcsPerCtn;
+        product.fobUsd = parsedCtnVal / pcsPerCtn;
+        renderTable();
     }
-    renderTable();
-}
-
-function updateProductCtnUsd(productId, newCtnUsd) {
-    syncCtnPrice(productId, newCtnUsd);
 }
 
 function generateCompetitorHtml(compList, targetWeightG, customerSellingPriceAudPcs, iconClass) {
@@ -1589,27 +1595,23 @@ function generateCompetitorHtml(compList, targetWeightG, customerSellingPriceAud
     }).join('');
 }
 
+// --- AUTOMATIC CONTAINER CARTAGE & FREIGHT SWITCHING ENGINE ---
 function handleContainerTypeChange() {
     const containerType = document.getElementById('input-container-type')?.value || '20ft';
     const inputFreight = document.getElementById('input-freight');
     const inputCartage = document.getElementById('input-cartage');
 
     if (containerType === '40ft') {
-        if (inputFreight && (inputFreight.value === '1580' || inputFreight.value === '1650' || inputFreight.value === '1650.00')) {
-            inputFreight.value = '2850';
-        }
+        if (inputFreight && (inputFreight.value === '1650' || inputFreight.value === '1650.00')) inputFreight.value = '2850';
         if (inputCartage) inputCartage.value = '1450';
     } else {
-        if (inputFreight && (inputFreight.value === '2850' || inputFreight.value === '2850.00')) {
-            inputFreight.value = '1580';
-        }
+        if (inputFreight && (inputFreight.value === '2850' || inputFreight.value === '2850.00')) inputFreight.value = '1650';
         if (inputCartage) inputCartage.value = '750';
     }
 
     updateOpExFromInputs();
 }
 
-// --- RENDER TABLE (EXPLICITLY DETECTS COMPACT Q1-1.html VS DETAILED Q1.html) ---
 function renderTable() {
     const inputContainerType = document.getElementById('input-container-type');
     const inputFx = document.getElementById('input-fx');
@@ -1619,7 +1621,7 @@ function renderTable() {
 
     const containerType = inputContainerType?.value || '20ft';
     const fx = parseFloat(inputFx?.value) || 0.6620;
-    const oceanFreightUsd = parseFloat(inputFreight?.value) || (containerType === '40ft' ? 2850 : 1580);
+    const oceanFreightUsd = parseFloat(inputFreight?.value) || (containerType === '40ft' ? 2850 : 1650);
     const localCartageAud = parseFloat(inputCartage?.value) || (containerType === '40ft' ? 1450 : 750);
     const marginPercent = parseFloat(inputMargin?.value) || 20;
 
@@ -1634,178 +1636,122 @@ function renderTable() {
     if (!tbody) return;
     tbody.innerHTML = '';
 
-    const t = translations[currentLang] || translations.en;
-
-    // Direct, explicit detection of Q1 vs Q1-1 table types
-    const hasBenchmarkColumns = document.querySelector('th.asian-comp-header') !== null || document.querySelector('th[data-i18n="th_asian_bench"]') !== null;
-    const isCompactView = !hasBenchmarkColumns;
+    const t = translations[currentLang];
 
     productsData.forEach((p, idx) => {
+        const calc = calculateProductCosts(p, fx, oceanFreightUsd, localCartageAud, marginPercent, containerType);
+        const isUpcoming = p.status === 'Upcoming';
+        const displayName = p.name[currentLang] || p.name.en;
+        const displaySpec = typeof p.spec === 'object' ? (p.spec[currentLang] || p.spec.en) : p.spec;
         const specStrEn = typeof p.spec === 'object' ? p.spec.en : p.spec;
         const pcsPerCtn = getPcsPerCtn(specStrEn);
-        const containerCapacityMultiplier = containerType === '40ft' ? 2.0 : 1.0;
-        const effectivePcsPerContainer = p.pcsPer20ft * containerCapacityMultiplier;
+        const ctnUsdVal = p.fobUsd * pcsPerCtn;
 
-        // Base Landed Cost calculation
-        const ctnPriceAud = (p.ctnPriceUsd || 0) / fx;
-        const freightAudPerCtn = (oceanFreightUsd / fx) / (containerType === '40ft' ? 2000 : 1000);
-        const customsAudPerCtn = 2235.00 / (containerType === '40ft' ? 2000 : 1000);
-        const opexAudPerCtn = currentOpExPerContainerAUD / (containerType === '40ft' ? 2000 : 1000);
+        const asianCompHtml = generateCompetitorHtml(p.asianComps, p.weightG, calc.customerSellingPriceAudPcs, 'fa-solid fa-store');
+        const ausCompHtml = generateCompetitorHtml(p.ausComps, p.weightG, calc.customerSellingPriceAudPcs, 'fa-solid fa-cart-shopping');
 
-        const landedCostAudCtn = ctnPriceAud + freightAudPerCtn + customsAudPerCtn + opexAudPerCtn;
-
-        const marginDecimal = marginPercent / 100;
-        const sellingPriceAudCtn = marginDecimal < 1 ? landedCostAudCtn / (1 - marginDecimal) : landedCostAudCtn;
-        const grossMarginCtn = sellingPriceAudCtn - landedCostAudCtn;
-        const netProfitCtn = grossMarginCtn * 0.90; // Excl. tax
-
-        p.lastCalculatedNetProfitCtn = netProfitCtn;
-
-        const qty = p.orderQty || 0;
-        const orderProfit = netProfitCtn * qty;
+        const currentOrderQty = p.orderQty || 0;
+        const currentOrderProfit = calc.netProfitCtn * currentOrderQty;
 
         const tr = document.createElement('tr');
+        tr.id = `product-row-${p.id}`;
+        tr.className = `hover:bg-slate-100/80 transition border-b-2 border-slate-300 ${isUpcoming ? 'bg-amber-50/50' : (idx % 2 === 0 ? 'bg-white' : 'bg-slate-50/70')}`;
 
-        if (isCompactView) {
-            // COMPACT FAST ENTRY ROW (Q1-1.html)
-            tr.className = `hover:bg-amber-50/60 transition ${p.status === 'Upcoming' ? 'bg-amber-50/40' : (idx % 2 === 0 ? 'bg-white' : 'bg-slate-50/60')}`;
-            tr.innerHTML = `
-                <td class="py-1 px-2 text-center font-bold text-slate-400 border-r border-slate-200">${p.id}</td>
-                <td class="py-1 px-3 border-r border-slate-200">
-                    <div class="flex items-center justify-between gap-1">
-                        <span class="font-bold text-slate-900">${p.name[currentLang] || p.name.en}</span>
-                        <span class="text-[10px] text-slate-400 font-mono bg-slate-100 border rounded px-1.5 shrink-0">${specStrEn}</span>
+        tr.innerHTML = `
+            <td class="py-3 px-2 text-center font-bold text-slate-500 border-r-2 border-slate-200">${p.id}</td>
+            <td class="py-3 px-3 border-r-2 border-slate-200">
+                <div class="flex items-center gap-1.5 mb-0.5">
+                    <span class="font-bold text-slate-900">${displayName}</span>
+                    ${isUpcoming ? '<span class="bg-amber-500 text-white text-[9px] font-bold px-1.5 py-0.2 rounded">NOV 2026</span>' : ''}
+                </div>
+                <div class="text-slate-600 text-[11px] font-khmer mb-1">${p.nameKhmer}</div>
+                <div class="flex items-center gap-2 text-[10px] text-slate-500">
+                    <span class="bg-slate-100 border border-slate-200 px-1.5 py-0.5 rounded font-medium">
+                        <i class="fa-solid fa-weight-hanging text-gold-600 mr-1"></i>${displaySpec}
+                    </span>
+                    <span class="text-slate-400">(${calc.effectivePcsPerContainer.toLocaleString()} pcs/${containerType})</span>
+                </div>
+            </td>
+            <td class="py-3 px-3 border-r-2 border-slate-200 text-right font-mono">
+                <div class="flex items-center justify-end gap-1 mb-1">
+                    <span class="text-xs text-slate-500 font-bold">$</span>
+                    <input type="number" step="0.10" min="0" value="${ctnUsdVal.toFixed(2)}" 
+                        onchange="updateProductCtnUsd(${p.id}, this.value)"
+                        class="bg-slate-100 hover:bg-white border border-slate-300 focus:border-gold-500 focus:bg-white text-slate-900 font-bold text-sm rounded px-2 py-0.5 text-right w-20 focus:outline-none transition shadow-sm"
+                        title="Click or type to adjust USD CTN price">
+                    <span class="text-[10px] text-gold-600 font-bold font-sans">USD/CTN</span>
+                </div>
+                <div class="text-[10px] text-slate-600 space-y-0.5">
+                    <div class="flex justify-between items-center gap-2">
+                        <span class="text-slate-400 font-sans">${t.lbl_pcs_usd}</span>
+                        <strong id="pcs-usd-${p.id}" class="text-slate-800">$${p.fobUsd.toFixed(2)} USD</strong>
                     </div>
-                </td>
-                <td class="py-1 px-2 border-r border-slate-200 text-center bg-slate-50">
-                    <div class="flex items-center justify-center gap-0.5">
-                        <span class="text-slate-400 font-bold">$</span>
-                        <input type="number" id="input-ctn-price-${p.id}" value="${(p.ctnPriceUsd || 0).toFixed(2)}" step="0.50" min="0"
-                            oninput="syncCtnPrice(${p.id}, this.value)"
-                            onkeydown="handleKeyDown(event, ${p.id}, 'price')"
-                            class="w-20 text-right bg-white border border-slate-300 focus:border-gold-500 font-bold font-mono text-xs text-gold-700 rounded py-0.5 px-1 focus:outline-none transition">
+                    <div class="flex justify-between items-center gap-2">
+                        <span class="text-slate-400 font-sans">${t.lbl_pcs_aud}</span>
+                        <strong id="pcs-aud-${p.id}" class="text-slate-700">$${calc.fobAudPcs.toFixed(2)} AUD</strong>
                     </div>
-                </td>
-                <td class="py-1 px-2 border-r border-slate-200 text-center bg-emerald-50/40">
-                    <input type="number" id="input-qty-${p.id}" value="${qty || ''}" placeholder="0" min="0" step="1"
-                        oninput="syncOrderQty(${p.id}, this.value)"
-                        onkeydown="handleKeyDown(event, ${p.id}, 'qty')"
-                        class="w-20 text-center bg-white border-2 border-emerald-300 focus:border-emerald-600 font-bold font-mono text-xs text-slate-900 rounded py-0.5 px-1 focus:outline-none transition">
-                </td>
-                <td class="py-1 px-3 text-right font-mono border-r border-slate-200">$${landedCostAudCtn.toFixed(2)}</td>
-                <td class="py-1 px-3 text-right font-mono border-r border-slate-200 text-gold-700 font-bold">$${sellingPriceAudCtn.toFixed(2)}</td>
-                <td class="py-1 px-3 text-right font-mono border-r border-slate-200 font-bold ${netProfitCtn >= 0 ? 'text-emerald-700' : 'text-rose-600'}">$${netProfitCtn.toFixed(2)}</td>
-                <td class="py-1 px-3 text-right font-mono font-bold bg-slate-900 text-gold-400" id="master-profit-val-${p.id}">
-                    $${orderProfit.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})} AUD
-                </td>
-            `;
-        } else {
-            // FULL DETAILED BENCHMARK SCHEDULE ROW (Q1.html)
-            const calc = calculateProductCosts(p, fx, oceanFreightUsd, localCartageAud, marginPercent, containerType);
-            const displayName = p.name[currentLang] || p.name.en;
-            const displaySpec = typeof p.spec === 'object' ? (p.spec[currentLang] || p.spec.en) : p.spec;
-            const asianCompHtml = generateCompetitorHtml(p.asianComps, p.weightG, calc.customerSellingPriceAudPcs, 'fa-solid fa-store');
-            const ausCompHtml = generateCompetitorHtml(p.ausComps, p.weightG, calc.customerSellingPriceAudPcs, 'fa-solid fa-cart-shopping');
-
-            tr.id = `product-row-${p.id}`;
-            tr.className = `hover:bg-slate-100/80 transition border-b-2 border-slate-300 ${p.status === 'Upcoming' ? 'bg-amber-50/50' : (idx % 2 === 0 ? 'bg-white' : 'bg-slate-50/70')}`;
-            tr.innerHTML = `
-                <td class="py-3 px-2 text-center font-bold text-slate-500 border-r-2 border-slate-200">${p.id}</td>
-                <td class="py-3 px-3 border-r-2 border-slate-200">
-                    <div class="flex items-center gap-1.5 mb-0.5">
-                        <span class="font-bold text-slate-900">${displayName}</span>
-                        ${p.status === 'Upcoming' ? '<span class="bg-amber-500 text-white text-[9px] font-bold px-1.5 py-0.2 rounded">NOV 2026</span>' : ''}
+                </div>
+            </td>
+            <td class="py-3 px-3 border-r-2 border-slate-200 bg-slate-50/80 font-mono">
+                <div class="flex justify-between items-center bg-slate-900 text-white p-1.5 rounded mb-1.5 shadow-sm">
+                    <span class="text-[10px] uppercase font-bold text-gold-400 font-sans">${t.lbl_landed_ctn_aud}</span>
+                    <span id="landed-cost-ctn-${p.id}" class="font-black text-xs text-white">$${calc.landedCostAudCtn.toFixed(2)} AUD</span>
+                </div>
+                <div class="space-y-0.5 text-[10px] text-slate-600 border-b border-dashed border-slate-300 pb-1.5 mb-1.5">
+                    <div class="flex justify-between pl-1"><span class="text-slate-600 font-semibold font-sans">${t.lbl_fob_ctn_aud}</span><strong class="text-slate-800">$${calc.fobAudCtn.toFixed(2)}</strong></div>
+                    <div class="flex justify-between pl-1"><span class="text-slate-500 font-sans">${t.lbl_ocean_ctn_aud}</span><span>$${calc.freightAudCtn.toFixed(2)}</span></div>
+                    <div class="flex justify-between pl-1"><span class="text-slate-500 font-sans">${t.lbl_customs_ctn_aud}</span><span>$${calc.customsAudCtn.toFixed(2)}</span></div>
+                    <div class="flex justify-between pl-1"><span class="text-slate-500 font-sans">${t.lbl_local_ctn_aud}</span><span>$${calc.cartageAudCtn.toFixed(2)}</span></div>
+                    <div class="flex justify-between pl-1 text-amber-700 bg-amber-50/60 font-semibold rounded px-0.5"><span class="font-sans">${t.lbl_opex_ctn_aud}</span><span>+$${calc.opexAudCtn.toFixed(2)}</span></div>
+                </div>
+                <div class="bg-gold-50 border border-gold-300 p-1.5 rounded space-y-1">
+                    <div class="flex justify-between items-center text-[10px]">
+                        <span class="text-gold-900 font-bold font-sans">${t.lbl_sell_ctn} ${marginPercent}%:</span>
+                        <span id="selling-price-ctn-${p.id}" class="text-gold-800 font-extrabold text-xs">$${calc.sellingPriceAudCtn.toFixed(2)}</span>
                     </div>
-                    <div class="text-slate-600 text-[11px] font-khmer mb-1">${p.nameKhmer || ''}</div>
-                    <div class="flex items-center gap-2 text-[10px] text-slate-500">
-                        <span class="bg-slate-100 border border-slate-200 px-1.5 py-0.5 rounded font-medium">
-                            <i class="fa-solid fa-weight-hanging text-gold-600 mr-1"></i>${displaySpec}
+                    <div class="flex justify-between items-center text-[10px] border-t border-gold-200/80 pt-0.5">
+                        <span class="text-gold-800 font-bold font-sans">${t.lbl_cust_margin_fixed}</span>
+                        <span id="selling-price-pcs-${p.id}" class="text-gold-700 font-bold text-xs">$${calc.customerSellingPriceAudPcs.toFixed(2)}</span>
+                    </div>
+                    <div class="flex justify-between items-center text-[10px] border-t border-gold-300/80 pt-1 mt-1 bg-emerald-500/10 p-1 rounded">
+                        <span class="text-emerald-900 font-black font-sans">${t.lbl_net_profit_ctn}</span>
+                        <span id="net-profit-ctn-${p.id}" class="font-black text-xs ${calc.netProfitCtn >= 0 ? 'text-emerald-700' : 'text-rose-600'}">$${calc.netProfitCtn.toFixed(2)} AUD</span>
+                    </div>
+                    <div class="flex justify-between items-center text-[10px] border-t border-emerald-300/80 pt-1 bg-emerald-600/10 p-1 rounded">
+                        <div class="flex items-center gap-1">
+                            <span class="text-emerald-950 font-black font-sans">${t.lbl_order_net_profits}</span>
+                            <input type="number" id="input-order-qty-${p.id}" value="${currentOrderQty}" min="0" step="1"
+                                oninput="syncOrderQty(${p.id}, this.value)"
+                                class="w-12 bg-white border border-emerald-400 focus:border-emerald-600 font-bold font-mono text-[10px] text-right rounded px-1 py-0.5 focus:outline-none transition shadow-sm"
+                                title="Enter total orders in cartons (CTN)">
+                        </div>
+                        <span id="order-net-profit-${p.id}" class="font-black text-xs ${currentOrderProfit > 0 ? 'text-emerald-800' : (currentOrderProfit < 0 ? 'text-rose-600' : 'text-slate-500')}">
+                            $${currentOrderProfit.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})} AUD
                         </span>
-                        <span class="text-slate-400">(${calc.effectivePcsPerContainer.toLocaleString()} pcs/${containerType})</span>
                     </div>
-                </td>
-                <td class="py-3 px-3 border-r-2 border-slate-200 text-right font-mono">
-                    <div class="flex items-center justify-end gap-1 mb-1">
-                        <span class="text-xs text-slate-500 font-bold">$</span>
-                        <input type="number" step="0.50" min="0" value="${(p.ctnPriceUsd || 0).toFixed(2)}" 
-                            oninput="syncCtnPrice(${p.id}, this.value)"
-                            class="bg-slate-100 hover:bg-white border border-slate-300 focus:border-gold-500 focus:bg-white text-slate-900 font-bold text-sm rounded px-2 py-0.5 text-right w-20 focus:outline-none transition shadow-sm"
-                            title="Click or type to adjust USD CTN price">
-                        <span class="text-[10px] text-gold-600 font-bold font-sans">USD/CTN</span>
-                    </div>
-                    <div class="text-[10px] text-slate-600 space-y-0.5">
-                        <div class="flex justify-between items-center gap-2">
-                            <span class="text-slate-400 font-sans">${t.lbl_pcs_usd}</span>
-                            <strong id="pcs-usd-${p.id}" class="text-slate-800">$${p.fobUsd.toFixed(2)} USD</strong>
-                        </div>
-                        <div class="flex justify-between items-center gap-2">
-                            <span class="text-slate-400 font-sans">${t.lbl_pcs_aud}</span>
-                            <strong id="pcs-aud-${p.id}" class="text-slate-700">$${calc.fobAudPcs.toFixed(2)} AUD</strong>
-                        </div>
-                    </div>
-                </td>
-                <td class="py-3 px-3 border-r-2 border-slate-200 bg-slate-50/80 font-mono">
-                    <div class="flex justify-between items-center bg-slate-900 text-white p-1.5 rounded mb-1.5 shadow-sm">
-                        <span class="text-[10px] uppercase font-bold text-gold-400 font-sans">${t.lbl_landed_ctn_aud}</span>
-                        <span id="landed-cost-ctn-${p.id}" class="font-black text-xs text-white">$${calc.landedCostAudCtn.toFixed(2)} AUD</span>
-                    </div>
-                    <div class="space-y-0.5 text-[10px] text-slate-600 border-b border-dashed border-slate-300 pb-1.5 mb-1.5">
-                        <div class="flex justify-between pl-1"><span class="text-slate-600 font-semibold font-sans">${t.lbl_fob_ctn_aud}</span><strong class="text-slate-800">$${calc.fobAudCtn.toFixed(2)}</strong></div>
-                        <div class="flex justify-between pl-1"><span class="text-slate-500 font-sans">${t.lbl_ocean_ctn_aud}</span><span>$${calc.freightAudCtn.toFixed(2)}</span></div>
-                        <div class="flex justify-between pl-1"><span class="text-slate-500 font-sans">${t.lbl_customs_ctn_aud}</span><span>$${calc.customsAudCtn.toFixed(2)}</span></div>
-                        <div class="flex justify-between pl-1"><span class="text-slate-500 font-sans">${t.lbl_local_ctn_aud}</span><span>$${calc.cartageAudCtn.toFixed(2)}</span></div>
-                        <div class="flex justify-between pl-1 text-amber-700 bg-amber-50/60 font-semibold rounded px-0.5"><span class="font-sans">${t.lbl_opex_ctn_aud}</span><span>+$${calc.opexAudCtn.toFixed(2)}</span></div>
-                    </div>
-                    <div class="bg-gold-50 border border-gold-300 p-1.5 rounded space-y-1">
-                        <div class="flex justify-between items-center text-[10px]">
-                            <span class="text-gold-900 font-bold font-sans">${t.lbl_sell_ctn} ${marginPercent}%:</span>
-                            <span id="selling-price-ctn-${p.id}" class="text-gold-800 font-extrabold text-xs">$${calc.sellingPriceAudCtn.toFixed(2)}</span>
-                        </div>
-                        <div class="flex justify-between items-center text-[10px] border-t border-gold-200/80 pt-0.5">
-                            <span class="text-gold-800 font-bold font-sans">${t.lbl_cust_margin_fixed}</span>
-                            <span id="selling-price-pcs-${p.id}" class="text-gold-700 font-bold text-xs">$${calc.customerSellingPriceAudPcs.toFixed(2)}</span>
-                        </div>
-                        <div class="flex justify-between items-center text-[10px] border-t border-gold-300/80 pt-1 mt-1 bg-emerald-500/10 p-1 rounded">
-                            <span class="text-emerald-900 font-black font-sans">${t.lbl_net_profit_ctn}</span>
-                            <span id="net-profit-ctn-${p.id}" class="font-black text-xs ${calc.netProfitCtn >= 0 ? 'text-emerald-700' : 'text-rose-600'}">$${calc.netProfitCtn.toFixed(2)} AUD</span>
-                        </div>
-                        <div class="flex justify-between items-center text-[10px] border-t border-emerald-300/80 pt-1 bg-emerald-600/10 p-1 rounded">
-                            <div class="flex items-center gap-1">
-                                <span class="text-emerald-950 font-black font-sans">${t.lbl_order_net_profits}</span>
-                                <input type="number" id="input-order-qty-${p.id}" value="${qty}" min="0" step="1"
-                                    oninput="syncOrderQty(${p.id}, this.value)"
-                                    class="w-12 bg-white border border-emerald-400 focus:border-emerald-600 font-bold font-mono text-[10px] text-right rounded px-1 py-0.5 focus:outline-none transition shadow-sm"
-                                    title="Enter total orders in cartons (CTN)">
-                            </div>
-                            <span id="order-net-profit-${p.id}" class="font-black text-xs ${orderProfit > 0 ? 'text-emerald-800' : (orderProfit < 0 ? 'text-rose-600' : 'text-slate-500')}">
-                                $${orderProfit.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})} AUD
-                            </span>
-                        </div>
-                    </div>
-                </td>
-                <td class="py-3 px-3 border-r-2 border-slate-200">${asianCompHtml}</td>
-                <td class="py-3 px-3">${ausCompHtml}</td>
-            `;
-        }
+                </div>
+            </td>
+            <td class="py-3 px-3 border-r-2 border-slate-200">${asianCompHtml}</td>
+            <td class="py-3 px-3">${ausCompHtml}</td>
+        `;
 
         tbody.appendChild(tr);
     });
 
-    recalculateMasterProfitTotal();
     renderMasterProfitModelTable();
 }
 
 function syncOrderQty(productId, newQty) {
-    const qty = Math.max(0, parseInt(newQty) || 0);
+    const qty = parseFloat(newQty) || 0;
 
     const product = productsData.find(p => p.id === productId);
     if (product) product.orderQty = qty;
 
-    const mainInput = document.getElementById(`input-qty-${productId}`) || document.getElementById(`input-order-qty-${productId}`);
-    if (mainInput && parseInt(mainInput.value) !== qty) mainInput.value = qty || '';
+    const mainInput = document.getElementById(`input-order-qty-${productId}`);
+    if (mainInput && parseFloat(mainInput.value) !== qty) mainInput.value = qty;
 
     const masterInput = document.getElementById(`master-profit-qty-${productId}`);
-    if (masterInput && parseInt(masterInput.value) !== qty) masterInput.value = qty;
+    if (masterInput && parseFloat(masterInput.value) !== qty) masterInput.value = qty;
 
     if (product && product.lastCalculatedNetProfitCtn !== undefined) {
         const orderProfit = product.lastCalculatedNetProfitCtn * qty;
@@ -1826,67 +1772,59 @@ function syncOrderQty(productId, newQty) {
     recalculateMasterProfitTotal();
 }
 
+// --- RECALCULATE MASTER PROFIT & AUTOMATIC OVER-CAPACITY ALERT (UNIT: CTN) ---
 function recalculateMasterProfitTotal() {
     let totalProfit = 0;
     let totalCartons = 0;
 
     const containerType = document.getElementById('input-container-type')?.value || '20ft';
-    const maxCtn = containerType === '40ft' ? 2000 : 1000;
+    
+    // Standard Carton Capacity: 1,000 CTN for 20ft container; 2,000 CTN for 40ft container
+    const containerCapacityCartons = containerType === '40ft' ? 2000 : 1000;
 
     productsData.forEach(p => {
         const qtyCartons = p.orderQty || 0;
         totalCartons += qtyCartons;
 
         if (p.lastCalculatedNetProfitCtn !== undefined) {
-            const rowProf = p.lastCalculatedNetProfitCtn * qtyCartons;
-            totalProfit += rowProf;
-            
-            const cell = document.getElementById(`master-profit-val-${p.id}`);
-            if (cell) {
-                cell.innerText = '$' + rowProf.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' AUD';
-            }
+            totalProfit += p.lastCalculatedNetProfitCtn * qtyCartons;
         }
     });
 
-    const formattedTotalProfit = '$' + totalProfit.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' AUD';
-    
-    // Update Summaries across view variants
-    if (document.getElementById('master-profit-total-val')) document.getElementById('master-profit-total-val').innerText = formattedTotalProfit;
-    if (document.getElementById('floating-total-profit')) document.getElementById('floating-total-profit').innerText = formattedTotalProfit;
-    if (document.getElementById('dash-card-profit')) document.getElementById('dash-card-profit').innerText = formattedTotalProfit;
-    if (document.getElementById('banner-master-profit-total')) document.getElementById('banner-master-profit-total').innerText = totalProfit.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    const bannerTotal = document.getElementById('banner-master-profit-total');
+    if (bannerTotal) bannerTotal.innerText = totalProfit.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
 
-    if (document.getElementById('master-profit-total-qty')) document.getElementById('master-profit-total-qty').innerText = `${totalCartons.toLocaleString()} CTN`;
-    if (document.getElementById('dash-card-ctn-qty')) document.getElementById('dash-card-ctn-qty').innerText = `${totalCartons.toLocaleString()} CTN`;
-    if (document.getElementById('dash-card-ctn-target')) document.getElementById('dash-card-ctn-target').innerText = `/ ${maxCtn.toLocaleString()} CTN`;
-    if (document.getElementById('dash-card-container-type')) document.getElementById('dash-card-container-type').innerText = containerType === '40ft' ? '40ft FCL' : '20ft FCL';
+    const footerVal = document.getElementById('master-profit-total-val');
+    if (footerVal) footerVal.innerText = '$' + totalProfit.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' AUD';
 
-    const rawSpacePct = (totalCartons / maxCtn) * 100;
+    const footerQty = document.getElementById('master-profit-total-qty');
+    if (footerQty) footerQty.innerText = totalCartons.toLocaleString('en-US') + ' CTN';
+
+    const floatProfit = document.getElementById('floating-total-profit');
+    if (floatProfit) floatProfit.innerText = '$' + totalProfit.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' AUD';
+
+    const rawSpacePct = (totalCartons / containerCapacityCartons) * 100;
     const spacePct = Math.round(rawSpacePct);
+    
+    const spaceText = document.getElementById('floating-space-text');
+    if (spaceText) spaceText.innerText = `${totalCartons.toLocaleString()} / ${containerCapacityCartons.toLocaleString()} CTN`;
 
-    if (document.getElementById('floating-space-text')) document.getElementById('floating-space-text').innerText = `${totalCartons.toLocaleString()} / ${maxCtn.toLocaleString()} CTN`;
-    if (document.getElementById('floating-space-pct')) document.getElementById('floating-space-pct').innerText = `(${spacePct}%)`;
-    if (document.getElementById('dash-card-ctn-pct')) document.getElementById('dash-card-ctn-pct').innerText = `${spacePct}%`;
+    const spacePctEl = document.getElementById('floating-space-pct');
+    if (spacePctEl) spacePctEl.innerText = `${spacePct}%`;
 
     const spaceBar = document.getElementById('floating-space-bar');
-    const dashBar = document.getElementById('dash-card-progress-bar');
-    const barWidth = `${Math.min(spacePct, 100)}%`;
-
     if (spaceBar) {
-        spaceBar.style.width = barWidth;
-        spaceBar.className = spacePct > 100 
-            ? 'bg-rose-600 h-full transition-all duration-300 animate-pulse' 
-            : 'bg-gradient-to-r from-emerald-500 to-gold-400 h-full transition-all duration-300';
-    }
-    if (dashBar) {
-        dashBar.style.width = barWidth;
-        dashBar.className = spacePct > 100 ? 'bg-rose-600 h-full transition-all duration-300' : 'bg-gold-500 h-full transition-all duration-300';
+        spaceBar.style.width = `${Math.min(spacePct, 100)}%`;
+        if (spacePct > 100) {
+            spaceBar.className = 'bg-rose-600 h-full rounded-full transition-all duration-300 animate-pulse';
+        } else {
+            spaceBar.className = 'bg-gradient-to-r from-emerald-500 to-gold-400 h-full rounded-full transition-all duration-300';
+        }
     }
 
-    // Over-capacity alert check
+    // --- AUTOMATIC OVER-CAPACITY WARNING ALERT LOGIC ---
     let alertBadge = document.getElementById('over-capacity-badge');
-    const spacePctEl = document.getElementById('floating-space-pct');
-
+    
     if (rawSpacePct > 100) {
         if (!alertBadge && spacePctEl) {
             alertBadge = document.createElement('span');
@@ -1899,7 +1837,7 @@ function recalculateMasterProfitTotal() {
         if (!containerOverCapacityAlertShown) {
             containerOverCapacityAlertShown = true;
             setTimeout(() => {
-                alert(`⚠️ CONTAINER CAPACITY WARNING ⚠️\n\nTotal order volume has reached ${spacePct}% (${totalCartons.toLocaleString()} CTN) of maximum container capacity (${maxCtn.toLocaleString()} CTN for ${containerType}).\n\nPlease adjust carton quantities or switch to a 40ft container.`);
+                alert(`⚠️ CONTAINER CAPACITY WARNING ⚠️\n\nTotal order volume has reached ${spacePct}% (${totalCartons.toLocaleString()} CTN) of maximum container capacity (${containerCapacityCartons.toLocaleString()} CTN for ${containerType}).\n\nPlease adjust carton quantities or switch to a 40ft container.`);
             }, 100);
         }
     } else {
@@ -1942,179 +1880,6 @@ function renderMasterProfitModelTable() {
     recalculateMasterProfitTotal();
 }
 
-// --- OFFICIAL PURCHASE ORDER PDF EXPORT GENERATOR ---
-function exportPurchaseOrderPDF() {
-    if (!window.jspdf || !window.jspdf.jsPDF) {
-        alert('PDF Export Library is loading, please try again in a moment.');
-        return;
-    }
-
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
-    
-    const containerType = document.getElementById('input-container-type')?.value || '20ft';
-    const containerLabel = containerType === '40ft' ? '40ft FCL Container' : '20ft FCL Container';
-    const now = new Date();
-    const formattedDateOnly = now.toLocaleDateString('en-GB', {
-        day: '2-digit', month: 'short', year: 'numeric'
-    }).toUpperCase();
-
-    const darkSlate = [30, 41, 59];
-    const goldColor = [212, 175, 55];
-    const lightGrey = [248, 250, 252];
-
-    // Header Banner
-    doc.setFillColor(...darkSlate);
-    doc.rect(0, 0, 210, 32, 'F');
-
-    doc.setFillColor(...goldColor);
-    doc.rect(0, 32, 210, 1.5, 'F');
-
-    doc.setTextColor(255, 255, 255);
-    doc.setFont('helvetica', 'bold');
-    doc.setFontSize(11);
-    doc.text('OFFICIAL PURCHASE ORDER & SHIPPING SPECIFICATION', 12, 13);
-
-    doc.setFontSize(8.5);
-    doc.setFont('helvetica', 'normal');
-    doc.setTextColor(230, 198, 85);
-    doc.text('Two Parrots Group Australia — Import Logistics Portal', 12, 21);
-
-    doc.setTextColor(255, 255, 255);
-    doc.setFont('helvetica', 'bold');
-    doc.setFontSize(13);
-    doc.text(formattedDateOnly, 198, 14, { align: 'right' });
-
-    doc.setFontSize(9);
-    doc.setTextColor(230, 198, 85);
-    doc.text(containerLabel, 198, 22, { align: 'right' });
-
-    // Exporter & Importer Cards
-    const startY = 38;
-
-    doc.setFillColor(...lightGrey);
-    doc.setDrawColor(203, 213, 225);
-    doc.roundedRect(12, startY, 90, 42, 2, 2, 'FD');
-
-    doc.setFillColor(234, 179, 8);
-    doc.rect(12, startY, 2, 42, 'F');
-
-    doc.setTextColor(...darkSlate);
-    doc.setFont('helvetica', 'bold');
-    doc.setFontSize(9);
-    doc.text('EXPORTER (SELLER):', 17, startY + 6);
-    doc.setFontSize(8.5);
-    doc.setTextColor(15, 23, 42);
-    doc.text('TWO PARROTS TRADING SOLUTIONS CO., LTD.', 17, startY + 12);
-    
-    doc.setFont('helvetica', 'normal');
-    doc.setFontSize(7.5);
-    doc.setTextColor(71, 85, 105);
-    doc.text('TEL: +855-12628988', 17, startY + 18);
-    doc.text('Email: tum@two-parrots.com', 17, startY + 23);
-    doc.text('Web: www.two-parrots.com', 17, startY + 28);
-
-    doc.setFillColor(...lightGrey);
-    doc.roundedRect(108, startY, 90, 42, 2, 2, 'FD');
-
-    doc.setFillColor(...darkSlate);
-    doc.rect(108, startY, 2, 42, 'F');
-
-    doc.setTextColor(...darkSlate);
-    doc.setFont('helvetica', 'bold');
-    doc.setFontSize(9);
-    doc.text('IMPORTER (BUYER):', 113, startY + 6);
-    doc.setFontSize(8.5);
-    doc.setTextColor(15, 23, 42);
-    doc.text('TWO PARROTS GROUP AUSTRALIA', 113, startY + 12);
-
-    doc.setFont('helvetica', 'normal');
-    doc.setFontSize(7.5);
-    doc.setTextColor(71, 85, 105);
-    doc.text('Managing Director: Kim Heng Ly', 113, startY + 18);
-    doc.text('Address: 1/57 Elonera Rd, Noble Park North VIC 3174', 113, startY + 23);
-    doc.text('Port of Discharge: Swanson Dock, VIC, Australia', 113, startY + 28);
-    doc.text('Email: info@twoparrotsgroup.com.au', 113, startY + 33);
-    doc.text('Web: twoparrotsgroup.com.au', 113, startY + 38);
-
-    // Filter >0 CTN Order Schedule
-    let totalOrderCartons = 0;
-    const tableRows = [];
-
-    productsData.forEach(p => {
-        const qty = p.orderQty || 0;
-        if (qty > 0) {
-            totalOrderCartons += qty;
-            const specStrEn = typeof p.spec === 'object' ? p.spec.en : p.spec;
-            tableRows.push([
-                p.id.toString(),
-                p.name.en,
-                specStrEn,
-                `${qty.toLocaleString()} CTN`
-            ]);
-        }
-    });
-
-    if (tableRows.length === 0) {
-        tableRows.push(['-', 'No product quantities entered yet.', '-', '0 CTN']);
-    }
-
-    doc.autoTable({
-        startY: 85,
-        head: [['N°', 'Product Description', 'Packaging Specification', 'Order Volume']],
-        body: tableRows,
-        theme: 'striped',
-        headStyles: {
-            fillColor: darkSlate,
-            textColor: [255, 255, 255],
-            fontSize: 8.5,
-            fontStyle: 'bold',
-            halign: 'left'
-        },
-        columnStyles: {
-            0: { halign: 'center', cellWidth: 12 },
-            1: { cellWidth: 95 },
-            2: { cellWidth: 50 },
-            3: { halign: 'center', cellWidth: 29, fontStyle: 'bold' }
-        },
-        styles: {
-            fontSize: 8,
-            cellPadding: 2.5
-        },
-        alternateRowStyles: {
-            fillColor: [241, 245, 249]
-        }
-    });
-
-    const finalY = doc.lastAutoTable.finalY + 6;
-    
-    doc.setFillColor(...darkSlate);
-    doc.roundedRect(12, finalY, 186, 12, 2, 2, 'F');
-    
-    doc.setTextColor(230, 198, 85);
-    doc.setFont('helvetica', 'bold');
-    doc.setFontSize(9.5);
-    doc.text(`TOTAL ORDER VOLUME: ${totalOrderCartons.toLocaleString()} CTN`, 18, finalY + 8);
-    doc.setTextColor(255, 255, 255);
-    doc.text(`CONTAINER TYPE: ${containerLabel.toUpperCase()}`, 192, finalY + 8, { align: 'right' });
-
-    const footerY = Math.max(finalY + 28, 250);
-    if (footerY < 280) {
-        doc.setDrawColor(203, 213, 225);
-        doc.line(12, footerY, 80, footerY);
-        doc.line(128, footerY, 198, footerY);
-
-        doc.setFontSize(7.5);
-        doc.setTextColor(100, 116, 139);
-        doc.setFont('helvetica', 'normal');
-        doc.text('Authorized Representative (Seller)', 12, footerY + 4);
-        doc.text('Authorized Director (Buyer)', 128, footerY + 4);
-    }
-
-    const formattedFileNameDate = now.toISOString().slice(0, 10);
-    doc.save(`TwoParrots_PurchaseOrder_${formattedFileNameDate}.pdf`);
-}
-
 async function loadLatestPrices() {
     try {
         fetchLiveFxRate();
@@ -2138,22 +1903,16 @@ async function loadLatestPrices() {
     }
 }
 
-// --- GLOBAL WINDOW FUNCTION ATTACHMENTS ---
+// Global Window Function Attachments
 window.unlockPage = unlockPage;
 window.togglePasswordVisibility = togglePasswordVisibility;
 window.setLanguage = setLanguage;
-window.syncCtnPrice = syncCtnPrice;
 window.updateProductCtnUsd = updateProductCtnUsd;
 window.syncOrderQty = syncOrderQty;
-window.recalculateAll = renderTable;
-window.recalculateMasterProfitTotal = recalculateMasterProfitTotal;
 window.resetOpExBudget = resetOpExBudget;
 window.resetMasterProfitOrders = resetMasterProfitOrders;
-window.handleContainerTypeChange = handleContainerTypeChange;
-window.exportPurchaseOrderPDF = exportPurchaseOrderPDF;
-window.handleKeyDown = handleKeyDown;
 
-// --- INITIAL LAUNCH LISTENERS ---
+// Initial Launch listeners
 document.addEventListener('DOMContentLoaded', () => {
     Object.keys(defaultOpExValues).forEach(id => {
         document.getElementById(id)?.addEventListener('input', updateOpExFromInputs);
@@ -2173,18 +1932,18 @@ document.addEventListener('DOMContentLoaded', () => {
     if (passwordForm) {
         passwordForm.addEventListener('submit', unlockPage);
     }
-
-    const c6_3_el = document.getElementById('c6_3_ship_input');
-    if (c6_3_el) {
-        c6_3_el.addEventListener('input', (e) => {
-            const val = parseFloat(e.target.value) || 0;
-            const inputCartage = document.getElementById('input-cartage');
-            if (inputCartage) {
-                inputCartage.value = val.toFixed(2);
-            }
-            updateOpExFromInputs();
-        });
-    }
+	// Attach inside DOMContentLoaded or init block:
+const c6_3_el = document.getElementById('c6_3_ship_input');
+if (c6_3_el) {
+    c6_3_el.addEventListener('input', (e) => {
+        const val = parseFloat(e.target.value) || 0;
+        const inputCartage = document.getElementById('input-cartage');
+        if (inputCartage) {
+            inputCartage.value = val.toFixed(2);
+        }
+        updateOpExFromInputs();
+    });
+}
 
     updateOpExFromInputs();
 });
