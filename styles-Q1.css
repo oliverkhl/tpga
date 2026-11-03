@@ -97,3 +97,16 @@ margin: 0.8cm;
     border-top: none;
     border-radius: 0 0 12px 12px;
 }
+
+/* Product Image Styling within the Table */
+.table-product-img {
+    display: block;
+    max-width: 120px;       /* Keeps the image small and compact */
+    height: auto;
+    margin-top: 12px;      /* Adds space between the spec text and the image */
+    border-radius: 6px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    background: #ffffff;
+    padding: 2px;
+}
