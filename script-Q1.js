@@ -1671,6 +1671,15 @@ function renderTable() {
                     </span>
                     <span class="text-slate-400">(${calc.effectivePcsPerContainer.toLocaleString()} pcs/${containerType})</span>
                 </div>
+				${p.id >= 1 && p.id <= 25 ? `
+                <div class="mt-2">
+                    <img src="images/P${p.id}.png" 
+                         onerror="this.onerror=function(){this.style.display='none'}; this.src='images/P${p.id}/image.jpg';" 
+                         alt="${displayName}" 
+                         class="w-20 h-20 object-cover rounded-md border border-slate-300 shadow-sm hover:scale-105 transition-transform duration-200 bg-white"
+                         title="${displayName}">
+                </div>
+                ` : ''}
             </td>
             <td class="py-3 px-3 border-r-2 border-slate-200 text-right font-mono">
                 <div class="flex items-center justify-end gap-1 mb-1">
