@@ -282,7 +282,7 @@
             <div class="bg-slate-900 px-4 py-2 flex flex-wrap justify-between items-center gap-2 border-b border-gold-500">
                 <div>
                     <h2 data-i18n="tbl_title" class="text-xs font-bold text-white tracking-wide uppercase">Customer Quotation</h2>
-                    <p class="text-[10px] text-gold-400">Adjust CTN Price (USD) or Volume (CTN) per product. Press Tab ↹ or Enter ↵ to cycle inputs fast.</p>
+                    <p class="text-[10px] text-gold-400">This Quotation is subject to change due to AUD/USD Exchange rate and Sea Freight, it only valid for 14 Days</p>
                 </div>
 				<div class="flex items-center gap-3 text-xs">
                     <!-- New GST Inclusive Toggle -->
@@ -305,7 +305,7 @@
             </div>
 
             <!-- Compact Table with Scroll Containment -->
-            <div class="max-h-[420px] overflow-y-auto">
+            <div class="overflow-y-auto">
                 <table class="w-full text-left border-collapse">
                     <thead class="sticky top-0 z-20 shadow-sm">
                         <tr class="bg-slate-800 text-slate-200 text-[10px] uppercase font-semibold tracking-wider border-b border-slate-900">
@@ -338,6 +338,10 @@
         </div>
 
         <!-- 3. FULL MASTER OPERATIONAL EXPENSE BUDGET & OPERATING MODEL -->
+		<details class="budget-accordion">
+		<summary class="budget-summary"></summary>
+    
+    <div class="accordion-content">
         <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-300 mb-6">
             <div class="bg-slate-900 px-4 py-3 border-b-2 border-gold-500 flex flex-wrap justify-between items-center gap-3">
                 <div>
@@ -755,8 +759,8 @@
 
             </div>
         </div>
-
-    </div>
+	</div>
+</details>
 
 <!-- 4. FLOATING LANDED COST ENGINE TOOLBAR -->
     <div id="landed-cost-engine" class="fixed bottom-0 left-0 right-0 bg-slate-900 border-t-2 border-gold-500 shadow-2xl text-white z-50 no-print transition-transform duration-300 translate-y-full">
