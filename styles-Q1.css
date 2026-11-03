@@ -63,3 +63,37 @@ size: A4 landscape;
 margin: 0.8cm;
 }
 }
+
+/* Container */
+.budget-accordion {
+    margin: 20px 0;
+    background: transparent;
+}
+
+/* 🚨 CRITICAL: Force hide the default browser arrow */
+.budget-accordion summary {
+    list-style: none !important; 
+}
+.budget-accordion summary::-webkit-details-marker {
+    display: none !important; 
+}
+
+/* SVG Chevron Animation */
+.summary-arrow {
+    transition: transform 0.3s ease;
+    transform: rotate(180deg); /* Points UP when closed to match your image */
+}
+
+/* Points DOWN when open */
+.budget-accordion[open] .summary-arrow {
+    transform: rotate(0deg); 
+}
+
+/* The hidden content box */
+.accordion-content {
+    padding: 24px;
+    background: #ffffff;
+    border: 2px solid #1c2331; /* Dark border connecting to the tab */
+    border-top: none;
+    border-radius: 0 0 12px 12px;
+}
