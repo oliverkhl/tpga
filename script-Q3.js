@@ -1,4 +1,6 @@
 // --- MASTER STATE DECLARATIONS & BASELINES ---
+const WORKER_URL = "https://your-worker-name.your-subdomain.workers.dev";
+let customerDatabase = [];
 let currentAnnualOpExAUD = 280435.00;
 let ANNUAL_CONTAINERS = 12;
 let currentOpExPerContainerAUD = currentAnnualOpExAUD / ANNUAL_CONTAINERS;
@@ -527,6 +529,47 @@ const translations = {
 };
 
 // --- HELPER & UTILITY FUNCTIONS ---
+async function loadCustomers() {
+    try {
+        const response = await fetch(WORKER_URL);
+        customerDatabase = await response.json();
+        
+        const select = document.getElementById('customerSelect');
+        customerDatabase.forEach((cust, index) => {
+            const option = document.createElement('option');
+            option.value = index; 
+            option.textContent = `${cust.name} (${cust.email})`;
+            select.appendChild(option);
+        });
+    } catch (error) {
+        console.error("Error loading customers:", error);
+    }
+}
+
+async function saveCustomerToGitHub() {
+    const newCustomer = {
+        name: document.getElementById('custName').value,
+        email: document.getElementById('custEmail').value,
+        address: document.getElementById('custAddress').value,
+        lastOrderVolume: document.getElementById('input-container-type').value
+    };
+
+    try {
+        const response = await fetch(WORKER_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(newCustomer)
+        });
+
+        if (response.ok) {
+            alert("Customer saved to database!");
+            loadCustomers();
+        }
+    } catch (error) {
+        console.error("Error saving customer:", error);
+    }
+}
+
 function getPcsPerCtn(specStr) {
     if (!specStr) return 1;
     const specText = typeof specStr === 'object' ? specStr.en : specStr;
@@ -1190,7 +1233,14 @@ async function exportPurchaseOrderPDF() {
     doc.text(`Attn: ${custContact}`, 17, startY + 18);
     doc.text(`Phone: ${custPhone}`, 17, startY + 23);
     doc.text(`Email: ${custEmail}`, 17, startY + 28);
-    doc.text(`Delivery: ${custAddress}`, 17, startY + 33);
+	// 1. Define the maximum width for the delivery text (adjust this number to fit your left box)
+    const maxAddressWidth = 85; 
+    
+    // 2. Break the long string into an array of smaller strings
+    const splitAddress = doc.splitTextToSize(`Delivery: ${custAddress}`, maxAddressWidth);
+    
+    // 3. Render the array (jsPDF will automatically print each array item on a new line)
+    doc.text(splitAddress, 17, startY + 33);
 
     // RIGHT BOX - TWO PARROTS
     doc.setFillColor(...lightGrey);
@@ -1356,6 +1406,11 @@ window.exportPurchaseOrderPDF = exportPurchaseOrderPDF;
 
 // --- INITIALIZATION ---
 document.addEventListener('DOMContentLoaded', () => {
+	const saveBtn = document.getElementById('saveCustomerBtn');
+	if (saveBtn) {
+		saveBtn.addEventListener('click', saveCustomerToGitHub);
+	}
+    // 1. Existing Password & Toggle Listeners
     const passwordForm = document.getElementById('password-form');
     if (passwordForm) passwordForm.addEventListener('submit', unlockPage);
 
@@ -1367,11 +1422,27 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById(`c${i}_toggle_input`)?.addEventListener('change', updateOpExFromInputs);
     });
 
+    // 2. Existing Calculation Listeners
     document.getElementById('input-container-type')?.addEventListener('change', handleContainerTypeChange);
     document.getElementById('input-fx')?.addEventListener('input', renderTable);
     document.getElementById('input-freight')?.addEventListener('input', renderTable);
     document.getElementById('input-margin')?.addEventListener('input', renderTable);
 
+    // 3. NEW: Customer Database Listener
+    const customerSelect = document.getElementById('customerSelect');
+    if (customerSelect) {
+        customerSelect.addEventListener('change', function(e) {
+            const selectedIndex = e.target.value;
+            if (selectedIndex !== "") {
+                const selectedCustomer = customerDatabase[selectedIndex];
+                document.getElementById('custEmail').value = selectedCustomer.email;
+                document.getElementById('custAddress').value = selectedCustomer.address;
+            }
+        });
+    }
+
+    // 4. Initial Data Fetches & Renders
     fetchLiveFxRate();
     updateOpExFromInputs();
+    loadCustomers(); // NEW: Fetch customer data on load
 });
