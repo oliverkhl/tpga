@@ -159,6 +159,15 @@
                                 <span>0468829988</span>
                             </p>
                         </div>
+						<div class="customer-select-wrapper">
+						<label for="customerSelect" class="section-label">
+							<i class="fas fa-users" style="color: #facc15;"></i> Select Customer
+						</label>
+							<select id="customerSelect" class="dark-input-select">
+								<option value="">-- Select a Customer to Auto-Fill --</option>
+								<!-- Options populated by JS -->
+							</select>
+						</div>
                     </div>
                 </div>
 
@@ -198,6 +207,9 @@
                                 <option value="30 Days Net" selected>Standard: 30 Days Net</option>
                             </select>
                             <i class="fa-solid fa-chevron-down absolute right-2.5 top-2 text-slate-500 text-[9px] pointer-events-none"></i>
+							<button id="saveCustomerBtn" class="save-cust-btn" type="button">
+							<i class="fas fa-save"></i> Save
+							</button>
                         </div>
                     </div>
                 </div>
