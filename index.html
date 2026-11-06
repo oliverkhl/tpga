@@ -6,11 +6,11 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="icon" type="image/png" href="images/favicon.png">
 		<style>
-			@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+			@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
-			/* --- [1] COLOR PALETTE SYSTEM (UNIFIED BRANDING) --- */
+			/* --- COLOR PALETTE SYSTEM (UPDATED TO Q1 STYLES) --- */
 			* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-			body { background: #FDFBF7; color: #1F2937; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+			body { background: #F4F5F7; color: #1E293B; font-family: 'Inter', sans-serif; overflow-x: hidden; }
 			a { text-decoration: none !important; }
 			ul { list-style: none !important; }
 
@@ -18,13 +18,13 @@
 			.page-view { display: none; }
 			.page-view.active-page { display: block; }
 
-			/* --- [2] HERITAGE ACKNOWLEDGMENT BAR --- */
+			/* --- HERITAGE ACKNOWLEDGMENT BAR --- */
 			.au-heritage-bar {
-				background: #1F2937;
+				background: #151f30;
 				color: #f1f5f9;
 				padding: 10px 0;
 				font-size: 0.85rem;
-				border-bottom: 2px solid #EA580C;
+				border-bottom: 2px solid #D4AF37;
 			}
 			.au-heritage-bar .main-container {
 				display: flex;
@@ -36,9 +36,9 @@
 			.flag-container { display: flex; align-items: center; gap: 10px; }
 			.flag-item { font-size: 1.3rem; line-height: 1; }
 			.state-badge {
-				background: #4B5563;
-				color: #F59E0B;
-				border: 1px solid #F59E0B;
+				background: #151f30;
+				color: #E6C655;
+				border: 1px solid #E6C655;
 				font-weight: 800;
 				font-size: 0.75rem;
 				padding: 2px 8px;
@@ -53,20 +53,20 @@
 				box-shadow: 0 1px 3px rgba(0,0,0,0.3);
 			}
 			.flag-top-black { position: absolute; top: 0; left: 0; width: 100%; height: 50%; background: #000000; }
-			.flag-bottom-red { position: absolute; bottom: 0; left: 0; width: 100%; height: 50%; background: #EA580C; }
+			.flag-bottom-red { position: absolute; bottom: 0; left: 0; width: 100%; height: 50%; background: #D4AF37; }
 			.flag-sun-yellow {
 				position: absolute; top: 50%; left: 50%;
 				transform: translate(-50%, -50%);
 				width: 8px; height: 8px;
-				background: #F59E0B; border-radius: 50%; z-index: 2;
+				background: #E6C655; border-radius: 50%; z-index: 2;
 			}
 			.country-ack { color: #cbd5e1; font-size: 0.8rem; font-weight: 500; }
 
-			/* --- [3] HEADER & NAVIGATION --- */
+			/* --- HEADER & NAVIGATION --- */
 			#header-fixed {
 				position: fixed; top: 0px; left: 0; width: 100%; height: 80px;
-				background: #ffffff; z-index: 10000;
-				border-bottom: 3px solid #4B5563; display: flex; align-items: center;
+				background: #1E293B; z-index: 10000;
+				border-bottom: 2px solid #D4AF37; display: flex; align-items: center;
 			}
 			.main-container { max-width: 1200px; width: 90%; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
 			.image-logo { display: flex; align-items: center; transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important; will-change: transform; cursor: pointer; }
@@ -74,16 +74,16 @@
 			.image-logo:hover { transform: scale(1.08) !important; }
 
 			:root {
-			  --orange-start: #f29100;
-			  --orange-end: #e25100;
+			  --gold-start: #E6C655;
+			  --gold-end: #D4AF37;
 			  --text-white: #ffffff;
-			  --bg-cream: #fdf8eb;
+			  --bg-slate: #1E293B;
 			}
 
-			header { background-color: var(--bg-cream) !important; }
+			header { background-color: var(--bg-slate) !important; }
 			.logo-text h1 {
 			  font-size: 1.8rem !important;
-			  background: linear-gradient(135deg, var(--orange-start), var(--orange-end)) !important;
+			  background: linear-gradient(135deg, var(--gold-start), var(--gold-end)) !important;
 			  -webkit-background-clip: text !important;
 			  -webkit-text-fill-color: transparent !important;
 			  text-transform: uppercase !important;
@@ -94,7 +94,7 @@
 			}
 			.logo-text span {
 			  font-size: 1rem !important;
-			  color: var(--orange-end) !important;
+			  color: var(--gold-end) !important;
 			  font-weight: 600 !important;
 			  display: block !important;
 			  margin-top: 2px !important;
@@ -102,7 +102,7 @@
 
 			#main-nav { display: flex; align-items: center; }
 			#main-nav a { 
-				color: #1F2937; font-weight: 600; text-decoration: none; 
+				color: #ffffff; font-weight: 600; text-decoration: none; 
 				margin-left: 15px; font-size: 0.95rem; padding: 10px 22px; 
 				border-radius: 50px; 
 				transition: 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
@@ -110,187 +110,187 @@
 			}
 			#main-nav a:hover { 
 				transform: translateY(-2px) scale(1.05) !important; 
-				background: #4B5563; color: #F59E0B !important; 
+				background: #151f30; color: #E6C655 !important; 
 			}
-			.active-link { background: #FAF3E0; color: #EA580C !important; border: 1px solid #EA580C; }
+			.active-link { background: rgba(212, 175, 55, 0.1); color: #D4AF37 !important; border: 1px solid #D4AF37; }
 
-			/* --- [4] HERO BANNERS --- */
+			/* --- HERO BANNERS --- */
 			#page-wrapper { padding-top: 80px; }
 			#hero-banner, .support-desk-hero, .products-hero-banner, .biosecurity-hero-banner, .inner-page-hero, .page-banner {
 				min-height: 400px; display: flex; align-items: center; 
-				color: #1F2937 !important; padding: 80px 0 !important;
-				background: linear-gradient(135deg, #FDFBF7 0%, #FAF3E0 50%, #F5E6CA 100%) !important;
+				color: #1E293B !important; padding: 80px 0 !important;
+				background: linear-gradient(135deg, #F4F5F7 0%, #E2E8F0 50%, #CBD5E1 100%) !important;
 			}
 			.hero-flex { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 60px; width: 100%; }
 			.hero-content h1, .products-hero-banner h1, .biosecurity-hero-banner h1, .inner-page-hero h1, .page-banner h1 { 
-				font-size: 2.8rem; line-height: 1.15; margin-bottom: 20px; font-weight: 800; color: #1F2937 !important; text-shadow: none !important;
+				font-size: 2.8rem; line-height: 1.15; margin-bottom: 20px; font-weight: 800; color: #1E293B !important; text-shadow: none !important;
 			}
 			.hero-slogan, .products-hero-banner p, .biosecurity-hero-banner p, .inner-page-hero p, .page-banner p { 
-				font-size: 1.15rem; color: #4B5563 !important; line-height: 1.6; margin-bottom: 40px; max-width: 680px; 
+				font-size: 1.15rem; color: #334155 !important; line-height: 1.6; margin-bottom: 40px; max-width: 680px; 
 			}
 			.badge { 
-				background: rgba(245, 158, 11, 0.15); color: #D97706; padding: 6px 16px; 
+				background: rgba(212, 175, 55, 0.15); color: #C59B27; padding: 6px 16px; 
 				border-radius: 50px; font-size: 0.85rem; font-weight: 800; text-transform: uppercase; 
-				margin-bottom: 20px; border: 1px solid #F59E0B; display: inline-block; 
+				margin-bottom: 20px; border: 1px solid #D4AF37; display: inline-block; 
 			}
 			.hero-btn.big-btn { 
 				display: inline-block; padding: 22px 60px; 
-				background: linear-gradient(135deg, #F59E0B 0%, #EA580C 100%); 
-				color: #ffffff !important; text-decoration: none; border-radius: 100px; 
+				background: linear-gradient(135deg, #E6C655 0%, #D4AF37 100%); 
+				color: #1E293B !important; text-decoration: none; border-radius: 100px; 
 				font-size: 1.6rem; font-weight: 800; 
 				transition: 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
-				will-change: transform; box-shadow: 0 10px 25px rgba(234, 88, 12, 0.3); cursor: pointer;
+				will-change: transform; box-shadow: 0 10px 25px rgba(212, 175, 55, 0.3); cursor: pointer;
 			}
 			.hero-btn:hover { 
-				background: #4B5563 !important; color: #ffffff !important; 
+				background: #151f30 !important; color: #ffffff !important; 
 				transform: translateY(-6px) scale(1.05) !important; 
-				box-shadow: 0 15px 35px rgba(75, 85, 99, 0.3); 
+				box-shadow: 0 15px 35px rgba(30, 41, 59, 0.3); 
 			}
 			.hero-image { flex: 0 0 45%; display: flex; justify-content: center; align-items: center; }
 			.hero-image img { 
 				max-width: 550px; width: 100%; height: auto; border-radius: 20px; 
-				box-shadow: 0 25px 50px rgba(0,0,0,0.08); border: 2px solid rgba(245, 158, 11, 0.3);
+				box-shadow: 0 25px 50px rgba(0,0,0,0.08); border: 2px solid rgba(212, 175, 55, 0.3);
 				transition: 0.6s cubic-bezier(0.165, 0.84, 0.44, 1) !important;
 			}
 			.hero-image img:hover { transform: scale(1.35) translateY(-8px) !important; }
 
-			/* --- [5] PRODUCT FILTERS & CARDS --- */
+			/* --- PRODUCT FILTERS & CARDS --- */
 			.filter-tab-container {
 				display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;
 				margin: 40px auto 20px auto; position: relative; z-index: 10; max-width: 1000px; padding: 0 20px;
 			}
 			.filter-btn {
-				background: #ffffff; color: #002147; border: 2px solid #002147;
+				background: #ffffff; color: #1E293B; border: 2px solid #1E293B;
 				padding: 12px 26px; border-radius: 50px; font-weight: 700; font-size: 0.95rem;
 				cursor: pointer; transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); box-shadow: 0 4px 15px rgba(0,0,0,0.05);
 			}
 			.filter-btn:hover, .filter-btn.active {
-				background: #C8102E; color: #ffffff; border-color: #C8102E;
-				transform: translateY(-3px); box-shadow: 0 8px 20px rgba(200, 16, 46, 0.3);
+				background: #D4AF37; color: #1E293B; border-color: #D4AF37;
+				transform: translateY(-3px); box-shadow: 0 8px 20px rgba(212, 175, 55, 0.3);
 			}
 			.product-card-modern {
 				background: #ffffff; border-radius: 24px; padding: 30px;
-				border: 1px solid rgba(0, 33, 71, 0.08); box-shadow: 0 10px 30px rgba(0, 33, 71, 0.05);
+				border: 1px solid rgba(30, 41, 59, 0.08); box-shadow: 0 10px 30px rgba(30, 41, 59, 0.05);
 				transition: all 0.4s ease; display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden;
 			}
-			.product-card-modern:hover { transform: translateY(-10px); box-shadow: 0 20px 45px rgba(0, 33, 71, 0.12); border-color: #FFCC00; }
+			.product-card-modern:hover { transform: translateY(-10px); box-shadow: 0 20px 45px rgba(30, 41, 59, 0.12); border-color: #D4AF37; }
 			.card-badge {
-				position: absolute; top: 15px; right: 15px; background: #f1f5f9; color: #002147;
+				position: absolute; top: 15px; right: 15px; background: #f1f5f9; color: #1E293B;
 				font-size: 0.75rem; font-weight: 800; padding: 4px 12px; border-radius: 50px; text-transform: uppercase; letter-spacing: 0.5px;
 			}
-			.card-badge.gold { background: #fffbe6; color: #b45309; border: 1px solid #fde68a; }
+			.card-badge.gold { background: #fffbe6; color: #9B7817; border: 1px solid #E6C655; }
 			.product-icon-box {
 				width: 80px; height: 80px; border-radius: 20px; background: #f8fafc;
-				display: flex; align-items: center; justify-content: center; font-size: 2.8rem; margin-bottom: 20px; border: 1px solid rgba(0, 33, 71, 0.05);
+				display: flex; align-items: center; justify-content: center; font-size: 2.8rem; margin-bottom: 20px; border: 1px solid rgba(30, 41, 59, 0.05);
 			}
 			.product-icon-box img { height: 90px; width: auto; transition: 0.3s ease; }
 			.product-icon-box img:hover { transform: scale(1.1) translateY(-4px) !important; }
-			.product-title { font-size: 1.35rem; font-weight: 800; color: #002147; margin-bottom: 8px; }
+			.product-title { font-size: 1.35rem; font-weight: 800; color: #1E293B; margin-bottom: 8px; }
 			.product-specs-list { margin: 15px 0; font-size: 0.9rem; color: #475569; line-height: 1.6; }
 			.product-specs-list li { margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
-			.price-tag { font-size: 1.25rem; font-weight: 800; color: #C8102E; margin-top: 10px; }
+			.price-tag { font-size: 1.25rem; font-weight: 800; color: #D4AF37; margin-top: 10px; }
 			.quote-btn-small {
-				display: block; width: 100%; text-align: center; padding: 12px; background: #002147;
+				display: block; width: 100%; text-align: center; padding: 12px; background: #1E293B;
 				color: #ffffff !important; border-radius: 50px; font-weight: 700; font-size: 0.9rem; margin-top: 15px; transition: 0.3s ease; cursor: pointer;
 			}
-			.quote-btn-small:hover { background: #C8102E; transform: scale(1.02); }
+			.quote-btn-small:hover { background: #D4AF37; color: #1E293B !important; transform: scale(1.02); }
 
-			/* --- [6] LOGO SLIDER --- */
+			/* --- LOGO SLIDER --- */
 			.logo-slider { background: #ffffff; padding: 35px 0; overflow: hidden; border-bottom: 1px solid #e2e8f0; white-space: nowrap; }
 			.slider-track { display: flex; align-items: center; animation: scroll 40s linear infinite; width: max-content; }
 			.logo-slider:hover .slider-track { animation-play-state: paused; }
 			.text-logo { font-size: 1.8rem; font-weight: 800; margin: 0 50px; transition: 0.4s; display: inline-block; opacity: 0.7; }
 			.text-logo:hover { opacity: 1; transform: scale(1.15); }
-			.unifi { color: #4B5563 !important; } 
-			.cisco { color: #EA580C !important; letter-spacing: 2px; border-top: 3px solid #EA580C; }
-			.sophos { color: #F59E0B !important; font-style: italic; background: #1F2937; padding: 2px 8px; border-radius: 4px; }
-			.draytek { color: #4B5563 !important; font-weight: 700; }
-			.tplink { color: #EA580C !important; text-transform: lowercase; }
-			.netgear { color: #F59E0B !important; font-weight: 800; background: #111827; padding: 2px 8px; }
-			.telstra { color: #4B5563 !important; font-style: italic; }
+			.unifi { color: #1E293B !important; } 
+			.cisco { color: #D4AF37 !important; letter-spacing: 2px; border-top: 3px solid #D4AF37; }
+			.sophos { color: #E6C655 !important; font-style: italic; background: #151f30; padding: 2px 8px; border-radius: 4px; }
+			.draytek { color: #1E293B !important; font-weight: 700; }
+			.tplink { color: #D4AF37 !important; text-transform: lowercase; }
+			.netgear { color: #E6C655 !important; font-weight: 800; background: #1E293B; padding: 2px 8px; }
+			.telstra { color: #1E293B !important; font-style: italic; }
 			@keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
-			/* --- [7] SERVICE & ABOUT CARDS --- */
-			.services-section { padding: 80px 0; background: #FDFBF7; }
+			/* --- SERVICE & ABOUT CARDS --- */
+			.services-section { padding: 80px 0; background: #F4F5F7; }
 			.services-grid { display: grid; grid-template-columns: 1fr; gap: 30px; width: 90%; max-width: 1200px; margin: 0 auto; }
 			.service-card { 
 				background: #ffffff; border-radius: 35px; padding: 40px 30px; text-align: center; 
-				border: 1px solid rgba(75, 85, 99, 0.1); box-shadow: 0 15px 40px rgba(0, 0, 0, 0.03); 
+				border: 1px solid rgba(30, 41, 59, 0.1); box-shadow: 0 15px 40px rgba(0, 0, 0, 0.03); 
 				transition: 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); position: relative; overflow: hidden;
 			}
 			.card-icon-wrapper { 
 				font-size: 4rem; margin: 0 auto 20px auto; display: flex; align-items: center; justify-content: center;
-				background: #FAF3E0; width: 100px; height: 100px; border-radius: 24px; transition: 0.4s ease;
-				border: 1px solid rgba(234, 88, 12, 0.2);
+				background: rgba(212, 175, 55, 0.1); width: 100px; height: 100px; border-radius: 24px; transition: 0.4s ease;
+				border: 1px solid rgba(212, 175, 55, 0.2);
 			}
 			.card-icon-wrapper img { height: 70px; width: auto; pointer-events: none; }
-			.service-card h4 { font-size: 1.4rem; font-weight: 800; margin-bottom: 15px; color: #1F2937; }
-			.service-card p { font-size: 1rem; line-height: 1.6; color: #4B5563; }
-			.service-card:hover { transform: translateY(-10px); border-color: #EA580C; box-shadow: 0 30px 60px rgba(234, 88, 12, 0.12); }
+			.service-card h4 { font-size: 1.4rem; font-weight: 800; margin-bottom: 15px; color: #1E293B; }
+			.service-card p { font-size: 1rem; line-height: 1.6; color: #334155; }
+			.service-card:hover { transform: translateY(-10px); border-color: #D4AF37; box-shadow: 0 30px 60px rgba(212, 175, 55, 0.12); }
 
 			.team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 25px; margin-top: 30px; }
-			.team-card { background: #ffffff; padding: 35px 25px; border-radius: 20px; border: 1px solid rgba(0, 33, 71, 0.08); text-align: center; box-shadow: 0 10px 25px rgba(0,33,71,0.04); transition: 0.3s ease; }
-			.team-card:hover { transform: translateY(-5px); border-color: #C8102E; box-shadow: 0 15px 35px rgba(200,16,46,0.1); }
-			.au-executive-card { background: #ffffff; padding: 40px 30px; border-radius: 24px; border: 1px solid rgba(0, 33, 71, 0.12); text-align: center; box-shadow: 0 12px 30px rgba(0,33,71,0.06); transition: 0.3s ease; }
-			.au-executive-card:hover { transform: translateY(-6px); border-color: #FFCC00; box-shadow: 0 18px 40px rgba(0, 33, 71, 0.15); }
-			.testimonial-card { background: linear-gradient(135deg, #002147 0%, #00152e 100%); color: #ffffff; padding: 50px 40px; border-radius: 30px; margin-top: 50px; text-align: center; border: 1px solid rgba(255,204,0,0.3); box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
+			.team-card { background: #ffffff; padding: 35px 25px; border-radius: 20px; border: 1px solid rgba(30, 41, 59, 0.08); text-align: center; box-shadow: 0 10px 25px rgba(30, 41, 59,0.04); transition: 0.3s ease; }
+			.team-card:hover { transform: translateY(-5px); border-color: #D4AF37; box-shadow: 0 15px 35px rgba(212, 175, 55, 0.1); }
+			.au-executive-card { background: #ffffff; padding: 40px 30px; border-radius: 24px; border: 1px solid rgba(30, 41, 59, 0.12); text-align: center; box-shadow: 0 12px 30px rgba(30, 41, 59,0.06); transition: 0.3s ease; }
+			.au-executive-card:hover { transform: translateY(-6px); border-color: #E6C655; box-shadow: 0 18px 40px rgba(30, 41, 59, 0.15); }
+			.testimonial-card { background: linear-gradient(135deg, #1E293B 0%, #151f30 100%); color: #ffffff; padding: 50px 40px; border-radius: 30px; margin-top: 50px; text-align: center; border: 1px solid rgba(212, 175, 55, 0.3); box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
 			.about-profile-card { background: #ffffff; padding: 30px; border-radius: 24px; border: 1px solid #e2e8f0; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
 			.profile-icon { display: flex; justify-content: center; align-items: center; gap: 10px; margin-bottom: 15px; }
 			.profile-icon img { height: 80px; width: auto; }
 			.profile-divider { height: 2px; background: #e2e8f0; margin: 15px 0; }
 			.profile-stats { text-align: left; font-size: 0.9rem; line-height: 1.8; color: #475569; }
-			.profile-stats span { font-weight: 700; color: #002147; }
+			.profile-stats span { font-weight: 700; color: #1E293B; }
 
-			/* --- [8] BIOSECURITY TABLE & CARDS --- */
-			.qa-section-title { font-size: 2rem; color: #002147; margin-bottom: 25px; font-weight: 800; }
-			.qa-card-modern { background: #ffffff; border-radius: 24px; padding: 40px; border: 1px solid rgba(0, 33, 71, 0.08); box-shadow: 0 10px 30px rgba(0, 33, 71, 0.05); transition: all 0.4s ease; }
-			.qa-card-modern:hover { transform: translateY(-5px); box-shadow: 0 20px 45px rgba(0, 33, 71, 0.1); border-color: #C8102E; }
-			.qa-badge { display: inline-block; background: #fffbe6; color: #b45309; border: 1px solid #fde68a; font-size: 0.8rem; font-weight: 800; padding: 6px 14px; border-radius: 50px; text-transform: uppercase; margin-bottom: 15px; }
+			/* --- BIOSECURITY TABLE & CARDS --- */
+			.qa-section-title { font-size: 2rem; color: #1E293B; margin-bottom: 25px; font-weight: 800; }
+			.qa-card-modern { background: #ffffff; border-radius: 24px; padding: 40px; border: 1px solid rgba(30, 41, 59, 0.08); box-shadow: 0 10px 30px rgba(30, 41, 59, 0.05); transition: all 0.4s ease; }
+			.qa-card-modern:hover { transform: translateY(-5px); box-shadow: 0 20px 45px rgba(30, 41, 59, 0.1); border-color: #D4AF37; }
+			.qa-badge { display: inline-block; background: #fffbe6; color: #9B7817; border: 1px solid #E6C655; font-size: 0.8rem; font-weight: 800; padding: 6px 14px; border-radius: 50px; text-transform: uppercase; margin-bottom: 15px; }
 			.spec-table { width: 100%; border-collapse: collapse; margin-top: 20px; background: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.04); }
 			.spec-table th, .spec-table td { padding: 16px 20px; text-align: left; border-bottom: 1px solid #e2e8f0; }
-			.spec-table th { background: #002147; color: #ffffff; font-weight: 700; }
+			.spec-table th { background: #1E293B; color: #ffffff; font-weight: 700; }
 			.spec-table tr:hover { background: #f8fafc; }
 
-			/* --- [9] CONTACT FORM & ACTION ROW --- */
+			/* --- CONTACT FORM & ACTION ROW --- */
 			.hero-action-row { display: flex; flex-wrap: wrap; gap: 15px; margin-top: 35px; }
 			.action-btn {
 				display: flex; align-items: center; gap: 12px; padding: 12px 20px; border-radius: 16px;
-				background: rgba(255, 255, 255, 0.7); border: 1px solid rgba(107, 114, 128, 0.2); color: #1F2937 !important;
+				background: rgba(255, 255, 255, 0.7); border: 1px solid rgba(107, 114, 128, 0.2); color: #1E293B !important;
 				transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); backdrop-filter: blur(10px); cursor: pointer;
 			}
-			.action-btn:hover { transform: translateY(-4px); background: #EA580C; border-color: #EA580C; box-shadow: 0 10px 25px rgba(234, 88, 12, 0.25); }
-			.action-btn:hover .btn-text small, .action-btn:hover .btn-text strong { color: #ffffff !important; }
+			.action-btn:hover { transform: translateY(-4px); background: #1E293B; border-color: #1E293B; box-shadow: 0 10px 25px rgba(30, 41, 59, 0.25); }
+			.action-btn:hover .btn-text small, .action-btn:hover .btn-text strong { color: #D4AF37 !important; }
 			.btn-icon { font-size: 1.5rem; }
 			.btn-text { display: flex; flex-direction: column; text-align: left; }
 			.btn-text small { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.5px; color: #6B7280; }
-			.btn-text strong { font-size: 0.95rem; font-weight: 800; color: #1F2937; }
-			.glass-form-container { flex: 0 0 460px; max-width: 100%; background: #ffffff; border: 1px solid rgba(75, 85, 99, 0.1); padding: 40px; border-radius: 28px; box-shadow: 0 25px 60px rgba(0, 0, 0, 0.08); }
-			.support-form-modern h3 { color: #1F2937; font-size: 1.6rem; font-weight: 800; margin-bottom: 4px; text-align: left; }
+			.btn-text strong { font-size: 0.95rem; font-weight: 800; color: #1E293B; }
+			.glass-form-container { flex: 0 0 460px; max-width: 100%; background: #ffffff; border: 1px solid rgba(30, 41, 59, 0.1); padding: 40px; border-radius: 28px; box-shadow: 0 25px 60px rgba(0, 0, 0, 0.08); }
+			.support-form-modern h3 { color: #1E293B; font-size: 1.6rem; font-weight: 800; margin-bottom: 4px; text-align: left; }
 			.form-subtext { color: #6B7280; font-size: 0.88rem; margin-bottom: 25px; text-align: left; }
 			.form-group { margin-bottom: 18px; text-align: left; }
-			.form-group label { display: block; font-size: 0.8rem; font-weight: 700; color: #1F2937; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+			.form-group label { display: block; font-size: 0.8rem; font-weight: 700; color: #1E293B; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
 			.form-group input, .form-group select {
 				width: 100%; padding: 14px 18px; border-radius: 12px; border: 1.5px solid #cbd5e1;
-				background: #FDFBF7; font-size: 0.95rem; color: #0f172a; outline: none; transition: all 0.3s ease; font-family: inherit;
+				background: #F4F5F7; font-size: 0.95rem; color: #0f172a; outline: none; transition: all 0.3s ease; font-family: inherit;
 			}
-			.form-group input:focus, .form-group select:focus { border-color: #EA580C; background: #ffffff; box-shadow: 0 0 0 4px rgba(234, 88, 12, 0.1); }
+			.form-group input:focus, .form-group select:focus { border-color: #D4AF37; background: #ffffff; box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1); }
 			.submit-btn-glow {
 				width: 100%; padding: 18px; margin-top: 10px; border: none; border-radius: 50px;
-				background: linear-gradient(135deg, #F59E0B 0%, #EA580C 100%); color: #ffffff !important;
-				font-size: 1.05rem; font-weight: 800; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 10px 25px rgba(234, 88, 12, 0.3);
+				background: linear-gradient(135deg, #E6C655 0%, #D4AF37 100%); color: #1E293B !important;
+				font-size: 1.05rem; font-weight: 800; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 10px 25px rgba(212, 175, 55, 0.3);
 			}
-			.submit-btn-glow:hover { background: #4B5563; color: #ffffff !important; transform: translateY(-2px); box-shadow: 0 15px 30px rgba(75, 85, 99, 0.3); }
+			.submit-btn-glow:hover { background: #151f30; color: #ffffff !important; transform: translateY(-2px); box-shadow: 0 15px 30px rgba(30, 41, 59, 0.3); }
 
-			/* --- [10] FOOTER --- */
-			#modern-footer { background: #1F2937; color: #cbd5e1; padding: 60px 0 30px 0; border-top: 4px solid #EA580C; }
+			/* --- FOOTER --- */
+			#modern-footer { background: #151f30; color: #cbd5e1; padding: 60px 0 30px 0; border-top: 4px solid #D4AF37; }
 			.footer-grid { display: grid; grid-template-columns: 1fr; gap: 40px; }
 			.footer-logo { height: 80px; margin-bottom: 20px; }
 			.footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 25px; margin-top: 30px; text-align: center; font-size: 0.8rem; color: #94a3b8; }
-			.footer-col h4 { color: #F59E0B; margin-bottom: 20px; }
+			.footer-col h4 { color: #E6C655; margin-bottom: 20px; }
 			.footer-col a { color: #cbd5e1 !important; transition: 0.3s; display: inline-block; cursor: pointer; }
-			.footer-col a:hover { color: #F59E0B !important; transform: translateX(5px); }
+			.footer-col a:hover { color: #E6C655 !important; transform: translateX(5px); }
 
-			/* --- [11] RESPONSIVE BREAKPOINTS --- */
+			/* --- RESPONSIVE BREAKPOINTS --- */
 			@media screen and (min-width: 981px) {
 				.hero-flex { flex-direction: row; text-align: left; justify-content: space-between; gap: 10px; }
 				.hero-content { flex: 0 0 55%; }
@@ -303,10 +303,10 @@
 				#header-fixed { top: 0px; }
 				#page-wrapper { padding-top: 10px; }
 				.menu-toggle { display: flex; flex-direction: column; justify-content: space-between; width: 30px; height: 21px; background: transparent; border: none; z-index: 10001; cursor: pointer; }
-				.menu-toggle .bar { width: 100%; height: 3px; background-color: #1F2937; border-radius: 10px; transition: 0.3s; }
-				#main-nav { position: fixed; top: 80px; left: 0; width: 100%; background: #ffffff; flex-direction: column; display: none; z-index: 9999; border-bottom: 2px solid #e2e8f0; }
+				.menu-toggle .bar { width: 100%; height: 3px; background-color: #ffffff; border-radius: 10px; transition: 0.3s; }
+				#main-nav { position: fixed; top: 80px; left: 0; width: 100%; background: #1E293B; flex-direction: column; display: none; z-index: 9999; border-bottom: 2px solid #D4AF37; }
 				#main-nav.is-open { display: flex !important; }
-				#main-nav a { width: 100%; text-align: center; margin: 0; border-bottom: 1px solid #f1f5f9; padding: 15px 0; border-radius: 0; }
+				#main-nav a { width: 100%; text-align: center; margin: 0; border-bottom: 1px solid #151f30; padding: 15px 0; border-radius: 0; }
 				.glass-form-container { width: 100%; flex: 1 1 auto; padding: 30px 20px; }
 				.hero-action-row { justify-content: center; }
 				.spec-table { display: block; overflow-x: auto; }
@@ -437,7 +437,7 @@
 			<!-- ==========================================
 				 2. PRODUCTS VIEW
 			========================================== -->
-<main id="view-products" class="page-view">
+			<main id="view-products" class="page-view">
 				<section id="hero-banner">
 					<div class="main-container">
 						<div class="hero-flex">
@@ -458,251 +458,533 @@
 					<button class="filter-btn" onclick="filterProducts(event, 'flours')">🌾 Agricultural Flours</button>
 					<button class="filter-btn" onclick="filterProducts(event, 'bulk-pepper')">🌿 Bulk Industrial Pepper</button>
 					<button class="filter-btn" onclick="filterProducts(event, 'retail-pepper')">🫙 Retail Canisters</button>
+					<button class="filter-btn" onclick="filterProducts(event, 'new-releases')">🚀 New Releases (Nov 2026)</button>
 				</div>
 
 				<section class="services-section" style="padding-top: 20px;">
 					<div class="main-container">
 						<div class="services-grid" id="product-grid">
 							
-							<!-- === FLOURS === -->
+							<!-- ==========================================
+								 AGRICULTURAL FLOURS (Items 1-7)
+							========================================== -->
 							<div class="product-card-modern" data-category="flours">
-								<span class="card-badge gold">Retail Pack</span>
+								<span class="card-badge gold">20 PCS / CARTON</span>
 								<div>
-									<div class="product-icon-box"><img src="images/p-01.png" alt="Finest Rice Flour"></div>
+									<div class="product-icon-box"><img src="images/P1.png" alt="Finest Rice Flour"></div>
 									<h3 class="product-title">Finest Rice Flour (500g)</h3>
 									<ul class="product-specs-list">
-										<li>📦 <strong>Packaging:</strong> 20 Pkgs (10kg) / Box</li>
-										<li>✨ Fine-milled, pure Cambodian rice starch</li>
-										<li>🌾 Ideal for gluten-free baking & CPG manufacturing</li>
+										<li>📦 <strong>Package:</strong> 20 Pcs (10Kg) / Carton</li>
+										<li>✨ 100% Rice | Fine powder | White color</li>
+										<li>🛒 Moisture ≤ 12% | Shelf Life: 2 years</li>
 									</ul>
 								</div>
 								<div>
-									<div class="price-tag">AUD $--.-- <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ Box</span></div>
+									<div class="price-tag">AUD $2.18 <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ pc</span></div>
 									<a onclick="navigateTo('contact')" class="quote-btn-small">Request Wholesale Sample</a>
 								</div>
 							</div>
 
 							<div class="product-card-modern" data-category="flours">
-								<span class="card-badge gold">Retail Pack</span>
+								<span class="card-badge gold">20 PCS / CARTON</span>
 								<div>
-									<div class="product-icon-box"><img src="images/p-02.png" alt="Glutinous Rice Flour"></div>
+									<div class="product-icon-box"><img src="images/P2.png" alt="Glutinous Rice Flour"></div>
 									<h3 class="product-title">Glutinous Rice Flour (500g)</h3>
 									<ul class="product-specs-list">
-										<li>📦 <strong>Packaging:</strong> 20 Pkgs (10kg) / Box</li>
-										<li>✨ Premium high-sticky starch formulation</li>
-										<li>🥟 Essential for Asian bakery & dumplings</li>
+										<li>📦 <strong>Package:</strong> 20 Pcs (10Kg) / Carton</li>
+										<li>✨ 100% Glutinous Rice | Fine powder</li>
+										<li>🛒 Moisture ≤ 12% | Shelf Life: 2 years</li>
 									</ul>
 								</div>
 								<div>
-									<div class="price-tag">AUD $--.-- <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ Box</span></div>
+									<div class="price-tag">AUD $2.82 <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ pc</span></div>
 									<a onclick="navigateTo('contact')" class="quote-btn-small">Request Wholesale Sample</a>
 								</div>
 							</div>
 
 							<div class="product-card-modern" data-category="flours">
-								<span class="card-badge">Industrial & Retail</span>
+								<span class="card-badge gold">20 PCS / CARTON</span>
 								<div>
-									<div class="product-icon-box"><img src="images/p-03.png" alt="Tapioca Flour"></div>
+									<div class="product-icon-box"><img src="images/P3.png" alt="Tapioca Flour"></div>
 									<h3 class="product-title">Tapioca Flour (500g)</h3>
 									<ul class="product-specs-list">
-										<li>📦 <strong>Packaging:</strong> 20 Pkgs (10kg) / Box</li>
-										<li>✨ High-clarity native tapioca starch</li>
-										<li>🧪 Perfect thickener for commercial kitchens</li>
+										<li>📦 <strong>Package:</strong> 20 Pcs (10Kg) / Carton</li>
+										<li>✨ 100% Tapioca Starch | Bright white</li>
+										<li>🛒 Moisture ≤ 12% | Shelf Life: 2 years</li>
 									</ul>
 								</div>
 								<div>
-									<div class="price-tag">AUD $--.-- <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ Box</span></div>
+									<div class="price-tag">AUD $2.40 <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ pc</span></div>
 									<a onclick="navigateTo('contact')" class="quote-btn-small">Request Wholesale Sample</a>
 								</div>
 							</div>
 
 							<div class="product-card-modern" data-category="flours">
-								<span class="card-badge gold">Pre-Mix</span>
+								<span class="card-badge gold">20 PCS / CARTON</span>
 								<div>
-									<div class="product-icon-box"><img src="images/p-04.png" alt="Specialty Pancake Flour"></div>
-									<h3 class="product-title">Specialty Pancake Flour (500g)</h3>
+									<div class="product-icon-box"><img src="images/P4.png" alt="Pancake Flour"></div>
+									<h3 class="product-title">Pancake Flour (500g)</h3>
 									<ul class="product-specs-list">
-										<li>📦 <strong>Packaging:</strong> 20 Pkgs (10kg) / Box</li>
-										<li>✨ Authentic Cambodian recipe pre-mix</li>
-										<li>🍳 Fast-prep for foodservice & grocery</li>
+										<li>📦 <strong>Package:</strong> 20 Pcs (10Kg) / Carton</li>
+										<li>✨ Rice, wheat, tapioca, coconut & turmeric</li>
+										<li>🛒 Moisture ≤ 12% | Shelf Life: 2 years</li>
 									</ul>
 								</div>
 								<div>
-									<div class="price-tag">AUD $--.-- <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ Box</span></div>
+									<div class="price-tag">AUD $3.73 <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ pc</span></div>
 									<a onclick="navigateTo('contact')" class="quote-btn-small">Request Wholesale Sample</a>
 								</div>
 							</div>
 
 							<div class="product-card-modern" data-category="flours">
-								<span class="card-badge gold">Popular</span>
+								<span class="card-badge gold">10 PCS / CARTON</span>
 								<div>
-									<div class="product-icon-box"><img src="images/p-05.png" alt="Crispy Tempura Flour"></div>
-									<h3 class="product-title">Crispy Tempura Flour</h3>
+									<div class="product-icon-box"><img src="images/P5.png" alt="Crispy Tempura Flour 1000g"></div>
+									<h3 class="product-title">Crispy Tempura Flour (1000g)</h3>
 									<ul class="product-specs-list">
-										<li>📦 <strong>Formats:</strong> 1000g (10kg/Box) & 150g (60 pcs/Box)</li>
-										<li>✨ High-crunch batter for seafood & veggies</li>
-										<li>🥢 Formulated for restaurant hospitality</li>
+										<li>📦 <strong>Package:</strong> 10 Pcs (10Kg) / Carton</li>
+										<li>✨ Rice, wheat, tapioca flour & baking powder</li>
+										<li>🛒 Moisture ≤ 10% | Shelf Life: 2 years</li>
 									</ul>
 								</div>
 								<div>
-									<div class="price-tag">AUD $--.-- <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ Box</span></div>
+									<div class="price-tag">AUD $5.90 <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ pc</span></div>
 									<a onclick="navigateTo('contact')" class="quote-btn-small">Request Wholesale Sample</a>
 								</div>
 							</div>
 
 							<div class="product-card-modern" data-category="flours">
-								<span class="card-badge gold">Specialty</span>
+								<span class="card-badge gold">60 PCS / CARTON</span>
 								<div>
-									<div class="product-icon-box"><img src="images/p-06.png" alt="Fried Banana Flour"></div>
+									<div class="product-icon-box"><img src="images/P6.png" alt="Crispy Tempura Flour 150g"></div>
+									<h3 class="product-title">Crispy Tempura Flour (150g)</h3>
+									<ul class="product-specs-list">
+										<li>📦 <strong>Package:</strong> 6 bags × 10 Pcs (60 Pcs) / Carton</li>
+										<li>✨ Fine powder | White to pale cream</li>
+										<li>🛒 Moisture ≤ 10% | Shelf Life: 2 years</li>
+									</ul>
+								</div>
+								<div>
+									<div class="price-tag">AUD $1.50 <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ pc</span></div>
+									<a onclick="navigateTo('contact')" class="quote-btn-small">Request Wholesale Sample</a>
+								</div>
+							</div>
+
+							<div class="product-card-modern" data-category="flours">
+								<span class="card-badge gold">20 PCS / CARTON</span>
+								<div>
+									<div class="product-icon-box"><img src="images/P7.png" alt="Fried Banana Flour"></div>
 									<h3 class="product-title">Fried Banana Flour (500g)</h3>
 									<ul class="product-specs-list">
-										<li>📦 <strong>Packaging:</strong> 20 Pkgs (10kg) / Box</li>
-										<li>✨ Traditional crispy dessert batter mix</li>
-										<li>🍨 High margin retail & street-food favorite</li>
+										<li>📦 <strong>Package:</strong> 20 Pcs (10Kg) / Carton</li>
+										<li>✨ Rice, wheat, tapioca, sesame & coconut</li>
+										<li>🛒 Moisture ≤ 12% | Shelf Life: 2 years</li>
 									</ul>
 								</div>
 								<div>
-									<div class="price-tag">AUD $--.-- <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ Box</span></div>
+									<div class="price-tag">AUD $5.73 <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ pc</span></div>
 									<a onclick="navigateTo('contact')" class="quote-btn-small">Request Wholesale Sample</a>
 								</div>
 							</div>
 
-							<!-- === BULK PEPPER === -->
-							<div class="product-card-modern" data-category="bulk-pepper">
-								<span class="card-badge">10kg Bulk Box</span>
-								<div>
-									<div class="product-icon-box"><img src="images/p-07.png" alt="Whole Black Pepper"></div>
-									<h3 class="product-title">Whole Black Pepper (1000g/500g)</h3>
-									<ul class="product-specs-list">
-										<li>🔬 <strong>Specs:</strong> Density 550 g/l | Size ≥ 4mm</li>
-										<li>💨 Steam-sterilized round peppercorns</li>
-										<li>⚙️ Moisture ≤ 12% | Foreign Matter 0.00%</li>
-									</ul>
-								</div>
-								<div>
-									<div class="price-tag">AUD $--.-- <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ 10kg Box</span></div>
-									<a onclick="navigateTo('contact')" class="quote-btn-small">Request Bulk Spec Sheet</a>
-								</div>
-							</div>
-
-							<div class="product-card-modern" data-category="bulk-pepper">
-								<span class="card-badge">10kg Bulk Box</span>
-								<div>
-									<div class="product-icon-box"><img src="images/p-08.png" alt="Crushed Black Pepper"></div>
-									<h3 class="product-title">Crushed Black Pepper</h3>
-									<ul class="product-specs-list">
-										<li>🔬 <strong>Specs:</strong> 10–20 Mesh Granulation</li>
-										<li>🥩 Perfect coarse cut for meat rubs & sauces</li>
-										<li>⚙️ Steam sterilized & sorted</li>
-									</ul>
-								</div>
-								<div>
-									<div class="price-tag">AUD $--.-- <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ 10kg Box</span></div>
-									<a onclick="navigateTo('contact')" class="quote-btn-small">Request Bulk Spec Sheet</a>
-								</div>
-							</div>
-
-							<div class="product-card-modern" data-category="bulk-pepper">
-								<span class="card-badge">10kg Bulk Box</span>
-								<div>
-									<div class="product-icon-box"><img src="images/p-09.png" alt="Ground Black Pepper"></div>
-									<h3 class="product-title">Ground Black Pepper (40 Mesh)</h3>
-									<ul class="product-specs-list">
-										<li>🔬 <strong>Specs:</strong> 40 Fine Mesh Granulation</li>
-										<li>🏭 Industrial grade for commercial formulations</li>
-										<li>⚙️ Steam sterilized | Moisture ≤ 12%</li>
-									</ul>
-								</div>
-								<div>
-									<div class="price-tag">AUD $--.-- <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ 10kg Box</span></div>
-									<a onclick="navigateTo('contact')" class="quote-btn-small">Request Bulk Spec Sheet</a>
-								</div>
-							</div>
-
-							<div class="product-card-modern" data-category="bulk-pepper">
-								<span class="card-badge">10kg Bulk Box</span>
-								<div>
-									<div class="product-icon-box"><img src="images/p-10.png" alt="Whole White Pepper"></div>
-									<h3 class="product-title">Whole White Pepper (1000g/500g)</h3>
-									<ul class="product-specs-list">
-										<li>🔬 <strong>Specs:</strong> High Density 630 g/l | Size ≥ 4mm</li>
-										<li>✨ Clean aroma & high volatile oil content</li>
-										<li>⚙️ Steam sterilized whole peppercorns</li>
-									</ul>
-								</div>
-								<div>
-									<div class="price-tag">AUD $--.-- <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ 10kg Box</span></div>
-									<a onclick="navigateTo('contact')" class="quote-btn-small">Request Bulk Spec Sheet</a>
-								</div>
-							</div>
-
-							<div class="product-card-modern" data-category="bulk-pepper">
-								<span class="card-badge">10kg Bulk Box</span>
-								<div>
-									<div class="product-icon-box"><img src="images/p-11.png" alt="Ground White Pepper"></div>
-									<h3 class="product-title">Ground White Pepper (60 Mesh)</h3>
-									<ul class="product-specs-list">
-										<li>🔬 <strong>Specs:</strong> 60 Micro Mesh Fine Powder</li>
-										<li>🍲 Tailored for white sauces & fine cuisine</li>
-										<li>⚙️ Steam sterilized | Moisture ≤ 12%</li>
-									</ul>
-								</div>
-								<div>
-									<div class="price-tag">AUD $--.-- <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ 10kg Box</span></div>
-									<a onclick="navigateTo('contact')" class="quote-btn-small">Request Bulk Spec Sheet</a>
-								</div>
-							</div>
-
-							<!-- === RETAIL PEPPER CANISTERS === -->
+							<!-- ==========================================
+								 RETAIL PEPPER CANISTERS
+							========================================== -->
 							<div class="product-card-modern" data-category="retail-pepper">
-								<span class="card-badge gold">24 Cans / Box</span>
+								<span class="card-badge gold">20 CANS / BOX</span>
 								<div>
-									<div class="product-icon-box"><img src="images/p-12.png" alt="Fine Ground Black Pepper"></div>
+									<div class="product-icon-box"><img src="images/P9.png" alt="Fine Ground Black Pepper 80g"></div>
 									<h3 class="product-title">Fine Ground Black Pepper (80g)</h3>
 									<ul class="product-specs-list">
-										<li>📦 <strong>Package:</strong> 24 Cans / Outer Box</li>
+										<li>📦 <strong>Package:</strong> 20 Cans / Carton</li>
+										<li>✨ 40 Mesh fine ground in display canisters</li>
+										<li>🛒 Moisture ≤ 12% | Steam Sterilized</li>
+									</ul>
+								</div>
+								<div>
+									<div class="price-tag">AUD $5.25 <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ can</span></div>
+									<a onclick="navigateTo('contact')" class="quote-btn-small">Request Retail Sample</a>
+								</div>
+							</div>
+
+							<div class="product-card-modern" data-category="retail-pepper">
+								<span class="card-badge gold">20 CANS / BOX</span>
+								<div>
+									<div class="product-icon-box"><img src="images/P10.png" alt="Coarse Ground Black Pepper 80g"></div>
+									<h3 class="product-title">Coarse Ground Black Pepper (80g)</h3>
+									<ul class="product-specs-list">
+										<li>📦 <strong>Package:</strong> 20 Cans / Carton</li>
+										<li>✨ 10-20 Mesh coarse ground in display canisters</li>
+										<li>🛒 Moisture ≤ 12% | Steam Sterilized</li>
+									</ul>
+								</div>
+								<div>
+									<div class="price-tag">AUD $5.25 <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ can</span></div>
+									<a onclick="navigateTo('contact')" class="quote-btn-small">Request Retail Sample</a>
+								</div>
+							</div>
+
+							<div class="product-card-modern" data-category="retail-pepper">
+								<span class="card-badge gold">20 CANS / BOX</span>
+								<div>
+									<div class="product-icon-box"><img src="images/P11.png" alt="Fine Ground White Pepper 80g"></div>
+									<h3 class="product-title">Fine Ground White Pepper (80g)</h3>
+									<ul class="product-specs-list">
+										<li>📦 <strong>Package:</strong> 20 Cans / Carton</li>
+										<li>✨ 40 Mesh fine ground white pepper</li>
+										<li>🛒 Moisture ≤ 12% | Steam Sterilized</li>
+									</ul>
+								</div>
+								<div>
+									<div class="price-tag">AUD $5.25 <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ can</span></div>
+									<a onclick="navigateTo('contact')" class="quote-btn-small">Request Retail Sample</a>
+								</div>
+							</div>
+
+							<div class="product-card-modern" data-category="retail-pepper">
+								<span class="card-badge gold">12 CANS / BOX</span>
+								<div>
+									<div class="product-icon-box"><img src="images/P8.png" alt="Black Pepper Whole 120g"></div>
+									<h3 class="product-title">Black Pepper Whole (120g)</h3>
+									<ul class="product-specs-list">
+										<li>📦 <strong>Package:</strong> 12 Cans / Carton</li>
+										<li>✨ Size ≥ 4mm | Density 550 g/l</li>
+										<li>🛒 Ready for grocery & supermarket shelves</li>
+									</ul>
+								</div>
+								<div>
+									<div class="price-tag">AUD $12.34 <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ can</span></div>
+									<a onclick="navigateTo('contact')" class="quote-btn-small">Request Retail Sample</a>
+								</div>
+							</div>
+
+							<div class="product-card-modern" data-category="retail-pepper">
+								<span class="card-badge gold">12 CANS / BOX</span>
+								<div>
+									<div class="product-icon-box"><img src="images/P20.png" alt="Black Pepper Whole 200g"></div>
+									<h3 class="product-title">Black Pepper Whole (200g)</h3>
+									<ul class="product-specs-list">
+										<li>📦 <strong>Package:</strong> 12 Cans / Carton</li>
+										<li>✨ Size ≥ 4mm | Density 550 g/l</li>
+										<li>🛒 Ready for grocery & supermarket shelves</li>
+									</ul>
+								</div>
+								<div>
+									<div class="price-tag">AUD $9.60 <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ can</span></div>
+									<a onclick="navigateTo('contact')" class="quote-btn-small">Request Retail Sample</a>
+								</div>
+							</div>
+
+							<div class="product-card-modern" data-category="retail-pepper">
+								<span class="card-badge gold">12 CANS / BOX</span>
+								<div>
+									<div class="product-icon-box"><img src="images/P21.png" alt="Coarse Ground Black Pepper 250g"></div>
+									<h3 class="product-title">Coarse Ground Black Pepper (250g)</h3>
+									<ul class="product-specs-list">
+										<li>📦 <strong>Package:</strong> 12 Cans / Carton</li>
+										<li>✨ 10-20 Mesh coarse ground in display canisters</li>
+										<li>🛒 Ready for grocery & supermarket shelves</li>
+									</ul>
+								</div>
+								<div>
+									<div class="price-tag">AUD $11.58 <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ can</span></div>
+									<a onclick="navigateTo('contact')" class="quote-btn-small">Request Retail Sample</a>
+								</div>
+							</div>
+
+							<div class="product-card-modern" data-category="retail-pepper">
+								<span class="card-badge gold">12 CANS / BOX</span>
+								<div>
+									<div class="product-icon-box"><img src="images/P22.png" alt="Fine Ground Black Pepper 250g"></div>
+									<h3 class="product-title">Fine Ground Black Pepper (250g)</h3>
+									<ul class="product-specs-list">
+										<li>📦 <strong>Package:</strong> 12 Cans / Carton</li>
 										<li>✨ 40 Mesh fine ground in display canisters</li>
 										<li>🛒 Ready for grocery & supermarket shelves</li>
 									</ul>
 								</div>
 								<div>
-									<div class="price-tag">AUD $--.-- <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ Box (24 Cans)</span></div>
+									<div class="price-tag">AUD $11.58 <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ can</span></div>
 									<a onclick="navigateTo('contact')" class="quote-btn-small">Request Retail Sample</a>
 								</div>
 							</div>
 
 							<div class="product-card-modern" data-category="retail-pepper">
-								<span class="card-badge gold">24 Cans / Box</span>
+								<span class="card-badge gold">12 CANS / BOX</span>
 								<div>
-									<div class="product-icon-box"><img src="images/p-13.png" alt="Coarse Ground Black Pepper"></div>
-									<h3 class="product-title">Coarse Ground Black Pepper (80g)</h3>
+									<div class="product-icon-box"><img src="images/P23.png" alt="Black Pepper Whole 350g"></div>
+									<h3 class="product-title">Black Pepper Whole (350g)</h3>
 									<ul class="product-specs-list">
-										<li>📦 <strong>Package:</strong> 24 Cans / Outer Box</li>
-										<li>✨ 10–20 Mesh coarse ground spice canisters</li>
-										<li>🛒 High margin retail tabletop product</li>
+										<li>📦 <strong>Package:</strong> 12 Cans / Carton</li>
+										<li>✨ Size ≥ 4mm | Density 550 g/l</li>
+										<li>🛒 Ready for grocery & supermarket shelves</li>
 									</ul>
 								</div>
 								<div>
-									<div class="price-tag">AUD $--.-- <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ Box (24 Cans)</span></div>
+									<div class="price-tag">AUD $12.22 <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ can</span></div>
 									<a onclick="navigateTo('contact')" class="quote-btn-small">Request Retail Sample</a>
 								</div>
 							</div>
 
 							<div class="product-card-modern" data-category="retail-pepper">
-								<span class="card-badge gold">24 Cans / Box</span>
+								<span class="card-badge gold">12 CANS / BOX</span>
 								<div>
-									<div class="product-icon-box"><img src="images/p-14.png" alt="Fine Ground White Pepper"></div>
-									<h3 class="product-title">Fine Ground White Pepper (80g)</h3>
+									<div class="product-icon-box"><img src="images/P24.png" alt="Coarse Ground Black Pepper 360g"></div>
+									<h3 class="product-title">Coarse Ground Black Pepper (360g)</h3>
 									<ul class="product-specs-list">
-										<li>📦 <strong>Package:</strong> 24 Cans / Outer Box</li>
-										<li>✨ 40 Mesh fine white pepper canister</li>
-										<li>🛒 Modern sealed packaging for fresh flavor</li>
+										<li>📦 <strong>Package:</strong> 12 Cans / Carton</li>
+										<li>✨ 10-20 Mesh coarse ground in display canisters</li>
+										<li>🛒 Ready for grocery & supermarket shelves</li>
 									</ul>
 								</div>
 								<div>
-									<div class="price-tag">AUD $--.-- <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ Box (24 Cans)</span></div>
+									<div class="price-tag">AUD $13.56 <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ can</span></div>
 									<a onclick="navigateTo('contact')" class="quote-btn-small">Request Retail Sample</a>
 								</div>
+							</div>
+
+							<div class="product-card-modern" data-category="retail-pepper">
+								<span class="card-badge gold">12 CANS / BOX</span>
+								<div>
+									<div class="product-icon-box"><img src="images/P25.png" alt="Fine Ground Black Pepper 360g"></div>
+									<h3 class="product-title">Fine Ground Black Pepper (360g)</h3>
+									<ul class="product-specs-list">
+										<li>📦 <strong>Package:</strong> 12 Cans / Carton</li>
+										<li>✨ 40 Mesh fine ground in display canisters</li>
+										<li>🛒 Ready for grocery & supermarket shelves</li>
+									</ul>
+								</div>
+								<div>
+									<div class="price-tag">AUD $13.09 <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ can</span></div>
+									<a onclick="navigateTo('contact')" class="quote-btn-small">Request Retail Sample</a>
+								</div>
+							</div>
+
+							<div class="product-card-modern" data-category="retail-pepper">
+								<span class="card-badge gold">6 CANS / BOX</span>
+								<div>
+									<div class="product-icon-box"><img src="images/P12.png" alt="Coarse Ground Black Pepper 650g"></div>
+									<h3 class="product-title">Coarse Ground Black Pepper (650g)</h3>
+									<ul class="product-specs-list">
+										<li>📦 <strong>Package:</strong> 6 Cans / Carton</li>
+										<li>✨ 10-20 Mesh coarse ground food-service cans</li>
+										<li>🛒 Ready for commercial kitchens & grocery</li>
+									</ul>
+								</div>
+								<div>
+									<div class="price-tag">AUD $25.26 <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ can</span></div>
+									<a onclick="navigateTo('contact')" class="quote-btn-small">Request Retail Sample</a>
+								</div>
+							</div>
+
+							<div class="product-card-modern" data-category="retail-pepper">
+								<span class="card-badge gold">6 CANS / BOX</span>
+								<div>
+									<div class="product-icon-box"><img src="images/P13.png" alt="Fine Ground Black Pepper 650g"></div>
+									<h3 class="product-title">Fine Ground Black Pepper (650g)</h3>
+									<ul class="product-specs-list">
+										<li>📦 <strong>Package:</strong> 6 Cans / Carton</li>
+										<li>✨ 40 Mesh fine ground food-service cans</li>
+										<li>🛒 Ready for commercial kitchens & grocery</li>
+									</ul>
+								</div>
+								<div>
+									<div class="price-tag">AUD $25.26 <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ can</span></div>
+									<a onclick="navigateTo('contact')" class="quote-btn-small">Request Retail Sample</a>
+								</div>
+							</div>
+
+							<!-- ==========================================
+								 BULK INDUSTRIAL PEPPER
+							========================================== -->
+							<div class="product-card-modern" data-category="bulk-pepper">
+								<span class="card-badge">BULK 10KG</span>
+								<div>
+									<div class="product-icon-box"><img src="images/P14.png" alt="Black Pepper Whole 1000g"></div>
+									<h3 class="product-title">Black Pepper Whole (1000g)</h3>
+									<ul class="product-specs-list">
+										<li>📦 <strong>Package:</strong> 10 Bags (10Kg) / Carton</li>
+										<li>🔬 Density 550 g/l | Size ≥ 4mm</li>
+										<li>⚙️ Moisture ≤ 12% | Steam Sterilized</li>
+									</ul>
+								</div>
+								<div>
+									<div class="price-tag">AUD $28.35 <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ bag</span></div>
+									<a onclick="navigateTo('contact')" class="quote-btn-small">Request Bulk Spec Sheet</a>
+								</div>
+							</div>
+
+							<div class="product-card-modern" data-category="bulk-pepper">
+								<span class="card-badge">BULK 10KG</span>
+								<div>
+									<div class="product-icon-box"><img src="images/P15.png" alt="Black Pepper Whole 500g"></div>
+									<h3 class="product-title">Black Pepper Whole (500g)</h3>
+									<ul class="product-specs-list">
+										<li>📦 <strong>Package:</strong> 20 Bags (10Kg) / Carton</li>
+										<li>🔬 Density 550 g/l | Size ≥ 4mm</li>
+										<li>⚙️ Moisture ≤ 12% | Steam Sterilized</li>
+									</ul>
+								</div>
+								<div>
+									<div class="price-tag">AUD $14.36 <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ bag</span></div>
+									<a onclick="navigateTo('contact')" class="quote-btn-small">Request Bulk Spec Sheet</a>
+								</div>
+							</div>
+
+							<div class="product-card-modern" data-category="bulk-pepper">
+								<span class="card-badge">BULK 10KG</span>
+								<div>
+									<div class="product-icon-box"><img src="images/P16.png" alt="Crushed Black Pepper 1000g"></div>
+									<h3 class="product-title">Crushed Black Pepper (1000g)</h3>
+									<ul class="product-specs-list">
+										<li>📦 <strong>Package:</strong> 10 Bags (10Kg) / Carton</li>
+										<li>🔬 Density: 10-20 mesh</li>
+										<li>⚙️ Moisture ≤ 12% | Steam Sterilized</li>
+									</ul>
+								</div>
+								<div>
+									<div class="price-tag">AUD $29.47 <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ bag</span></div>
+									<a onclick="navigateTo('contact')" class="quote-btn-small">Request Bulk Spec Sheet</a>
+								</div>
+							</div>
+
+							<div class="product-card-modern" data-category="bulk-pepper">
+								<span class="card-badge">BULK 10KG</span>
+								<div>
+									<div class="product-icon-box"><img src="images/P17.png" alt="Crushed Black Pepper 500g"></div>
+									<h3 class="product-title">Crushed Black Pepper (500g)</h3>
+									<ul class="product-specs-list">
+										<li>📦 <strong>Package:</strong> 20 Bags (10Kg) / Carton</li>
+										<li>🔬 Density: 10-20 mesh</li>
+										<li>⚙️ Moisture ≤ 12% | Steam Sterilized</li>
+									</ul>
+								</div>
+								<div>
+									<div class="price-tag">AUD $14.90 <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ bag</span></div>
+									<a onclick="navigateTo('contact')" class="quote-btn-small">Request Bulk Spec Sheet</a>
+								</div>
+							</div>
+
+							<div class="product-card-modern" data-category="bulk-pepper">
+								<span class="card-badge">BULK 10KG</span>
+								<div>
+									<div class="product-icon-box"><img src="images/P18.png" alt="Fine Ground Black Pepper 1000g"></div>
+									<h3 class="product-title">Fine Ground Black Pepper (1000g)</h3>
+									<ul class="product-specs-list">
+										<li>📦 <strong>Package:</strong> 10 Bags (10Kg) / Carton</li>
+										<li>🔬 Density: 40 mesh</li>
+										<li>⚙️ Moisture ≤ 12% | Steam Sterilized</li>
+									</ul>
+								</div>
+								<div>
+									<div class="price-tag">AUD $29.45 <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ bag</span></div>
+									<a onclick="navigateTo('contact')" class="quote-btn-small">Request Bulk Spec Sheet</a>
+								</div>
+							</div>
+
+							<div class="product-card-modern" data-category="bulk-pepper">
+								<span class="card-badge">BULK 10KG</span>
+								<div>
+									<div class="product-icon-box"><img src="images/P19.png" alt="Fine Ground Black Pepper 500g"></div>
+									<h3 class="product-title">Fine Ground Black Pepper (500g)</h3>
+									<ul class="product-specs-list">
+										<li>📦 <strong>Package:</strong> 20 Bags (10Kg) / Carton</li>
+										<li>🔬 Density: 40 mesh</li>
+										<li>⚙️ Moisture ≤ 12% | Steam Sterilized</li>
+									</ul>
+								</div>
+								<div>
+									<div class="price-tag">AUD $14.87 <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ bag</span></div>
+									<a onclick="navigateTo('contact')" class="quote-btn-small">Request Bulk Spec Sheet</a>
+								</div>
+							</div>
+
+							<!-- ==========================================
+								 NEW RELEASES - NOV 2026
+							========================================== 
+							<div class="product-card-modern" data-category="new-releases">
+								<span class="card-badge" style="background:#1E293B; color:#D4AF37;">NOV 2026</span>
+								<div>
+									<div class="product-icon-box"><img src="images/P26.png" alt="Instant Rice Stir-Fry Noodle"></div>
+									<h3 class="product-title">Instant Rice Stir-Fry Noodle (100g)</h3>
+									<ul class="product-specs-list">
+										<li>📦 <strong>Package:</strong> 24 Pcs / Carton</li>
+										<li>✨ Rice flour, vegetable oil, sweet soy sauce & chili</li>
+										<li>🛒 Moisture ≤ 12% | Shelf Life: 2 years</li>
+									</ul>
+								</div>
+								<div>
+									<div class="price-tag">AUD $--.-- <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ pc</span></div>
+									<a onclick="navigateTo('contact')" class="quote-btn-small">Pre-Order Inquiry</a>
+								</div>
+							</div>
+
+							<div class="product-card-modern" data-category="new-releases">
+								<span class="card-badge" style="background:#1E293B; color:#D4AF37;">NOV 2026</span>
+								<div>
+									<div class="product-icon-box"><img src="images/P27.png" alt="Crispy Rice Cake Flour"></div>
+									<h3 class="product-title">Crispy Rice Cake Flour</h3>
+									<ul class="product-specs-list">
+										<li>📦 <strong>Package:</strong> 20 Pcs (10Kg) / Carton</li>
+										<li>✨ Rice flour, sticky rice flour & coconut milk powder</li>
+										<li>🛒 Moisture ≤ 12% | Shelf Life: 2 years</li>
+									</ul>
+								</div>
+								<div>
+									<div class="price-tag">AUD $--.-- <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ pc</span></div>
+									<a onclick="navigateTo('contact')" class="quote-btn-small">Pre-Order Inquiry</a>
+								</div>
+							</div>
+
+							<div class="product-card-modern" data-category="new-releases">
+								<span class="card-badge" style="background:#1E293B; color:#D4AF37;">NOV 2026</span>
+								<div>
+									<div class="product-icon-box"><img src="images/P28.png" alt="Chinese Doughnuts Flour"></div>
+									<h3 class="product-title">Chinese Doughnuts Flour</h3>
+									<ul class="product-specs-list">
+										<li>📦 <strong>Package:</strong> 20 Pcs (10Kg) / Carton</li>
+										<li>✨ Wheat flour, tapioca flour, baking powder & yeast</li>
+										<li>🛒 Moisture ≤ 12% | Shelf Life: 2 years</li>
+									</ul>
+								</div>
+								<div>
+									<div class="price-tag">AUD $--.-- <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ pc</span></div>
+									<a onclick="navigateTo('contact')" class="quote-btn-small">Pre-Order Inquiry</a>
+								</div>
+							</div>
+
+							<div class="product-card-modern" data-category="new-releases">
+								<span class="card-badge" style="background:#1E293B; color:#D4AF37;">NOV 2026</span>
+								<div>
+									<div class="product-icon-box"><img src="images/P29.png" alt="Waffle Flour"></div>
+									<h3 class="product-title">Waffle Flour</h3>
+									<ul class="product-specs-list">
+										<li>📦 <strong>Package:</strong> 20 Pcs (10Kg) / Carton</li>
+										<li>✨ Rice/wheat flour, coconut milk powder, sugar & yeast</li>
+										<li>🛒 Moisture ≤ 12% | Shelf Life: 2 years</li>
+									</ul>
+								</div>
+								<div>
+									<div class="price-tag">AUD $--.-- <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ pc</span></div>
+									<a onclick="navigateTo('contact')" class="quote-btn-small">Pre-Order Inquiry</a>
+								</div>
+							</div>
+
+							<div class="product-card-modern" data-category="new-releases">
+								<span class="card-badge" style="background:#1E293B; color:#D4AF37;">NOV 2026</span>
+								<div>
+									<div class="product-icon-box"><img src="images/P30.png" alt="Steamed Rice Cake Flour"></div>
+									<h3 class="product-title">Steamed Rice Cake Flour</h3>
+									<ul class="product-specs-list">
+										<li>📦 <strong>Package:</strong> 20 Pcs (10Kg) / Carton</li>
+										<li>✨ Rice flour, sugar, coconut milk powder & yeast</li>
+										<li>🛒 Moisture ≤ 12% | Shelf Life: 2 years</li>
+									</ul>
+								</div>
+								<div>
+									<div class="price-tag">AUD $--.-- <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">/ pc</span></div>
+									<a onclick="navigateTo('contact')" class="quote-btn-small">Pre-Order Inquiry</a>
+								</div>-->
 							</div>
 
 						</div>
@@ -738,19 +1020,19 @@
 							<div class="services-grid">
 								<div class="qa-card-modern">
 									<span class="qa-badge">GMP & HACCP Certified</span>
-									<h3 style="color:#002147; font-size:1.4rem; margin-bottom:12px;">Standardized Processing</h3>
+									<h3 style="color:#1E293B; font-size:1.4rem; margin-bottom:12px;">Standardized Processing</h3>
 									<p style="color:#475569; line-height:1.6;">All pepper and flour lines are processed in standardized Cambodian facilities certified under international GMP and HACCP quality standards.</p>
 								</div>
 
 								<div class="qa-card-modern">
 									<span class="qa-badge">Pure Origin Assurance</span>
-									<h3 style="color:#002147; font-size:1.4rem; margin-bottom:12px;">Steam Sterilization</h3>
+									<h3 style="color:#1E293B; font-size:1.4rem; margin-bottom:12px;">Steam Sterilization</h3>
 									<p style="color:#475569; line-height:1.6;">Spices undergo advanced steam sterilization treatment to eliminate biological pathogens while preserving essential volatile oils and aroma.</p>
 								</div>
 
 								<div class="qa-card-modern">
 									<span class="qa-badge">DAFF Clearance Ready</span>
-									<h3 style="color:#002147; font-size:1.4rem; margin-bottom:12px;">Pre-Arrival Lodgement</h3>
+									<h3 style="color:#1E293B; font-size:1.4rem; margin-bottom:12px;">Pre-Arrival Lodgement</h3>
 									<p style="color:#475569; line-height:1.6;">Shipments are pre-lodged with Australian Border Force (ABF) and DAFF via BICON protocols to guarantee smooth entry into Port of Melbourne.</p>
 								</div>
 							</div>
@@ -819,8 +1101,8 @@
 						</div>
 
 						<!-- Section 3: Documentation Checklist -->
-						<div class="qa-card-modern" style="background: linear-gradient(135deg, #002147 0%, #00152e 100%); color:#ffffff;">
-							<h3 style="color:#FFCC00; font-size:1.6rem; margin-bottom:15px;">📋 Mandatory Import Documentation Included</h3>
+						<div class="qa-card-modern" style="background: linear-gradient(135deg, #1E293B 0%, #151f30 100%); color:#ffffff;">
+							<h3 style="color:#E6C655; font-size:1.6rem; margin-bottom:15px;">📋 Mandatory Import Documentation Included</h3>
 							<p style="color:#e2e8f0; line-height:1.6; margin-bottom:25px;">Every container shipped to Two Parrots Group Australia Pty Ltd is issued with complete documentation to satisfy Australian customs and food security standards:</p>
 							<div style="display:flex; flex-wrap:wrap; gap:15px;">
 								<span style="background:rgba(255,255,255,0.1); padding:8px 16px; border-radius:30px; border:1px solid rgba(255,255,255,0.2);">✅ Official Phytosanitary Certificate</span>
@@ -887,15 +1169,15 @@
 						
 						<!-- Vision & Mission Callouts -->
 						<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; width: 100%;">
-							<div style="background: #f8fafc; padding: 40px; border-radius: 24px; border-left: 6px solid #002147;">
-								<h3 style="color: #002147; font-size: 1.5rem; margin-bottom: 12px; font-weight: 800;">👁️ Our Vision</h3>
+							<div style="background: #f8fafc; padding: 40px; border-radius: 24px; border-left: 6px solid #1E293B;">
+								<h3 style="color: #1E293B; font-size: 1.5rem; margin-bottom: 12px; font-weight: 800;">👁️ Our Vision</h3>
 								<p style="color: #475569; line-height: 1.7; font-size: 1.05rem;">
 									To be a leading, trusted, and ethical agribusiness partner driving sustainable growth for farmers, partners, and consumers.
 								</p>
 							</div>
 
-							<div style="background: #f8fafc; padding: 40px; border-radius: 24px; border-left: 6px solid #C8102E;">
-								<h3 style="color: #C8102E; font-size: 1.5rem; margin-bottom: 12px; font-weight: 800;">🎯 Our Mission</h3>
+							<div style="background: #f8fafc; padding: 40px; border-radius: 24px; border-left: 6px solid #D4AF37;">
+								<h3 style="color: #D4AF37; font-size: 1.5rem; margin-bottom: 12px; font-weight: 800;">🎯 Our Mission</h3>
 								<p style="color: #475569; line-height: 1.7; font-size: 1.05rem;">
 									To build sustainable agricultural value chains delivering high-quality and traceable products while promoting environmental and social responsibility.
 								</p>
@@ -904,7 +1186,7 @@
 
 						<!-- Core Values Grid -->
 						<div style="width: 100%; text-align: center; margin-top: 20px;">
-							<h2 style="font-size: 2.2rem; color: #002147; font-weight: 800; margin-bottom: 15px;">Our Core Values</h2>
+							<h2 style="font-size: 2.2rem; color: #1E293B; font-weight: 800; margin-bottom: 15px;">Our Core Values</h2>
 							<p style="color: #475569; margin-bottom: 40px;">Professional & Trustworthy in every transaction.</p>
 
 							<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px;">
@@ -939,15 +1221,15 @@
 					<div class="main-container" style="flex-direction: column; gap: 40px; text-align: center;">
 						<div>
 							<div class="state-badge" style="display:inline-block; margin-bottom:12px;">🇦🇺 Executive Directorate</div>
-							<h2 style="font-size: 2.2rem; color: #002147; font-weight: 800; margin-bottom: 12px;">Australian Leadership Team</h2>
+							<h2 style="font-size: 2.2rem; color: #1E293B; font-weight: 800; margin-bottom: 12px;">Australian Leadership Team</h2>
 							<p style="color: #475569; max-width: 700px; margin: 0 auto;">Directing domestic market expansion, corporate governance, cross-border import strategy, and 3PL distribution networks from Victoria.</p>
 						</div>
 
 						<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; width: 100%; margin-top: 10px;">
 							<div class="au-executive-card">
 								<div style="font-size: 3rem; margin-bottom: 15px;">👨‍💼</div>
-								<h3 style="color:#002147; font-size:1.4rem; margin-bottom:4px; font-weight:800;">Kim Heng LY</h3>
-								<p style="color:#C8102E; font-weight:800; font-size:0.95rem; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:15px;">Managing Director</p>
+								<h3 style="color:#1E293B; font-size:1.4rem; margin-bottom:4px; font-weight:800;">Kim Heng LY</h3>
+								<p style="color:#D4AF37; font-weight:800; font-size:0.95rem; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:15px;">Managing Director</p>
 								<div style="height:2px; background:#e2e8f0; width:50px; margin:0 auto 20px auto;"></div>
 								<p style="color:#475569; font-size:0.95rem; line-height:1.7; text-align:left;">
 									Specializes in strategic trade expansion, international cross-border logistics, market penetration, and establishing robust supply channels connecting Cambodian producers with Australian B2B distribution and commercial food networks.
@@ -956,8 +1238,8 @@
 
 							<div class="au-executive-card">
 								<div style="font-size: 3rem; margin-bottom: 15px;">👩‍💼</div>
-								<h3 style="color:#002147; font-size:1.4rem; margin-bottom:4px; font-weight:800;">Chhingleang Loy</h3>
-								<p style="color:#C8102E; font-weight:800; font-size:0.95rem; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:15px;">Operations Manager</p>
+								<h3 style="color:#1E293B; font-size:1.4rem; margin-bottom:4px; font-weight:800;">Chhingleang Loy</h3>
+								<p style="color:#D4AF37; font-weight:800; font-size:0.95rem; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:15px;">Operations Manager</p>
 								<div style="height:2px; background:#e2e8f0; width:50px; margin:0 auto 20px auto;"></div>
 								<p style="color:#475569; font-size:0.95rem; line-height:1.7; text-align:left;">
 									Spearheads end-to-end operational execution, human resources management, localized Victorian 3PL fulfillment, regulatory administration, and day-to-day workflow optimizations across our domestic supply infrastructure.
@@ -972,7 +1254,7 @@
 					<div class="main-container" style="flex-direction: column; gap: 60px;">
 						
 						<div style="max-width: 900px; margin: 0 auto; text-align: left;">
-							<h2 style="font-size: 2.2rem; color: #002147; margin-bottom: 20px; font-weight: 800;">About Two Parrots Sourcing & Origin</h2>
+							<h2 style="font-size: 2.2rem; color: #1E293B; margin-bottom: 20px; font-weight: 800;">About Two Parrots Sourcing & Origin</h2>
 							<p style="font-size: 1.1rem; line-height: 1.8; color: #475569; margin-bottom: 25px;">
 								Two Parrots Trading Solutions is a social agribusiness committed to building sustainable and inclusive value chains in Cambodia. We connect farmers, producers, and markets through innovative production, processing, sourcing, and trading solutions that ensure quality and traceability from farm to market.
 							</p>
@@ -980,7 +1262,7 @@
 								With <strong>20 years of agri-food experience</strong>, Two Parrots bridges smallholder farmers, local partners, and international buyers through a transparent, fair-trade, and sustainability-driven approach that creates shared value for all. We work across the value chain—from farm-level sourcing and processing coordination to quality control and shipment readiness—so buyers can purchase with confidence.
 							</p>
 
-							<h3 style="font-size: 1.6rem; color: #002147; margin: 40px 0 15px 0; font-weight: 800;">From Origin to Shipment: How We Work</h3>
+							<h3 style="font-size: 1.6rem; color: #1E293B; margin: 40px 0 15px 0; font-weight: 800;">From Origin to Shipment: How We Work</h3>
 							<p style="font-size: 1.05rem; line-height: 1.7; color: #475569;">
 								We organize supply with clear specifications, lot-level traceability, and practical quality checks aligned with buyer requirements. Our team supports sampling, documentation, packing formats, and shipment coordination. The result is an export-ready supply process designed to reduce risk, improve consistency, and strengthen long-term sourcing programs.
 							</p>
@@ -1008,35 +1290,35 @@
 
 						<!-- Origin Leadership Team -->
 						<div style="width: 100%; text-align: center; margin-top: 20px;">
-							<h2 style="font-size: 2rem; color: #002147; font-weight: 800; margin-bottom: 10px;">Origin Leadership Team</h2>
+							<h2 style="font-size: 2rem; color: #1E293B; font-weight: 800; margin-bottom: 10px;">Origin Leadership Team</h2>
 							<p style="color: #475569; margin-bottom: 30px;">Directing sourcing, processing quality, and global trade development from Phnom Penh, Cambodia.</p>
 
 							<div class="team-grid">
 								<div class="team-card">
 									<div style="font-size: 2.5rem; margin-bottom: 10px;">👤</div>
-									<h4 style="color:#002147; font-size:1.1rem; margin-bottom:4px;">Mr. Try Senhoeun</h4>
-									<p style="font-size:0.85rem; color:#C8102E; font-weight:700; margin-bottom:8px;">Founder & Chairman</p>
+									<h4 style="color:#1E293B; font-size:1.1rem; margin-bottom:4px;">Mr. Try Senhoeun</h4>
+									<p style="font-size:0.85rem; color:#D4AF37; font-weight:700; margin-bottom:8px;">Founder & Chairman</p>
 									<p style="font-size:0.85rem; color:#64748b; line-height:1.5;">Extensive experience in agribusiness, supply chain development, and building sustainable market linkages.</p>
 								</div>
 
 								<div class="team-card">
 									<div style="font-size: 2.5rem; margin-bottom: 10px;">👩‍💼</div>
-									<h4 style="color:#002147; font-size:1.1rem; margin-bottom:4px;">Mrs. To Sony</h4>
-									<p style="font-size:0.85rem; color:#C8102E; font-weight:700; margin-bottom:8px;">Founder & CEO</p>
+									<h4 style="color:#1E293B; font-size:1.1rem; margin-bottom:4px;">Mrs. To Sony</h4>
+									<p style="font-size:0.85rem; color:#D4AF37; font-weight:700; margin-bottom:8px;">Founder & CEO</p>
 									<p style="font-size:0.85rem; color:#64748b; line-height:1.5;">Leads sustainable production, marketing, and export strategies while empowering local farmers.</p>
 								</div>
 
 								<div class="team-card">
 									<div style="font-size: 2.5rem; margin-bottom: 10px;">👨‍💼</div>
-									<h4 style="color:#002147; font-size:1.1rem; margin-bottom:4px;">Mr. Noun Tum</h4>
-									<p style="font-size:0.85rem; color:#C8102E; font-weight:700; margin-bottom:8px;">Managing Director</p>
+									<h4 style="color:#1E293B; font-size:1.1rem; margin-bottom:4px;">Mr. Noun Tum</h4>
+									<p style="font-size:0.85rem; color:#D4AF37; font-weight:700; margin-bottom:8px;">Managing Director</p>
 									<p style="font-size:0.85rem; color:#64748b; line-height:1.5;">Specializes in trade strategy, market development, and connecting local producers with international buyers.</p>
 								</div>
 
 								<div class="team-card">
 									<div style="font-size: 2.5rem; margin-bottom: 10px;">👩‍🔬</div>
-									<h4 style="color:#002147; font-size:1.1rem; margin-bottom:4px;">Ms. Heng Socheata</h4>
-									<p style="font-size:0.85rem; color:#C8102E; font-weight:700; margin-bottom:8px;">Operations Manager</p>
+									<h4 style="color:#1E293B; font-size:1.1rem; margin-bottom:4px;">Ms. Heng Socheata</h4>
+									<p style="font-size:0.85rem; color:#D4AF37; font-weight:700; margin-bottom:8px;">Operations Manager</p>
 									<p style="font-size:0.85rem; color:#64748b; line-height:1.5;">Oversees daily production, supply chain efficiency, product quality control, and timely delivery.</p>
 								</div>
 							</div>
@@ -1044,31 +1326,31 @@
 
 						<!-- Origin Operations Structure -->
 						<div style="width: 100%; text-align: center; margin-top: 20px;">
-							<h2 style="font-size: 2rem; color: #002147; font-weight: 800;">Cross-Functional Operations Team</h2>
+							<h2 style="font-size: 2rem; color: #1E293B; font-weight: 800;">Cross-Functional Operations Team</h2>
 							<p style="color: #475569; margin-bottom: 30px;">Supporting responsive service for international procurement teams.</p>
 
 							<div class="team-grid">
 								<div class="team-card">
 									<div style="font-size: 2.5rem; margin-bottom: 10px;">🌾</div>
-									<h4 style="color:#002147; font-size:1.1rem; margin-bottom:8px;">Sourcing & Farmer Partnerships</h4>
+									<h4 style="color:#1E293B; font-size:1.1rem; margin-bottom:8px;">Sourcing & Farmer Partnerships</h4>
 									<p style="font-size:0.88rem; color:#64748b;">Origin relationships and supply planning.</p>
 								</div>
 
 								<div class="team-card">
 									<div style="font-size: 2.5rem; margin-bottom: 10px;">🔬</div>
-									<h4 style="color:#002147; font-size:1.1rem; margin-bottom:8px;">Quality & Specifications</h4>
+									<h4 style="color:#1E293B; font-size:1.1rem; margin-bottom:8px;">Quality & Specifications</h4>
 									<p style="font-size:0.88rem; color:#64748b;">Lot checks, sampling support, and documentation.</p>
 								</div>
 
 								<div class="team-card">
 									<div style="font-size: 2.5rem; margin-bottom: 10px;">📦</div>
-									<h4 style="color:#002147; font-size:1.1rem; margin-bottom:8px;">Processing & Packing</h4>
+									<h4 style="color:#1E293B; font-size:1.1rem; margin-bottom:8px;">Processing & Packing</h4>
 									<p style="font-size:0.88rem; color:#64748b;">Packing formats, labeling, and export readiness.</p>
 								</div>
 
 								<div class="team-card">
 									<div style="font-size: 2.5rem; margin-bottom: 10px;">🌐</div>
-									<h4 style="color:#002147; font-size:1.1rem; margin-bottom:8px;">Logistics & Customer Support</h4>
+									<h4 style="color:#1E293B; font-size:1.1rem; margin-bottom:8px;">Logistics & Customer Support</h4>
 									<p style="font-size:0.88rem; color:#64748b;">Shipment coordination and buyer communication.</p>
 								</div>
 							</div>
@@ -1076,11 +1358,11 @@
 
 						<!-- Testimonial -->
 						<div class="testimonial-card">
-							<div style="font-size: 2rem; color: #FFCC00; margin-bottom: 15px;">★★★★★</div>
+							<div style="font-size: 2rem; color: #E6C655; margin-bottom: 15px;">★★★★★</div>
 							<blockquote style="font-size: 1.25rem; font-style: italic; line-height: 1.7; color: #f8fafc; max-width: 800px; margin: 0 auto 20px auto;">
 								“Two Parrots provided clear specifications, responsive communication, and export-ready documentation. Sampling and shipment coordination were handled professionally from start to finish.”
 							</blockquote>
-							<p style="color: #FFCC00; font-weight: 800; font-size: 1.05rem;">Procurement Manager — Spices & Nuts Importer</p>
+							<p style="color: #E6C655; font-weight: 800; font-size: 1.05rem;">Procurement Manager — Spices & Nuts Importer</p>
 							<p style="color: #94a3b8; font-size: 0.85rem;">International Buyer (Confidential)</p>
 						</div>
 
@@ -1178,9 +1460,9 @@
 									</div>
 
 									<!-- HUMAN VERIFICATION BOX -->
-									<div class="form-group" style="margin-top: 20px; background: #FAF3E0; padding: 12px 16px; border-radius: 12px; border: 1px solid #F59E0B; display: flex; align-items: center; gap: 12px;">
-										<input type="checkbox" id="human_check" style="width: 20px; height: 20px; accent-color: #EA580C; cursor: pointer;" required>
-										<label for="human_check" style="margin-bottom: 0; font-size: 0.9rem; color: #1F2937; cursor: pointer; text-transform: none; font-weight: 600;">
+									<div class="form-group" style="margin-top: 20px; background: rgba(212, 175, 55, 0.1); padding: 12px 16px; border-radius: 12px; border: 1px solid #D4AF37; display: flex; align-items: center; gap: 12px;">
+										<input type="checkbox" id="human_check" style="width: 20px; height: 20px; accent-color: #D4AF37; cursor: pointer;" required>
+										<label for="human_check" style="margin-bottom: 0; font-size: 0.9rem; color: #1E293B; cursor: pointer; text-transform: none; font-weight: 600;">
 											I agree for Two Parrots Group Australia to contact me.
 										</label>
 									</div>
@@ -1215,7 +1497,7 @@
 					<div class="main-container" style="flex-direction: column; gap: 50px;">
 						
 						<div style="text-align: center;">
-							<h2 style="font-size: 2.2rem; color: #002147; font-weight: 800; margin-bottom: 12px;">Get In Touch</h2>
+							<h2 style="font-size: 2.2rem; color: #1E293B; font-weight: 800; margin-bottom: 12px;">Get In Touch</h2>
 							<p style="color: #475569;">Reach out directly to our Australian headquarters or origin operational desk.</p>
 						</div>
 
@@ -1224,21 +1506,21 @@
 							<!-- Australian HQ -->
 							<div class="service-card" style="text-align: left; padding: 40px 30px;">
 								<div class="card-icon-wrapper" style="font-size: 3.5rem; margin:0 0 25px 0;">🇦🇺</div>
-								<h4 style="color: #002147; font-size: 1.4rem; margin-bottom: 10px;">Australian Headquarters</h4>
-								<p style="color: #C8102E; font-weight: 700; font-size: 0.9rem; margin-bottom: 15px;">Two Parrots Group Australia Pty Ltd</p>
+								<h4 style="color: #1E293B; font-size: 1.4rem; margin-bottom: 10px;">Australian Headquarters</h4>
+								<p style="color: #D4AF37; font-weight: 700; font-size: 0.9rem; margin-bottom: 15px;">Two Parrots Group Australia Pty Ltd</p>
 								<ul style="color: #475569; font-size: 0.95rem; line-height: 1.8;">
 									<li><strong>ACN:</strong> 699 476 107</li>
 									<li><strong>Address:</strong> 1/57 Elonera Rd Noble Park North VIC 3174</li>
-									<li><strong>Phone:</strong> <a href="tel:0468829988" style="color: #002147; font-weight: 700;">0468 829 988</a></li>
-									<li><strong>Email:</strong> <a href="mailto:info@twoparrotsgroup.com.au" style="color: #002147; font-weight: 700;">info@twoparrotsgroup.com.au</a></li>
+									<li><strong>Phone:</strong> <a href="tel:0468829988" style="color: #1E293B; font-weight: 700;">0468 829 988</a></li>
+									<li><strong>Email:</strong> <a href="mailto:info@twoparrotsgroup.com.au" style="color: #1E293B; font-weight: 700;">info@twoparrotsgroup.com.au</a></li>
 								</ul>
 							</div>
 
 							<!-- Director Desk -->
 							<div class="service-card" style="text-align: left; padding: 40px 30px;">
 								<div class="card-icon-wrapper" style="font-size: 3.5rem; margin:0 0 25px 0;">👨‍💼</div>
-								<h4 style="color: #002147; font-size: 1.4rem; margin-bottom: 10px;">Executive Leadership</h4>
-								<p style="color: #C8102E; font-weight: 700; font-size: 0.9rem; margin-bottom: 15px;">Victoria Directorate Desk</p>
+								<h4 style="color: #1E293B; font-size: 1.4rem; margin-bottom: 10px;">Executive Leadership</h4>
+								<p style="color: #D4AF37; font-weight: 700; font-size: 0.9rem; margin-bottom: 15px;">Victoria Directorate Desk</p>
 								<ul style="color: #475569; font-size: 0.95rem; line-height: 1.8;">
 									<li><strong>Managing Director:</strong> Kim Heng LY</li>
 									<li><strong>Operations Manager:</strong> Chhingleang Loy</li>
@@ -1250,8 +1532,8 @@
 							<!-- Origin HQ -->
 							<div class="service-card" style="text-align: left; padding: 40px 30px;">
 								<div class="card-icon-wrapper" style="font-size: 3.5rem; margin:0 0 25px 0;">🇰🇭</div>
-								<h4 style="color: #002147; font-size: 1.4rem; margin-bottom: 10px;">Cambodian Origin HQ</h4>
-								<p style="color: #C8102E; font-weight: 700; font-size: 0.9rem; margin-bottom: 15px;">Two Parrots Trading Solutions Co., Ltd</p>
+								<h4 style="color: #1E293B; font-size: 1.4rem; margin-bottom: 10px;">Cambodian Origin HQ</h4>
+								<p style="color: #D4AF37; font-weight: 700; font-size: 0.9rem; margin-bottom: 15px;">Two Parrots Trading Solutions Co., Ltd</p>
 								<ul style="color: #475569; font-size: 0.95rem; line-height: 1.8;">
 									<li><strong>Address:</strong> N.1159, National Road No.2, Prek Ta Nu Village, Chak Angrae Leu, Mean Chey, Phnom Penh</li>
 									<li><strong>Managing Director:</strong> Mr. Noun Tum</li>
@@ -1404,14 +1686,14 @@
 					const isHuman = document.getElementById('human_check').checked;
 					if (!isHuman) {
 						statusText.style.display = 'block';
-						statusText.style.color = '#C8102E';
+						statusText.style.color = '#D4AF37';
 						statusText.innerText = 'Please check the human verification box before submitting.';
 						return;
 					}
 
 					if (document.getElementById('website_hp').value !== '') {
 						statusText.style.display = 'block';
-						statusText.style.color = '#EA580C';
+						statusText.style.color = '#D4AF37';
 						statusText.innerText = 'Thank you! Your inquiry has been processed.';
 						form.reset();
 						return;
@@ -1423,7 +1705,7 @@
 					fetch(scriptURL, { method: 'POST', body: new FormData(form) })
 						.then(response => {
 							statusText.style.display = 'block';
-							statusText.style.color = '#EA580C';
+							statusText.style.color = '#D4AF37';
 							statusText.innerText = 'Thank you! Your inquiry has been sent directly to our team.';
 							form.reset();
 							submitBtn.disabled = false;
@@ -1431,7 +1713,7 @@
 						})
 						.catch(error => {
 							statusText.style.display = 'block';
-							statusText.style.color = '#C8102E';
+							statusText.style.color = '#D4AF37';
 							statusText.innerText = 'Something went wrong. Please try again.';
 							submitBtn.disabled = false;
 							submitBtn.innerHTML = '<span>🚀 Submit Commercial Inquiry</span>';
