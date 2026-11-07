@@ -462,8 +462,8 @@ const translations = {
     }
 };
 
+// --- LOCAL STORAGE MANAGER & RETRIEVAL ---
 function saveToLocalBrowser(buttonElement) {
-    // Check primary company name ID, fall back to contact field if primary is empty
     const nameInput = (
         document.getElementById('cust-company')?.value || 
         document.getElementById('cust-contact')?.value || 
@@ -475,28 +475,38 @@ function saveToLocalBrowser(buttonElement) {
         return;
     }
 
+    const savedItems = productsData.map(p => ({
+        id: p.id,
+        orderQty: p.orderQty || 0,
+        ctnPriceUsd: p.ctnPriceUsd || 0
+    }));
+
+    const now = new Date();
+    const formattedDateTime = now.toLocaleDateString() + ' ' + now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    const quoteId = 'quote_' + Date.now();
+
     const customerData = {
-        id: 'cust_' + Date.now(),
+        id: quoteId,
         name: nameInput,
         contact: document.getElementById('cust-contact')?.value || '',
         phone: document.getElementById('cust-phone')?.value || '',
         email: document.getElementById('cust-email')?.value || '',
         address: document.getElementById('cust-address')?.value || '',
         terms: document.getElementById('cust-terms')?.value || '',
-        containerType: document.getElementById('input-container-type')?.value || '',
+        containerType: document.getElementById('input-container-type')?.value || '20ft',
+        fxRate: document.getElementById('input-fx')?.value || '0.6620',
+        freightUsd: document.getElementById('input-freight')?.value || '2480',
+        marginPct: document.getElementById('input-margin')?.value || '20',
+        discountPct: document.getElementById('dash-discount-input')?.value || '0',
+        isGstInc: document.getElementById('toggle-gst-inc')?.checked ?? true,
         volumeCtn: document.getElementById('dash-card-ctn-qty')?.innerText || '0 CTN',
-        saveDate: new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        totalPrice: document.getElementById('master-profit-total-val')?.innerText || '$0.00 AUD',
+        items: savedItems,
+        saveDate: formattedDateTime
     };
 
     const savedCustomers = JSON.parse(localStorage.getItem('savedCustomers') || '[]');
-
-    const existingIndex = savedCustomers.findIndex(c => c.name.toLowerCase() === nameInput.toLowerCase());
-    if (existingIndex > -1) {
-        customerData.id = savedCustomers[existingIndex].id;
-        savedCustomers[existingIndex] = customerData;
-    } else {
-        savedCustomers.push(customerData);
-    }
+    savedCustomers.push(customerData);
 
     localStorage.setItem('savedCustomers', JSON.stringify(savedCustomers));
     populateCustomerDropdown();
@@ -518,12 +528,14 @@ function populateCustomerDropdown() {
     if (!selectEl) return;
 
     const savedCustomers = JSON.parse(localStorage.getItem('savedCustomers') || '[]');
-    selectEl.innerHTML = '<option value="">Select a Customer</option>';
+    selectEl.innerHTML = '<option value="">Select a Customer Quotation</option>';
+
+    savedCustomers.sort((a, b) => b.id.localeCompare(a.id));
 
     savedCustomers.forEach(cust => {
         const option = document.createElement('option');
         option.value = cust.id;
-        option.textContent = `${cust.name} (${cust.saveDate})`;
+        option.textContent = `${cust.name} — ${cust.volumeCtn} (${cust.saveDate})`;
         selectEl.appendChild(option);
     });
 }
@@ -542,8 +554,36 @@ function loadSelectedCustomer(customerId) {
     if (document.getElementById('cust-email')) document.getElementById('cust-email').value = customer.email;
     if (document.getElementById('cust-address')) document.getElementById('cust-address').value = customer.address;
     if (document.getElementById('cust-terms')) document.getElementById('cust-terms').value = customer.terms;
-    if (document.getElementById('input-container-type')) document.getElementById('input-container-type').value = customer.containerType;
-    if (document.getElementById('dash-card-ctn-qty')) document.getElementById('dash-card-ctn-qty').innerText = customer.volumeCtn;
+
+    if (document.getElementById('input-container-type')) document.getElementById('input-container-type').value = customer.containerType || '20ft';
+    if (document.getElementById('input-fx')) document.getElementById('input-fx').value = customer.fxRate || '0.6620';
+    if (document.getElementById('input-freight')) document.getElementById('input-freight').value = customer.freightUsd || '2480';
+    if (document.getElementById('input-margin')) document.getElementById('input-margin').value = customer.marginPct || '20';
+    if (document.getElementById('dash-discount-input')) document.getElementById('dash-discount-input').value = customer.discountPct || '0';
+    
+    if (document.getElementById('toggle-gst-inc') && customer.isGstInc !== undefined) {
+        document.getElementById('toggle-gst-inc').checked = customer.isGstInc;
+    }
+
+    productsData.forEach(p => p.orderQty = 0);
+
+    if (customer.items && Array.isArray(customer.items)) {
+        customer.items.forEach(savedItem => {
+            const product = productsData.find(p => p.id === savedItem.id);
+            if (product) {
+                product.orderQty = parseInt(savedItem.orderQty, 10) || 0;
+                if (savedItem.ctnPriceUsd !== undefined) {
+                    product.ctnPriceUsd = parseFloat(savedItem.ctnPriceUsd) || 0;
+                    const specStr = typeof product.spec === 'object' ? product.spec.en : product.spec;
+                    const pcsPerCtn = getPcsPerCtn(specStr);
+                    product.fobUsd = product.ctnPriceUsd / pcsPerCtn;
+                }
+            }
+        });
+    }
+
+    updateOpExFromInputs();
+    renderTable();
 }
 
 document.addEventListener('DOMContentLoaded', populateCustomerDropdown);
@@ -671,7 +711,17 @@ function syncCtnPrice(productId, newPrice) {
 function syncOrderQty(productId, newQty) {
     const qty = Math.max(0, parseInt(newQty, 10) || 0);
     const product = productsData.find(p => p.id === productId);
-    if (product) product.orderQty = qty;
+    
+    if (product) {
+        product.orderQty = qty;
+        
+        const cell = document.getElementById(`master-profit-val-${productId}`);
+        if (cell && product.lastCalculatedSellingPriceCtn) {
+            const rowTotal = product.lastCalculatedSellingPriceCtn * qty;
+            cell.innerText = '$' + rowTotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' AUD';
+        }
+    }
+    
     recalculateMasterProfitTotal();
 }
 
@@ -912,8 +962,6 @@ function updateOpExFromInputs() {
 
     if (document.getElementById('sum-mth-total')) document.getElementById('sum-mth-total').innerText = '$' + totalMonthlyOpEx.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
     if (document.getElementById('sum-ann-total')) document.getElementById('sum-ann-total').innerText = '$' + totalAnnualOpEx.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-
-    renderTable();
 }
 
 function resetOpExBudget() {
@@ -991,14 +1039,14 @@ function renderTable() {
             <td class="py-1 px-2 border-r border-slate-200 text-center bg-slate-50 ${showCtnPrice ? '' : 'hidden'}" id="td-ctn-price-${p.id}">
                 <div class="flex items-center justify-center gap-0.5">
                     <span class="text-slate-400 font-bold">$</span>
-                    <input type="number" id="input-ctn-price-${p.id}" value="${p.ctnPriceUsd.toFixed(2)}" step="0.50" min="0"
+                    <input type="number" id="input-ctn-price-${p.id}" step="0.50" min="0"
                         oninput="syncCtnPrice(${p.id}, this.value)"
                         onkeydown="handleKeyDown(event, ${p.id}, 'price')"
                         class="w-20 text-right bg-white border border-slate-300 focus:border-gold-500 font-bold font-mono text-xs text-gold-700 rounded py-0.5 px-1 focus:outline-none transition">
                 </div>
             </td>
             <td class="py-1 px-2 border-r border-slate-200 text-center bg-emerald-50/40">
-                <input type="number" id="input-qty-${p.id}" value="${qty || ''}" placeholder="0" min="0" step="1"
+                <input type="number" id="input-qty-${p.id}" min="0" step="1"
                     oninput="syncOrderQty(${p.id}, this.value)"
                     onkeydown="handleKeyDown(event, ${p.id}, 'qty')"
                     class="w-20 text-center bg-white border-2 border-emerald-300 focus:border-emerald-600 font-bold font-mono text-xs text-slate-900 rounded py-0.5 px-1 focus:outline-none transition">
@@ -1010,6 +1058,12 @@ function renderTable() {
             </td>
         `;
         tbody.appendChild(tr);
+
+        const qtyEl = tr.querySelector(`#input-qty-${p.id}`);
+        if (qtyEl) qtyEl.value = qty;
+
+        const ctnPriceEl = tr.querySelector(`#input-ctn-price-${p.id}`);
+        if (ctnPriceEl) ctnPriceEl.value = p.ctnPriceUsd.toFixed(2);
     });
 
     recalculateMasterProfitTotal();
@@ -1128,4 +1182,33 @@ async function exportPurchaseOrderPDF() {
     doc.text(`Container Type: ${containerType}`, 14, 34);
 
     doc.save(`Customer_Quotation_${formattedDateOnly}.pdf`);
+}
+
+// --- INITIAL AUTOMATIC TABLE LOAD & INITIALIZATION ---
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. Populate saved customer options into header dropdown
+    if (typeof populateCustomerDropdown === 'function') {
+        populateCustomerDropdown();
+    }
+    
+    // 2. Safe calculation update
+    if (typeof updateOpExFromInputs === 'function') {
+        try {
+            updateOpExFromInputs();
+        } catch (err) {
+            console.warn("OpEx calculation warning:", err);
+        }
+    }
+
+    // 3. Render the product table rows immediately on page load
+    if (typeof renderTable === 'function') {
+        renderTable();
+    }
+});
+
+// Fallback execution if script loads after DOMContentLoaded event
+if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    if (typeof renderTable === 'function') {
+        renderTable();
+    }
 }
