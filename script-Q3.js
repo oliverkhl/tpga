@@ -462,9 +462,14 @@ const translations = {
     }
 };
 
-// --- LOCAL STORAGE MANAGER & RETRIEVAL ---
 function saveToLocalBrowser(buttonElement) {
-    const nameInput = document.getElementById('cust-company')?.value.trim();
+    // Check primary company name ID, fall back to contact field if primary is empty
+    const nameInput = (
+        document.getElementById('cust-company')?.value || 
+        document.getElementById('cust-contact')?.value || 
+        ""
+    ).trim();
+
     if (!nameInput) {
         alert('Please enter a customer company name before saving.');
         return;
@@ -494,7 +499,6 @@ function saveToLocalBrowser(buttonElement) {
     }
 
     localStorage.setItem('savedCustomers', JSON.stringify(savedCustomers));
-
     populateCustomerDropdown();
 
     if (buttonElement) {
