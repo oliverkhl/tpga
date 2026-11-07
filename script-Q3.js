@@ -22,7 +22,7 @@ const defaultOpExValues = {
 // --- COMPLETE 30-PRODUCT DATASET WITH MULTI-LANGUAGE & COMPETITOR COMPARISONS ---
 const productsData = [
     {
-        id: 1, status: 'Active', weightG: 500, orderQty: 0, ctnPriceUsd: 7.21,
+        id: 1, status: 'Active', weightG: 500, orderQty: 1, ctnPriceUsd: 7.21,
         name: { en: 'Finest Rice Flour 500g', km: 'ម្សៅអង្ករខ្សាយ ៥០០ក្រាម', fr: 'Farine de riz fine 500g', zh: '优质大米粉 500g' },
         nameKhmer: 'ម្សៅអង្ករខ្សាយ ៥០០ក្រាម', spec: { en: '20 Pcs/CTN (10kg)', km: 'ថង់ ៥០០ក្រាម / ២០ កញ្ចប់ (១០គីឡូ/កេស)', fr: 'Sac de 500g / 20 Pcs (10kg/CTN)', zh: '500g/袋 / 20包 (10kg/箱)' }, fobUsd: 0.36, pcsPer20ft: 20000,
         asianComps: [
@@ -40,7 +40,7 @@ const productsData = [
         ]
     },
     {
-        id: 2, status: 'Active', weightG: 500, orderQty: 0, ctnPriceUsd: 11.67,
+        id: 2, status: 'Active', weightG: 500, orderQty: 1, ctnPriceUsd: 11.67,
         name: { en: 'Glutinous Rice Flour 500g', km: 'ម្សៅអង្ករដំណើប ៥០០ក្រាម', fr: 'Farine de riz glutineux 500g', zh: '水磨糯米粉 500g' },
         nameKhmer: 'ម្សៅអង្ករដំណើប ៥០០ក្រាម', spec: { en: '20 Pcs/CTN (10kg)', km: 'ថង់ ៥០០ក្រាម / ២០ កញ្ចប់ (១០គីឡូ/កេស)', fr: 'Sac de 500g / 20 Pcs (10kg/CTN)', zh: '500g/袋 / 20包 (10kg/箱)' }, fobUsd: 0.58, pcsPer20ft: 20000,
         asianComps: [
@@ -54,7 +54,7 @@ const productsData = [
         ]
     },
     {
-        id: 3, status: 'Active', weightG: 500, orderQty: 0, ctnPriceUsd: 8.75,
+        id: 3, status: 'Active', weightG: 500, orderQty: 1, ctnPriceUsd: 8.75,
         name: { en: 'Tapioca Flour 500g', km: 'ម្សៅឆា ៥០០ក្រាម', fr: 'Farine de tapioca 500g', zh: '木薯淀粉 / 生粉 500g' },
         nameKhmer: 'ម្សៅឆា ៥០០ក្រាម', spec: { en: '20 Pcs/CTN (10kg)', km: 'ថង់ ៥០០ក្រាម / ២០ កញ្ចប់ (១០គីឡូ/កេស)', fr: 'Sac de 500g / 20 Pcs (10kg/CTN)', zh: '500g/袋 / 20包 (10kg/箱)' }, fobUsd: 0.44, pcsPer20ft: 20000,
         asianComps: [
@@ -69,7 +69,7 @@ const productsData = [
         ]
     },
     {
-        id: 4, status: 'Active', weightG: 500, orderQty: 0, ctnPriceUsd: 18.00,
+        id: 4, status: 'Active', weightG: 500, orderQty: 1, ctnPriceUsd: 18.00,
         name: { en: 'Pancake Flour (Banh Xeo) 500g', km: 'ម្សៅបាញ់ឆែវ ៥០០ក្រាម', fr: 'Farine pour crêpes asiatiques 500g', zh: '柬式/越式煎饼粉 (Banh Xeo) 500g' },
         nameKhmer: 'ម្សៅបាញ់ឆែវ ៥០០ក្រាម', spec: { en: '20 Pcs/CTN (10kg)', km: 'ថង់ ៥០០ក្រាម / ២០ កញ្ចប់ (១០គីឡូ/កេស)', fr: 'Sac de 500g / 20 Pcs (10kg/CTN)', zh: '500g/袋 / 20包 (10kg/箱)' }, fobUsd: 0.90, pcsPer20ft: 20000,
         asianComps: [
@@ -84,7 +84,7 @@ const productsData = [
         ]
     },
     {
-        id: 5, status: 'Active', weightG: 1000, orderQty: 0, ctnPriceUsd: 12.54,
+        id: 5, status: 'Active', weightG: 1000, orderQty: 1, ctnPriceUsd: 12.54,
         name: { en: 'Crispy Tempura Flour 1000g', km: 'ម្សៅបំពងស្រួយ ១០០០ក្រាម', fr: 'Farine à tempura croustillante 1000g', zh: '香酥天妇罗炸粉 1000g' },
         nameKhmer: 'ម្សៅបំពងស្រួយ ១០០០ក្រាម', spec: { en: '10 Pcs/CTN (10kg)', km: 'ថង់ ១០០០ក្រាម / ១០ កញ្ចប់ (១០គីឡូ/កេស)', fr: 'Sac de 1000g / 10 Pcs (10kg/CTN)', zh: '1000g/袋 / 10包 (10kg/箱)' }, fobUsd: 1.25, pcsPer20ft: 10000,
         asianComps: [
@@ -99,7 +99,7 @@ const productsData = [
         ]
     },
     {
-        id: 6, status: 'Active', weightG: 150, orderQty: 0, ctnPriceUsd: 23.40,
+        id: 6, status: 'Active', weightG: 150, orderQty: 1, ctnPriceUsd: 23.40,
         name: { en: 'Crispy Tempura Flour 150g', km: 'ម្សៅបំពងស្រួយ ១៥០ក្រាម', fr: 'Farine à tempura croustillante 150g', zh: '香酥天妇罗炸粉 150g' },
         nameKhmer: 'ម្សៅបំពងស្រួយ ១៥០ក្រាម', spec: { en: '60 Pcs/CTN (9kg)', km: 'ថង់ ១៥០ក្រាម / ៦០ កញ្ចប់ (៦x១០កញ្ចប់/កេស)', fr: 'Sac de 150g / 60 Pcs (6x10pcs/CTN)', zh: '150g/袋 / 60包 (6x10包/箱)' }, fobUsd: 0.39, pcsPer20ft: 60000,
         asianComps: [
@@ -112,7 +112,7 @@ const productsData = [
         ]
     },
     {
-        id: 7, status: 'Active', weightG: 500, orderQty: 0, ctnPriceUsd: 31.93,
+        id: 7, status: 'Active', weightG: 500, orderQty: 1, ctnPriceUsd: 31.93,
         name: { en: 'Fried Banana Flour 500g', km: 'ម្សៅចេកចៀន ៥០០ក្រាម', fr: 'Farine pour bananes frites 500g', zh: '炸香蕉专用脆粉 500g' },
         nameKhmer: 'ម្សៅចេកចៀន ៥០០ក្រាម', spec: { en: '20 Pcs/CTN (10kg)', km: 'ថង់ ៥០០ក្រាម / ២០ កញ្ចប់ (១០គីឡូ/កេស)', fr: 'Sac de 500g / 20 Pcs (10kg/CTN)', zh: '500g/袋 / 20包 (10kg/箱)' }, fobUsd: 1.60, pcsPer20ft: 20000,
         asianComps: [
@@ -125,7 +125,7 @@ const productsData = [
         ]
     },
     {
-        id: 8, status: 'Active', weightG: 120, orderQty: 0, ctnPriceUsd: 43.57,
+        id: 8, status: 'Active', weightG: 120, orderQty: 1, ctnPriceUsd: 43.57,
         name: { en: 'Black Pepper Whole 120g', km: 'ម្រេចខ្មៅគ្រាប់មូល ១២០ក្រាម', fr: 'Poivre noir entier 120g', zh: '整粒黑胡椒粒 120g' },
         nameKhmer: 'ម្រេចខ្មៅគ្រាប់មូល ១២០ក្រាម', spec: { en: '12 Cans/CTN', km: 'កំប៉ុង ១២០ក្រាម / ១២ កំប៉ុង/កេស', fr: 'Boîte de 120g / 12 Boîtes/CTN', zh: '120g/罐 / 12罐/箱' }, fobUsd: 3.63, pcsPer20ft: 18000,
         asianComps: [
@@ -142,7 +142,7 @@ const productsData = [
         ]
     },
     {
-        id: 9, status: 'Active', weightG: 80, orderQty: 0, ctnPriceUsd: 28.59,
+        id: 9, status: 'Active', weightG: 80, orderQty: 1, ctnPriceUsd: 28.59,
         name: { en: 'Fine Ground Black Pepper 80g', km: 'ម្រេចខ្មៅម៉ដ្ឋ ៨០ក្រាម', fr: 'Poivre noir moulu fin 80g', zh: '细磨黑胡椒粉 80g' },
         nameKhmer: 'ម្រេចខ្មៅម៉ដ្ឋ ៨០ក្រាម', spec: { en: '20 Cans/CTN', km: 'កំប៉ុង ៨០ក្រាម / ២០ កំប៉ុង/កេស', fr: 'Boîte de 80g / 20 Boîtes/CTN', zh: '80g/罐 / 20罐/箱' }, fobUsd: 1.43, pcsPer20ft: 24000,
         asianComps: [
@@ -156,7 +156,7 @@ const productsData = [
         ]
     },
     {
-        id: 10, status: 'Active', weightG: 80, orderQty: 0, ctnPriceUsd: 28.59,
+        id: 10, status: 'Active', weightG: 80, orderQty: 1, ctnPriceUsd: 28.59,
         name: { en: 'Coarse Ground Black Pepper 80g', km: 'ម្រេចខ្មៅចម្រៀក ៨០ក្រាម', fr: 'Poivre noir concassé 80g', zh: '粗磨黑胡椒碎 80g' },
         nameKhmer: 'ម្រេចខ្មៅចម្រៀក ៨០ក្រាម', spec: { en: '20 Cans/CTN', km: 'កំប៉ុង ៨០ក្រាម / ២០ កំប៉ុង/កេស', fr: 'Boîte de 80g / 20 Boîtes/CTN', zh: '80g/罐 / 20罐/箱' }, fobUsd: 1.43, pcsPer20ft: 24000,
         asianComps: [
@@ -170,7 +170,7 @@ const productsData = [
         ]
     },
     {
-        id: 11, status: 'Active', weightG: 80, orderQty: 0, ctnPriceUsd: 28.59,
+        id: 11, status: 'Active', weightG: 80, orderQty: 1, ctnPriceUsd: 28.59,
         name: { en: 'Fine Ground White Pepper 80g', km: 'ម្រេចសចម្រៀក ៨០ក្រាម', fr: 'Poivre blanc moulu fin 80g', zh: '细磨白胡椒粉 80g' },
         nameKhmer: 'ម្រេចសចម្រៀក ៨០ក្រាម', spec: { en: '20 Cans/CTN', km: 'កំប៉ុង ៨០ក្រាម / ២០ កំប៉ុង/កេស', fr: 'Boîte de 80g / 20 Boîtes/CTN', zh: '80g/罐 / 20罐/箱' }, fobUsd: 1.43, pcsPer20ft: 24000,
         asianComps: [
@@ -183,7 +183,7 @@ const productsData = [
         ]
     },
     {
-        id: 12, status: 'Active', weightG: 650, orderQty: 0, ctnPriceUsd: 44.78,
+        id: 12, status: 'Active', weightG: 650, orderQty: 1, ctnPriceUsd: 44.78,
         name: { en: 'Coarse Ground Black Pepper 650g', km: 'ម្រេចខ្មៅចម្រៀក ៦៥០ក្រាម', fr: 'Poivre noir concassé 650g', zh: '粗磨黑胡椒碎 650g (餐饮罐装)' },
         nameKhmer: 'ម្រេចខ្មៅចម្រៀក ៦៥០ក្រាម', spec: { en: '6 Cans/CTN', km: 'កំប៉ុង ៦៥០ក្រាម / ៦ កំប៉ុង/កេស', fr: 'Boîte de 650g / 6 Boîtes/CTN', zh: '650g/罐 / 6罐/箱' }, fobUsd: 7.46, pcsPer20ft: 9000,
         asianComps: [
@@ -197,7 +197,7 @@ const productsData = [
         ]
     },
     {
-        id: 13, status: 'Active', weightG: 650, orderQty: 0, ctnPriceUsd: 44.78,
+        id: 13, status: 'Active', weightG: 650, orderQty: 1, ctnPriceUsd: 44.78,
         name: { en: 'Fine Ground Black Pepper 650g', km: 'ម្រេចខ្មៅម៉ដ្ឋ ៦៥០ក្រាម', fr: 'Poivre noir moulu fin 650g', zh: '细磨黑胡椒粉 650g (餐饮罐装)' },
         nameKhmer: 'ម្រេចខ្មៅម៉ដ្ឋ ៦៥០ក្រាម', spec: { en: '6 Cans/CTN', km: 'កំប៉ុង ៦៥០ក្រាម / ៦ កំប៉ុង/កេស', fr: 'Boîte de 650g / 6 Boîtes/CTN', zh: '650g/罐 / 6罐/箱' }, fobUsd: 7.46, pcsPer20ft: 9000,
         asianComps: [
@@ -211,7 +211,7 @@ const productsData = [
         ]
     },
     {
-        id: 14, status: 'Active', weightG: 1000, orderQty: 0, ctnPriceUsd: 90.73,
+        id: 14, status: 'Active', weightG: 1000, orderQty: 1, ctnPriceUsd: 90.73,
         name: { en: 'Black Pepper Whole 1000g', km: 'ម្រេចខ្មៅគ្រាប់មូល ១០០០ក្រាម', fr: 'Poivre noir entier 1000g', zh: '整粒黑胡椒粒 1000g (大包装)' },
         nameKhmer: 'ម្រេចខ្មៅគ្រាប់មូល ១០០០ក្រាម', spec: { en: '10 Bags/CTN', km: 'ថង់ ១០០០ក្រាម / ១០ ថង់ (១០គីឡូ/កេស)', fr: 'Sac de 1000g / 10 Sacs (10kg/CTN)', zh: '1000g/袋 / 10袋 (10kg/箱)' }, fobUsd: 9.07, pcsPer20ft: 10000,
         asianComps: [
@@ -227,7 +227,7 @@ const productsData = [
         ]
     },
     {
-        id: 15, status: 'Active', weightG: 500, orderQty: 0, ctnPriceUsd: 92.02,
+        id: 15, status: 'Active', weightG: 500, orderQty: 1, ctnPriceUsd: 92.02,
         name: { en: 'Black Pepper Whole 500g', km: 'ម្រេចខ្មៅគ្រាប់មូល ៥០០ក្រាម', fr: 'Poivre noir entier 500g', zh: '整粒黑胡椒粒 500g' },
         nameKhmer: 'ម្រេចខ្មៅគ្រាប់មូល ៥០០ក្រាម', spec: { en: '20 Bags/CTN', km: 'ថង់ ៥០០ក្រាម / ២០ ថង់ (១០គីឡូ/កេស)', fr: 'Sac de 500g / 20 Sacs (10kg/CTN)', zh: '500g/袋 / 20包 (10kg/箱)' }, fobUsd: 4.60, pcsPer20ft: 20000,
         asianComps: [
@@ -240,7 +240,7 @@ const productsData = [
         ]
     },
     {
-        id: 16, status: 'Active', weightG: 1000, orderQty: 0, ctnPriceUsd: 94.62,
+        id: 16, status: 'Active', weightG: 1000, orderQty: 1, ctnPriceUsd: 94.62,
         name: { en: 'Crushed Black Pepper (10-20 Mesh) 1000g', km: 'ម្រេចខ្មៅចម្រៀក 10-20 ម៉េស ១០០០g', fr: 'Poivre noir concassé (10-20 Mesh) 1000g', zh: '黑胡椒碎 (10-20目) 1000g' },
         nameKhmer: 'ម្រេចខ្មៅចម្រៀកកំរិត 10-20 ម៉េស ១០០០ក្រាម', spec: { en: '10 Bags/CTN', km: 'ថង់ ១០០០ក្រាម / ១០ ថង់ (១០គីឡូ/កេស)', fr: 'Sac de 1000g / 10 Bags (10kg/CTN)', zh: '1000g/袋 / 10袋 (10kg/箱)' }, fobUsd: 9.46, pcsPer20ft: 10000,
         asianComps: [
@@ -253,7 +253,7 @@ const productsData = [
         ]
     },
     {
-        id: 17, status: 'Active', weightG: 500, orderQty: 0, ctnPriceUsd: 95.75,
+        id: 17, status: 'Active', weightG: 500, orderQty: 1, ctnPriceUsd: 95.75,
         name: { en: 'Crushed Black Pepper (10-20 Mesh) 500g', km: 'ម្រេចខ្មៅចម្រៀក 10-20 ម៉េស ៥០០g', fr: 'Poivre noir concassé (10-20 Mesh) 500g', zh: '黑胡椒碎 (10-20目) 500g' },
         nameKhmer: 'ម្រេចខ្មៅចម្រៀកកំរិត 10-20 ម៉េស ៥០០ក្រាម', spec: { en: '20 Bags/CTN', km: 'ថង់ ៥០០ក្រាម / ២០ ថង់ (១០គីឡូ/កេស)', fr: 'Sac de 500g / 20 Bags (10kg/CTN)', zh: '500g/袋 / 20包 (10kg/箱)' }, fobUsd: 4.79, pcsPer20ft: 20000,
         asianComps: [
@@ -266,7 +266,7 @@ const productsData = [
         ]
     },
     {
-        id: 18, status: 'Active', weightG: 1000, orderQty: 0, ctnPriceUsd: 94.55,
+        id: 18, status: 'Active', weightG: 1000, orderQty: 1, ctnPriceUsd: 94.55,
         name: { en: 'Fine Ground Black Pepper (40 Mesh) 1000g', km: 'ម្រេចខ្មៅម៉ដ្ឋ 40 ម៉េស ១០០០g', fr: 'Poivre noir moulu fin (40 Mesh) 1000g', zh: '细磨黑胡椒粉 (40目) 1000g' },
         nameKhmer: 'ម្រេចខ្មៅម៉ដ្ឋកំរិត 40 ម៉េស ១០០០ក្រាម', spec: { en: '10 Bags/CTN', km: 'ថង់ ១០០០ក្រាម / ១០ ថង់ (១០គីឡូ/កេស)', fr: 'Sac de 1000g / 10 Bags (10kg/CTN)', zh: '1000g/袋 / 10袋 (10kg/箱)' }, fobUsd: 9.46, pcsPer20ft: 10000,
         asianComps: [
@@ -279,7 +279,7 @@ const productsData = [
         ]
     },
     {
-        id: 19, status: 'Active', weightG: 500, orderQty: 0, ctnPriceUsd: 95.59,
+        id: 19, status: 'Active', weightG: 500, orderQty: 1, ctnPriceUsd: 95.59,
         name: { en: 'Fine Ground Black Pepper (40 Mesh) 500g', km: 'ម្រេចខ្មៅម៉ដ្ឋ 40 ម៉េស ៥០០g', fr: 'Poivre noir moulu fin (40 Mesh) 500g', zh: '细磨黑胡椒粉 (40目) 500g' },
         nameKhmer: 'ម្រេចខ្មៅម៉ដ្ឋកំរិត 40 ម៉េស ៥០០ក្រាម', spec: { en: '20 Bags/CTN', km: 'ថង់ ៥០០ក្រាម / ២០ ថង់ (១០គីឡូ/កេស)', fr: 'Sac de 500g / 20 Bags (10kg/CTN)', zh: '500g/袋 / 20包 (10kg/箱)' }, fobUsd: 4.78, pcsPer20ft: 20000,
         asianComps: [
@@ -292,7 +292,7 @@ const productsData = [
         ]
     },
     {
-        id: 20, status: 'Active', weightG: 200, orderQty: 0, ctnPriceUsd: 32.12,
+        id: 20, status: 'Active', weightG: 200, orderQty: 1, ctnPriceUsd: 32.12,
         name: { en: 'Black Pepper Whole 200g', km: 'ម្រេចខ្មៅគ្រាប់មូល ២០០ក្រាម', fr: 'Poivre noir entier 200g', zh: '整粒黑胡椒粒 200g (罐装)' },
         nameKhmer: 'ម្រេចខ្មៅគ្រាប់មូល ២០០ក្រាម', spec: { en: '12 Cans/CTN', km: 'កំប៉ុង ២០០ក្រាម / ១២ កំប៉ុង/កេស', fr: 'Boîte de 200g / 12 Boîtes/CTN', zh: '200g/罐 / 12罐/箱' }, fobUsd: 2.68, pcsPer20ft: 14400,
         asianComps: [
@@ -305,7 +305,7 @@ const productsData = [
         ]
     },
     {
-        id: 21, status: 'Active', weightG: 250, orderQty: 0, ctnPriceUsd: 40.39,
+        id: 21, status: 'Active', weightG: 250, orderQty: 1, ctnPriceUsd: 40.39,
         name: { en: 'Coarse Ground Black Pepper 250g', km: 'ម្រេចខ្មៅចម្រៀក ២៥០ក្រាម', fr: 'Poivre noir concassé 250g', zh: '粗磨黑胡椒碎 250g (罐装)' },
         nameKhmer: 'ម្រេចខ្មៅចម្រៀក ២៥០ក្រាម', spec: { en: '12 Cans/CTN', km: 'កំប៉ុង ២៥០ក្រាម / ១២ កំប៉ុង/កេស', fr: 'Boîte de 250g / 12 Boîtes/CTN', zh: '250g/罐 / 12罐/箱' }, fobUsd: 3.37, pcsPer20ft: 14400,
         asianComps: [
@@ -318,7 +318,7 @@ const productsData = [
         ]
     },
     {
-        id: 22, status: 'Active', weightG: 250, orderQty: 0, ctnPriceUsd: 40.39,
+        id: 22, status: 'Active', weightG: 250, orderQty: 1, ctnPriceUsd: 40.39,
         name: { en: 'Fine Ground Black Pepper 250g', km: 'ម្រេចខ្មៅម៉ដ្ឋ ២៥០ក្រាម', fr: 'Poivre noir moulu fin 250g', zh: '细磨黑胡椒粉 250g (罐装)' },
         nameKhmer: 'ម្រេចខ្មៅម៉ដ្ឋ ២៥០ក្រាម', spec: { en: '12 Cans/CTN', km: 'កំប៉ុង ២៥០ក្រាម / ១២ កំប៉ុង/កេស', fr: 'Boîte de 250g / 12 Boîtes/CTN', zh: '250g/罐 / 12罐/箱' }, fobUsd: 3.37, pcsPer20ft: 14400,
         asianComps: [
@@ -331,7 +331,7 @@ const productsData = [
         ]
     },
     {
-        id: 23, status: 'Active', weightG: 350, orderQty: 0, ctnPriceUsd: 43.08,
+        id: 23, status: 'Active', weightG: 350, orderQty: 1, ctnPriceUsd: 43.08,
         name: { en: 'Black Pepper Whole 350g', km: 'ម្រេចខ្មៅគ្រាប់មូល ៣៥០ក្រាម', fr: 'Poivre noir entier 350g', zh: '整粒黑胡椒粒 350g (罐装)' },
         nameKhmer: 'ម្រេចខ្មៅគ្រាប់មូល ៣៥០ក្រាម', spec: { en: '12 Cans/CTN', km: 'កំប៉ុង ៣៥០ក្រាម / ១២ កំប៉ុង/កេស', fr: 'Boîte de 350g / 12 Boîtes/CTN', zh: '350g/罐 / 12罐/箱' }, fobUsd: 3.59, pcsPer20ft: 14400,
         asianComps: [
@@ -344,7 +344,7 @@ const productsData = [
         ]
     },
     {
-        id: 24, status: 'Active', weightG: 360, orderQty: 0, ctnPriceUsd: 48.68,
+        id: 24, status: 'Active', weightG: 360, orderQty: 1, ctnPriceUsd: 48.68,
         name: { en: 'Coarse Ground Black Pepper 360g', km: 'ម្រេចខ្មៅចម្រៀក ៣៦០ក្រាម', fr: 'Poivre noir concassé 360g', zh: '粗磨黑胡椒碎 360g (罐装)' },
         nameKhmer: 'ម្រេចខ្មៅចម្រៀក ៣៦០ក្រាម', spec: { en: '12 Cans/CTN', km: 'កំប៉ុង ៣៦០ក្រាម / ១២ កំប៉ុង/កេស', fr: 'Boîte de 360g / 12 Boîtes/CTN', zh: '360g/罐 / 12罐/箱' }, fobUsd: 4.06, pcsPer20ft: 14400,
         asianComps: [
@@ -358,7 +358,7 @@ const productsData = [
         ]
     },
     {
-        id: 25, status: 'Active', weightG: 360, orderQty: 0, ctnPriceUsd: 46.68,
+        id: 25, status: 'Active', weightG: 360, orderQty: 1, ctnPriceUsd: 46.68,
         name: { en: 'Fine Ground Black Pepper 360g', km: 'ម្រេចខ្មៅម៉ដ្ឋ ៣៦០ក្រាម', fr: 'Poivre noir moulu fin 360g', zh: '细磨黑胡椒粉 360g (罐装)' },
         nameKhmer: 'ម្រេចខ្មៅម៉ដ្ឋ ៣៦០ក្រាម', spec: { en: '12 Cans/CTN', km: 'កំប៉ុង ៣៦០ក្រាម / ១២ កំប៉ុង/កេស', fr: 'Boîte de 360g / 12 Boîtes/CTN', zh: '360g/罐 / 12罐/箱' }, fobUsd: 3.89, pcsPer20ft: 14400,
         asianComps: [
@@ -370,9 +370,9 @@ const productsData = [
             { brand: 'Hoyts Ground Pepper Can', weightG: 360, priceAud: 9.10, source: 'Src: Woolworths Supermarkets VIC' },
             { brand: 'Kirkland Fine Pepper Shaker', weightG: 348, priceAud: 13.50, source: 'Src: Costco Wholesale AU' }
         ]
-    },
+    }/*,
     {
-        id: 26, status: 'Upcoming', weightG: 100, orderQty: 0, ctnPriceUsd: 20.40,
+        id: 26, status: 'Upcoming', weightG: 100, orderQty: 1, ctnPriceUsd: 20.40,
         name: { en: 'Instant Rice Stir-Fry Noodle 100g', km: 'មីគោក ១០០ក្រាម', fr: 'Nouilles de riz sautées instantanées 100g', zh: '即食干炒米粉 100g' },
         nameKhmer: 'មីគោក ១០០ក្រាម', spec: { en: '24 Pcs/CTN', km: 'ប្រអប់ ១០០ក្រាម / ២៤ កញ្ចប់/កេស', fr: 'Boîte de 100g / 24 Pcs/CTN', zh: '100g/盒 / 24包/箱' }, fobUsd: 0.85, pcsPer20ft: 18000,
         asianComps: [
@@ -386,7 +386,7 @@ const productsData = [
         ]
     },
     {
-        id: 27, status: 'Upcoming', weightG: 500, orderQty: 0, ctnPriceUsd: 19.00,
+        id: 27, status: 'Upcoming', weightG: 500, orderQty: 1, ctnPriceUsd: 19.00,
         name: { en: 'Crispy Rice Cake Flour 500g', km: 'ម្សៅនំគ្រក់ ៥០០ក្រាម', fr: 'Farine pour gâteau de riz croustillant 500g', zh: '柬式香脆米饼粉 (Nom Krok) 500g' },
         nameKhmer: 'ម្សៅនំគ្រក់ ៥០០ក្រាម', spec: { en: '20 Pcs/CTN', km: 'ថង់ ៥០០ក្រាម / ២០ កញ្ចប់ (១០គីឡូ/កេស)', fr: 'Sac de 500g / 20 Pcs (10kg/CTN)', zh: '500g/袋 / 20包 (10kg/箱)' }, fobUsd: 0.95, pcsPer20ft: 20000,
         asianComps: [
@@ -399,7 +399,7 @@ const productsData = [
         ]
     },
     {
-        id: 28, status: 'Upcoming', weightG: 500, orderQty: 0, ctnPriceUsd: 18.00,
+        id: 28, status: 'Upcoming', weightG: 500, orderQty: 1, ctnPriceUsd: 18.00,
         name: { en: 'Chinese Doughnuts Flour 500g', km: 'ម្សៅនំឆា ៥០០ក្រាម', fr: 'Farine pour beignets chinois (Youtiao) 500g', zh: '油条专用预拌粉 500g' },
         nameKhmer: 'ម្សៅនំឆា ៥០០ក្រាម', spec: { en: '20 Pcs/CTN', km: 'ថង់ ៥០០ក្រាម / ២០ កញ្ចប់ (១០គីឡូ/កេស)', fr: 'Sac de 500g / 20 Pcs (10kg/CTN)', zh: '500g/袋 / 20包 (10kg/箱)' }, fobUsd: 0.90, pcsPer20ft: 20000,
         asianComps: [
@@ -412,7 +412,7 @@ const productsData = [
         ]
     },
     {
-        id: 29, status: 'Upcoming', weightG: 500, orderQty: 0, ctnPriceUsd: 22.00,
+        id: 29, status: 'Upcoming', weightG: 500, orderQty: 1, ctnPriceUsd: 22.00,
         name: { en: 'Waffle Flour 500g', km: 'ម្សៅពុម្ព ៥០០ក្រាម', fr: 'Farine pour gaufres asiatiques 500g', zh: '东南亚华夫饼/格仔饼预拌粉 500g' },
         nameKhmer: 'ម្សៅពុម្ព ៥០០ក្រាម', spec: { en: '20 Pcs/CTN', km: 'ថង់ ៥០០ក្រាម / ២០ កញ្ចប់ (១០គីឡូ/កេស)', fr: 'Sac de 500g / 20 Pcs (10kg/CTN)', zh: '500g/袋 / 20包 (10kg/箱)' }, fobUsd: 1.10, pcsPer20ft: 20000,
         asianComps: [
@@ -425,7 +425,7 @@ const productsData = [
         ]
     },
     {
-        id: 30, status: 'Upcoming', weightG: 500, orderQty: 0, ctnPriceUsd: 17.00,
+        id: 30, status: 'Upcoming', weightG: 500, orderQty: 1, ctnPriceUsd: 17.00,
         name: { en: 'Steamed Rice Cake Flour 500g', km: 'ម្សៅនំអាកោ ៥០០ក្រាម', fr: 'Farine pour gâteau de riz à la vapeur 500g', zh: '蒸米糕粉 (Nom Ako) 500g' },
         nameKhmer: 'ម្សៅនំអាកោ ៥០០ក្រាម', spec: { en: '20 Pcs/CTN', km: 'ថង់ ៥០០ក្រាម / ២០ កញ្ចប់ (១០គីឡូ/កេស)', fr: 'Sac de 500g / 20 Pcs (10kg/CTN)', zh: '500g/袋 / 20包 (10kg/箱)' }, fobUsd: 0.85, pcsPer20ft: 20000,
         asianComps: [
@@ -436,7 +436,7 @@ const productsData = [
             { brand: 'Asian Rice Cake Premix', weightG: 500, priceAud: 3.10, source: 'Src: Woolworths Supermarkets VIC' },
             { brand: 'Lian How Steamed Cake Mix', weightG: 500, priceAud: 3.25, source: 'Src: Coles Online AU (Melb)' }
         ]
-    }
+    } */
 ];
 
 // --- TRANSLATION DICTIONARIES ---
@@ -527,6 +527,122 @@ const translations = {
         lbl_fx: "汇率 (AUD/USD)", lbl_freight: "海运费 (USD)", lbl_margin: "目标利润率 (%)", btn_recalc: "重新计算"
     }
 };
+
+// --- LOCAL STORAGE MANAGER & RETRIEVAL ---
+
+// 1. Save data to local storage and update the dropdown list
+function saveToLocalBrowser(buttonElement) {
+    const nameInput = document.getElementById('custName')?.value.trim();
+    if (!nameInput) {
+        alert('Please enter a customer name before saving.');
+        return;
+    }
+
+    const customerData = {
+        id: 'cust_' + Date.now(),
+        name: nameInput,
+        email: document.getElementById('custEmail')?.value || '',
+        address: document.getElementById('custAddress')?.value || '',
+        containerType: document.getElementById('input-container-type')?.value || '',
+        volumeCtn: document.getElementById('dash-card-ctn-qty')?.innerText || '0 CTN',
+        saveDate: new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    };
+
+    // Retrieve existing saved customers array or create a new array
+    const savedCustomers = JSON.parse(localStorage.getItem('savedCustomers') || '[]');
+
+    // Overwrite if customer name already exists, otherwise add new entry
+    const existingIndex = savedCustomers.findIndex(c => c.name.toLowerCase() === nameInput.toLowerCase());
+    if (existingIndex > -1) {
+        customerData.id = savedCustomers[existingIndex].id; // Retain ID
+        savedCustomers[existingIndex] = customerData;
+    } else {
+        savedCustomers.push(customerData);
+    }
+
+    localStorage.setItem('savedCustomers', JSON.stringify(savedCustomers));
+
+    // Refresh dropdown options immediately after saving
+    populateCustomerDropdown();
+
+    // Button visual feedback
+    if (buttonElement) {
+        const originalText = buttonElement.innerHTML;
+        buttonElement.innerHTML = 'Saved';
+        buttonElement.classList.add('bg-emerald-600', 'text-white', 'border-emerald-600');
+        buttonElement.classList.remove('bg-slate-900', 'text-gold-400');
+
+        setTimeout(() => {
+            buttonElement.innerHTML = originalText;
+            buttonElement.classList.remove('bg-emerald-600', 'text-white', 'border-emerald-600');
+            buttonElement.classList.add('bg-slate-900', 'text-gold-400');
+        }, 2500);
+    }
+}
+
+// 2. Populate the select element with all saved entries
+function populateCustomerDropdown() {
+    const selectEl = document.getElementById('selectCustomer');
+    if (!selectEl) return;
+
+    const savedCustomers = JSON.parse(localStorage.getItem('savedCustomers') || '[]');
+
+    // Reset list with placeholder option
+    selectEl.innerHTML = '<option value="">Select a Customer</option>';
+
+    // Add each saved customer as an option
+    savedCustomers.forEach(cust => {
+        const option = document.createElement('option');
+        option.value = cust.id;
+        option.textContent = `${cust.name} (${cust.saveDate})`;
+        selectEl.appendChild(option);
+    });
+}
+
+// 3. Load selected customer data back into the form inputs
+function loadSelectedCustomer(customerId) {
+    if (!customerId) return;
+
+    const savedCustomers = JSON.parse(localStorage.getItem('savedCustomers') || '[]');
+    const customer = savedCustomers.find(c => c.id === customerId);
+
+    if (!customer) return;
+
+    // Populate form fields
+    if (document.getElementById('custName')) document.getElementById('custName').value = customer.name;
+    if (document.getElementById('custEmail')) document.getElementById('custEmail').value = customer.email;
+    if (document.getElementById('custAddress')) document.getElementById('custAddress').value = customer.address;
+    if (document.getElementById('input-container-type')) document.getElementById('input-container-type').value = customer.containerType;
+    if (document.getElementById('dash-card-ctn-qty')) document.getElementById('dash-card-ctn-qty').innerText = customer.volumeCtn;
+}
+
+// Automatically populate the dropdown when page loads
+document.addEventListener('DOMContentLoaded', populateCustomerDropdown);
+
+function bulkFillQuantities(value) {
+    const outputSpan = document.getElementById('output');
+    
+    // If the user selects "-- Choose --", reset the text and exit
+    if (!value) {
+        if (outputSpan) outputSpan.innerText = "None";
+        return;
+    }
+
+    const qty = parseInt(value, 10);
+    
+    // Iterate through all products and set the new order quantity
+    productsData.forEach(p => {
+        p.orderQty = qty;
+    });
+
+    // Update the UI text to reflect the chosen amount
+    if (outputSpan) {
+        outputSpan.innerText = qty;
+    }
+
+    // Re-render the Customer Quotation table with the updated volumes
+    renderTable();
+}
 
 // --- HELPER & UTILITY FUNCTIONS ---
 async function loadCustomers() {
@@ -826,27 +942,44 @@ function updateOpExFromInputs() {
     const c5_mth = c5_ann / 12;
 
     // Category 6
-    const c6_1_ship = parseFloat(document.getElementById('c6_1_ship_input')?.value) || 0;
-    const c6_2_ship = parseFloat(document.getElementById('c6_2_ship_input')?.value) || 0;
-    const c6_3_ship = parseFloat(document.getElementById('c6_3_ship_input')?.value) || 0;
+// Category 6: Import Freight Clearance & Customs
+const parseInputValue = (id) => {
+    const el = document.getElementById(id);
+    if (!el) return 0;
+    const val = parseFloat(el.value);
+    return isNaN(val) ? 0 : val;
+};
 
-    const containerType = document.getElementById('input-container-type')?.value || '20ft';
-    ANNUAL_CONTAINERS = containerType === '40ft' ? 6 : 12;
+const c6_1_ship = parseInputValue('c6_1_ship_input');
+const c6_2_ship = parseInputValue('c6_2_ship_input');
+const c6_3_ship = parseInputValue('c6_3_ship_input');
+const c6_4_ship = parseInputValue('c6_4_ship_input');
+const c6_5_ship = parseInputValue('c6_5_ship_input');
 
-    const c6_1_ann = c6_1_ship * ANNUAL_CONTAINERS;
-    const c6_2_ann = c6_2_ship * ANNUAL_CONTAINERS;
-    const c6_3_ann = c6_3_ship * ANNUAL_CONTAINERS;
+const containerType = document.getElementById('input-container-type')?.value || '20ft';
+const ANNUAL_CONTAINERS = containerType === '40ft' ? 6 : 12;
 
-    if (document.getElementById('c6_1_ann')) document.getElementById('c6_1_ann').innerText = '$' + c6_1_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-    if (document.getElementById('c6_2_ann')) document.getElementById('c6_2_ann').innerText = '$' + c6_2_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-    if (document.getElementById('c6_3_ann')) document.getElementById('c6_3_ann').innerText = '$' + c6_3_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+const c6_1_ann = c6_1_ship * ANNUAL_CONTAINERS;
+const c6_2_ann = c6_2_ship * ANNUAL_CONTAINERS;
+const c6_3_ann = c6_3_ship * ANNUAL_CONTAINERS;
+const c6_4_ann = c6_4_ship * ANNUAL_CONTAINERS;
+const c6_5_ann = c6_5_ship * ANNUAL_CONTAINERS;
 
-    const c6_raw_ann = c6_1_ann + c6_2_ann + c6_3_ann;
-    if (document.getElementById('c6_ship_sub')) document.getElementById('c6_ship_sub').innerText = '$' + (c6_1_ship + c6_2_ship + c6_3_ship).toFixed(2);
-    if (document.getElementById('c6_ann_sub')) document.getElementById('c6_ann_sub').innerText = '$' + c6_raw_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+if (document.getElementById('c6_1_ann')) document.getElementById('c6_1_ann').innerText = '$' + c6_1_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+if (document.getElementById('c6_2_ann')) document.getElementById('c6_2_ann').innerText = '$' + c6_2_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+if (document.getElementById('c6_3_ann')) document.getElementById('c6_3_ann').innerText = '$' + c6_3_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+if (document.getElementById('c6_4_ann')) document.getElementById('c6_4_ann').innerText = '$' + c6_4_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+if (document.getElementById('c6_5_ann')) document.getElementById('c6_5_ann').innerText = '$' + c6_5_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
 
-    const c6_ann = getCategoryState(6, c6_raw_ann);
-    const c6_mth = c6_ann / 12;
+const c6_ship_sub_total = c6_1_ship + c6_2_ship + c6_3_ship + c6_4_ship + c6_5_ship;
+const c6_raw_ann = c6_1_ann + c6_2_ann + c6_3_ann + c6_4_ann + c6_5_ann;
+
+if (document.getElementById('c6_ship_sub')) document.getElementById('c6_ship_sub').innerText = '$' + c6_ship_sub_total.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+if (document.getElementById('c6_ann_sub')) document.getElementById('c6_ann_sub').innerText = '$' + c6_raw_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+if (document.getElementById('subtotal-c6-hdr')) document.getElementById('subtotal-c6-hdr').innerText = '$' + c6_raw_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + '/yr';
+
+const c6_ann = typeof getCategoryState === 'function' ? getCategoryState(6, c6_raw_ann) : c6_raw_ann;
+const c6_mth = c6_ann / 12;
 
     // Grand Total OpEx
     const totalAnnualOpEx = c1_ann + c2_ann + c3_ann + c4_ann + c5_ann + c6_ann;
