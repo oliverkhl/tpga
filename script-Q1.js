@@ -5,11 +5,10 @@ let currentOpExPerContainerAUD = currentAnnualOpExAUD / ANNUAL_CONTAINERS;
 let containerOverCapacityAlertShown = false; // Tracks alert state to prevent repeated triggers
 let appliedOpExContainerType = '20ft';
 
-// Q1 container presets. 40ft ocean freight is the 2,850 USD default already used by this
-// file (and by Q1-1). qc1 uses a different quote (2,480 / 4,710) and is not copied here.
+// Ocean freight matches qc1: 2,480 USD for 20ft and 4,710 USD for 40ft.
 const CONTAINER_PRESETS = {
-    '20ft': { freightUsd: 1580, cartageAud: 750, localCharges: 2920.60, warehouse: 600, annualContainers: 12, capacityCartons: 1000 },
-    '40ft': { freightUsd: 2850, cartageAud: 1450, localCharges: 3222.40, warehouse: 740, annualContainers: 6, capacityCartons: 2000 }
+    '20ft': { freightUsd: 2480, cartageAud: 750, localCharges: 2920.60, warehouse: 600, annualContainers: 12, capacityCartons: 1000 },
+    '40ft': { freightUsd: 4710, cartageAud: 1450, localCharges: 3222.40, warehouse: 740, annualContainers: 6, capacityCartons: 2000 }
 };
 
 // Last freight the user had for each container. A switch restores that container's own value.
