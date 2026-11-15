@@ -469,7 +469,7 @@ const translations = {
         c1_hdr: "Category 1: Stated Fixed Overheads", th_item: "Line Item", th_wk: "Weekly AUD", th_mth: "Monthly", th_ann: "Annual",
         c1_item1: "Office Rent", c1_item2: "Storage Unit / Small Warehouse", c1_item3: "Commercial Vehicle Rental",
         lbl_subtotal_ex_gst: "Subtotal (excl. GST)", c2_hdr: "Category 2: Personnel Overhead", th_role: "Role / Position",
-        th_base: "Base Salary AUD", th_super: "Super (11.5%)", th_wc: "WorkCover", c2_role1: "Managing Director", c2_role2: "Operations Manager",
+        th_base: "Base Salary AUD", th_super: "Super (12%)", th_wc: "WorkCover", c2_role1: "Managing Director", c2_role2: "Operations Manager",
         lbl_subtotal: "Subtotal", c3_hdr: "Category 3: Vehicle Running Expenses", th_desc: "Expense Description",
         c3_item1: "Fuel (Unleaded / Diesel)", c3_item2: "Transurban Tolls", c3_item3: "Vehicle Maintenance",
         c4_hdr: "Category 4: IT & SaaS Stack", th_software: "Software / Service",
@@ -482,7 +482,7 @@ const translations = {
         lbl_subtotal_ex_ocean: "Subtotal (excl. Ocean & Duty)", opex_sec3_title: "3. Key Compliance & Financial Considerations",
         opex_note1_title: "Customs Tariffs & FTAs:", opex_note1_body: "Goods originating in Cambodia qualify for duty-free entry into Australia under AANZFTA or RCEP, provided a valid Certificate of Origin (COO) is supplied.",
         opex_note2_title: "Import GST Deferred Scheme (DGST):", opex_note2_body: "Import GST (10%) is calculated on Customs Value + Duty + Transport/Insurance. Registering for Deferred GST defers border payment to monthly BAS returns.",
-        opex_note3_title: "Superannuation Compliance:", opex_note3_body: "Statutory Employer Superannuation Guarantee (11.5%) must be remitted quarterly to compliant Australian super funds before statutory due dates.",
+        opex_note3_title: "Superannuation Compliance:", opex_note3_body: "Statutory Employer Superannuation Guarantee (12%) must be remitted quarterly to compliant Australian super funds before statutory due dates.",
         tbl_title: "Landed Cost Quotation & Benchmark Schedule (Fast Entry + CTN Price Inputs)", tbl_subtitle: "Rearranged per Two Parrots Quotation (25 Active Products + 5 Upcoming Nov 2026 Launch)",
         lbl_active: "Active", lbl_upcoming: "Upcoming", th_prod_desc: "Product Description & Packaging Spec", th_fob_price: "CTN Price Before Delivery", th_fob_sub: "(Adjustable CTN USD → Auto PCS USD/AUD)",
         th_total_cost: "Total Landed Cost, Prices & Profit", th_itemized_note: "Structure: Total Landed CTN → Itemized Costs → Selling Prices → Net Profit (CTN - Landed - 10% Tax)",
@@ -516,7 +516,7 @@ const translations = {
         c1_hdr: "ប្រភេទ ១៖ ចំណាយថេរទូទៅ", th_item: "កាតព្វកិច្ច/មុខទំនិញ", th_wk: "ប្រចាំសប្តាហ៍ AUD", th_mth: "ប្រចាំខែ", th_ann: "ប្រចាំឆ្នាំ",
         c1_item1: "ថ្លៃជួលការិយាល័យ", c1_item2: "ថ្លៃជួលឃ្លាំងស្តុកទំនិញ", c1_item3: "ថ្លៃជួលរថយន្តពាណិជ្ជកម្ម",
         lbl_subtotal_ex_gst: "សរុបរង (មិនរាប់បញ្ចូល GST)", c2_hdr: "ប្រភេទ ២៖ ចំណាយបុគ្គលិក", th_role: "តួនាទី / តំណែង",
-        th_base: "ប្រាក់ខែសរុប AUD", th_super: "ប្រាក់សោធន (11.5%)", th_wc: "ធានារ៉ាប់រងបុគ្គលិក", c2_role1: "នាយកប្រតិបត្តិ", c2_role2: "អ្នកគ្រប់គ្រងប្រតិបត្តិការ",
+        th_base: "ប្រាក់ខែសរុប AUD", th_super: "ប្រាក់សោធន (12%)", th_wc: "ធានារ៉ាប់រងបុគ្គលិក", c2_role1: "នាយកប្រតិបត្តិ", c2_role2: "អ្នកគ្រប់គ្រងប្រតិបត្តិការ",
         lbl_subtotal: "សរុបរង", c3_hdr: "ប្រភេទ ៣៖ ចំណាយប្រតិបត្តិការរថយន្ត", th_desc: "ការបរិយាយចំណាយ",
         c3_item1: "ថ្លៃប្រេងសាំង", c3_item2: "ថ្លៃបង់ផ្លូវ Transurban", c3_item3: "ថ្លៃថែទាំរថយន្ត",
         c4_hdr: "ប្រភេទ ៤៖ ប្រព័ន្ធបច្ចេកវិទ្យា IT & SaaS", th_software: "កម្មវិធី / សេវាកម្ម",
@@ -529,7 +529,7 @@ const translations = {
         lbl_subtotal_ex_ocean: "សរុបរង (មិនរាប់ថ្លៃដឹកសមុទ្រ និងពន្ធ)", opex_sec3_title: "៣. អនុលោមភាពសំខាន់ៗ និងការពិចារណាផ្នែកហិរញ្ញវត្ថុ",
         opex_note1_title: "ពន្ធគយ និងកិច្ចព្រមព្រៀងពាណិជ្ជកម្មសេរី៖", opex_note1_body: "ទំនិញដែលមានប្រភពដើមពីប្រទេសកម្ពុជាទទួលបានការលើកលែងពន្ធនាំចូលមកអូស្ត្រាលីក្រោម AANZFTA ឬ RCEP ដោយគ្រាន់តែមានវិញ្ញាបនបត្រប្រភពដើម (COO)។",
         opex_note2_title: "ប្រព័ន្ធពន្យារការបង់ពន្ធ GST នាំចូល (DGST)៖", opex_note2_body: "ពន្ធ GST នាំចូល 10% ត្រូវគណនាលើតម្លៃគយ + ពន្ធ + ការដឹកជញ្ជូន។ ការចុះឈ្មោះប្រព័ន្ធ DGST អនុញ្ញាតឱ្យពន្យារការបង់ពន្ធរហូតដល់របាយការណ៍ BAS ប្រចាំខែ។",
-        opex_note3_title: "អនុលោមភាពប្រាក់សោធននិវត្តន៍៖", opex_note3_body: "ភាគទានប្រាក់សោធននិវត្តន៍កាតព្វកិច្ចរបស់និយោជក (11.5%) ត្រូវតែបង់ជូនមូលនិធិសោធនអូស្ត្រាលីរៀងរាល់ត្រីមាស។",
+        opex_note3_title: "អនុលោមភាពប្រាក់សោធននិវត្តន៍៖", opex_note3_body: "ភាគទានប្រាក់សោធននិវត្តន៍កាតព្វកិច្ចរបស់និយោជក (12%) ត្រូវតែបង់ជូនមូលនិធិសោធនអូស្ត្រាលីរៀងរាល់ត្រីមាស។",
         tbl_title: "តារាងសម្រង់តម្លៃដើម (បញ្ចូលរហ័ស + តម្លៃកេស)", tbl_subtitle: "រៀបចំឡើងវិញតាមសម្រង់តម្លៃ Two Parrots (២៥ ផលិតផលសកម្ម + ៥ ផលិតផលថ្មី)",
         lbl_active: "សកម្ម", lbl_upcoming: "ជិតចេញលក់", th_prod_desc: "ការបរិយាយផលិតផល និងលក្ខណៈវេចខ្ចប់", th_fob_price: "តម្លៃមួយកេសមុនពេលដឹក", th_fob_sub: "(អាចកែសម្រួលតម្លៃកេស USD → គណនាដប/កញ្ចប់ស្វ័យប្រវត្តិ)",
         th_total_cost: "ថ្លៃដើមនាំចូលសរុប តម្លៃលក់ និងចំណេញ", th_itemized_note: "រចនាសម្ព័ន្ធ៖ ថ្លៃដើមនាំចូលកេស → លម្អិតថ្លៃដើមកេស → តម្លៃលក់ → ចំណេញសុទ្ធ (កេស - ថ្លៃដើម - ពន្ធ ១០%)",
@@ -563,7 +563,7 @@ const translations = {
         c1_hdr: "Catégorie 1: Frais Fixes Établis", th_item: "Poste de Dépense", th_wk: "Hebdomadaire AUD", th_mth: "Mensuel", th_ann: "Annuel",
         c1_item1: "Loyer du bureau", c1_item2: "Unité de stockage / Petit entrepôt", c1_item3: "Location de véhicule commercial",
         lbl_subtotal_ex_gst: "Sous-total (hors GST)", c2_hdr: "Catégorie 2: Frais de Personnel", th_role: "Rôle / Poste",
-        th_base: "Salaire de base AUD", th_super: "Retraite (11.5%)", th_wc: "WorkCover", c2_role1: "Directeur Général", c2_role2: "Responsable des Opérations",
+        th_base: "Salaire de base AUD", th_super: "Retraite (12%)", th_wc: "WorkCover", c2_role1: "Directeur Général", c2_role2: "Responsable des Opérations",
         lbl_subtotal: "Sous-total", c3_hdr: "Catégorie 3: Frais de Véhicule", th_desc: "Description de la Dépense",
         c3_item1: "Carburant", c3_item2: "Péages Transurban", c3_item3: "Entretien du véhicule",
         c4_hdr: "Catégorie 4: Suite IT & SaaS", th_software: "Logiciel / Service",
@@ -576,7 +576,7 @@ const translations = {
         lbl_subtotal_ex_ocean: "Sous-total (hors fret maritime et droits)", opex_sec3_title: "3. Considérations Financières et de Conformité",
         opex_note1_title: "Tarifs Douaniers & ALE:", opex_note1_body: "Les marchandises du Cambodge sont exemptées de droits en Australie sous AANZFTA ou RCEP avec un certificat d'origine (COO) valide.",
         opex_note2_title: "Régime de GST d'Importation Différée (DGST):", opex_note2_body: "La GST d'importation (10%) est calculée sur Valeur en douane + Droits + Transport. L'inscription au DGST reporte le paiement à la déclaration BAS mensuelle.",
-        opex_note3_title: "Conformité de la Retraite (Superannuation):", opex_note3_body: "La contribution légale de l'employeur à la retraite (11,5%) doit être versée chaque trimestre à des fonds de retraite australiens conformes.",
+        opex_note3_title: "Conformité de la Retraite (Superannuation):", opex_note3_body: "La contribution légale de l'employeur à la retraite (12%) doit être versée chaque trimestre à des fonds de retraite australiens conformes.",
         tbl_title: "Devis des coûts rendus (saisie rapide + prix carton)", tbl_subtitle: "Réorganisé selon le devis Two Parrots (25 produits actifs + 5 nouveaux nov. 2026)",
         lbl_active: "Actifs", lbl_upcoming: "À venir", th_prod_desc: "Description du produit et conditionnement", th_fob_price: "Prix par Carton avant livraison", th_fob_sub: "(Ajustable CTN USD → Auto PCS USD/AUD)",
         th_total_cost: "Coût rendu total, Prix & Bénéfice", th_itemized_note: "Structure: Coût rendu Carton → Détail Coûts → Prix de vente → Bénéfice Net (Carton - Coût - Taxe 10%)",
@@ -610,7 +610,7 @@ const translations = {
         c1_hdr: "类别 1: 规定固定开支", th_item: "费用项目", th_wk: "每周 AUD", th_mth: "每月", th_ann: "每年",
         c1_item1: "办公室租金", c1_item2: "迷你仓库/小型仓库租金", c1_item3: "商用车租赁费",
         lbl_subtotal_ex_gst: "小计 (不含 GST)", c2_hdr: "类别 2: 人员薪酬开支", th_role: "职位 / 岗位",
-        th_base: "基本年薪 AUD", th_super: "养老金 (11.5%)", th_wc: "工伤保险", c2_role1: "总经理", c2_role2: "运营经理",
+        th_base: "基本年薪 AUD", th_super: "养老金 (12%)", th_wc: "工伤保险", c2_role1: "总经理", c2_role2: "运营经理",
         lbl_subtotal: "小计", c3_hdr: "类别 3: 车辆运营费用", th_desc: "费用描述",
         c3_item1: "燃油费 (无铅汽油/柴油)", c3_item2: "Transurban 高速路桥费", c3_item3: "车辆日常维护费",
         c4_hdr: "类别 4: IT 与 SaaS 软件服务", th_software: "软件 / 服务",
@@ -623,7 +623,7 @@ const translations = {
         lbl_subtotal_ex_ocean: "小计 (不含海运费与关税)", opex_sec3_title: "3. 关键合规与财务注意事项",
         opex_note1_title: "海关关税与自贸协定:", opex_note1_body: "原产于柬埔寨的货物在提供有效原产地证书 (COO) 的情况下，可通过 AANZFTA 或 RCEP 享受零关税进入澳大利亚。",
         opex_note2_title: "进口 GST 延期缴纳计划 (DGST):", opex_note2_body: "进口 GST (10%) 按海关价值 + 关税 + 运费/保险计算。注册延期 GST 计划可将清关时的支付延期至每月 BAS 申报时缴纳。",
-        opex_note3_title: "雇主养老金合规要求:", opex_note3_body: "法定雇主养老金 (11.5%) 必须在法定截止日期前按季度缴纳至符合条件的澳大利亚养老金基金中。",
+        opex_note3_title: "雇主养老金合规要求:", opex_note3_body: "法定雇主养老金 (12%) 必须在法定截止日期前按季度缴纳至符合条件的澳大利亚养老金基金中。",
         tbl_title: "到岸成本报价表（快速录入 + 箱价）", tbl_subtitle: "根据 Two Parrots 报价单重新排列（25 个在售产品 + 5 个 2026 年 11 月新品）",
         lbl_active: "在售", lbl_upcoming: "即将上市", th_prod_desc: "产品描述与包装规格", th_fob_price: "每箱发货前单价 (CTN)", th_fob_sub: "(可调节箱价 USD → 自动计算单件 USD/AUD)",
         th_total_cost: "总到岸成本、售价与净利润", th_itemized_note: "结构: 每箱到岸价 → 拆解成本 → 建议售价 → 净利润 (整箱 - 到岸 - 10% 税)",
@@ -936,12 +936,12 @@ function updateOpExFromInputs() {
 
     // Category 2
     const c2_1_base = parseFloat(document.getElementById('c2_1_base')?.value) || 0;
-    const c2_1_super = c2_1_base * 0.115;
+    const c2_1_super = c2_1_base * 0.12;
     const c2_1_wc = parseFloat(document.getElementById('c2_1_wc')?.value) || 0;
     const c2_1_tot = c2_1_base + c2_1_super + c2_1_wc;
 
     const c2_2_base = parseFloat(document.getElementById('c2_2_base')?.value) || 0;
-    const c2_2_super = c2_2_base * 0.115;
+    const c2_2_super = c2_2_base * 0.12;
     const c2_2_wc = parseFloat(document.getElementById('c2_2_wc')?.value) || 0;
     const c2_2_tot = c2_2_base + c2_2_super + c2_2_wc;
 

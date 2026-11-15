@@ -263,12 +263,12 @@ function updateOpExFromInputs() {
 
     // Category 3: Personnel Overhead
     const c3_1_base = parseFloat(document.getElementById('c3_1_base')?.value) || 0;
-    const c3_1_super = c3_1_base * 0.115;
+    const c3_1_super = c3_1_base * 0.12;
     const c3_1_wc = parseFloat(document.getElementById('c3_1_wc')?.value) || 0;
     const c3_1_tot = c3_1_base + c3_1_super + c3_1_wc;
 
     const c3_2_base = parseFloat(document.getElementById('c3_2_base')?.value) || 0;
-    const c3_2_super = c3_2_base * 0.115;
+    const c3_2_super = c3_2_base * 0.12;
     const c3_2_wc = parseFloat(document.getElementById('c3_2_wc')?.value) || 0;
     const c3_2_tot = c3_2_base + c3_2_super + c3_2_wc;
 
@@ -556,13 +556,13 @@ async function exportCategoryPDF(catNum) {
         theadHTML = `<tr>
             ${thCell('Role / Position', 'តួនាទី / មុខតំណែង', 'left')}
             ${thCell('Base AUD', 'ប្រាក់ខែគោល', 'right')}
-            ${thCell('Super (11.5%)', 'ប្រាក់សោធន', 'right')}
+            ${thCell('Super (12%)', 'ប្រាក់សោធន', 'right')}
             ${thCell('WorkCover', 'ធានារ៉ាប់រងការងារ', 'right')}
             ${thCell('Annual AUD', 'សរុប AUD', 'right')}
             ${thCell('Annual USD', 'សរុប USD', 'right')}
         </tr>`;
-        const b1 = getVal('c3_1_base'), wc1 = getVal('c3_1_wc'), tot1 = b1 + (b1 * 0.115) + wc1;
-        const b2 = getVal('c3_2_base'), wc2 = getVal('c3_2_wc'), tot2 = b2 + (b2 * 0.115) + wc2;
+        const b1 = getVal('c3_1_base'), wc1 = getVal('c3_1_wc'), tot1 = b1 + (b1 * 0.12) + wc1;
+        const b2 = getVal('c3_2_base'), wc2 = getVal('c3_2_wc'), tot2 = b2 + (b2 * 0.12) + wc2;
         const totalAud = tot1 + tot2;
         const rows = [
             ['Managing Director', 'នាយកគ្រប់គ្រង', fmt(b1), getTxt('c3_1_super'), fmt(wc1), tot1],
