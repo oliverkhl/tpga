@@ -3,6 +3,7 @@ let currentAnnualOpExAUD = 280435.00;
 let ANNUAL_CONTAINERS = 12; // Default: 12 x 20ft FCL Shipments per year
 let currentOpExPerContainerAUD = currentAnnualOpExAUD / ANNUAL_CONTAINERS;
 let containerOverCapacityAlertShown = false; // Tracks alert state to prevent repeated triggers
+let appliedOpExContainerType = '20ft';
 
 // Default OpEx Baseline Values for Reset Button
 const defaultOpExValues = {
@@ -25,9 +26,7 @@ const defaultOpExValues = {
     c5_2_ann_input: 1800.00,
     c5_3_ann_input: 1500.00,
     c5_4_ann_input: 1860.00,
-    c6_1_ship_input: 475.00,  // Synchronized Customs Admin Baseline
-    c6_2_ship_input: 450.00,  // Synchronized Port Handling Benchmark
-    c6_3_ship_input: 750.00   // Synchronized Wharf Cartage (tied to input-cartage)
+    c6_1_ship_input: 2920.60, c6_2_ship_input: 600.00, c6_3_ship_input: 0.00, c6_4_ship_input: 0.00, c6_5_ship_input: 223.00
 };
 
 // --- REAL-TIME OPEX CALCULATOR & RE-ALLOCATION WITH TOGGLE SWITCHES FOR ALL CATEGORIES ---
@@ -191,45 +190,41 @@ function updateOpExFromInputs() {
     const c5_ann_sub = getCategoryState(5, c5_raw_ann_sub);
     const c5_mth_sub = c5_ann_sub / 12;
 
-// --- CATEGORY 6 (FULLY SYNCHRONIZED WITH FREIGHT & TERMINAL BASELINE) ---
+    // Category 6: Import Freight Clearance & Customs (same line items and formulas as qc1)
+    const parseInputValue = (id) => {
+        const el = document.getElementById(id);
+        if (!el) return 0;
+        const val = parseFloat(el.value);
+        return isNaN(val) ? 0 : val;
+    };
+
+    const c6_1_ship = parseInputValue('c6_1_ship_input');
+    const c6_2_ship = parseInputValue('c6_2_ship_input');
+    const c6_3_ship = parseInputValue('c6_3_ship_input');
+    const c6_4_ship = parseInputValue('c6_4_ship_input');
+    const c6_5_ship = parseInputValue('c6_5_ship_input');
+
     const containerType = document.getElementById('input-container-type')?.value || '20ft';
-    const is40ft = containerType === '40ft';
+    ANNUAL_CONTAINERS = containerType === '40ft' ? 6 : 12;
 
-    // 1. Dynamic Cartage Sync with Card 2 / Live Control Panel
-    const currentCartageVal = parseFloat(document.getElementById('input-cartage')?.value) || (is40ft ? 1450.00 : 750.00);
-    const c6_3_input_el = document.getElementById('c6_3_ship_input');
-    if (c6_3_input_el && document.activeElement !== c6_3_input_el) {
-        c6_3_input_el.value = currentCartageVal.toFixed(2);
-    }
-
-    // 2. Dynamic Port Charges Sync (Default: $450 AUD for 20ft, $850 AUD for 40ft)
-    const defaultPortCharge = is40ft ? 850.00 : 450.00;
-    const c6_2_input_el = document.getElementById('c6_2_ship_input');
-    if (c6_2_input_el && document.activeElement !== c6_2_input_el && (!c6_2_input_el.value || c6_2_input_el.getAttribute('data-container-type') !== containerType)) {
-        c6_2_input_el.value = defaultPortCharge.toFixed(2);
-        c6_2_input_el.setAttribute('data-container-type', containerType);
-    }
-
-    // 3. Read Active Inputs
-    const c6_1_ship = parseFloat(document.getElementById('c6_1_ship_input')?.value) || 475.00;
-    const c6_2_ship = parseFloat(c6_2_input_el?.value) || defaultPortCharge;
-    const c6_3_ship = parseFloat(c6_3_input_el?.value) || currentCartageVal;
-
-    // 4. Calculate Annual Totals using Live Annual Container Count (12 for 20ft, 6 for 40ft)
     const c6_1_ann = c6_1_ship * ANNUAL_CONTAINERS;
     const c6_2_ann = c6_2_ship * ANNUAL_CONTAINERS;
     const c6_3_ann = c6_3_ship * ANNUAL_CONTAINERS;
+    const c6_4_ann = c6_4_ship * ANNUAL_CONTAINERS;
+    const c6_5_ann = c6_5_ship * ANNUAL_CONTAINERS;
 
-    // Update UI Annual Labels
-    if (document.getElementById('c6_1_ann')) document.getElementById('c6_1_ann').innerText = '$' + c6_1_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-    if (document.getElementById('c6_2_ann')) document.getElementById('c6_2_ann').innerText = '$' + c6_2_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-    if (document.getElementById('c6_3_ann')) document.getElementById('c6_3_ann').innerText = '$' + c6_3_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    const money = (n) => '$' + n.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    if (document.getElementById('c6_1_ann')) document.getElementById('c6_1_ann').innerText = money(c6_1_ann);
+    if (document.getElementById('c6_2_ann')) document.getElementById('c6_2_ann').innerText = money(c6_2_ann);
+    if (document.getElementById('c6_3_ann')) document.getElementById('c6_3_ann').innerText = money(c6_3_ann);
+    if (document.getElementById('c6_4_ann')) document.getElementById('c6_4_ann').innerText = money(c6_4_ann);
+    if (document.getElementById('c6_5_ann')) document.getElementById('c6_5_ann').innerText = money(c6_5_ann);
 
-    const c6_ship_sub = c6_1_ship + c6_2_ship + c6_3_ship;
-    const c6_raw_ann_sub = c6_1_ann + c6_2_ann + c6_3_ann;
+    const c6_ship_sub = c6_1_ship + c6_2_ship + c6_3_ship + c6_4_ship + c6_5_ship;
+    const c6_raw_ann_sub = c6_1_ann + c6_2_ann + c6_3_ann + c6_4_ann + c6_5_ann;
 
-    if (document.getElementById('c6_ship_sub')) document.getElementById('c6_ship_sub').innerText = '$' + c6_ship_sub.toFixed(2);
-    if (document.getElementById('c6_ann_sub')) document.getElementById('c6_ann_sub').innerText = '$' + c6_raw_ann_sub.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    if (document.getElementById('c6_ship_sub')) document.getElementById('c6_ship_sub').innerText = money(c6_ship_sub);
+    if (document.getElementById('c6_ann_sub')) document.getElementById('c6_ann_sub').innerText = money(c6_raw_ann_sub);
 
     const c6_ann_sub = getCategoryState(6, c6_raw_ann_sub);
     const c6_mth_sub = c6_ann_sub / 12;
@@ -253,7 +248,7 @@ function updateOpExFromInputs() {
         { name: 'Vehicle Running', amt: c3_ann_sub, sub: '$' + c3_ann_sub.toLocaleString('en-US', {minimumFractionDigits: 2}) + ' AUD (Fuel, Tolls, Maint.)' },
         { name: 'IT & SaaS Stack', amt: c4_ann_sub, sub: '$' + c4_ann_sub.toLocaleString('en-US', {minimumFractionDigits: 2}) + ' AUD (Software & Telecoms)' },
         { name: 'Insurance & Compliance', amt: c5_ann_sub, sub: '$' + c5_ann_sub.toLocaleString('en-US', {minimumFractionDigits: 2}) + ' AUD (Liability, Transit, Audit)' },
-        { name: 'Import Clearance & Port', amt: c6_ann_sub, sub: '$' + c6_ann_sub.toLocaleString('en-US', {minimumFractionDigits: 2}) + ' AUD (Clearance & Cartage)' }
+        { name: 'Import Clearance & Customs', amt: c6_ann_sub, sub: '$' + c6_ann_sub.toLocaleString('en-US', {minimumFractionDigits: 2}) + ' AUD (Local charges, warehouse, duty, GST, entry fee)' }
     ];
 
     const topCategory = categories.reduce((max, cat) => cat.amt > max.amt ? cat : max, categories[0]);
@@ -467,9 +462,16 @@ const translations = {
         th_service: "Service Component",
         th_per_shipment: "Per Shipment AUD",
         th_ann_shipments: "Annual (12 Shipments)",
-        c6_item1: "Customs Clearance & Admin Fees",
-        c6_item2: "Port Charges & Infrastructure Levies",
-        c6_item3: "Wharf Cartage & Sideloader Transport",
+        c6_item1: "Local Charges & GST",
+        c6_item2: "Warehouse Services & GST",
+        c6_item3: "Customs Duty",
+        c6_item4: "Import GST",
+        c6_item5: "Electronic Entry Fee",
+        c6_note1: "Handling fees + local GST ($207.24)",
+        c6_note2: "Unpacking, 38 pallets, storage, admin + GST ($293)",
+        c6_note3: "Waived via valid Free Trade Agreement certificate",
+        c6_note4: "Recalculated at 10% of VoTI ($26,853.20 CIF value + freight)",
+        c6_note5: "Tiered fee for consignments over AUD 10,000",
         lbl_subtotal_ex_ocean: "Subtotal (excl. Ocean & Duty)",
         opex_sec3_title: "3. Key Compliance & Financial Considerations",
         opex_note1_title: "Customs Tariffs & FTAs:",
@@ -635,9 +637,16 @@ const translations = {
         th_service: "សមាសភាគសេវាកម្ម",
         th_per_shipment: "ក្នុងមួយជើង AUD",
         th_ann_shipments: "ប្រចាំឆ្នាំ (១២ ជើង)",
-        c6_item1: "ថ្លៃជើងសាគយ",
-        c6_item2: "ថ្លៃសេវាកំពង់ផែ (PSC)",
-        c6_item3: "ថ្លៃដឹកជញ្ជូនពីកំពង់ផែទៅឃ្លាំង",
+        c6_item1: "ថ្លៃសេវាក្នុងស្រុក និង GST",
+        c6_item2: "សេវាឃ្លាំង និង GST",
+        c6_item3: "ពន្ធគយ",
+        c6_item4: "ពន្ធ GST នាំចូល",
+        c6_item5: "ថ្លៃបញ្ចូលទិន្នន័យអេឡិចត្រូនិក",
+        c6_note1: "ថ្លៃដោះស្រាយ + GST ក្នុងស្រុក ($207.24)",
+        c6_note2: "ពន្លា ៣៨ ប៉ាឡែត ការរក្សាទុក រដ្ឋបាល + GST ($293)",
+        c6_note3: "លើកលែងដោយវិញ្ញាបនបត្រកិច្ចព្រមព្រៀងពាណិជ្ជកម្មសេរីដែលមានសុពលភាព",
+        c6_note4: "គណនាឡើងវិញ 10% នៃ VoTI (តម្លៃ CIF $26,853.20 + ថ្លៃដឹក)",
+        c6_note5: "ថ្លៃតាមកម្រិតសម្រាប់ទំនិញលើស AUD 10,000",
         lbl_subtotal_ex_ocean: "សរុបរង (មិនរាប់ថ្លៃដឹកសមុទ្រ និងពន្ធ)",
         opex_sec3_title: "៣. អនុលោមភាពសំខាន់ៗ និងការពិចារណាផ្នែកហិរញ្ញវត្ថុ",
         opex_note1_title: "ពន្ធគយ និងកិច្ចព្រមព្រៀងពាណិជ្ជកម្មសេរី៖",
@@ -803,9 +812,16 @@ const translations = {
         th_service: "Composante du service",
         th_per_shipment: "Par expédition AUD",
         th_ann_shipments: "Annuel (12 expéditions)",
-        c6_item1: "Frais de courtage en douane",
-        c6_item2: "Frais de manutention portuaire (PSC)",
-        c6_item3: "Camionnage / Transport du quai au stockage",
+        c6_item1: "Frais locaux et GST",
+        c6_item2: "Services d'entrepôt et GST",
+        c6_item3: "Droits de douane",
+        c6_item4: "GST à l'importation",
+        c6_item5: "Frais de saisie électronique",
+        c6_note1: "Frais de manutention + GST locale ($207.24)",
+        c6_note2: "Déballage, 38 palettes, stockage, admin + GST ($293)",
+        c6_note3: "Exonéré avec un certificat d'accord de libre-échange valide",
+        c6_note4: "Recalculé à 10 % de la VoTI (valeur CIF $26,853.20 + fret)",
+        c6_note5: "Frais échelonné pour les envois supérieurs à 10 000 AUD",
         lbl_subtotal_ex_ocean: "Sous-total (hors fret maritime et droits)",
         opex_sec3_title: "3. Considérations Financières et de Conformité",
         opex_note1_title: "Tarifs Douaniers & ALE:",
@@ -971,9 +987,16 @@ const translations = {
         th_service: "服务组成部分",
         th_per_shipment: "单次运费 AUD",
         th_ann_shipments: "每年费用 (12次进口)",
-        c6_item1: "报关行服务费",
-        c6_item2: "港口服务费 (PSC)",
-        c6_item3: "码头至仓库短驳拖車费",
+        c6_item1: "本地费用及 GST",
+        c6_item2: "仓储服务及 GST",
+        c6_item3: "关税",
+        c6_item4: "进口 GST",
+        c6_item5: "电子申报费",
+        c6_note1: "操作费 + 本地 GST（$207.24）",
+        c6_note2: "拆箱、38 个托盘、仓储、管理费 + GST（$293）",
+        c6_note3: "凭有效自由贸易协定证书免征",
+        c6_note4: "按 VoTI 的 10% 重算（CIF 价值 $26,853.20 + 运费）",
+        c6_note5: "货值超过 10,000 澳元的分级费用",
         lbl_subtotal_ex_ocean: "小计 (不含海运费与关税)",
         opex_sec3_title: "3. 关键合规与财务注意事项",
         opex_note1_title: "海关关税与自贸协定:",
@@ -1668,6 +1691,20 @@ function generateCompetitorHtml(compList, targetWeightG, customerSellingPriceAud
 }
 
 // --- AUTOMATIC CONTAINER CARTAGE & FREIGHT SWITCHING ENGINE ---
+function applyOpExContainerPreset(containerType) {
+    if (appliedOpExContainerType === containerType) return;
+    appliedOpExContainerType = containerType;
+    const c6_1_ship_input = document.getElementById('c6_1_ship_input');
+    const c6_2_ship_input = document.getElementById('c6_2_ship_input');
+    if (containerType === '40ft') {
+        if (c6_1_ship_input) c6_1_ship_input.value = 3222.40;
+        if (c6_2_ship_input) c6_2_ship_input.value = 740.00;
+    } else {
+        if (c6_1_ship_input) c6_1_ship_input.value = 2920.60;
+        if (c6_2_ship_input) c6_2_ship_input.value = 600.00;
+    }
+}
+
 function handleContainerTypeChange() {
     const containerType = document.getElementById('input-container-type')?.value || '20ft';
     const inputFreight = document.getElementById('input-freight');
@@ -1681,6 +1718,7 @@ function handleContainerTypeChange() {
         if (inputCartage) inputCartage.value = '750';
     }
 
+    applyOpExContainerPreset(containerType);
     updateOpExFromInputs();
 }
 
@@ -2020,6 +2058,7 @@ window.resetMasterProfitOrders = resetMasterProfitOrders;
 
 // Initial Launch listeners
 document.addEventListener('DOMContentLoaded', () => {
+    appliedOpExContainerType = document.getElementById('input-container-type')?.value || '20ft';
     initPasswordModalA11y();
     if (tpgaStaffSessionActive()) {
         tpgaApplyStaffUnlock();
@@ -2044,18 +2083,5 @@ document.addEventListener('DOMContentLoaded', () => {
     if (passwordForm) {
         passwordForm.addEventListener('submit', unlockPage);
     }
-	// Attach inside DOMContentLoaded or init block:
-const c6_3_el = document.getElementById('c6_3_ship_input');
-if (c6_3_el) {
-    c6_3_el.addEventListener('input', (e) => {
-        const val = parseFloat(e.target.value) || 0;
-        const inputCartage = document.getElementById('input-cartage');
-        if (inputCartage) {
-            inputCartage.value = val.toFixed(2);
-        }
-        updateOpExFromInputs();
-    });
-}
-
     updateOpExFromInputs();
 });

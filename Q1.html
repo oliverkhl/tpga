@@ -655,7 +655,7 @@
                                             <div class="w-9 h-5 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-emerald-600 relative"></div>
                                             <span id="c6_toggle_status" class="ml-2 text-[10px] font-bold uppercase tracking-wider text-emerald-600">ON</span>
                                         </label>
-                                        <span class="text-gold-800 font-mono font-bold text-xs" id="subtotal-c6-hdr">$35,742.00/yr</span>
+                                        <span class="text-gold-800 font-mono font-bold text-xs" id="subtotal-c6-hdr">$115,331.52/yr</span>
                                     </div>
                                 </div>
                                 <table class="w-full text-[11px] bg-white rounded border border-slate-200">
@@ -668,30 +668,59 @@
                                     </thead>
                                     <tbody class="divide-y divide-slate-100">
                                         <tr>
-                                            <td class="p-1.5 font-medium" data-i18n="c6_item1">Customs Clearance & Admin Fees</td>
-                                            <td class="p-1.5 text-right font-mono">
-                                                $<input type="number" id="c6_1_ship_input" value="253.50" step="10" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
+                                            <td class="p-1.5 font-medium">
+                                                <div data-i18n="c6_item1">Local Charges & GST</div>
+                                                <div class="text-[9.5px] text-slate-400 font-normal" data-i18n="c6_note1">Handling fees + local GST ($207.24)</div>
                                             </td>
-                                            <td class="p-1.5 text-right font-mono font-bold" id="c6_1_ann">$3,042.00</td>
+                                            <td class="p-1.5 text-right font-mono">
+                                                $<input type="number" id="c6_1_ship_input" value="3479.64" step="0.01" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
+                                            </td>
+                                            <td class="p-1.5 text-right font-mono font-bold" id="c6_1_ann">$41,755.68</td>
                                         </tr>
                                         <tr>
-                                            <td class="p-1.5 font-medium" data-i18n="c6_item2">Port Charges & Infrastructure Levies</td>
-                                            <td class="p-1.5 text-right font-mono">
-                                                $<input type="number" id="c6_2_ship_input" value="1695.00" step="25" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
+                                            <td class="p-1.5 font-medium">
+                                                <div data-i18n="c6_item2">Warehouse Services & GST</div>
+                                                <div class="text-[9.5px] text-slate-400 font-normal" data-i18n="c6_note2">Unpacking, 38 pallets, storage, admin + GST ($293)</div>
                                             </td>
-                                            <td class="p-1.5 text-right font-mono font-bold" id="c6_2_ann">$20,340.00</td>
+                                            <td class="p-1.5 text-right font-mono">
+                                                $<input type="number" id="c6_2_ship_input" value="3223.00" step="0.01" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
+                                            </td>
+                                            <td class="p-1.5 text-right font-mono font-bold" id="c6_2_ann">$38,676.00</td>
                                         </tr>
                                         <tr>
-                                            <td class="p-1.5 font-medium" data-i18n="c6_item3">Wharf Cartage & Sideloader Transport</td>
-                                            <td class="p-1.5 text-right font-mono">
-                                                $<input type="number" id="c6_3_ship_input" value="1030.00" step="25" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
+                                            <td class="p-1.5 font-medium">
+                                                <div data-i18n="c6_item3">Customs Duty</div>
+                                                <div class="text-[9.5px] text-emerald-600 font-normal" data-i18n="c6_note3">Waived via valid Free Trade Agreement certificate</div>
                                             </td>
-                                            <td class="p-1.5 text-right font-mono font-bold" id="c6_3_ann">$12,360.00</td>
+                                            <td class="p-1.5 text-right font-mono">
+                                                $<input type="number" id="c6_3_ship_input" value="0.00" step="0.01" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
+                                            </td>
+                                            <td class="p-1.5 text-right font-mono font-bold" id="c6_3_ann">$0.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-1.5 font-medium">
+                                                <div data-i18n="c6_item4">Import GST</div>
+                                                <div class="text-[9.5px] text-slate-400 font-normal" data-i18n="c6_note4">Recalculated at 10% of VoTI ($26,853.20 CIF value + freight)</div>
+                                            </td>
+                                            <td class="p-1.5 text-right font-mono">
+                                                $<input type="number" id="c6_4_ship_input" value="2685.32" step="0.01" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
+                                            </td>
+                                            <td class="p-1.5 text-right font-mono font-bold" id="c6_4_ann">$32,223.84</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-1.5 font-medium">
+                                                <div data-i18n="c6_item5">Electronic Entry Fee</div>
+                                                <div class="text-[9.5px] text-slate-400 font-normal" data-i18n="c6_note5">Tiered fee for consignments over AUD 10,000</div>
+                                            </td>
+                                            <td class="p-1.5 text-right font-mono">
+                                                $<input type="number" id="c6_5_ship_input" value="223.00" step="0.01" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
+                                            </td>
+                                            <td class="p-1.5 text-right font-mono font-bold" id="c6_5_ann">$2,676.00</td>
                                         </tr>
                                         <tr class="bg-slate-100 font-bold border-t border-slate-300">
                                             <td class="p-1.5 text-slate-900" data-i18n="lbl_subtotal_ex_ocean">Subtotal (excl. Ocean & Duty)</td>
-                                            <td class="p-1.5 text-right font-mono" id="c6_ship_sub">$2,978.50</td>
-                                            <td class="p-1.5 text-right font-mono text-gold-800" id="c6_ann_sub">$35,742.00</td>
+                                            <td class="p-1.5 text-right font-mono" id="c6_ship_sub">$9,610.96</td>
+                                            <td class="p-1.5 text-right font-mono text-gold-800" id="c6_ann_sub">$115,331.52</td>
                                         </tr>
                                     </tbody>
                                 </table>
