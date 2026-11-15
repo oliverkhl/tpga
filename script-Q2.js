@@ -442,7 +442,7 @@ const translations = {
     en: {
         modal_title: "Restricted Access", modal_desc: "Please enter the security password to view the Landed Cost Quotation & Analytics.",
         modal_label: "Enter Password", modal_error: "Incorrect password. Please try again.", modal_btn: "Unlock Dashboard",
-        header_company_name: "TWO PARROTS GROUP AUSTRALIA", header_sub: "Import & Distribution Landed Cost Intelligence",
+        header_company_name: "TWO PARROTS GROUP AUSTRALIA", header_sub: "Customer Quotation Intelligence",
         btn_print: "Print A4 Quotation", hdr_company_title: "Two Parrots Group Australia", lbl_md: "Managing Director:",
         card_contact_title: "Contact & Web Portal", card_logistics_title: "Import / Logistics Terminal",
         lbl_discharge_port: "Discharge Port:", val_discharge_port: "Melbourne Swanson Dock / DP World",
@@ -478,8 +478,8 @@ const translations = {
         opex_note1_title: "Customs Tariffs & FTAs:", opex_note1_body: "Goods originating in Cambodia qualify for duty-free entry into Australia under AANZFTA or RCEP, provided a valid Certificate of Origin (COO) is supplied.",
         opex_note2_title: "Import GST Deferred Scheme (DGST):", opex_note2_body: "Import GST (10%) is calculated on Customs Value + Duty + Transport/Insurance. Registering for Deferred GST defers border payment to monthly BAS returns.",
         opex_note3_title: "Superannuation Compliance:", opex_note3_body: "Statutory Employer Superannuation Guarantee (11.5%) must be remitted quarterly to compliant Australian super funds before statutory due dates.",
-        tbl_title: "Landed Cost Quotation & Benchmark Schedule", tbl_subtitle: "Rearranged per Two Parrots Quotation (25 Active Products + 5 Upcoming Nov 2026 Launch)",
-        lbl_active: "Active", lbl_upcoming: "Upcoming", th_prod_desc: "Product Description", th_fob_price: "CTN Price Before Delivery", th_fob_sub: "(Adjustable CTN USD → Auto PCS USD/AUD)",
+        tbl_title: "Landed Cost Quotation & Benchmark Schedule (Fast Entry + CTN Price Inputs)", tbl_subtitle: "Rearranged per Two Parrots Quotation (25 Active Products + 5 Upcoming Nov 2026 Launch)",
+        lbl_active: "Active", lbl_upcoming: "Upcoming", th_prod_desc: "Product Description & Packaging Spec", th_fob_price: "CTN Price Before Delivery", th_fob_sub: "(Adjustable CTN USD → Auto PCS USD/AUD)",
         th_total_cost: "Total Landed Cost, Prices & Profit", th_itemized_note: "Structure: Total Landed CTN → Itemized Costs → Selling Prices → Net Profit (CTN - Landed - 10% Tax)",
         th_asian_bench: "Ethnic & Asian Market Comparisons", th_asian_sub: "(Asian, Indian, Nepalese, Sri Lankan)", th_aus_bench: "Australian Supermarket Prices", th_aus_sub: "(Coles, Woolworths, ALDI, Costco, IGA)",
         tb_title: "Live Landed Cost Recalculation Engine", tb_desc: "Adjust freight variables & margin percentage to compute live costings",
@@ -489,7 +489,7 @@ const translations = {
     km: {
         modal_title: "ការចូលប្រើប្រាស់ត្រូវបានកំណត់", modal_desc: "សូមបញ្ចូលពាក្យសម្ងាត់សុវត្ថិភាពដើម្បីមើលសម្រង់តម្លៃដើម និងការវិភាគ។",
         modal_label: "បញ្ចូលពាក្យសម្ងាត់", modal_error: "ពាក្យសម្ងាត់មិនត្រឹមត្រូវ។ សូមព្យាយាមម្តងទៀត។", modal_btn: "បើកផ្ទាំងគ្រប់គ្រង",
-        header_company_name: "ក្រុមហ៊ុន ថូ ផារ៉ត គ្រុប អូស្ត្រាលី", header_sub: "ព័ត៌មានវិភាគថ្លៃដើមនាំចូល និងចែករំលែក",
+        header_company_name: "ក្រុមហ៊ុន ថូ ផារ៉ត គ្រុប អូស្ត្រាលី", header_sub: "ព័ត៌មានវិភាគសម្រង់តម្លៃអតិថិជន",
         btn_print: "បោះពុម្ពសម្រង់តម្លៃ A4", hdr_company_title: "ក្រុមហ៊ុន ថូ ផារ៉ត គ្រុប អូស្ត្រាលី", lbl_md: "នាយកប្រតិបត្តិ:",
         card_contact_title: "ទំនាក់ទំនង និងវេបសាយ", card_logistics_title: "ស្ថានីយនាំចូល / ឡូជីស្ទិក",
         lbl_discharge_port: "កំពង់ផែនាំចុះ:", val_discharge_port: "កំពង់ផែម៉ែលប៊ន Swanson Dock / DP World",
@@ -525,8 +525,8 @@ const translations = {
         opex_note1_title: "ពន្ធគយ និងកិច្ចព្រមព្រៀងពាណិជ្ជកម្មសេរី៖", opex_note1_body: "ទំនិញដែលមានប្រភពដើមពីប្រទេសកម្ពុជាទទួលបានការលើកលែងពន្ធនាំចូលមកអូស្ត្រាលីក្រោម AANZFTA ឬ RCEP ដោយគ្រាន់តែមានវិញ្ញាបនបត្រប្រភពដើម (COO)។",
         opex_note2_title: "ប្រព័ន្ធពន្យារការបង់ពន្ធ GST នាំចូល (DGST)៖", opex_note2_body: "ពន្ធ GST នាំចូល 10% ត្រូវគណនាលើតម្លៃគយ + ពន្ធ + ការដឹកជញ្ជូន។ ការចុះឈ្មោះប្រព័ន្ធ DGST អនុញ្ញាតឱ្យពន្យារការបង់ពន្ធរហូតដល់របាយការណ៍ BAS ប្រចាំខែ។",
         opex_note3_title: "អនុលោមភាពប្រាក់សោធននិវត្តន៍៖", opex_note3_body: "ភាគទានប្រាក់សោធននិវត្តន៍កាតព្វកិច្ចរបស់និយោជក (11.5%) ត្រូវតែបង់ជូនមូលនិធិសោធនអូស្ត្រាលីរៀងរាល់ត្រីមាស។",
-        tbl_title: "តារាងសម្រង់តម្លៃដើមនាំចូល និងការប្រៀបធៀប", tbl_subtitle: "រៀបចំឡើងវិញតាមសម្រង់តម្លៃ Two Parrots (២៥ ផលិតផលសកម្ម + ៥ ផលិតផលថ្មី)",
-        lbl_active: "សកម្ម", lbl_upcoming: "ជិតចេញលក់", th_prod_desc: "ការបរិយាយផលិតផល", th_fob_price: "តម្លៃមួយកេសមុនពេលដឹក", th_fob_sub: "(អាចកែសម្រួលតម្លៃកេស USD → គណនាដប/កញ្ចប់ស្វ័យប្រវត្តិ)",
+        tbl_title: "តារាងសម្រង់តម្លៃដើម (បញ្ចូលរហ័ស + តម្លៃកេស)", tbl_subtitle: "រៀបចំឡើងវិញតាមសម្រង់តម្លៃ Two Parrots (២៥ ផលិតផលសកម្ម + ៥ ផលិតផលថ្មី)",
+        lbl_active: "សកម្ម", lbl_upcoming: "ជិតចេញលក់", th_prod_desc: "ការបរិយាយផលិតផល និងលក្ខណៈវេចខ្ចប់", th_fob_price: "តម្លៃមួយកេសមុនពេលដឹក", th_fob_sub: "(អាចកែសម្រួលតម្លៃកេស USD → គណនាដប/កញ្ចប់ស្វ័យប្រវត្តិ)",
         th_total_cost: "ថ្លៃដើមនាំចូលសរុប តម្លៃលក់ និងចំណេញ", th_itemized_note: "រចនាសម្ព័ន្ធ៖ ថ្លៃដើមនាំចូលកេស → លម្អិតថ្លៃដើមកេស → តម្លៃលក់ → ចំណេញសុទ្ធ (កេស - ថ្លៃដើម - ពន្ធ ១០%)",
         th_asian_bench: "ការប្រៀបធៀបទីផ្សារអាស៊ី និងអាស៊ីខាងត្បូង", th_asian_sub: "(អាស៊ី ឥណ្ឌា នេប៉ាល់ ស្រីលង្កា)", th_aus_bench: "តម្លៃផ្សារទំនើបអូស្ត្រាលី", th_aus_sub: "(Coles, Woolworths, ALDI, Costco, IGA)",
         tb_title: "ប្រព័ន្ធគណនាថ្លៃដើមនាំចូលផ្ទាល់", tb_desc: "កែប្រែប្រៀបប្រែប្រួលថ្លៃដឹកជញ្ជូន និងភាគរយចំណេញដើម្បីគណនាភ្លាមៗ",
@@ -536,7 +536,7 @@ const translations = {
     fr: {
         modal_title: "Accès Restreint", modal_desc: "Veuillez saisir le mot de passe de sécurité pour afficher le devis des coûts rendus et les analyses.",
         modal_label: "Entrer le mot de passe", modal_error: "Mot de passe incorrect. Veuillez réessayer.", modal_btn: "Déverrouiller le tableau de bord",
-        header_company_name: "TWO PARROTS GROUP AUSTRALIA", header_sub: "Intelligence du coût de revient à destination & distribution",
+        header_company_name: "TWO PARROTS GROUP AUSTRALIA", header_sub: "Intelligence des devis clients",
         btn_print: "Imprimer devis A4", hdr_company_title: "Two Parrots Group Australia", lbl_md: "Directeur Général:",
         card_contact_title: "Contact & Portail Web", card_logistics_title: "Terminal d'importation / Logistique",
         lbl_discharge_port: "Port de déchargement:", val_discharge_port: "Melbourne Swanson Dock / DP World",
@@ -572,8 +572,8 @@ const translations = {
         opex_note1_title: "Tarifs Douaniers & ALE:", opex_note1_body: "Les marchandises du Cambodge sont exemptées de droits en Australie sous AANZFTA ou RCEP avec un certificat d'origine (COO) valide.",
         opex_note2_title: "Régime de GST d'Importation Différée (DGST):", opex_note2_body: "La GST d'importation (10%) est calculée sur Valeur en douane + Droits + Transport. L'inscription au DGST reporte le paiement à la déclaration BAS mensuelle.",
         opex_note3_title: "Conformité de la Retraite (Superannuation):", opex_note3_body: "La contribution légale de l'employeur à la retraite (11,5%) doit être versée chaque trimestre à des fonds de retraite australiens conformes.",
-        tbl_title: "Devis des coûts rendus & Tableau comparatif", tbl_subtitle: "Réorganisé selon le devis Two Parrots (25 produits actifs + 5 nouveaux nov. 2026)",
-        lbl_active: "Actifs", lbl_upcoming: "À venir", th_prod_desc: "Description du produit", th_fob_price: "Prix par Carton avant livraison", th_fob_sub: "(Ajustable CTN USD → Auto PCS USD/AUD)",
+        tbl_title: "Devis des coûts rendus (saisie rapide + prix carton)", tbl_subtitle: "Réorganisé selon le devis Two Parrots (25 produits actifs + 5 nouveaux nov. 2026)",
+        lbl_active: "Actifs", lbl_upcoming: "À venir", th_prod_desc: "Description du produit et conditionnement", th_fob_price: "Prix par Carton avant livraison", th_fob_sub: "(Ajustable CTN USD → Auto PCS USD/AUD)",
         th_total_cost: "Coût rendu total, Prix & Bénéfice", th_itemized_note: "Structure: Coût rendu Carton → Détail Coûts → Prix de vente → Bénéfice Net (Carton - Coût - Taxe 10%)",
         th_asian_bench: "Comparaisons du marché asiatique & ethnique", th_asian_sub: "(Asiatique, Indien, Népalais, Sri Lankais)", th_aus_bench: "Prix des supermarchés australiens", th_aus_sub: "(Coles, Woolworths, ALDI, Costco, IGA)",
         tb_title: "Calculateur de coût rendu en direct", tb_desc: "Ajustez les variables de fret et le pourcentage de marge pour calculer les coûts en direct",
@@ -583,7 +583,7 @@ const translations = {
     zh: {
         modal_title: "受限访问", modal_desc: "请输入安全密码以查看到岸成本报价和分析数据。",
         modal_label: "输入密码", modal_error: "密码不正确，请重试。", modal_btn: "解锁控制面板",
-        header_company_name: "双鹦鹉集团澳大利亚公司", header_sub: "进口与分销到岸成本情报",
+        header_company_name: "双鹦鹉集团澳大利亚公司", header_sub: "客户报价情报",
         btn_print: "打印 A4 报价单", hdr_company_title: "双鹦鹉集团澳大利亚公司", lbl_md: "总经理:",
         card_contact_title: "联系方式与网站", card_logistics_title: "进口 / 物流枢纽",
         lbl_discharge_port: "卸货港:", val_discharge_port: "墨尔本 Swanson 码头 / DP World",
@@ -619,8 +619,8 @@ const translations = {
         opex_note1_title: "海关关税与自贸协定:", opex_note1_body: "原产于柬埔寨的货物在提供有效原产地证书 (COO) 的情况下，可通过 AANZFTA 或 RCEP 享受零关税进入澳大利亚。",
         opex_note2_title: "进口 GST 延期缴纳计划 (DGST):", opex_note2_body: "进口 GST (10%) 按海关价值 + 关税 + 运费/保险计算。注册延期 GST 计划可将清关时的支付延期至每月 BAS 申报时缴纳。",
         opex_note3_title: "雇主养老金合规要求:", opex_note3_body: "法定雇主养老金 (11.5%) 必须在法定截止日期前按季度缴纳至符合条件的澳大利亚养老金基金中。",
-        tbl_title: "到岸成本报价与市场标杆对照表", tbl_subtitle: "根据 Two Parrots 报价单重新排列（25 个在售产品 + 5 个 2026 年 11 月新品）",
-        lbl_active: "在售", lbl_upcoming: "即将上市", th_prod_desc: "产品描述", th_fob_price: "每箱发货前单价 (CTN)", th_fob_sub: "(可调节箱价 USD → 自动计算单件 USD/AUD)",
+        tbl_title: "到岸成本报价表（快速录入 + 箱价）", tbl_subtitle: "根据 Two Parrots 报价单重新排列（25 个在售产品 + 5 个 2026 年 11 月新品）",
+        lbl_active: "在售", lbl_upcoming: "即将上市", th_prod_desc: "产品描述与包装规格", th_fob_price: "每箱发货前单价 (CTN)", th_fob_sub: "(可调节箱价 USD → 自动计算单件 USD/AUD)",
         th_total_cost: "总到岸成本、售价与净利润", th_itemized_note: "结构: 每箱到岸价 → 拆解成本 → 建议售价 → 净利润 (整箱 - 到岸 - 10% 税)",
         th_asian_bench: "族群及亚洲超市标杆对比", th_asian_sub: "(东南亚, 印度, 尼泊尔, 斯里兰卡超市)", th_aus_bench: "澳大利亚主流超市标杆", th_aus_sub: "(Coles, Woolworths, ALDI, Costco, IGA)",
         tb_title: "实时到岸成本重算引擎", tb_desc: "调整运费变量和目标利润率以计算实时成本",
@@ -630,6 +630,50 @@ const translations = {
 };
 
 // --- HELPER & UTILITY FUNCTIONS ---
+function escapeHtml(value) {
+    return String(value ?? '').replace(/[&<>"']/g, (m) => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    }[m]));
+}
+
+function loadScriptOnce(src) {
+    const existing = document.querySelector(`script[data-lazy-src="${src}"]`);
+    if (existing && existing.dataset.loaded === '1') return Promise.resolve();
+    if (existing && existing._loadPromise) return existing._loadPromise;
+    const script = existing || document.createElement('script');
+    const promise = new Promise((resolve, reject) => {
+        script.addEventListener('load', () => {
+            script.dataset.loaded = '1';
+            resolve();
+        }, { once: true });
+        script.addEventListener('error', () => reject(new Error('Failed to load ' + src)), { once: true });
+    });
+    script._loadPromise = promise;
+    if (!existing) {
+        script.src = src;
+        script.async = true;
+        script.dataset.lazySrc = src;
+        document.head.appendChild(script);
+    }
+    return promise;
+}
+
+let pdfLibsPromise = null;
+function ensurePdfLibraries() {
+    if (window.jspdf && window.jspdf.jsPDF && typeof window.jspdf.jsPDF.API.autoTable === 'function') {
+        return Promise.resolve();
+    }
+    if (!pdfLibsPromise) {
+        pdfLibsPromise = loadScriptOnce('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js')
+            .then(() => loadScriptOnce('https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js'))
+            .catch((err) => {
+                pdfLibsPromise = null;
+                throw err;
+            });
+    }
+    return pdfLibsPromise;
+}
+
 function getPcsPerCtn(specStr) {
     if (!specStr) return 1;
     const specText = typeof specStr === 'object' ? specStr.en : specStr;
@@ -649,7 +693,7 @@ function unlockPage(e) {
             modal.classList.add('opacity-0', 'pointer-events-none');
             setTimeout(() => modal.style.display = 'none', 300);
         }
-        if (content) content.classList.remove('blur-xl', 'pointer-events-none', 'select-none');
+        if (content) content.classList.remove('filter', 'blur-xl', 'pointer-events-none', 'select-none');
         updateOpExFromInputs();
     } else {
         if (errorMsg) errorMsg.classList.remove('hidden');
@@ -659,13 +703,67 @@ function unlockPage(e) {
 function togglePasswordVisibility() {
     const input = document.getElementById('password-input');
     const icon = document.getElementById('eye-icon');
+    const btn = document.getElementById('toggle-password-btn');
     if (!input || !icon) return;
-    if (input.type === 'password') {
-        input.type = 'text';
-        icon.classList.replace('fa-eye', 'fa-eye-slash');
+    const showing = input.type === 'password';
+    input.type = showing ? 'text' : 'password';
+    icon.classList.toggle('fa-eye', !showing);
+    icon.classList.toggle('fa-eye-slash', showing);
+    if (btn) {
+        btn.setAttribute('aria-pressed', showing ? 'true' : 'false');
+        btn.setAttribute('aria-label', showing ? 'Hide password' : 'Show password');
+    }
+}
+
+function initPasswordModalA11y() {
+    const modal = document.getElementById('password-modal');
+    if (!modal || modal.dataset.trapBound === '1') return;
+    modal.dataset.trapBound = '1';
+    document.addEventListener('keydown', (event) => {
+        if (event.key !== 'Tab') return;
+        if (modal.style.display === 'none' || modal.classList.contains('pointer-events-none')) return;
+        const focusable = [...modal.querySelectorAll('button, [href], input, select, textarea')]
+            .filter((el) => !el.disabled && el.offsetParent !== null);
+        if (!focusable.length) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (!modal.contains(document.activeElement)) {
+            event.preventDefault();
+            (event.shiftKey ? last : first).focus();
+        } else if (event.shiftKey && document.activeElement === first) {
+            event.preventDefault();
+            last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+            event.preventDefault();
+            first.focus();
+        }
+    });
+}
+
+function toggleEngine() {
+    const engine = document.getElementById('landed-cost-engine');
+    const icon = document.getElementById('toggle-engine-icon');
+    const btn = document.getElementById('toggle-engine-btn');
+    if (!engine) return;
+    const willOpen = engine.classList.contains('max-sm:translate-y-full');
+    engine.classList.toggle('max-sm:translate-y-full', !willOpen);
+    if (icon) {
+        icon.classList.toggle('fa-chevron-up', !willOpen);
+        icon.classList.toggle('fa-chevron-down', willOpen);
+    }
+    if (btn) btn.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+    syncEnginePadding();
+}
+
+function syncEnginePadding() {
+    const engine = document.getElementById('landed-cost-engine');
+    if (!engine) return;
+    const mobile = window.matchMedia('(max-width: 639px)').matches;
+    const collapsed = engine.classList.contains('max-sm:translate-y-full');
+    if (mobile && !collapsed) {
+        document.body.style.paddingBottom = `${engine.offsetHeight + 16}px`;
     } else {
-        input.type = 'password';
-        icon.classList.replace('fa-eye-slash', 'fa-eye');
+        document.body.style.paddingBottom = '';
     }
 }
 
@@ -740,7 +838,7 @@ function getCategoryState(catNum, rawAnnualSubtotal) {
     if (headerEl) {
         if (isEnabled) {
             headerEl.innerText = '$' + rawAnnualSubtotal.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + '/yr';
-            headerEl.className = (catNum === 2 ? "text-emerald-700" : "text-gold-700") + " font-mono font-bold text-xs";
+            headerEl.className = (catNum === 2 ? "text-emerald-700" : "text-gold-800") + " font-mono font-bold text-xs";
         } else {
             headerEl.innerText = '$0.00/yr (OFF)';
             headerEl.className = "text-slate-400 font-mono font-bold text-xs";
@@ -985,8 +1083,8 @@ function renderTable() {
             <td class="py-1 px-2 text-center font-bold text-slate-400 border-r border-slate-200">${p.id}</td>
             <td class="py-1 px-3 border-r border-slate-200">
                 <div class="flex items-center justify-between gap-1">
-                    <span class="font-bold text-slate-900">${displayName}</span>
-                    <span class="text-[10px] text-slate-400 font-mono bg-slate-100 border rounded px-1.5 shrink-0">${displaySpec}</span>
+                    <span class="font-bold text-slate-900">${escapeHtml(displayName)}</span>
+                    <span class="text-[10px] text-slate-400 font-mono bg-slate-100 border rounded px-1.5 shrink-0">${escapeHtml(displaySpec)}</span>
                 </div>
             </td>
             <td class="py-1 px-2 border-r border-slate-200 text-center bg-slate-50">
@@ -995,7 +1093,7 @@ function renderTable() {
                     <input type="number" id="input-ctn-price-${p.id}" value="${p.ctnPriceUsd.toFixed(2)}" step="0.50" min="0"
                         oninput="syncCtnPrice(${p.id}, this.value)"
                         onkeydown="handleKeyDown(event, ${p.id}, 'price')"
-                        class="w-20 text-right bg-white border border-slate-300 focus:border-gold-500 font-bold font-mono text-xs text-gold-700 rounded py-0.5 px-1 focus:outline-none transition">
+                        class="w-20 text-right bg-white border border-slate-300 focus:border-gold-500 font-bold font-mono text-xs text-gold-800 rounded py-0.5 px-1 focus:outline-none transition">
                 </div>
             </td>
             <td class="py-1 px-2 border-r border-slate-200 text-center bg-emerald-50/40">
@@ -1005,7 +1103,7 @@ function renderTable() {
                     class="w-20 text-center bg-white border-2 border-emerald-300 focus:border-emerald-600 font-bold font-mono text-xs text-slate-900 rounded py-0.5 px-1 focus:outline-none transition">
             </td>
             <td class="py-1 px-3 text-right font-mono border-r border-slate-200">$${landedCostAudCtn.toFixed(2)}</td>
-            <td class="py-1 px-3 text-right font-mono border-r border-slate-200 text-gold-700 font-bold">$${sellingPriceAudCtn.toFixed(2)}</td>
+            <td class="py-1 px-3 text-right font-mono border-r border-slate-200 text-gold-800 font-bold">$${sellingPriceAudCtn.toFixed(2)}</td>
             <td class="py-1 px-3 text-right font-mono border-r border-slate-200 font-bold ${netProfitCtn >= 0 ? 'text-emerald-700' : 'text-rose-600'}">$${netProfitCtn.toFixed(2)}</td>
             <td class="py-1 px-3 text-right font-mono font-bold bg-slate-900 text-gold-400" id="master-profit-val-${p.id}">
                 $${orderProfit.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})} AUD
@@ -1083,16 +1181,21 @@ function setLanguage(lang) {
 
     document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
-        if (translations[lang] && translations[lang][key]) {
-            el.innerText = translations[lang][key];
-        }
+        const value = (translations[lang] && translations[lang][key]) || (translations.en && translations.en[key]);
+        if (value) el.innerText = value;
     });
 
     renderTable();
 }
 
 // --- OFFICIAL PURCHASE ORDER PDF EXPORT GENERATOR ---
-function exportPurchaseOrderPDF() {
+async function exportPurchaseOrderPDF() {
+    try {
+        await ensurePdfLibraries();
+    } catch (err) {
+        alert('Could not load the PDF library. Check your connection and try again.');
+        return;
+    }
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
     
@@ -1278,9 +1381,12 @@ window.resetOpExBudget = resetOpExBudget;
 window.renderTable = renderTable;
 window.setLanguage = setLanguage;
 window.exportPurchaseOrderPDF = exportPurchaseOrderPDF;
+window.toggleEngine = toggleEngine;
 
 // --- INITIALIZATION ---
 document.addEventListener('DOMContentLoaded', () => {
+    initPasswordModalA11y();
+    window.addEventListener('resize', syncEnginePadding);
     const passwordForm = document.getElementById('password-form');
     if (passwordForm) passwordForm.addEventListener('submit', unlockPage);
 

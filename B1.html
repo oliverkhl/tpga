@@ -13,9 +13,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts (Inter + Noto Sans Khmer for simultaneous bilingual rendering) -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+Khmer:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- jsPDF & html2canvas for Native Khmer Shaped PDF Exports -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <!-- jsPDF and html2canvas load on the first PDF export click -->
     <!-- External Custom Styles -->
     <link rel="stylesheet" href="styles-Q1.css">
     <style>
@@ -50,7 +48,8 @@
                             400: '#E6C655',
                             500: '#D4AF37',
                             600: '#C59B27',
-                            700: '#9B7817'
+                            700: '#9B7817',
+                            800: '#7A5B12'
                         }
                     },
                     fontFamily: {
@@ -64,13 +63,13 @@
 <body class="min-h-screen pb-12 relative bg-slate-100 text-slate-800 font-sans">
 
 <!-- PASSWORD MODAL OVERLAY -->
-<div id="password-modal" class="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/70 backdrop-blur-md p-4 transition-opacity duration-300 no-print">
+<div id="password-modal" role="dialog" aria-modal="true" aria-labelledby="password-modal-title" class="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/70 backdrop-blur-md p-4 transition-opacity duration-300 no-print">
     <div class="bg-slate-900 border-2 border-gold-500 text-white rounded-2xl shadow-2xl p-6 max-w-md w-full relative">
         <div class="text-center mb-6">
             <div class="w-12 h-12 bg-gold-500/10 rounded-full border border-gold-500/30 flex items-center justify-center mx-auto mb-3">
                 <i class="fa-solid fa-lock text-gold-400 text-xl"></i>
             </div>
-            <h2 class="text-xl font-bold text-white tracking-wide">
+            <h2 id="password-modal-title" class="text-xl font-bold text-white tracking-wide">
                 Restricted Access
                 <span class="km-sub text-xs text-gold-400">ការចូលប្រើប្រាស់ត្រូវបានកំណត់</span>
             </h2>
@@ -82,12 +81,12 @@
         
         <form id="password-form" onsubmit="unlockPage(event)">
             <div class="mb-5">
-                <label class="block text-xs uppercase font-semibold text-gold-400 mb-1.5 tracking-wider">
+                <label for="password-input" class="block text-xs uppercase font-semibold text-gold-400 mb-1.5 tracking-wider">
                     Enter Password <span class="normal-case font-normal text-slate-300 ml-1">/ បញ្ចូលពាក្យសម្ងាត់</span>
                 </label>
                 <div class="relative">
-                    <input type="password" id="password-input" placeholder="••••••••" autofocus class="w-full bg-slate-800 border border-slate-700 focus:border-gold-500 rounded-lg px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none transition">
-                    <button type="button" onclick="togglePasswordVisibility()" class="absolute right-3 top-2.5 text-slate-400 hover:text-gold-400 text-sm">
+                    <input type="password" id="password-input" placeholder="••••••••" autofocus class="w-full bg-slate-800 border border-slate-700 focus:border-gold-500 rounded-lg px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-gold-400 transition">
+                    <button type="button" id="toggle-password-btn" onclick="togglePasswordVisibility()" aria-label="Show password" aria-pressed="false" class="absolute right-3 top-2.5 text-slate-400 hover:text-gold-400 text-sm rounded focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-gold-400">
                         <i id="eye-icon" class="fa-solid fa-eye"></i>
                     </button>
                 </div>
@@ -118,6 +117,7 @@
     <header class="bg-slate-900 text-white shadow-md no-print border-b-2 border-gold-500">
         <div class="max-w-7xl mx-auto px-4 py-2.5 flex flex-wrap justify-between items-center gap-4">
             <div class="flex items-center gap-3">
+                <img src="images/logo.png" alt="Two Parrots Logo" class="h-10 w-10 object-contain rounded">
                 <div>
                     <h1 class="text-base font-bold text-white tracking-wide">
                         TWO PARROTS GROUP AUSTRALIA <span class="text-xs font-normal text-slate-300">| ក្រុមហ៊ុន ថូ ផារ៉ត គ្រុប អូស្ត្រាលី</span>
@@ -138,6 +138,16 @@
                 </button>
             </div>
         </div>
+        <nav aria-label="Internal tools" class="border-t border-slate-800 bg-slate-950/50">
+            <div class="max-w-7xl mx-auto px-4 py-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px]">
+                <a href="https://twoparrotsgroup.com.au/" class="font-semibold text-gold-400 hover:text-gold-300">Two Parrots</a>
+                <span class="text-slate-600" aria-hidden="true">/</span>
+                <a href="Q1.html" class="text-slate-300 hover:text-white">Landed Cost</a>
+                <a href="Q1-1.html" class="text-slate-300 hover:text-white">Fast Entry</a>
+                <a href="qc1.html" class="text-slate-300 hover:text-white">Customer Quote</a>
+                <span aria-current="page" class="font-semibold text-white">OpEx Budget</span>
+            </div>
+        </nav>
     </header>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-5">
@@ -159,8 +169,8 @@
                             <span class="km-sub text-[10px] text-slate-400 ml-4">1/57 ផ្លូវ Elonera, Noble Park North, រដ្ឋ Victoria 3174, ប្រទេសអូស្ត្រាលី</span>
                         </span>
                         <span><i class="fa-solid fa-file-invoice text-gold-500 mr-1.5"></i>ABN: 79699476107</span>
-                        <span><i class="fa-solid fa-envelope text-gold-400 mr-1.5"></i>info@twoparrotsgroup.com.au</span>
-                        <span><i class="fa-solid fa-phone text-gold-400 mr-1.5"></i>0468829988</span>
+                        <span><i class="fa-solid fa-envelope text-gold-400 mr-1.5"></i><a href="mailto:info@twoparrotsgroup.com.au" class="hover:underline">info@twoparrotsgroup.com.au</a></span>
+                        <span><i class="fa-solid fa-phone text-gold-400 mr-1.5"></i><a href="tel:+61468829988" class="hover:underline">+61 468 829 988</a></span>
                     </div>
                 </div>
                 <div class="flex flex-col sm:flex-row sm:items-center gap-2 bg-slate-800 px-3 py-2 rounded-lg border border-slate-700 no-print">
@@ -231,15 +241,18 @@
                 <!-- 1. Executive Summary & Budget Overview -->
                 <div>
                     <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wider mb-2 flex items-start gap-2 border-b border-slate-200 pb-1.5">
-                        <i class="fa-solid fa-list-check text-gold-600 mt-0.5"></i>
+                        <i class="fa-solid fa-list-check text-gold-800 mt-0.5"></i>
                         <span>
                             1. Executive Summary & Budget Overview (Prices incl. GST)
                             <span class="km-sub text-[11px] text-slate-600 normal-case">១. សេចក្តីសង្ខេបប្រតិបត្តិ និងទិដ្ឋភាពទូទៅនៃថវិកា (តម្លៃរួមបញ្ចូល GST)</span>
                         </span>
                     </h3>
                     
-                    <div class="overflow-x-auto rounded border border-slate-200">
-                        <table class="w-full text-left text-xs">
+                    <p class="table-scroll-note items-center gap-1.5 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-wide text-slate-500 bg-slate-50 border border-slate-200 border-b-0 rounded-t">
+                        <i class="fa-solid fa-arrows-left-right" aria-hidden="true"></i> Swipe sideways to see every column
+                    </p>
+                    <div class="table-scroll overflow-x-auto max-w-full rounded border border-slate-200" tabindex="0" role="region" aria-label="Expense summary. Scroll horizontally for more columns.">
+                        <table class="w-full min-w-[36rem] text-left text-xs">
                             <thead>
                                 <tr class="bg-slate-800 text-slate-200 font-bold uppercase tracking-wider border-b border-slate-700 text-[10px]">
                                     <th class="py-2 px-3">
@@ -344,7 +357,7 @@
                 <!-- 2. Detailed Expense Itemization -->
                 <div>
                     <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wider mb-2 flex items-start gap-2 border-b border-slate-200 pb-1.5">
-                        <i class="fa-solid fa-edit text-gold-600 mt-0.5"></i>
+                        <i class="fa-solid fa-edit text-gold-800 mt-0.5"></i>
                         <span>
                             2. Detailed Expense Itemization (Editable AUD Prices — incl. GST)
                             <span class="km-sub text-[11px] text-slate-600 normal-case">២. តារាងចំណាយលម្អិត (អាចកែប្រែតម្លៃជា AUD បាន — រួមបញ្ចូល GST)</span>
@@ -372,7 +385,7 @@
                                         <div class="w-8 h-4 bg-slate-300 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-emerald-600 relative"></div>
                                         <span id="c1_toggle_status" class="ml-1.5 text-[10px] font-bold uppercase text-emerald-600">ON</span>
                                     </label>
-                                    <span class="text-gold-700 font-mono font-bold text-xs" id="subtotal-c1-hdr">$6,039.18</span>
+                                    <span class="text-gold-800 font-mono font-bold text-xs" id="subtotal-c1-hdr">$6,039.18</span>
                                 </div>
                             </div>
                             <table class="w-full text-[11px] bg-white rounded border border-slate-200">
@@ -450,7 +463,7 @@
                                             Subtotal (incl. GST)
                                             <span class="km-sub text-[10px] text-slate-600">សរុបរង (រួមបញ្ចូល GST)</span>
                                         </td>
-                                        <td class="p-1.5 text-right font-mono text-gold-700" id="c1_ann_sub">$6,039.18</td>
+                                        <td class="p-1.5 text-right font-mono text-gold-800" id="c1_ann_sub">$6,039.18</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -475,7 +488,7 @@
                                         <div class="w-8 h-4 bg-slate-300 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-emerald-600 relative"></div>
                                         <span id="c2_toggle_status" class="ml-1.5 text-[10px] font-bold uppercase text-emerald-600">ON</span>
                                     </label>
-                                    <span class="text-gold-700 font-mono font-bold text-xs" id="subtotal-c2-hdr">$32,968.00/yr</span>
+                                    <span class="text-gold-800 font-mono font-bold text-xs" id="subtotal-c2-hdr">$32,968.00/yr</span>
                                 </div>
                             </div>
                             <table class="w-full text-[11px] bg-white rounded border border-slate-200">
@@ -534,7 +547,7 @@
                                         </td>
                                         <td class="p-1.5 text-right font-mono" id="c2_wk_sub">$634.00</td>
                                         <td class="p-1.5 text-right font-mono" id="c2_mth_sub">$2,747.33</td>
-                                        <td class="p-1.5 text-right font-mono text-gold-700" id="c2_ann_sub">$32,968.00</td>
+                                        <td class="p-1.5 text-right font-mono text-gold-800" id="c2_ann_sub">$32,968.00</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -641,7 +654,7 @@
                                         <div class="w-8 h-4 bg-slate-300 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-emerald-600 relative"></div>
                                         <span id="c4_toggle_status" class="ml-1.5 text-[10px] font-bold uppercase text-emerald-600">ON</span>
                                     </label>
-                                    <span class="text-gold-700 font-mono font-bold text-xs" id="subtotal-c4-hdr">$4,620.00/yr</span>
+                                    <span class="text-gold-800 font-mono font-bold text-xs" id="subtotal-c4-hdr">$4,620.00/yr</span>
                                 </div>
                             </div>
                             <table class="w-full text-[11px] bg-white rounded border border-slate-200">
@@ -692,7 +705,7 @@
                                             <span class="km-sub text-[10px] text-slate-600">សរុបរង (រួមបញ្ចូល GST)</span>
                                         </td>
                                         <td class="p-1.5 text-right font-mono" id="c4_mth_sub">$385.00</td>
-                                        <td class="p-1.5 text-right font-mono text-gold-700" id="c4_ann_sub">$4,620.00</td>
+                                        <td class="p-1.5 text-right font-mono text-gold-800" id="c4_ann_sub">$4,620.00</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -717,7 +730,7 @@
                                         <div class="w-8 h-4 bg-slate-300 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-emerald-600 relative"></div>
                                         <span id="c5_toggle_status" class="ml-1.5 text-[10px] font-bold uppercase text-emerald-600">ON</span>
                                     </label>
-                                    <span class="text-gold-700 font-mono font-bold text-xs" id="subtotal-c5-hdr">$4,860.00/yr</span>
+                                    <span class="text-gold-800 font-mono font-bold text-xs" id="subtotal-c5-hdr">$4,860.00/yr</span>
                                 </div>
                             </div>
                             <table class="w-full text-[11px] bg-white rounded border border-slate-200">
@@ -784,7 +797,7 @@
                                             <span class="km-sub text-[10px] text-slate-600">សរុបរង (រួមបញ្ចូល GST)</span>
                                         </td>
                                         <td class="p-1.5 text-right font-mono" id="c5_mth_sub">$405.00</td>
-                                        <td class="p-1.5 text-right font-mono text-gold-700" id="c5_ann_sub">$4,860.00</td>
+                                        <td class="p-1.5 text-right font-mono text-gold-800" id="c5_ann_sub">$4,860.00</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -809,7 +822,7 @@
                                         <div class="w-8 h-4 bg-slate-300 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-emerald-600 relative"></div>
                                         <span id="c6_toggle_status" class="ml-1.5 text-[10px] font-bold uppercase text-emerald-600">ON</span>
                                     </label>
-                                    <span class="text-gold-700 font-mono font-bold text-xs" id="subtotal-c6-hdr">$5,337.00/yr</span>
+                                    <span class="text-gold-800 font-mono font-bold text-xs" id="subtotal-c6-hdr">$5,337.00/yr</span>
                                 </div>
                             </div>
                             <table class="w-full text-[11px] bg-white rounded border border-slate-200">
@@ -867,7 +880,7 @@
                                             Subtotal (incl. GST)
                                             <span class="km-sub text-[10px] text-slate-600">សរុបរង (រួមបញ្ចូល GST)</span>
                                         </td>
-                                        <td class="p-1.5 text-right font-mono text-gold-700" id="c6_ex_sub">$5,337.00</td>
+                                        <td class="p-1.5 text-right font-mono text-gold-800" id="c6_ex_sub">$5,337.00</td>
                                         <td class="p-1.5 text-right font-mono text-slate-800" id="c6_inc_sub">$5,870.70</td>
                                     </tr>
                                 </tbody>
@@ -893,7 +906,7 @@
                                         <div class="w-8 h-4 bg-slate-300 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-emerald-600 relative"></div>
                                         <span id="c7_toggle_status" class="ml-1.5 text-[10px] font-bold uppercase text-emerald-600">ON</span>
                                     </label>
-                                    <span class="text-gold-700 font-mono font-bold text-xs" id="subtotal-c7-hdr">$115,331.52/yr</span>
+                                    <span class="text-gold-800 font-mono font-bold text-xs" id="subtotal-c7-hdr">$115,331.52/yr</span>
                                 </div>
                             </div>
                             <table class="w-full text-[11px] bg-white rounded border border-slate-200">
@@ -965,7 +978,7 @@
                                             <span class="km-sub text-[10px] text-slate-600">សរុបរង (រួមបញ្ចូល GST មិនរួមថ្លៃដឹកតាមសមុទ្រ និងពន្ធគយ)</span>
                                         </td>
                                         <td class="p-1.5 text-right font-mono" id="c7_ship_sub">$9,610.96</td>
-                                        <td class="p-1.5 text-right font-mono text-gold-700" id="c7_ann_sub">$115,331.52</td>
+                                        <td class="p-1.5 text-right font-mono text-gold-800" id="c7_ann_sub">$115,331.52</td>
                                     </tr>
                                 </tbody>
                             </table>

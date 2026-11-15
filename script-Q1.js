@@ -49,7 +49,7 @@ function updateOpExFromInputs() {
         if (headerEl) {
             if (isEnabled) {
                 headerEl.innerText = '$' + rawAnnualSubtotal.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + '/yr';
-                headerEl.className = (catNum === 2 ? "text-emerald-700" : "text-gold-700") + " font-mono font-bold text-xs";
+                headerEl.className = (catNum === 2 ? "text-emerald-700" : "text-gold-800") + " font-mono font-bold text-xs";
             } else {
                 headerEl.innerText = '$0.00/yr (OFF)';
                 headerEl.className = "text-slate-400 font-mono font-bold text-xs";
@@ -1066,7 +1066,7 @@ function unlockPage(e) {
                 modal.style.display = 'none';
             }, 300);
         }
-        if (content) content.classList.remove('blur-xl', 'pointer-events-none', 'select-none');
+        if (content) content.classList.remove('filter', 'blur-xl', 'pointer-events-none', 'select-none');
 
         loadLatestPrices();
     } else {
@@ -1079,16 +1079,41 @@ function unlockPage(e) {
 function togglePasswordVisibility() {
     const input = document.getElementById('password-input');
     const icon = document.getElementById('eye-icon');
+    const btn = document.getElementById('toggle-password-btn');
     if (!input || !icon) return;
-    if (input.type === 'password') {
-        input.type = 'text';
-        icon.classList.remove('fa-eye');
-        icon.classList.add('fa-eye-slash');
-    } else {
-        input.type = 'password';
-        icon.classList.remove('fa-eye-slash');
-        icon.classList.add('fa-eye');
+    const showing = input.type === 'password';
+    input.type = showing ? 'text' : 'password';
+    icon.classList.toggle('fa-eye', !showing);
+    icon.classList.toggle('fa-eye-slash', showing);
+    if (btn) {
+        btn.setAttribute('aria-pressed', showing ? 'true' : 'false');
+        btn.setAttribute('aria-label', showing ? 'Hide password' : 'Show password');
     }
+}
+
+function initPasswordModalA11y() {
+    const modal = document.getElementById('password-modal');
+    if (!modal || modal.dataset.trapBound === '1') return;
+    modal.dataset.trapBound = '1';
+    document.addEventListener('keydown', (event) => {
+        if (event.key !== 'Tab') return;
+        if (modal.style.display === 'none' || modal.classList.contains('pointer-events-none')) return;
+        const focusable = [...modal.querySelectorAll('button, [href], input, select, textarea')]
+            .filter((el) => !el.disabled && el.offsetParent !== null);
+        if (!focusable.length) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (!modal.contains(document.activeElement)) {
+            event.preventDefault();
+            (event.shiftKey ? last : first).focus();
+        } else if (event.shiftKey && document.activeElement === first) {
+            event.preventDefault();
+            last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+            event.preventDefault();
+            first.focus();
+        }
+    });
 }
 
 function getPcsPerCtn(specStr) {
@@ -1575,6 +1600,22 @@ function updateProductCtnUsd(productId, newCtnUsd) {
     }
 }
 
+function escapeHtml(value) {
+    return String(value ?? '').replace(/[&<>"']/g, (m) => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    }[m]));
+}
+
+const PRODUCT_WEBP_IDS = new Set([4, 6, 8, 9, 10, 11, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]);
+
+function productImageTag(id, altText) {
+    const png = `images/P${id}.png`;
+    const src = PRODUCT_WEBP_IDS.has(id) ? `images/P${id}.webp` : png;
+    const fallbackAttr = PRODUCT_WEBP_IDS.has(id) ? ` data-fallback="${png}"` : '';
+    const safeAlt = escapeHtml(altText);
+    return `<img src="${src}"${fallbackAttr} alt="${safeAlt}" title="${safeAlt}" onerror="if(this.dataset.fallback){this.src=this.dataset.fallback; this.removeAttribute('data-fallback');}else{this.onerror=null; this.style.display='none';}" class="w-20 h-20 object-cover rounded-md border border-slate-300 shadow-sm hover:scale-105 transition-transform duration-200 bg-white">`;
+}
+
 function generateCompetitorHtml(compList, targetWeightG, customerSellingPriceAudPcs, iconClass) {
     if (!compList || !compList.length) return '';
     const t = translations[currentLang];
@@ -1585,10 +1626,10 @@ function generateCompetitorHtml(compList, targetWeightG, customerSellingPriceAud
         
         return `
             <div class="mb-2 last:mb-0 pb-1 border-b border-slate-100 last:border-b-0">
-                <div class="text-slate-800 font-medium text-xs mb-0.5">${comp.brand} ${comp.weightG}g ($${comp.priceAud.toFixed(2)}/pc)</div>
+                <div class="text-slate-800 font-medium text-xs mb-0.5">${escapeHtml(comp.brand)} ${comp.weightG}g ($${comp.priceAud.toFixed(2)}/pc)</div>
                 <div class="flex items-center gap-1.5 flex-wrap">
-                    <span class="source-badge border ${badgeClass}"><i class="${iconClass} mr-0.5 text-[9px]"></i> ${comp.source}</span>
-                    <span class="text-[10px] text-slate-500 font-mono">[${t.lbl_eq}: $${equivPriceAud.toFixed(2)}/${targetWeightG}g]</span>
+                    <span class="source-badge border ${badgeClass}"><i class="${iconClass} mr-0.5 text-[9px]"></i> ${escapeHtml(comp.source)}</span>
+                    <span class="text-[10px] text-slate-500 font-mono">[${escapeHtml(t.lbl_eq)}: $${equivPriceAud.toFixed(2)}/${targetWeightG}g]</span>
                 </div>
             </div>
         `;
@@ -1610,6 +1651,37 @@ function handleContainerTypeChange() {
     }
 
     updateOpExFromInputs();
+}
+
+function recalculateAll() {
+    handleContainerTypeChange();
+}
+
+function toggleEngine() {
+    const engine = document.getElementById('landed-cost-engine');
+    const icon = document.getElementById('toggle-engine-icon');
+    const btn = document.getElementById('toggle-engine-btn');
+    if (!engine) return;
+    const willOpen = engine.classList.contains('max-sm:translate-y-full');
+    engine.classList.toggle('max-sm:translate-y-full', !willOpen);
+    if (icon) {
+        icon.classList.toggle('fa-chevron-up', !willOpen);
+        icon.classList.toggle('fa-chevron-down', willOpen);
+    }
+    if (btn) btn.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+    syncEnginePadding();
+}
+
+function syncEnginePadding() {
+    const engine = document.getElementById('landed-cost-engine');
+    if (!engine) return;
+    const mobile = window.matchMedia('(max-width: 639px)').matches;
+    const collapsed = engine.classList.contains('max-sm:translate-y-full');
+    if (mobile && !collapsed) {
+        document.body.style.paddingBottom = `${engine.offsetHeight + 16}px`;
+    } else {
+        document.body.style.paddingBottom = '';
+    }
 }
 
 function renderTable() {
@@ -1661,25 +1733,17 @@ function renderTable() {
             <td class="py-3 px-2 text-center font-bold text-slate-500 border-r-2 border-slate-200">${p.id}</td>
             <td class="py-3 px-3 border-r-2 border-slate-200">
                 <div class="flex items-center gap-1.5 mb-0.5">
-                    <span class="font-bold text-slate-900">${displayName}</span>
+                    <span class="font-bold text-slate-900">${escapeHtml(displayName)}</span>
                     ${isUpcoming ? '<span class="bg-amber-500 text-white text-[9px] font-bold px-1.5 py-0.2 rounded">NOV 2026</span>' : ''}
                 </div>
-                <div class="text-slate-600 text-[11px] font-khmer mb-1">${p.nameKhmer}</div>
+                <div class="text-slate-600 text-[11px] font-khmer mb-1">${escapeHtml(p.nameKhmer)}</div>
                 <div class="flex items-center gap-2 text-[10px] text-slate-500">
                     <span class="bg-slate-100 border border-slate-200 px-1.5 py-0.5 rounded font-medium">
-                        <i class="fa-solid fa-weight-hanging text-gold-600 mr-1"></i>${displaySpec}
+                        <i class="fa-solid fa-weight-hanging text-gold-800 mr-1"></i>${escapeHtml(displaySpec)}
                     </span>
                     <span class="text-slate-400">(${calc.effectivePcsPerContainer.toLocaleString()} pcs/${containerType})</span>
                 </div>
-				${p.id >= 1 && p.id <= 25 ? `
-                <div class="mt-2">
-                    <img src="images/P${p.id}.png" 
-                         onerror="this.onerror=function(){this.style.display='none'}; this.src='images/P${p.id}/image.jpg';" 
-                         alt="${displayName}" 
-                         class="w-20 h-20 object-cover rounded-md border border-slate-300 shadow-sm hover:scale-105 transition-transform duration-200 bg-white"
-                         title="${displayName}">
-                </div>
-                ` : ''}
+				${p.id >= 1 && p.id <= 25 ? `<div class="mt-2">${productImageTag(p.id, displayName)}</div>` : ''}
             </td>
             <td class="py-3 px-3 border-r-2 border-slate-200 text-right font-mono">
                 <div class="flex items-center justify-end gap-1 mb-1">
@@ -1688,7 +1752,7 @@ function renderTable() {
                         onchange="updateProductCtnUsd(${p.id}, this.value)"
                         class="bg-slate-100 hover:bg-white border border-slate-300 focus:border-gold-500 focus:bg-white text-slate-900 font-bold text-sm rounded px-2 py-0.5 text-right w-20 focus:outline-none transition shadow-sm"
                         title="Click or type to adjust USD CTN price">
-                    <span class="text-[10px] text-gold-600 font-bold font-sans">USD/CTN</span>
+                    <span class="text-[10px] text-gold-800 font-bold font-sans">USD/CTN</span>
                 </div>
                 <div class="text-[10px] text-slate-600 space-y-0.5">
                     <div class="flex justify-between items-center gap-2">
@@ -1720,7 +1784,7 @@ function renderTable() {
                     </div>
                     <div class="flex justify-between items-center text-[10px] border-t border-gold-200/80 pt-0.5">
                         <span class="text-gold-800 font-bold font-sans">${t.lbl_cust_margin_fixed}</span>
-                        <span id="selling-price-pcs-${p.id}" class="text-gold-700 font-bold text-xs">$${calc.customerSellingPriceAudPcs.toFixed(2)}</span>
+                        <span id="selling-price-pcs-${p.id}" class="text-gold-800 font-bold text-xs">$${calc.customerSellingPriceAudPcs.toFixed(2)}</span>
                     </div>
                     <div class="flex justify-between items-center text-[10px] border-t border-gold-300/80 pt-1 mt-1 bg-emerald-500/10 p-1 rounded">
                         <span class="text-emerald-900 font-black font-sans">${t.lbl_net_profit_ctn}</span>
@@ -1871,7 +1935,7 @@ function renderMasterProfitModelTable() {
         tr.className = 'hover:bg-slate-50 transition border-b border-slate-200';
         tr.innerHTML = `
             <td class="py-2 px-3 text-center font-bold text-slate-500">${p.id}</td>
-            <td class="py-2 px-4 font-semibold text-slate-800">${displayName}</td>
+            <td class="py-2 px-4 font-semibold text-slate-800">${escapeHtml(displayName)}</td>
             <td class="py-2 px-4 text-right">
                 <input type="number" id="master-profit-qty-${p.id}" value="${qty}" min="0" step="1"
                     oninput="syncOrderQty(${p.id}, this.value)"
@@ -1915,6 +1979,8 @@ async function loadLatestPrices() {
 // Global Window Function Attachments
 window.unlockPage = unlockPage;
 window.togglePasswordVisibility = togglePasswordVisibility;
+window.recalculateAll = recalculateAll;
+window.toggleEngine = toggleEngine;
 window.setLanguage = setLanguage;
 window.updateProductCtnUsd = updateProductCtnUsd;
 window.syncOrderQty = syncOrderQty;
@@ -1923,6 +1989,8 @@ window.resetMasterProfitOrders = resetMasterProfitOrders;
 
 // Initial Launch listeners
 document.addEventListener('DOMContentLoaded', () => {
+    initPasswordModalA11y();
+    window.addEventListener('resize', syncEnginePadding);
     Object.keys(defaultOpExValues).forEach(id => {
         document.getElementById(id)?.addEventListener('input', updateOpExFromInputs);
     });

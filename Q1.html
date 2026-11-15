@@ -9,7 +9,7 @@
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Khmer:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="styles-Q1.css">
 	    <link rel="icon" href="favicon.ico" sizes="any">
@@ -28,37 +28,38 @@
                             400: '#E6C655',
                             500: '#D4AF37',
                             600: '#C59B27',
-                            700: '#9B7817'
+                            700: '#9B7817',
+                            800: '#7A5B12'
                         },
                         greybg: '#F4F5F7'
                     },
                     fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
+                        sans: ['Inter', 'Noto Sans Khmer', 'sans-serif'],
                     }
                 }
             }
         }
     </script>
 </head>
-<body class="min-h-screen pb-32 relative">
+<body class="min-h-screen pb-14 sm:pb-32 relative">
 
     <!-- PASSWORD MODAL OVERLAY -->
-    <div id="password-modal" class="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/70 backdrop-blur-md p-4 transition-opacity duration-300 no-print">
+    <div id="password-modal" role="dialog" aria-modal="true" aria-labelledby="password-modal-title" class="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/70 backdrop-blur-md p-4 transition-opacity duration-300 no-print">
         <div class="bg-slate-900 border-2 border-gold-500 text-white rounded-2xl shadow-2xl p-6 sm:p-8 max-w-md w-full relative">
             <div class="text-center mb-6">
                 <div class="w-14 h-14 bg-gold-500/10 rounded-full border border-gold-500/30 flex items-center justify-center mx-auto mb-3">
                     <i class="fa-solid fa-lock text-gold-400 text-2xl"></i>
                 </div>
-                <h2 data-i18n="modal_title" class="text-xl font-bold text-white tracking-wide">Restricted Access</h2>
+                <h2 id="password-modal-title" data-i18n="modal_title" class="text-xl font-bold text-white tracking-wide">Restricted Access</h2>
                 <p data-i18n="modal_desc" class="text-xs text-slate-400 mt-1">Please enter the security password to view the Landed Cost Quotation & Analytics.</p>
             </div>
             
             <form id="password-form" onsubmit="unlockPage(event)">
                 <div class="mb-5">
-                    <label data-i18n="modal_label" class="block text-xs uppercase font-semibold text-gold-400 mb-1.5 tracking-wider">Enter Password</label>
+                    <label for="password-input" data-i18n="modal_label" class="block text-xs uppercase font-semibold text-gold-400 mb-1.5 tracking-wider">Enter Password</label>
                     <div class="relative">
-                        <input type="password" id="password-input" placeholder="••••••••" autofocus class="w-full bg-slate-800 border border-slate-700 focus:border-gold-500 rounded-lg px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none transition">
-                        <button type="button" onclick="togglePasswordVisibility()" class="absolute right-3 top-2.5 text-slate-400 hover:text-gold-400 text-sm">
+                        <input type="password" id="password-input" placeholder="••••••••" autofocus class="w-full bg-slate-800 border border-slate-700 focus:border-gold-500 rounded-lg px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-gold-400 transition">
+                        <button type="button" id="toggle-password-btn" onclick="togglePasswordVisibility()" aria-label="Show password" aria-pressed="false" class="absolute right-3 top-2.5 text-slate-400 hover:text-gold-400 text-sm rounded focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-gold-400">
                             <i id="eye-icon" class="fa-solid fa-eye"></i>
                         </button>
                     </div>
@@ -103,6 +104,16 @@
                     </button>
                 </div>
             </div>
+            <nav aria-label="Internal tools" class="border-t border-slate-800 bg-slate-950/50">
+                <div class="max-w-7xl mx-auto px-4 py-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px]">
+                    <a href="https://twoparrotsgroup.com.au/" class="font-semibold text-gold-400 hover:text-gold-300">Two Parrots</a>
+                    <span class="text-slate-600" aria-hidden="true">/</span>
+                    <span aria-current="page" class="font-semibold text-white">Landed Cost</span>
+                    <a href="Q1-1.html" class="text-slate-300 hover:text-white">Fast Entry</a>
+                    <a href="qc1.html" class="text-slate-300 hover:text-white">Customer Quote</a>
+                    <a href="B1.html" class="text-slate-300 hover:text-white">OpEx Budget</a>
+                </div>
+            </nav>
         </header>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
@@ -136,7 +147,7 @@
                         </p>
                         <p class="text-xs text-slate-300 flex items-center gap-2">
                             <i class="fa-solid fa-phone text-gold-400 w-4"></i>
-                            <span>+6146 882 99 88</span>
+                            <a href="tel:+61468829988" class="hover:underline">+61 468 829 988</a>
                         </p>
                     </div>
 
@@ -175,8 +186,11 @@
                     </div>
                 </div>
 
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse">
+                <p class="table-scroll-note items-center gap-1.5 px-4 py-1.5 text-[10px] font-semibold uppercase tracking-wide text-slate-500 bg-slate-50 border-b border-slate-200">
+                    <i class="fa-solid fa-arrows-left-right" aria-hidden="true"></i> Swipe sideways to see every column
+                </p>
+                <div class="table-scroll overflow-x-auto max-w-full" tabindex="0" role="region" aria-label="Product quotation. Scroll horizontally for more columns.">
+                    <table class="w-full min-w-[760px] text-left border-collapse">
                         <thead>
                             <tr class="bg-slate-800 text-slate-200 text-xs uppercase font-semibold tracking-wider border-b-2 border-slate-900">
                                 <th class="py-3 px-2 text-center w-[3%] border-r-2 border-slate-700">N°</th>
@@ -233,7 +247,7 @@
                     <!-- 1. Executive Summary & Dynamic Summary Table -->
                     <div>
                         <h3 class="text-sm font-bold text-slate-900 uppercase tracking-wider mb-3 flex items-center gap-2 border-b border-slate-200 pb-2">
-                            <i class="fa-solid fa-list-check text-gold-600"></i> <span data-i18n="opex_sec1_title">1. Executive Summary & Budget Overview</span>
+                            <i class="fa-solid fa-list-check text-gold-800"></i> <span data-i18n="opex_sec1_title">1. Executive Summary & Budget Overview</span>
                         </h3>
                         
                         <div class="overflow-x-auto rounded-lg border border-slate-200">
@@ -297,7 +311,7 @@
                     <!-- 2. Detailed Editable Expense Itemization (All 6 Categories with ON/OFF Toggles) -->
                     <div>
                         <h3 class="text-sm font-bold text-slate-900 uppercase tracking-wider mb-3 flex items-center gap-2 border-b border-slate-200 pb-2">
-                            <i class="fa-solid fa-edit text-gold-600"></i> <span data-i18n="opex_sec2_title">2. Detailed Expense Itemization (Editable AUD Prices)</span>
+                            <i class="fa-solid fa-edit text-gold-800"></i> <span data-i18n="opex_sec2_title">2. Detailed Expense Itemization (Editable AUD Prices)</span>
                         </h3>
 
                         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -314,7 +328,7 @@
                                             <div class="w-9 h-5 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-emerald-600 relative"></div>
                                             <span id="c1_toggle_status" class="ml-2 text-[10px] font-bold uppercase tracking-wider text-emerald-600">ON</span>
                                         </label>
-                                        <span class="text-gold-700 font-mono font-bold text-xs" id="subtotal-c1-hdr">$32,968.00/yr</span>
+                                        <span class="text-gold-800 font-mono font-bold text-xs" id="subtotal-c1-hdr">$32,968.00/yr</span>
                                     </div>
                                 </div>
                                 <table class="w-full text-[11px] bg-white rounded border border-slate-200">
@@ -355,7 +369,7 @@
                                             <td class="p-1.5 text-slate-900" data-i18n="lbl_subtotal_ex_gst">Subtotal (excl. GST)</td>
                                             <td class="p-1.5 text-right font-mono" id="c1_wk_sub">$634.00</td>
                                             <td class="p-1.5 text-right font-mono" id="c1_mth_sub">$2,747.33</td>
-                                            <td class="p-1.5 text-right font-mono text-gold-700" id="c1_ann_sub">$32,968.00</td>
+                                            <td class="p-1.5 text-right font-mono text-gold-800" id="c1_ann_sub">$32,968.00</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -432,7 +446,7 @@
                                             <div class="w-9 h-5 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-emerald-600 relative"></div>
                                             <span id="c3_toggle_status" class="ml-2 text-[10px] font-bold uppercase tracking-wider text-emerald-600">ON</span>
                                         </label>
-                                        <span class="text-gold-700 font-mono font-bold text-xs" id="subtotal-c3-hdr">$4,620.00/yr</span>
+                                        <span class="text-gold-800 font-mono font-bold text-xs" id="subtotal-c3-hdr">$4,620.00/yr</span>
                                     </div>
                                 </div>
                                 <table class="w-full text-[11px] bg-white rounded border border-slate-200">
@@ -468,7 +482,7 @@
                                         <tr class="bg-slate-100 font-bold border-t border-slate-300">
                                             <td class="p-1.5 text-slate-900" data-i18n="lbl_subtotal_ex_gst">Subtotal (excl. GST)</td>
                                             <td class="p-1.5 text-right font-mono" id="c3_mth_sub">$385.00</td>
-                                            <td class="p-1.5 text-right font-mono text-gold-700" id="c3_ann_sub">$4,620.00</td>
+                                            <td class="p-1.5 text-right font-mono text-gold-800" id="c3_ann_sub">$4,620.00</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -486,7 +500,7 @@
                                             <div class="w-9 h-5 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-emerald-600 relative"></div>
                                             <span id="c4_toggle_status" class="ml-2 text-[10px] font-bold uppercase tracking-wider text-emerald-600">ON</span>
                                         </label>
-                                        <span class="text-gold-700 font-mono font-bold text-xs" id="subtotal-c4-hdr">$4,860.00/yr</span>
+                                        <span class="text-gold-800 font-mono font-bold text-xs" id="subtotal-c4-hdr">$4,860.00/yr</span>
                                     </div>
                                 </div>
                                 <table class="w-full text-[11px] bg-white rounded border border-slate-200">
@@ -536,7 +550,7 @@
                                         <tr class="bg-slate-100 font-bold border-t border-slate-300">
                                             <td class="p-1.5 text-slate-900" data-i18n="lbl_subtotal_ex_gst">Subtotal (excl. GST)</td>
                                             <td class="p-1.5 text-right font-mono" id="c4_mth_sub">$405.00</td>
-                                            <td class="p-1.5 text-right font-mono text-gold-700" id="c4_ann_sub">$4,860.00</td>
+                                            <td class="p-1.5 text-right font-mono text-gold-800" id="c4_ann_sub">$4,860.00</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -554,7 +568,7 @@
                                             <div class="w-9 h-5 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-emerald-600 relative"></div>
                                             <span id="c5_toggle_status" class="ml-2 text-[10px] font-bold uppercase tracking-wider text-emerald-600">ON</span>
                                         </label>
-                                        <span class="text-gold-700 font-mono font-bold text-xs" id="subtotal-c5-hdr">$5,337.00/yr</span>
+                                        <span class="text-gold-800 font-mono font-bold text-xs" id="subtotal-c5-hdr">$5,337.00/yr</span>
                                     </div>
                                 </div>
                                 <table class="w-full text-[11px] bg-white rounded border border-slate-200">
@@ -596,7 +610,7 @@
                                         </tr>
                                         <tr class="bg-slate-100 font-bold border-t border-slate-300">
                                             <td class="p-1.5 text-slate-900" data-i18n="lbl_subtotal">Subtotal</td>
-                                            <td class="p-1.5 text-right font-mono text-gold-700" id="c5_ex_sub">$5,337.00</td>
+                                            <td class="p-1.5 text-right font-mono text-gold-800" id="c5_ex_sub">$5,337.00</td>
                                             <td class="p-1.5 text-right font-mono text-slate-800" id="c5_inc_sub">$5,870.70</td>
                                         </tr>
                                     </tbody>
@@ -615,7 +629,7 @@
                                             <div class="w-9 h-5 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-emerald-600 relative"></div>
                                             <span id="c6_toggle_status" class="ml-2 text-[10px] font-bold uppercase tracking-wider text-emerald-600">ON</span>
                                         </label>
-                                        <span class="text-gold-700 font-mono font-bold text-xs" id="subtotal-c6-hdr">$35,742.00/yr</span>
+                                        <span class="text-gold-800 font-mono font-bold text-xs" id="subtotal-c6-hdr">$35,742.00/yr</span>
                                     </div>
                                 </div>
                                 <table class="w-full text-[11px] bg-white rounded border border-slate-200">
@@ -651,7 +665,7 @@
                                         <tr class="bg-slate-100 font-bold border-t border-slate-300">
                                             <td class="p-1.5 text-slate-900" data-i18n="lbl_subtotal_ex_ocean">Subtotal (excl. Ocean & Duty)</td>
                                             <td class="p-1.5 text-right font-mono" id="c6_ship_sub">$2,978.50</td>
-                                            <td class="p-1.5 text-right font-mono text-gold-700" id="c6_ann_sub">$35,742.00</td>
+                                            <td class="p-1.5 text-right font-mono text-gold-800" id="c6_ann_sub">$35,742.00</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -688,7 +702,12 @@
         </div>
 
         <!-- 4. FLOATING LANDED COST ENGINE TOOLBAR -->
-        <div class="fixed bottom-0 left-0 right-0 bg-slate-900 border-t-2 border-gold-500 shadow-2xl p-4 text-white z-50 no-print">
+        <div id="landed-cost-engine" class="fixed bottom-0 left-0 right-0 bg-slate-900 border-t-2 border-gold-500 shadow-2xl text-white z-50 no-print transition-transform duration-300 max-sm:translate-y-full">
+            <button type="button" id="toggle-engine-btn" onclick="toggleEngine()" aria-expanded="false" aria-controls="engine-panel" class="sm:hidden absolute -top-[34px] right-4 bg-slate-900 border-t-2 border-l-2 border-r-2 border-gold-500 text-gold-400 px-4 py-1.5 rounded-t-lg hover:bg-slate-800 transition flex items-center justify-center focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-gold-400">
+                <i id="toggle-engine-icon" class="fa-solid fa-chevron-up" aria-hidden="true"></i>
+                <span class="ml-2 text-[10px] font-bold uppercase tracking-wider">Cost Engine</span>
+            </button>
+            <div id="engine-panel" class="p-4">
             <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4">
                 <div class="flex items-center space-x-3">
                     <div class="p-2 bg-gold-500 text-slate-900 rounded-lg">
@@ -753,6 +772,7 @@
                         <i class="fa-solid fa-arrows-rotate"></i> <span data-i18n="btn_recalc">Recalculate</span>
                     </button>
                 </div>
+            </div>
             </div>
         </div>
 

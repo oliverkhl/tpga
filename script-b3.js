@@ -41,7 +41,7 @@ function unlockPage(e) {
             modal.classList.add('opacity-0', 'pointer-events-none');
             setTimeout(() => modal.style.display = 'none', 300);
         }
-        if (content) content.classList.remove('blur-xl', 'pointer-events-none', 'select-none');
+        if (content) content.classList.remove('filter', 'blur-xl', 'pointer-events-none', 'select-none');
         updateOpExFromInputs();
     } else {
         if (errorMsg) errorMsg.classList.remove('hidden');
@@ -51,14 +51,80 @@ function unlockPage(e) {
 function togglePasswordVisibility() {
     const input = document.getElementById('password-input');
     const icon = document.getElementById('eye-icon');
+    const btn = document.getElementById('toggle-password-btn');
     if (!input || !icon) return;
-    if (input.type === 'password') {
-        input.type = 'text';
-        icon.classList.replace('fa-eye', 'fa-eye-slash');
-    } else {
-        input.type = 'password';
-        icon.classList.replace('fa-eye-slash', 'fa-eye');
+    const showing = input.type === 'password';
+    input.type = showing ? 'text' : 'password';
+    icon.classList.toggle('fa-eye', !showing);
+    icon.classList.toggle('fa-eye-slash', showing);
+    if (btn) {
+        btn.setAttribute('aria-pressed', showing ? 'true' : 'false');
+        btn.setAttribute('aria-label', showing ? 'Hide password' : 'Show password');
     }
+}
+
+function initPasswordModalA11y() {
+    const modal = document.getElementById('password-modal');
+    if (!modal || modal.dataset.trapBound === '1') return;
+    modal.dataset.trapBound = '1';
+    document.addEventListener('keydown', (event) => {
+        if (event.key !== 'Tab') return;
+        if (modal.style.display === 'none' || modal.classList.contains('pointer-events-none')) return;
+        const focusable = [...modal.querySelectorAll('button, [href], input, select, textarea')]
+            .filter((el) => !el.disabled && el.offsetParent !== null);
+        if (!focusable.length) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (!modal.contains(document.activeElement)) {
+            event.preventDefault();
+            (event.shiftKey ? last : first).focus();
+        } else if (event.shiftKey && document.activeElement === first) {
+            event.preventDefault();
+            last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+            event.preventDefault();
+            first.focus();
+        }
+    });
+}
+
+function loadScriptOnce(src) {
+    const existing = document.querySelector(`script[data-lazy-src="${src}"]`);
+    if (existing && existing.dataset.loaded === '1') return Promise.resolve();
+    if (existing && existing._loadPromise) return existing._loadPromise;
+    const script = existing || document.createElement('script');
+    const promise = new Promise((resolve, reject) => {
+        script.addEventListener('load', () => {
+            script.dataset.loaded = '1';
+            resolve();
+        }, { once: true });
+        script.addEventListener('error', () => reject(new Error('Failed to load ' + src)), { once: true });
+    });
+    script._loadPromise = promise;
+    if (!existing) {
+        script.src = src;
+        script.async = true;
+        script.dataset.lazySrc = src;
+        document.head.appendChild(script);
+    }
+    return promise;
+}
+
+let pdfLibsPromise = null;
+function ensurePdfLibraries() {
+    if (window.jspdf && window.jspdf.jsPDF && typeof html2canvas === 'function') {
+        return Promise.resolve();
+    }
+    if (!pdfLibsPromise) {
+        pdfLibsPromise = Promise.all([
+            loadScriptOnce('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js'),
+            loadScriptOnce('https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js')
+        ]).then(() => undefined).catch((err) => {
+            pdfLibsPromise = null;
+            throw err;
+        });
+    }
+    return pdfLibsPromise;
 }
 
 // --- CONTAINER / SHIPMENT FREQUENCY HANDLER ---
@@ -102,7 +168,7 @@ function getCategoryState(catNum, rawSubtotal, suffix = '/yr') {
     if (headerEl) {
         if (isEnabled) {
             headerEl.innerText = '$' + rawSubtotal.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + suffix;
-            headerEl.className = (catNum === 3 ? "text-emerald-700" : "text-gold-700") + " font-mono font-bold text-xs";
+            headerEl.className = (catNum === 3 ? "text-emerald-700" : "text-gold-800") + " font-mono font-bold text-xs";
         } else {
             headerEl.innerText = `$0.00${suffix} (OFF)`;
             headerEl.className = "text-slate-400 font-mono font-bold text-xs";
@@ -332,6 +398,12 @@ function updateOpExFromInputs() {
 
 // --- INDIVIDUAL BILINGUAL (EN + KM) CATEGORY PDF EXPORT ENGINE (WITH AUD & USD COLUMNS) ---
 async function exportCategoryPDF(catNum) {
+    try {
+        await ensurePdfLibraries();
+    } catch (err) {
+        alert('Could not load the PDF libraries. Check your connection and try again.');
+        return;
+    }
     if (!window.jspdf || !window.jspdf.jsPDF || typeof html2canvas === 'undefined') {
         alert("PDF export libraries are still loading. Please try again in a moment.");
         return;
@@ -776,6 +848,7 @@ function resetOpExBudget() {
 
 // --- INITIALIZATION ON PAGE LOAD ---
 document.addEventListener('DOMContentLoaded', () => {
+    initPasswordModalA11y();
     updateOpExFromInputs();
 });
 

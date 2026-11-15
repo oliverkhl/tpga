@@ -1,7 +1,11 @@
 body {
 background-color: #F4F5F7;
-font-family: 'Inter', sans-serif;
+font-family: 'Inter', 'Noto Sans Khmer', sans-serif;
 color: #1E293B;
+}
+
+.font-khmer {
+font-family: 'Noto Sans Khmer', sans-serif;
 }
 
 .gold-gradient {
@@ -184,4 +188,35 @@ margin: 0.8cm;
     background-color: #facc15; /* Brand yellow */
     color: #1e293b; /* Dark text on hover */
     border-color: #facc15;
+}
+
+/* Horizontal table scroll with a fade cue on small screens */
+.table-scroll {
+    overflow-x: auto;
+    max-width: 100%;
+    -webkit-overflow-scrolling: touch;
+}
+
+.table-scroll-note {
+    display: none;
+}
+
+@media (max-width: 639px) {
+    .table-scroll {
+        background-image:
+            linear-gradient(90deg, rgba(30, 41, 59, 0.16), rgba(30, 41, 59, 0)),
+            linear-gradient(270deg, rgba(30, 41, 59, 0.22), rgba(30, 41, 59, 0));
+        background-repeat: no-repeat;
+        background-position: left center, right center;
+        background-size: 14px 100%, 18px 100%;
+    }
+
+    .table-scroll-note {
+        display: flex;
+    }
+
+    [id$="-card-container"] {
+        overflow-x: auto;
+        max-width: 100%;
+    }
 }
