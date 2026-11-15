@@ -133,6 +133,27 @@
 				background: #151f30; color: #E6C655 !important; 
 			}
 			.active-link { background: rgba(212, 175, 55, 0.1); color: #D4AF37 !important; border: 1px solid #D4AF37; }
+			#main-nav a.staff-login {
+				display: inline-flex; align-items: center; gap: 6px; flex-shrink: 0;
+				margin-left: 12px; padding: 8px 14px; font-size: 0.82rem; font-weight: 700;
+				color: #E6C655; background: transparent; border: 1px solid #E6C655;
+				border-radius: 50px; white-space: nowrap; line-height: 1; letter-spacing: 0.01em;
+				transition: background-color 0.2s, color 0.2s, border-color 0.2s, transform 0.2s !important;
+			}
+			#main-nav a.staff-login svg { width: 14px; height: 14px; flex: 0 0 auto; display: block; }
+			#main-nav a.staff-login:hover {
+				background: rgba(230, 198, 85, 0.12); color: #F8E7A0 !important;
+				border-color: #E6C655; transform: translateY(-2px) !important;
+			}
+			#main-nav a.staff-login:focus-visible {
+				outline: 3px solid #ffffff; outline-offset: 3px;
+				box-shadow: 0 0 0 2px #1E293B, 0 0 0 6px #ffffff;
+			}
+			.footer-col a.staff-login-footer { font-size: 0.85rem; transition: color 0.2s, transform 0.2s !important; }
+			.footer-col a.staff-login-footer:focus-visible {
+				outline: 3px solid #ffffff; outline-offset: 3px;
+				box-shadow: 0 0 0 2px #151f30, 0 0 0 6px #ffffff;
+			}
 
 			/* --- HERO BANNERS --- */
 			#page-wrapper { padding-top: 80px; }
@@ -345,9 +366,21 @@
 				#main-nav { position: fixed; top: 80px; left: 0; width: 100%; background: #1E293B; flex-direction: column; display: none; z-index: 9999; border-bottom: 2px solid #D4AF37; }
 				#main-nav.is-open { display: flex !important; }
 				#main-nav a { width: 100%; text-align: center; margin: 0; border-bottom: 1px solid #151f30; padding: 15px 0; border-radius: 0; }
+				#main-nav a.staff-login {
+					margin: 0; width: 100%; justify-content: center; border-radius: 0;
+					padding: 15px 0; font-size: 0.95rem; border: none; border-bottom: 1px solid #151f30;
+				}
+				#main-nav a.staff-login:hover { transform: none !important; background: #151f30; }
 				.glass-form-container { width: 100%; flex: 1 1 auto; padding: 30px 20px; }
 				.hero-action-row { justify-content: center; }
 				.spec-table { display: block; overflow-x: auto; }
+			}
+			@media screen and (min-width: 981px) and (max-width: 1279px) {
+				#main-nav a.staff-login { margin-left: 8px; padding: 11px 11px; gap: 0; }
+				#main-nav a.staff-login .staff-login-label { display: none; }
+			}
+			@media screen and (min-width: 981px) and (max-width: 1040px) {
+				#main-nav a.staff-login { margin-right: -48px; }
 			}
 		</style>
 	</head>
@@ -394,6 +427,12 @@
 						<a href="#compliance" id="nav-compliance">Biosecurity & QA</a>
 						<a href="#about" id="nav-about">About Us</a>
 						<a href="#contact" id="nav-contact">Contact Us</a>
+						<a href="Q1.html" rel="nofollow" class="staff-login" aria-label="Staff Login" title="Staff Login">
+							<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+								<path fill="currentColor" d="M12 1.5a5.25 5.25 0 0 0-5.25 5.25v3a3 3 0 0 0-3 3v6.75a3 3 0 0 0 3 3h10.5a3 3 0 0 0 3-3v-6.75a3 3 0 0 0-3-3v-3A5.25 5.25 0 0 0 12 1.5zm3.75 8.25v-3a3.75 3.75 0 1 0-7.5 0v3h7.5z"/>
+							</svg>
+							<span class="staff-login-label">Staff Login</span>
+						</a>
 					</nav>
 				</div>
 			</header>
@@ -1621,6 +1660,7 @@
 								<li><a href="#compliance">Biosecurity & QA</a></li>
 								<li><a href="#about">About Us</a></li>
 								<li><a href="#contact">Contact Us</a></li>
+								<li><a href="Q1.html" rel="nofollow" class="staff-login-footer">Staff Login</a></li>
 							</ul>
 						</div>
 
