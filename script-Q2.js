@@ -681,6 +681,36 @@ function getPcsPerCtn(specStr) {
     return match ? parseInt(match[1], 10) : 1;
 }
 
+// Shared staff session for this tab (Q1, Q1-1, B1, qc1).
+function tpgaStaffSessionActive() {
+    try {
+        return sessionStorage.getItem('tpgaStaffAuth') === '1';
+    } catch (err) {
+        return false;
+    }
+}
+
+function tpgaRememberStaffAuth() {
+    try {
+        sessionStorage.setItem('tpgaStaffAuth', '1');
+    } catch (err) {}
+    document.documentElement.classList.add('tpga-show-logout');
+}
+
+function tpgaApplyStaffUnlock() {
+    const modal = document.getElementById('password-modal');
+    const content = document.getElementById('page-content');
+    if (modal) {
+        modal.classList.add('opacity-0', 'pointer-events-none');
+        modal.style.display = 'none';
+        modal.setAttribute('aria-hidden', 'true');
+    }
+    if (content) content.classList.remove('filter', 'blur-xl', 'pointer-events-none', 'select-none');
+    const focused = document.activeElement;
+    if (focused && modal && modal.contains(focused) && focused.blur) focused.blur();
+    document.documentElement.classList.add('tpga-staff-auth', 'tpga-show-logout');
+}
+
 function unlockPage(e) {
     if (e) e.preventDefault();
     const inputVal = document.getElementById('password-input')?.value;
@@ -689,6 +719,7 @@ function unlockPage(e) {
     const content = document.getElementById('page-content');
 
     if (inputVal === 'twoparrots') {
+        tpgaRememberStaffAuth();
         if (modal) {
             modal.classList.add('opacity-0', 'pointer-events-none');
             setTimeout(() => modal.style.display = 'none', 300);
@@ -1386,6 +1417,10 @@ window.toggleEngine = toggleEngine;
 // --- INITIALIZATION ---
 document.addEventListener('DOMContentLoaded', () => {
     initPasswordModalA11y();
+    if (tpgaStaffSessionActive()) {
+        tpgaApplyStaffUnlock();
+        updateOpExFromInputs();
+    }
     window.addEventListener('resize', syncEnginePadding);
     const passwordForm = document.getElementById('password-form');
     if (passwordForm) passwordForm.addEventListener('submit', unlockPage);

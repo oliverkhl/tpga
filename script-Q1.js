@@ -1051,6 +1051,36 @@ function setLanguage(lang) {
     renderTable();
 }
 
+// Shared staff session for this tab (Q1, Q1-1, B1, qc1).
+function tpgaStaffSessionActive() {
+    try {
+        return sessionStorage.getItem('tpgaStaffAuth') === '1';
+    } catch (err) {
+        return false;
+    }
+}
+
+function tpgaRememberStaffAuth() {
+    try {
+        sessionStorage.setItem('tpgaStaffAuth', '1');
+    } catch (err) {}
+    document.documentElement.classList.add('tpga-show-logout');
+}
+
+function tpgaApplyStaffUnlock() {
+    const modal = document.getElementById('password-modal');
+    const content = document.getElementById('page-content');
+    if (modal) {
+        modal.classList.add('opacity-0', 'pointer-events-none');
+        modal.style.display = 'none';
+        modal.setAttribute('aria-hidden', 'true');
+    }
+    if (content) content.classList.remove('filter', 'blur-xl', 'pointer-events-none', 'select-none');
+    const focused = document.activeElement;
+    if (focused && modal && modal.contains(focused) && focused.blur) focused.blur();
+    document.documentElement.classList.add('tpga-staff-auth', 'tpga-show-logout');
+}
+
 // --- RESTORED SECURITY LOGIN & PASSWORD MODAL LOGIC ---
 function unlockPage(e) {
     if (e) e.preventDefault();
@@ -1060,6 +1090,7 @@ function unlockPage(e) {
     const content = document.getElementById('page-content');
 
     if (inputVal === 'twoparrots') {
+        tpgaRememberStaffAuth();
         if (modal) {
             modal.classList.add('opacity-0', 'pointer-events-none');
             setTimeout(() => {
@@ -1990,6 +2021,10 @@ window.resetMasterProfitOrders = resetMasterProfitOrders;
 // Initial Launch listeners
 document.addEventListener('DOMContentLoaded', () => {
     initPasswordModalA11y();
+    if (tpgaStaffSessionActive()) {
+        tpgaApplyStaffUnlock();
+        loadLatestPrices();
+    }
     window.addEventListener('resize', syncEnginePadding);
     Object.keys(defaultOpExValues).forEach(id => {
         document.getElementById(id)?.addEventListener('input', updateOpExFromInputs);
