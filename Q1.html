@@ -36,7 +36,7 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Khmer:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="styles-Q1.css">
+    <link rel="stylesheet" href="styles-Q1.css?v=20261115b">
 	    <link rel="icon" href="favicon.ico" sizes="any">
     <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
     <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
@@ -781,9 +781,9 @@
                             <input type="number" id="input-fx" value="0.6620" step="0.0005" min="0.1" class="bg-slate-800 border border-slate-700 text-white rounded px-2.5 py-1 text-xs w-24 text-right focus:outline-none focus:border-gold-500">
                     </div>
 
-                    <!-- 20ft Ocean Freight -->
+                    <!-- Ocean freight. The label and value follow the container selector. -->
                     <div class="flex flex-col">
-                        <label data-i18n="lbl_freight" class="text-[10px] text-gold-400 uppercase font-semibold mb-0.5">20ft Freight (USD)</label>
+                        <label id="engine-freight-label" data-i18n="lbl_freight" class="text-[10px] text-gold-400 uppercase font-semibold mb-0.5">20ft Freight (USD)</label>
                         <input type="number" id="input-freight" value="1580" step="25" min="0" class="bg-slate-800 border border-slate-700 text-white rounded px-2.5 py-1 text-xs w-28 text-right focus:outline-none focus:border-gold-500">
                     </div>
 
@@ -799,9 +799,9 @@
 					<!-- Container Type (20ft / 40ft) -->
 					<div class="flex flex-col">
 						<label class="text-[10px] text-gold-400 uppercase font-semibold mb-0.5">Container Type</label>
-							<select id="input-container-type" onchange="recalculateAll()" class="bg-slate-800 border border-slate-700 text-white rounded px-2.5 py-1 text-xs font-bold focus:outline-none focus:border-gold-500">
-								<option value="20ft" selected>20ft FCL</option>
-								<option value="40ft">40ft FCL</option>
+							<select id="input-container-type" data-container-type-select onchange="recalculateAll()" class="bg-slate-800 border border-slate-700 text-white rounded px-2.5 py-1 text-xs font-bold focus:outline-none focus:border-gold-500">
+								<option value="20ft" selected>20ft FCL (1,000 CTN)</option>
+								<option value="40ft">40ft FCL (2,000 CTN)</option>
 							</select>
 					</div>
 
@@ -814,7 +814,7 @@
 					<!-- Bottom: Container Capacity Bar & Count -->
 						<div class="w-full">
 						<div class="flex justify-between text-[9px] text-slate-300 font-mono mb-0.5">
-							<span id="floating-space-text">0 / 20,000 Pcs</span>
+							<span id="floating-space-text">0 / 1,000 CTN</span>
 							<span id="floating-space-pct" class="font-bold text-gold-400">0%</span>
 						</div>
 						<div class="w-full bg-slate-900 rounded-full h-1.5 overflow-hidden border border-slate-700">
@@ -834,6 +834,6 @@
     </div>
 
     <!-- Custom Script -->
-    <script src="script-Q1.js"></script>
+    <script src="script-Q1.js?v=20261115b"></script>
 </body>
 </html>

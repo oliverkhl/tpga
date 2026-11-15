@@ -5,6 +5,19 @@ let currentOpExPerContainerAUD = currentAnnualOpExAUD / ANNUAL_CONTAINERS;
 let containerOverCapacityAlertShown = false; // Tracks alert state to prevent repeated triggers
 let appliedOpExContainerType = '20ft';
 
+// Q1 container presets. 40ft ocean freight is the 2,850 USD default already used by this
+// file (and by Q1-1). qc1 uses a different quote (2,480 / 4,710) and is not copied here.
+const CONTAINER_PRESETS = {
+    '20ft': { freightUsd: 1580, cartageAud: 750, localCharges: 2920.60, warehouse: 600, annualContainers: 12, capacityCartons: 1000 },
+    '40ft': { freightUsd: 2850, cartageAud: 1450, localCharges: 3222.40, warehouse: 740, annualContainers: 6, capacityCartons: 2000 }
+};
+
+// Last freight the user had for each container. A switch restores that container's own value.
+let rememberedFreightUsd = {
+    '20ft': CONTAINER_PRESETS['20ft'].freightUsd,
+    '40ft': CONTAINER_PRESETS['40ft'].freightUsd
+};
+
 // Default OpEx Baseline Values for Reset Button
 const defaultOpExValues = {
     c1_1_input: 60.00,
@@ -204,8 +217,8 @@ function updateOpExFromInputs() {
     const c6_4_ship = parseInputValue('c6_4_ship_input');
     const c6_5_ship = parseInputValue('c6_5_ship_input');
 
-    const containerType = document.getElementById('input-container-type')?.value || '20ft';
-    ANNUAL_CONTAINERS = containerType === '40ft' ? 6 : 12;
+    const containerType = currentContainerType();
+    ANNUAL_CONTAINERS = CONTAINER_PRESETS[containerType].annualContainers;
 
     const c6_1_ann = c6_1_ship * ANNUAL_CONTAINERS;
     const c6_2_ann = c6_2_ship * ANNUAL_CONTAINERS;
@@ -302,6 +315,16 @@ function resetOpExBudget() {
     });
     const c2Toggle = document.getElementById('c2_toggle_input');
     if (c2Toggle) c2Toggle.checked = false;
+
+    // Budget defaults store the 20ft Category 6 pair. Put the pair for the container
+    // that is actually selected back in, so a reset on 40ft does not leave 20ft charges.
+    const containerType = currentContainerType();
+    const preset = CONTAINER_PRESETS[containerType];
+    const c6Local = document.getElementById('c6_1_ship_input');
+    const c6Warehouse = document.getElementById('c6_2_ship_input');
+    if (c6Local) c6Local.value = preset.localCharges;
+    if (c6Warehouse) c6Warehouse.value = preset.warehouse;
+    appliedOpExContainerType = containerType;
 
     updateOpExFromInputs();
 }
@@ -1690,35 +1713,105 @@ function generateCompetitorHtml(compList, targetWeightG, customerSellingPriceAud
     }).join('');
 }
 
-// --- AUTOMATIC CONTAINER CARTAGE & FREIGHT SWITCHING ENGINE ---
+function currentContainerType() {
+    const value = document.getElementById('input-container-type')?.value;
+    return CONTAINER_PRESETS[value] ? value : '20ft';
+}
+
+function finiteNonNegative(value, fallback) {
+    const n = typeof value === 'number' ? value : parseFloat(value);
+    return Number.isFinite(n) && n >= 0 ? n : fallback;
+}
+
+function engineFreightLabel(containerType) {
+    const labels = {
+        en: { '20ft': '20ft Freight (USD)', '40ft': '40ft Freight (USD)' },
+        km: { '20ft': 'ថ្លៃកុងតឺន័រ ២០ហ្វ៊ីត (USD)', '40ft': 'ថ្លៃកុងតឺន័រ ៤០ហ្វ៊ីត (USD)' },
+        fr: { '20ft': 'Fret 20ft (USD)', '40ft': 'Fret 40ft (USD)' },
+        zh: { '20ft': '20尺海运费 (USD)', '40ft': '40尺海运费 (USD)' }
+    };
+    const pack = labels[currentLang] || labels.en;
+    return pack[containerType] || pack['20ft'];
+}
+
+function standardUnitLabel(containerType) {
+    const labels = {
+        en: { '20ft': '20ft FCL Container', '40ft': '40ft FCL Container' },
+        km: { '20ft': 'កុងតឺន័រ 20ft FCL', '40ft': 'កុងតឺន័រ 40ft FCL' },
+        fr: { '20ft': 'Conteneur 20ft FCL', '40ft': 'Conteneur 40ft FCL' },
+        zh: { '20ft': '20尺整柜集装箱 (FCL)', '40ft': '40尺整柜集装箱 (FCL)' }
+    };
+    const pack = labels[currentLang] || labels.en;
+    return pack[containerType] || pack['20ft'];
+}
+
+function annualShipmentsLabel(count) {
+    const shipments = count === 6 ? 6 : 12;
+    const labels = {
+        en: `Annual (${shipments} Shipments)`,
+        km: `ប្រចាំឆ្នាំ (${shipments === 6 ? '៦' : '១២'} ជើង)`,
+        fr: `Annuel (${shipments} expéditions)`,
+        zh: `每年费用 (${shipments}次进口)`
+    };
+    return labels[currentLang] || labels.en;
+}
+
+function syncEngineContainerChrome(containerType) {
+    const preset = CONTAINER_PRESETS[containerType] || CONTAINER_PRESETS['20ft'];
+    const freightLabel = document.getElementById('engine-freight-label');
+    if (freightLabel) freightLabel.textContent = engineFreightLabel(containerType);
+    const standardUnit = document.querySelector('[data-i18n="val_standard_unit"]');
+    if (standardUnit) standardUnit.textContent = standardUnitLabel(containerType);
+    const annualHeader = document.querySelector('[data-i18n="th_ann_shipments"]');
+    if (annualHeader) annualHeader.textContent = annualShipmentsLabel(preset.annualContainers);
+}
+
+// Save the freight box into the container size it belongs to. Empty or invalid
+// input leaves the last good value for that size alone.
+function rememberActiveFreight() {
+    const type = CONTAINER_PRESETS[appliedOpExContainerType] ? appliedOpExContainerType : currentContainerType();
+    const raw = parseFloat(document.getElementById('input-freight')?.value);
+    if (Number.isFinite(raw) && raw >= 0) rememberedFreightUsd[type] = raw;
+}
+
+function onFreightInput() {
+    rememberActiveFreight();
+    renderTable();
+}
+
+// Category 6 local charges and warehouse follow the container. Duty, import GST
+// and the entry fee are not container presets, so a manual edit of those sticks
+// until Reset. Local charges and warehouse are rewritten only when the size changes.
 function applyOpExContainerPreset(containerType) {
     if (appliedOpExContainerType === containerType) return;
     appliedOpExContainerType = containerType;
-    const c6_1_ship_input = document.getElementById('c6_1_ship_input');
-    const c6_2_ship_input = document.getElementById('c6_2_ship_input');
-    if (containerType === '40ft') {
-        if (c6_1_ship_input) c6_1_ship_input.value = 3222.40;
-        if (c6_2_ship_input) c6_2_ship_input.value = 740.00;
-    } else {
-        if (c6_1_ship_input) c6_1_ship_input.value = 2920.60;
-        if (c6_2_ship_input) c6_2_ship_input.value = 600.00;
-    }
+    const preset = CONTAINER_PRESETS[containerType] || CONTAINER_PRESETS['20ft'];
+    const c6Local = document.getElementById('c6_1_ship_input');
+    const c6Warehouse = document.getElementById('c6_2_ship_input');
+    if (c6Local) c6Local.value = preset.localCharges;
+    if (c6Warehouse) c6Warehouse.value = preset.warehouse;
 }
 
-function handleContainerTypeChange() {
-    const containerType = document.getElementById('input-container-type')?.value || '20ft';
-    const inputFreight = document.getElementById('input-freight');
-    const inputCartage = document.getElementById('input-cartage');
+function syncContainerSelectors(nextType, source) {
+    document.querySelectorAll('[data-container-type-select]').forEach((el) => {
+        if (el !== source && el.value !== nextType) el.value = nextType;
+    });
+}
 
-    if (containerType === '40ft') {
-        if (inputFreight && (inputFreight.value === '1650' || inputFreight.value === '1650.00')) inputFreight.value = '2850';
-        if (inputCartage) inputCartage.value = '1450';
+function handleContainerTypeChange(event) {
+    const next = currentContainerType();
+    syncContainerSelectors(next, event?.target || null);
+    if (next !== appliedOpExContainerType) {
+        rememberActiveFreight();
+        const freightEl = document.getElementById('input-freight');
+        const remembered = rememberedFreightUsd[next];
+        if (freightEl) {
+            freightEl.value = String(finiteNonNegative(remembered, CONTAINER_PRESETS[next].freightUsd));
+        }
+        applyOpExContainerPreset(next);
     } else {
-        if (inputFreight && (inputFreight.value === '2850' || inputFreight.value === '2850.00')) inputFreight.value = '1650';
-        if (inputCartage) inputCartage.value = '750';
+        rememberActiveFreight();
     }
-
-    applyOpExContainerPreset(containerType);
     updateOpExFromInputs();
 }
 
@@ -1754,20 +1847,25 @@ function syncEnginePadding() {
 }
 
 function renderTable() {
-    const inputContainerType = document.getElementById('input-container-type');
     const inputFx = document.getElementById('input-fx');
     const inputFreight = document.getElementById('input-freight');
     const inputCartage = document.getElementById('input-cartage');
     const inputMargin = document.getElementById('input-margin');
 
-    const containerType = inputContainerType?.value || '20ft';
-    const fx = parseFloat(inputFx?.value) || 0.6620;
-    const oceanFreightUsd = parseFloat(inputFreight?.value) || (containerType === '40ft' ? 2850 : 1650);
-    const localCartageAud = parseFloat(inputCartage?.value) || (containerType === '40ft' ? 1450 : 750);
-    const marginPercent = parseFloat(inputMargin?.value) || 20;
+    const containerType = currentContainerType();
+    const preset = CONTAINER_PRESETS[containerType];
+    const fxRaw = parseFloat(inputFx?.value);
+    const fx = Number.isFinite(fxRaw) && fxRaw > 0 ? fxRaw : 0.6620;
+    const oceanFreightUsd = finiteNonNegative(inputFreight?.value, preset.freightUsd);
+    // Cartage is no longer a Category 6 line. The engine has no cartage box; the
+    // landed-cost cartage term uses this container's preset unless a cartage input exists.
+    const localCartageAud = finiteNonNegative(inputCartage?.value, preset.cartageAud);
+    const marginRaw = parseFloat(inputMargin?.value);
+    const marginPercent = Number.isFinite(marginRaw) && marginRaw >= 0 ? marginRaw : 20;
 
-    ANNUAL_CONTAINERS = containerType === '40ft' ? 6 : 12;
-    currentOpExPerContainerAUD = currentAnnualOpExAUD / ANNUAL_CONTAINERS;
+    ANNUAL_CONTAINERS = preset.annualContainers;
+    currentOpExPerContainerAUD = ANNUAL_CONTAINERS > 0 ? currentAnnualOpExAUD / ANNUAL_CONTAINERS : 0;
+    syncEngineContainerChrome(containerType);
 
     if (document.getElementById('card-fx-rate')) document.getElementById('card-fx-rate').innerText = fx.toFixed(4) + ' AUD/USD';
     if (document.getElementById('card-ocean-freight')) document.getElementById('card-ocean-freight').innerText = '$' + oceanFreightUsd.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' USD';
@@ -1919,10 +2017,8 @@ function recalculateMasterProfitTotal() {
     let totalProfit = 0;
     let totalCartons = 0;
 
-    const containerType = document.getElementById('input-container-type')?.value || '20ft';
-    
-    // Standard Carton Capacity: 1,000 CTN for 20ft container; 2,000 CTN for 40ft container
-    const containerCapacityCartons = containerType === '40ft' ? 2000 : 1000;
+    const containerType = currentContainerType();
+    const containerCapacityCartons = CONTAINER_PRESETS[containerType].capacityCartons;
 
     productsData.forEach(p => {
         const qtyCartons = p.orderQty || 0;
@@ -1949,7 +2045,7 @@ function recalculateMasterProfitTotal() {
     const spacePct = Math.round(rawSpacePct);
     
     const spaceText = document.getElementById('floating-space-text');
-    if (spaceText) spaceText.innerText = `${totalCartons.toLocaleString()} / ${containerCapacityCartons.toLocaleString()} CTN`;
+    if (spaceText) spaceText.innerText = `${totalCartons.toLocaleString('en-US')} / ${containerCapacityCartons.toLocaleString('en-US')} CTN`;
 
     const spacePctEl = document.getElementById('floating-space-pct');
     if (spacePctEl) spacePctEl.innerText = `${spacePct}%`;
@@ -1990,7 +2086,10 @@ function recalculateMasterProfitTotal() {
 
 function renderMasterProfitModelTable() {
     const masterTbody = document.getElementById('master-profit-table-body');
-    if (!masterTbody) return;
+    if (!masterTbody) {
+        recalculateMasterProfitTotal();
+        return;
+    }
 
     masterTbody.innerHTML = '';
 
@@ -2058,7 +2157,11 @@ window.resetMasterProfitOrders = resetMasterProfitOrders;
 
 // Initial Launch listeners
 document.addEventListener('DOMContentLoaded', () => {
-    appliedOpExContainerType = document.getElementById('input-container-type')?.value || '20ft';
+    appliedOpExContainerType = currentContainerType();
+    const initialFreight = parseFloat(document.getElementById('input-freight')?.value);
+    if (Number.isFinite(initialFreight) && initialFreight >= 0) {
+        rememberedFreightUsd[appliedOpExContainerType] = initialFreight;
+    }
     initPasswordModalA11y();
     if (tpgaStaffSessionActive()) {
         tpgaApplyStaffUnlock();
@@ -2073,10 +2176,8 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById(`c${i}_toggle_input`)?.addEventListener('change', updateOpExFromInputs);
     });
 
-    document.getElementById('input-container-type')?.addEventListener('change', handleContainerTypeChange);
     document.getElementById('input-fx')?.addEventListener('input', renderTable);
-    document.getElementById('input-freight')?.addEventListener('input', renderTable);
-    document.getElementById('input-cartage')?.addEventListener('input', updateOpExFromInputs);
+    document.getElementById('input-freight')?.addEventListener('input', onFreightInput);
     document.getElementById('input-margin')?.addEventListener('input', renderTable);
 
     const passwordForm = document.getElementById('password-form');
