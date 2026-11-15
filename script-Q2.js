@@ -1,11 +1,16 @@
 // --- MASTER STATE DECLARATIONS & BASELINES ---
-let currentAnnualOpExAUD = 280435.00;
+let currentAnnualOpExAUD = 92708.20;
 let ANNUAL_CONTAINERS = 12;
 let currentOpExPerContainerAUD = currentAnnualOpExAUD / ANNUAL_CONTAINERS;
 let containerOverCapacityAlertShown = false;
 let currentLang = 'en';
 
 const TOTAL_FIXED_CUSTOMS_AUD = 253.50 + 154.00 + 67.50 + 1695.00 + 65.00;
+
+// ECB reference via Frankfurter, rate date 2026-11-13: AUD 1 = USD 0.67854.
+// api.frankfurter.app redirects to this URL; the redirect response has no CORS header, so the browser calls the target directly.
+const FX_FALLBACK_AUD_USD = 0.67854;
+const FX_RATE_URL = 'https://api.frankfurter.dev/v1/latest?from=AUD&to=USD';
 
 // Default OpEx Baseline Values for Reset Button
 const defaultOpExValues = {
@@ -14,13 +19,13 @@ const defaultOpExValues = {
     c3_1_mth_input: 260.00, c3_2_mth_input: 85.00, c3_3_mth_input: 40.00,
     c4_1_mth_input: 160.00, c4_2_mth_input: 55.00, c4_3_mth_input: 30.00, c4_4_mth_input: 90.00, c4_5_mth_input: 70.00,
     c5_1_ann_input: 177.00, c5_2_ann_input: 1800.00, c5_3_ann_input: 1500.00, c5_4_ann_input: 1860.00,
-    c6_1_ship_input: 475.00, c6_2_ship_input: 450.00, c6_3_ship_input: 750.00
+    c6_1_ship_input: 2920.60, c6_2_ship_input: 600.00, c6_3_ship_input: 0.00, c6_4_ship_input: 0.00, c6_5_ship_input: 223.00
 };
 
 // --- COMPLETE 30-PRODUCT DATASET WITH MULTI-LANGUAGE & COMPETITOR COMPARISONS ---
 const productsData = [
     {
-        id: 1, status: 'Active', weightG: 500, orderQty: 0, ctnPriceUsd: 7.20,
+        id: 1, status: 'Active', weightG: 500, orderQty: 0, ctnPriceUsd: 7.21,
         name: { en: 'Finest Rice Flour 500g', km: 'ម្សៅអង្ករខ្សាយ ៥០០ក្រាម', fr: 'Farine de riz fine 500g', zh: '优质大米粉 500g' },
         nameKhmer: 'ម្សៅអង្ករខ្សាយ ៥០០ក្រាម', spec: { en: '20 Pcs/CTN (10kg)', km: 'ថង់ ៥០០ក្រាម / ២០ កញ្ចប់ (១០គីឡូ/កេស)', fr: 'Sac de 500g / 20 Pcs (10kg/CTN)', zh: '500g/袋 / 20包 (10kg/箱)' }, fobUsd: 0.36, pcsPer20ft: 20000,
         asianComps: [
@@ -38,7 +43,7 @@ const productsData = [
         ]
     },
     {
-        id: 2, status: 'Active', weightG: 500, orderQty: 0, ctnPriceUsd: 11.60,
+        id: 2, status: 'Active', weightG: 500, orderQty: 0, ctnPriceUsd: 11.67,
         name: { en: 'Glutinous Rice Flour 500g', km: 'ម្សៅអង្ករដំណើប ៥០០ក្រាម', fr: 'Farine de riz glutineux 500g', zh: '水磨糯米粉 500g' },
         nameKhmer: 'ម្សៅអង្ករដំណើប ៥០០ក្រាម', spec: { en: '20 Pcs/CTN (10kg)', km: 'ថង់ ៥០០ក្រាម / ២០ កញ្ចប់ (១០គីឡូ/កេស)', fr: 'Sac de 500g / 20 Pcs (10kg/CTN)', zh: '500g/袋 / 20包 (10kg/箱)' }, fobUsd: 0.58, pcsPer20ft: 20000,
         asianComps: [
@@ -52,7 +57,7 @@ const productsData = [
         ]
     },
     {
-        id: 3, status: 'Active', weightG: 500, orderQty: 0, ctnPriceUsd: 8.80,
+        id: 3, status: 'Active', weightG: 500, orderQty: 0, ctnPriceUsd: 8.75,
         name: { en: 'Tapioca Flour 500g', km: 'ម្សៅឆា ៥០០ក្រាម', fr: 'Farine de tapioca 500g', zh: '木薯淀粉 / 生粉 500g' },
         nameKhmer: 'ម្សៅឆា ៥០០ក្រាម', spec: { en: '20 Pcs/CTN (10kg)', km: 'ថង់ ៥០០ក្រាម / ២០ កញ្ចប់ (១០គីឡូ/កេស)', fr: 'Sac de 500g / 20 Pcs (10kg/CTN)', zh: '500g/袋 / 20包 (10kg/箱)' }, fobUsd: 0.44, pcsPer20ft: 20000,
         asianComps: [
@@ -82,7 +87,7 @@ const productsData = [
         ]
     },
     {
-        id: 5, status: 'Active', weightG: 1000, orderQty: 0, ctnPriceUsd: 12.50,
+        id: 5, status: 'Active', weightG: 1000, orderQty: 0, ctnPriceUsd: 12.54,
         name: { en: 'Crispy Tempura Flour 1000g', km: 'ម្សៅបំពងស្រួយ ១០០០ក្រាម', fr: 'Farine à tempura croustillante 1000g', zh: '香酥天妇罗炸粉 1000g' },
         nameKhmer: 'ម្សៅបំពងស្រួយ ១០០០ក្រាម', spec: { en: '10 Pcs/CTN (10kg)', km: 'ថង់ ១០០០ក្រាម / ១០ កញ្ចប់ (១០គីឡូ/កេស)', fr: 'Sac de 1000g / 10 Pcs (10kg/CTN)', zh: '1000g/袋 / 10包 (10kg/箱)' }, fobUsd: 1.25, pcsPer20ft: 10000,
         asianComps: [
@@ -110,7 +115,7 @@ const productsData = [
         ]
     },
     {
-        id: 7, status: 'Active', weightG: 500, orderQty: 0, ctnPriceUsd: 32.00,
+        id: 7, status: 'Active', weightG: 500, orderQty: 0, ctnPriceUsd: 31.93,
         name: { en: 'Fried Banana Flour 500g', km: 'ម្សៅចេកចៀន ៥០០ក្រាម', fr: 'Farine pour bananes frites 500g', zh: '炸香蕉专用脆粉 500g' },
         nameKhmer: 'ម្សៅចេកចៀន ៥០០ក្រាម', spec: { en: '20 Pcs/CTN (10kg)', km: 'ថង់ ៥០០ក្រាម / ២០ កញ្ចប់ (១០គីឡូ/កេស)', fr: 'Sac de 500g / 20 Pcs (10kg/CTN)', zh: '500g/袋 / 20包 (10kg/箱)' }, fobUsd: 1.60, pcsPer20ft: 20000,
         asianComps: [
@@ -123,7 +128,7 @@ const productsData = [
         ]
     },
     {
-        id: 8, status: 'Active', weightG: 120, orderQty: 0, ctnPriceUsd: 43.56,
+        id: 8, status: 'Active', weightG: 120, orderQty: 0, ctnPriceUsd: 43.57,
         name: { en: 'Black Pepper Whole 120g', km: 'ម្រេចខ្មៅគ្រាប់មូល ១២០ក្រាម', fr: 'Poivre noir entier 120g', zh: '整粒黑胡椒粒 120g' },
         nameKhmer: 'ម្រេចខ្មៅគ្រាប់មូល ១២០ក្រាម', spec: { en: '12 Cans/CTN', km: 'កំប៉ុង ១២០ក្រាម / ១២ កំប៉ុង/កេស', fr: 'Boîte de 120g / 12 Boîtes/CTN', zh: '120g/罐 / 12罐/箱' }, fobUsd: 3.63, pcsPer20ft: 18000,
         asianComps: [
@@ -140,7 +145,7 @@ const productsData = [
         ]
     },
     {
-        id: 9, status: 'Active', weightG: 80, orderQty: 0, ctnPriceUsd: 28.60,
+        id: 9, status: 'Active', weightG: 80, orderQty: 0, ctnPriceUsd: 28.59,
         name: { en: 'Fine Ground Black Pepper 80g', km: 'ម្រេចខ្មៅម៉ដ្ឋ ៨០ក្រាម', fr: 'Poivre noir moulu fin 80g', zh: '细磨黑胡椒粉 80g' },
         nameKhmer: 'ម្រេចខ្មៅម៉ដ្ឋ ៨០ក្រាម', spec: { en: '20 Cans/CTN', km: 'កំប៉ុង ៨០ក្រាម / ២០ កំប៉ុង/កេស', fr: 'Boîte de 80g / 20 Boîtes/CTN', zh: '80g/罐 / 20罐/箱' }, fobUsd: 1.43, pcsPer20ft: 24000,
         asianComps: [
@@ -154,7 +159,7 @@ const productsData = [
         ]
     },
     {
-        id: 10, status: 'Active', weightG: 80, orderQty: 0, ctnPriceUsd: 28.60,
+        id: 10, status: 'Active', weightG: 80, orderQty: 0, ctnPriceUsd: 28.59,
         name: { en: 'Coarse Ground Black Pepper 80g', km: 'ម្រេចខ្មៅចម្រៀក ៨០ក្រាម', fr: 'Poivre noir concassé 80g', zh: '粗磨黑胡椒碎 80g' },
         nameKhmer: 'ម្រេចខ្មៅចម្រៀក ៨០ក្រាម', spec: { en: '20 Cans/CTN', km: 'កំប៉ុង ៨០ក្រាម / ២០ កំប៉ុង/កេស', fr: 'Boîte de 80g / 20 Boîtes/CTN', zh: '80g/罐 / 20罐/箱' }, fobUsd: 1.43, pcsPer20ft: 24000,
         asianComps: [
@@ -168,7 +173,7 @@ const productsData = [
         ]
     },
     {
-        id: 11, status: 'Active', weightG: 80, orderQty: 0, ctnPriceUsd: 28.60,
+        id: 11, status: 'Active', weightG: 80, orderQty: 0, ctnPriceUsd: 28.59,
         name: { en: 'Fine Ground White Pepper 80g', km: 'ម្រេចសចម្រៀក ៨០ក្រាម', fr: 'Poivre blanc moulu fin 80g', zh: '细磨白胡椒粉 80g' },
         nameKhmer: 'ម្រេចសចម្រៀក ៨០ក្រាម', spec: { en: '20 Cans/CTN', km: 'កំប៉ុង ៨០ក្រាម / ២០ កំប៉ុង/កេស', fr: 'Boîte de 80g / 20 Boîtes/CTN', zh: '80g/罐 / 20罐/箱' }, fobUsd: 1.43, pcsPer20ft: 24000,
         asianComps: [
@@ -181,7 +186,7 @@ const productsData = [
         ]
     },
     {
-        id: 12, status: 'Active', weightG: 650, orderQty: 0, ctnPriceUsd: 44.76,
+        id: 12, status: 'Active', weightG: 650, orderQty: 0, ctnPriceUsd: 44.78,
         name: { en: 'Coarse Ground Black Pepper 650g', km: 'ម្រេចខ្មៅចម្រៀក ៦៥០ក្រាម', fr: 'Poivre noir concassé 650g', zh: '粗磨黑胡椒碎 650g (餐饮罐装)' },
         nameKhmer: 'ម្រេចខ្មៅចម្រៀក ៦៥០ក្រាម', spec: { en: '6 Cans/CTN', km: 'កំប៉ុង ៦៥០ក្រាម / ៦ កំប៉ុង/កេស', fr: 'Boîte de 650g / 6 Boîtes/CTN', zh: '650g/罐 / 6罐/箱' }, fobUsd: 7.46, pcsPer20ft: 9000,
         asianComps: [
@@ -195,7 +200,7 @@ const productsData = [
         ]
     },
     {
-        id: 13, status: 'Active', weightG: 650, orderQty: 0, ctnPriceUsd: 44.76,
+        id: 13, status: 'Active', weightG: 650, orderQty: 0, ctnPriceUsd: 44.78,
         name: { en: 'Fine Ground Black Pepper 650g', km: 'ម្រេចខ្មៅម៉ដ្ឋ ៦៥០ក្រាម', fr: 'Poivre noir moulu fin 650g', zh: '细磨黑胡椒粉 650g (餐饮罐装)' },
         nameKhmer: 'ម្រេចខ្មៅម៉ដ្ឋ ៦៥០ក្រាម', spec: { en: '6 Cans/CTN', km: 'កំប៉ុង ៦៥០ក្រាម / ៦ កំប៉ុង/កេស', fr: 'Boîte de 650g / 6 Boîtes/CTN', zh: '650g/罐 / 6罐/箱' }, fobUsd: 7.46, pcsPer20ft: 9000,
         asianComps: [
@@ -209,7 +214,7 @@ const productsData = [
         ]
     },
     {
-        id: 14, status: 'Active', weightG: 1000, orderQty: 0, ctnPriceUsd: 90.70,
+        id: 14, status: 'Active', weightG: 1000, orderQty: 0, ctnPriceUsd: 90.73,
         name: { en: 'Black Pepper Whole 1000g', km: 'ម្រេចខ្មៅគ្រាប់មូល ១០០០ក្រាម', fr: 'Poivre noir entier 1000g', zh: '整粒黑胡椒粒 1000g (大包装)' },
         nameKhmer: 'ម្រេចខ្មៅគ្រាប់មូល ១០០០ក្រាម', spec: { en: '10 Bags/CTN', km: 'ថង់ ១០០០ក្រាម / ១០ ថង់ (១០គីឡូ/កេស)', fr: 'Sac de 1000g / 10 Sacs (10kg/CTN)', zh: '1000g/袋 / 10袋 (10kg/箱)' }, fobUsd: 9.07, pcsPer20ft: 10000,
         asianComps: [
@@ -225,7 +230,7 @@ const productsData = [
         ]
     },
     {
-        id: 15, status: 'Active', weightG: 500, orderQty: 0, ctnPriceUsd: 92.00,
+        id: 15, status: 'Active', weightG: 500, orderQty: 0, ctnPriceUsd: 92.02,
         name: { en: 'Black Pepper Whole 500g', km: 'ម្រេចខ្មៅគ្រាប់មូល ៥០០ក្រាម', fr: 'Poivre noir entier 500g', zh: '整粒黑胡椒粒 500g' },
         nameKhmer: 'ម្រេចខ្មៅគ្រាប់មូល ៥០០ក្រាម', spec: { en: '20 Bags/CTN', km: 'ថង់ ៥០០ក្រាម / ២០ ថង់ (១០គីឡូ/កេស)', fr: 'Sac de 500g / 20 Sacs (10kg/CTN)', zh: '500g/袋 / 20包 (10kg/箱)' }, fobUsd: 4.60, pcsPer20ft: 20000,
         asianComps: [
@@ -238,7 +243,7 @@ const productsData = [
         ]
     },
     {
-        id: 16, status: 'Active', weightG: 1000, orderQty: 0, ctnPriceUsd: 94.60,
+        id: 16, status: 'Active', weightG: 1000, orderQty: 0, ctnPriceUsd: 94.62,
         name: { en: 'Crushed Black Pepper (10-20 Mesh) 1000g', km: 'ម្រេចខ្មៅចម្រៀក 10-20 ម៉េស ១០០០g', fr: 'Poivre noir concassé (10-20 Mesh) 1000g', zh: '黑胡椒碎 (10-20目) 1000g' },
         nameKhmer: 'ម្រេចខ្មៅចម្រៀកកំរិត 10-20 ម៉េស ១០០០ក្រាម', spec: { en: '10 Bags/CTN', km: 'ថង់ ១០០០ក្រាម / ១០ ថង់ (១០គីឡូ/កេស)', fr: 'Sac de 1000g / 10 Bags (10kg/CTN)', zh: '1000g/袋 / 10袋 (10kg/箱)' }, fobUsd: 9.46, pcsPer20ft: 10000,
         asianComps: [
@@ -251,7 +256,7 @@ const productsData = [
         ]
     },
     {
-        id: 17, status: 'Active', weightG: 500, orderQty: 0, ctnPriceUsd: 95.80,
+        id: 17, status: 'Active', weightG: 500, orderQty: 0, ctnPriceUsd: 95.75,
         name: { en: 'Crushed Black Pepper (10-20 Mesh) 500g', km: 'ម្រេចខ្មៅចម្រៀក 10-20 ម៉េស ៥០០g', fr: 'Poivre noir concassé (10-20 Mesh) 500g', zh: '黑胡椒碎 (10-20目) 500g' },
         nameKhmer: 'ម្រេចខ្មៅចម្រៀកកំរិត 10-20 ម៉េស ៥០០ក្រាម', spec: { en: '20 Bags/CTN', km: 'ថង់ ៥០០ក្រាម / ២០ ថង់ (១០គីឡូ/កេស)', fr: 'Sac de 500g / 20 Bags (10kg/CTN)', zh: '500g/袋 / 20包 (10kg/箱)' }, fobUsd: 4.79, pcsPer20ft: 20000,
         asianComps: [
@@ -264,7 +269,7 @@ const productsData = [
         ]
     },
     {
-        id: 18, status: 'Active', weightG: 1000, orderQty: 0, ctnPriceUsd: 94.60,
+        id: 18, status: 'Active', weightG: 1000, orderQty: 0, ctnPriceUsd: 94.55,
         name: { en: 'Fine Ground Black Pepper (40 Mesh) 1000g', km: 'ម្រេចខ្មៅម៉ដ្ឋ 40 ម៉េស ១០០០g', fr: 'Poivre noir moulu fin (40 Mesh) 1000g', zh: '细磨黑胡椒粉 (40目) 1000g' },
         nameKhmer: 'ម្រេចខ្មៅម៉ដ្ឋកំរិត 40 ម៉េស ១០០០ក្រាម', spec: { en: '10 Bags/CTN', km: 'ថង់ ១០០០ក្រាម / ១០ ថង់ (១០គីឡូ/កេស)', fr: 'Sac de 1000g / 10 Bags (10kg/CTN)', zh: '1000g/袋 / 10袋 (10kg/箱)' }, fobUsd: 9.46, pcsPer20ft: 10000,
         asianComps: [
@@ -277,7 +282,7 @@ const productsData = [
         ]
     },
     {
-        id: 19, status: 'Active', weightG: 500, orderQty: 0, ctnPriceUsd: 95.60,
+        id: 19, status: 'Active', weightG: 500, orderQty: 0, ctnPriceUsd: 95.59,
         name: { en: 'Fine Ground Black Pepper (40 Mesh) 500g', km: 'ម្រេចខ្មៅម៉ដ្ឋ 40 ម៉េស ៥០០g', fr: 'Poivre noir moulu fin (40 Mesh) 500g', zh: '细磨黑胡椒粉 (40目) 500g' },
         nameKhmer: 'ម្រេចខ្មៅម៉ដ្ឋកំរិត 40 ម៉េស ៥០០ក្រាម', spec: { en: '20 Bags/CTN', km: 'ថង់ ៥០០ក្រាម / ២០ ថង់ (១០គីឡូ/កេស)', fr: 'Sac de 500g / 20 Bags (10kg/CTN)', zh: '500g/袋 / 20包 (10kg/箱)' }, fobUsd: 4.78, pcsPer20ft: 20000,
         asianComps: [
@@ -290,7 +295,7 @@ const productsData = [
         ]
     },
     {
-        id: 20, status: 'Active', weightG: 200, orderQty: 0, ctnPriceUsd: 32.16,
+        id: 20, status: 'Active', weightG: 200, orderQty: 0, ctnPriceUsd: 32.12,
         name: { en: 'Black Pepper Whole 200g', km: 'ម្រេចខ្មៅគ្រាប់មូល ២០០ក្រាម', fr: 'Poivre noir entier 200g', zh: '整粒黑胡椒粒 200g (罐装)' },
         nameKhmer: 'ម្រេចខ្មៅគ្រាប់មូល ២០០ក្រាម', spec: { en: '12 Cans/CTN', km: 'កំប៉ុង ២០០ក្រាម / ១២ កំប៉ុង/កេស', fr: 'Boîte de 200g / 12 Boîtes/CTN', zh: '200g/罐 / 12罐/箱' }, fobUsd: 2.68, pcsPer20ft: 14400,
         asianComps: [
@@ -303,7 +308,7 @@ const productsData = [
         ]
     },
     {
-        id: 21, status: 'Active', weightG: 250, orderQty: 0, ctnPriceUsd: 40.44,
+        id: 21, status: 'Active', weightG: 250, orderQty: 0, ctnPriceUsd: 40.39,
         name: { en: 'Coarse Ground Black Pepper 250g', km: 'ម្រេចខ្មៅចម្រៀក ២៥០ក្រាម', fr: 'Poivre noir concassé 250g', zh: '粗磨黑胡椒碎 250g (罐装)' },
         nameKhmer: 'ម្រេចខ្មៅចម្រៀក ២៥០ក្រាម', spec: { en: '12 Cans/CTN', km: 'កំប៉ុង ២៥០ក្រាម / ១២ កំប៉ុង/កេស', fr: 'Boîte de 250g / 12 Boîtes/CTN', zh: '250g/罐 / 12罐/箱' }, fobUsd: 3.37, pcsPer20ft: 14400,
         asianComps: [
@@ -316,7 +321,7 @@ const productsData = [
         ]
     },
     {
-        id: 22, status: 'Active', weightG: 250, orderQty: 0, ctnPriceUsd: 40.44,
+        id: 22, status: 'Active', weightG: 250, orderQty: 0, ctnPriceUsd: 40.39,
         name: { en: 'Fine Ground Black Pepper 250g', km: 'ម្រេចខ្មៅម៉ដ្ឋ ២៥០ក្រាម', fr: 'Poivre noir moulu fin 250g', zh: '细磨黑胡椒粉 250g (罐装)' },
         nameKhmer: 'ម្រេចខ្មៅម៉ដ្ឋ ២៥០ក្រាម', spec: { en: '12 Cans/CTN', km: 'កំប៉ុង ២៥០ក្រាម / ១២ កំប៉ុង/កេស', fr: 'Boîte de 250g / 12 Boîtes/CTN', zh: '250g/罐 / 12罐/箱' }, fobUsd: 3.37, pcsPer20ft: 14400,
         asianComps: [
@@ -342,7 +347,7 @@ const productsData = [
         ]
     },
     {
-        id: 24, status: 'Active', weightG: 360, orderQty: 0, ctnPriceUsd: 48.72,
+        id: 24, status: 'Active', weightG: 360, orderQty: 0, ctnPriceUsd: 48.68,
         name: { en: 'Coarse Ground Black Pepper 360g', km: 'ម្រេចខ្មៅចម្រៀក ៣៦០ក្រាម', fr: 'Poivre noir concassé 360g', zh: '粗磨黑胡椒碎 360g (罐装)' },
         nameKhmer: 'ម្រេចខ្មៅចម្រៀក ៣៦០ក្រាម', spec: { en: '12 Cans/CTN', km: 'កំប៉ុង ៣៦០ក្រាម / ១២ កំប៉ុង/កេស', fr: 'Boîte de 360g / 12 Boîtes/CTN', zh: '360g/罐 / 12罐/箱' }, fobUsd: 4.06, pcsPer20ft: 14400,
         asianComps: [
@@ -473,7 +478,7 @@ const translations = {
         c5_hdr: "Category 5: Insurance & Compliance", th_policy: "Service / Policy Type", th_ex_gst: "Annual ex GST AUD", th_inc_gst: "inc GST (10%)",
         c5_item1: "Accounting & Tax Compliance Fee", c5_item2: "Public & Products Liability", c5_item3: "Marine Cargo / Transit Insurance", c5_item4: "Management Liability & Cyber",
         c6_hdr: "Category 6: Import Freight Clearance & Customs", th_service: "Service Component", th_per_shipment: "Per Shipment AUD", th_ann_shipments: "Annual (12 Shipments)",
-        c6_item1: "Customs Clearance & Admin Fees", c6_item2: "Port Charges & Infrastructure Levies", c6_item3: "Wharf Cartage & Sideloader Transport",
+        c6_item1: "Local Charges & GST", c6_item2: "Warehouse Services & GST", c6_item3: "Customs Duty", c6_item4: "Import GST", c6_item5: "Electronic Entry Fee",
         lbl_subtotal_ex_ocean: "Subtotal (excl. Ocean & Duty)", opex_sec3_title: "3. Key Compliance & Financial Considerations",
         opex_note1_title: "Customs Tariffs & FTAs:", opex_note1_body: "Goods originating in Cambodia qualify for duty-free entry into Australia under AANZFTA or RCEP, provided a valid Certificate of Origin (COO) is supplied.",
         opex_note2_title: "Import GST Deferred Scheme (DGST):", opex_note2_body: "Import GST (10%) is calculated on Customs Value + Duty + Transport/Insurance. Registering for Deferred GST defers border payment to monthly BAS returns.",
@@ -520,7 +525,7 @@ const translations = {
         c5_hdr: "ប្រភេទ ៥៖ ធានារ៉ាប់រង និងអនុលោមភាព", th_policy: "ប្រភេទប័ណ្ណសន្យា/សេវាកម្ម", th_ex_gst: "ប្រចាំឆ្នាំ ex GST AUD", th_inc_gst: "រាប់បញ្ចូល GST (10%)",
         c5_item1: "ថ្លៃសេវាគណនេយ្យ និងពន្ធដារ", c5_item2: "ធានារ៉ាប់រងការទទួលខុសត្រូវសាធារណៈ", c5_item3: "ធានារ៉ាប់រងដឹកជញ្ជូនតាមសមុទ្រ", c5_item4: "ធានារ៉ាប់រងការគ្រប់គ្រង និងសុវត្ថិភាពស៊ីប៊ែរ",
         c6_hdr: "ប្រភេទ ៦៖ ថ្លៃដឹកជញ្ជូន និងរត់ការគយ", th_service: "សមាសភាគសេវាកម្ម", th_per_shipment: "ក្នុងមួយជើង AUD", th_ann_shipments: "ប្រចាំឆ្នាំ (១២ ជើង)",
-        c6_item1: "ថ្លៃជើងសាគយ", c6_item2: "ថ្លៃសេវាកំពង់ផែ (PSC)", c6_item3: "ថ្លៃដឹកជញ្ជូនពីកំពង់ផែទៅឃ្លាំង",
+        c6_item1: "ថ្លៃសេវាក្នុងស្រុក និង GST", c6_item2: "សេវាឃ្លាំង និង GST", c6_item3: "ពន្ធគយ", c6_item4: "ពន្ធ GST នាំចូល", c6_item5: "ថ្លៃបញ្ចូលទិន្នន័យអេឡិចត្រូនិក",
         lbl_subtotal_ex_ocean: "សរុបរង (មិនរាប់ថ្លៃដឹកសមុទ្រ និងពន្ធ)", opex_sec3_title: "៣. អនុលោមភាពសំខាន់ៗ និងការពិចារណាផ្នែកហិរញ្ញវត្ថុ",
         opex_note1_title: "ពន្ធគយ និងកិច្ចព្រមព្រៀងពាណិជ្ជកម្មសេរី៖", opex_note1_body: "ទំនិញដែលមានប្រភពដើមពីប្រទេសកម្ពុជាទទួលបានការលើកលែងពន្ធនាំចូលមកអូស្ត្រាលីក្រោម AANZFTA ឬ RCEP ដោយគ្រាន់តែមានវិញ្ញាបនបត្រប្រភពដើម (COO)។",
         opex_note2_title: "ប្រព័ន្ធពន្យារការបង់ពន្ធ GST នាំចូល (DGST)៖", opex_note2_body: "ពន្ធ GST នាំចូល 10% ត្រូវគណនាលើតម្លៃគយ + ពន្ធ + ការដឹកជញ្ជូន។ ការចុះឈ្មោះប្រព័ន្ធ DGST អនុញ្ញាតឱ្យពន្យារការបង់ពន្ធរហូតដល់របាយការណ៍ BAS ប្រចាំខែ។",
@@ -567,7 +572,7 @@ const translations = {
         c5_hdr: "Catégorie 5: Assurance & Conformité", th_policy: "Type de Police / Service", th_ex_gst: "Annuel hors GST AUD", th_inc_gst: "avec GST (10%)",
         c5_item1: "Frais de conformité comptable et fiscale", c5_item2: "Responsabilité civile et produits", c5_item3: "Assurance fret maritime et transit", c5_item4: "Responsabilité des dirigeants et cyber-assurance",
         c6_hdr: "Catégorie 6: Dédouanement et Transit", th_service: "Composante du service", th_per_shipment: "Par expédition AUD", th_ann_shipments: "Annuel (12 expéditions)",
-        c6_item1: "Frais de courtage en douane", c6_item2: "Frais de manutention portuaire (PSC)", c6_item3: "Camionnage / Transport du quai au stockage",
+        c6_item1: "Frais locaux et GST", c6_item2: "Services d'entrepôt et GST", c6_item3: "Droits de douane", c6_item4: "GST à l'importation", c6_item5: "Frais de saisie électronique",
         lbl_subtotal_ex_ocean: "Sous-total (hors fret maritime et droits)", opex_sec3_title: "3. Considérations Financières et de Conformité",
         opex_note1_title: "Tarifs Douaniers & ALE:", opex_note1_body: "Les marchandises du Cambodge sont exemptées de droits en Australie sous AANZFTA ou RCEP avec un certificat d'origine (COO) valide.",
         opex_note2_title: "Régime de GST d'Importation Différée (DGST):", opex_note2_body: "La GST d'importation (10%) est calculée sur Valeur en douane + Droits + Transport. L'inscription au DGST reporte le paiement à la déclaration BAS mensuelle.",
@@ -614,7 +619,7 @@ const translations = {
         c5_hdr: "类别 5: 保险与合规费用", th_policy: "服务 / 保单类型", th_ex_gst: "每年不含 GST AUD", th_inc_gst: "含 GST (10%)",
         c5_item1: "会计与税务合规服务费", c5_item2: "公众与产品责任险", c5_item3: "海运货物与运输险", c5_item4: "高管责任险与网络安全险",
         c6_hdr: "类别 6: 进口货运清关与海关管理", th_service: "服务组成部分", th_per_shipment: "单次运费 AUD", th_ann_shipments: "每年费用 (12次进口)",
-        c6_item1: "报关行服务费", c6_item2: "港口服务费 (PSC)", c6_item3: "码头至仓库短驳拖車费",
+        c6_item1: "本地费用及 GST", c6_item2: "仓储服务及 GST", c6_item3: "关税", c6_item4: "进口 GST", c6_item5: "电子申报费",
         lbl_subtotal_ex_ocean: "小计 (不含海运费与关税)", opex_sec3_title: "3. 关键合规与财务注意事项",
         opex_note1_title: "海关关税与自贸协定:", opex_note1_body: "原产于柬埔寨的货物在提供有效原产地证书 (COO) 的情况下，可通过 AANZFTA 或 RCEP 享受零关税进入澳大利亚。",
         opex_note2_title: "进口 GST 延期缴纳计划 (DGST):", opex_note2_body: "进口 GST (10%) 按海关价值 + 关税 + 运费/保险计算。注册延期 GST 计划可将清关时的支付延期至每月 BAS 申报时缴纳。",
@@ -841,14 +846,32 @@ function resetMasterProfitOrders() {
 function handleContainerTypeChange() {
     const containerType = document.getElementById('input-container-type')?.value || '20ft';
     const inputFreight = document.getElementById('input-freight');
-    if (inputFreight) {
-        if (containerType === '40ft') {
-            if (inputFreight.value === '1580' || inputFreight.value === '1650') inputFreight.value = '2850';
-        } else {
-            if (inputFreight.value === '2850') inputFreight.value = '1580';
-        }
+    const c6_1_ship_input = document.getElementById('c6_1_ship_input');
+    const c6_2_ship_input = document.getElementById('c6_2_ship_input');
+
+    if (containerType === '40ft') {
+        if (inputFreight) inputFreight.value = '4710';
+        if (c6_1_ship_input) c6_1_ship_input.value = '3222.40';
+        if (c6_2_ship_input) c6_2_ship_input.value = '740.00';
+    } else {
+        if (inputFreight) inputFreight.value = '2480';
+        if (c6_1_ship_input) c6_1_ship_input.value = '2920.60';
+        if (c6_2_ship_input) c6_2_ship_input.value = '600.00';
     }
     updateOpExFromInputs();
+}
+
+function syncAnnualShipmentsLabel() {
+    const el = document.querySelector('[data-i18n="th_ann_shipments"]');
+    if (!el) return;
+    const six = ANNUAL_CONTAINERS === 6;
+    const labels = {
+        en: six ? 'Annual (6 Shipments)' : 'Annual (12 Shipments)',
+        km: six ? 'ប្រចាំឆ្នាំ (៦ ជើង)' : 'ប្រចាំឆ្នាំ (១២ ជើង)',
+        fr: six ? 'Annuel (6 expéditions)' : 'Annuel (12 expéditions)',
+        zh: six ? '每年费用 (6次进口)' : '每年费用 (12次进口)'
+    };
+    el.innerText = labels[currentLang] || labels.en;
 }
 
 // --- DYNAMIC OPEX BUDGET ENGINE ---
@@ -999,10 +1022,19 @@ function updateOpExFromInputs() {
     const c5_ann = getCategoryState(5, c5_raw_ann);
     const c5_mth = c5_ann / 12;
 
-    // Category 6
-    const c6_1_ship = parseFloat(document.getElementById('c6_1_ship_input')?.value) || 0;
-    const c6_2_ship = parseFloat(document.getElementById('c6_2_ship_input')?.value) || 0;
-    const c6_3_ship = parseFloat(document.getElementById('c6_3_ship_input')?.value) || 0;
+    // Category 6: Import Freight Clearance & Customs (same five lines as qc1)
+    const parseInputValue = (id) => {
+        const el = document.getElementById(id);
+        if (!el) return 0;
+        const val = parseFloat(el.value);
+        return isNaN(val) ? 0 : val;
+    };
+
+    const c6_1_ship = parseInputValue('c6_1_ship_input');
+    const c6_2_ship = parseInputValue('c6_2_ship_input');
+    const c6_3_ship = parseInputValue('c6_3_ship_input');
+    const c6_4_ship = parseInputValue('c6_4_ship_input');
+    const c6_5_ship = parseInputValue('c6_5_ship_input');
 
     const containerType = document.getElementById('input-container-type')?.value || '20ft';
     ANNUAL_CONTAINERS = containerType === '40ft' ? 6 : 12;
@@ -1010,14 +1042,20 @@ function updateOpExFromInputs() {
     const c6_1_ann = c6_1_ship * ANNUAL_CONTAINERS;
     const c6_2_ann = c6_2_ship * ANNUAL_CONTAINERS;
     const c6_3_ann = c6_3_ship * ANNUAL_CONTAINERS;
+    const c6_4_ann = c6_4_ship * ANNUAL_CONTAINERS;
+    const c6_5_ann = c6_5_ship * ANNUAL_CONTAINERS;
 
     if (document.getElementById('c6_1_ann')) document.getElementById('c6_1_ann').innerText = '$' + c6_1_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
     if (document.getElementById('c6_2_ann')) document.getElementById('c6_2_ann').innerText = '$' + c6_2_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
     if (document.getElementById('c6_3_ann')) document.getElementById('c6_3_ann').innerText = '$' + c6_3_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    if (document.getElementById('c6_4_ann')) document.getElementById('c6_4_ann').innerText = '$' + c6_4_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    if (document.getElementById('c6_5_ann')) document.getElementById('c6_5_ann').innerText = '$' + c6_5_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
 
-    const c6_raw_ann = c6_1_ann + c6_2_ann + c6_3_ann;
-    if (document.getElementById('c6_ship_sub')) document.getElementById('c6_ship_sub').innerText = '$' + (c6_1_ship + c6_2_ship + c6_3_ship).toFixed(2);
+    const c6_ship_sub_total = c6_1_ship + c6_2_ship + c6_3_ship + c6_4_ship + c6_5_ship;
+    const c6_raw_ann = c6_1_ann + c6_2_ann + c6_3_ann + c6_4_ann + c6_5_ann;
+    if (document.getElementById('c6_ship_sub')) document.getElementById('c6_ship_sub').innerText = '$' + c6_ship_sub_total.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
     if (document.getElementById('c6_ann_sub')) document.getElementById('c6_ann_sub').innerText = '$' + c6_raw_ann.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    syncAnnualShipmentsLabel();
 
     const c6_ann = getCategoryState(6, c6_raw_ann);
     const c6_mth = c6_ann / 12;
@@ -1067,14 +1105,22 @@ function resetOpExBudget() {
     const c2Toggle = document.getElementById('c2_toggle_input');
     if (c2Toggle) c2Toggle.checked = false;
 
+    const containerType = document.getElementById('input-container-type')?.value || '20ft';
+    if (containerType === '40ft') {
+        const c6Local = document.getElementById('c6_1_ship_input');
+        const c6Warehouse = document.getElementById('c6_2_ship_input');
+        if (c6Local) c6Local.value = '3222.40';
+        if (c6Warehouse) c6Warehouse.value = '740.00';
+    }
+
     updateOpExFromInputs();
 }
 
 // --- LIVE RENDER & COMPUTATION TABLE ---
 function renderTable() {
     const containerType = document.getElementById('input-container-type')?.value || '20ft';
-    const fx = parseFloat(document.getElementById('input-fx')?.value) || 0.6620;
-    const oceanFreightUsd = parseFloat(document.getElementById('input-freight')?.value) || 1580;
+    const fx = parseFloat(document.getElementById('input-fx')?.value) || FX_FALLBACK_AUD_USD;
+    const oceanFreightUsd = parseFloat(document.getElementById('input-freight')?.value) || (containerType === '40ft' ? 4710 : 2480);
     const marginPercent = parseFloat(document.getElementById('input-margin')?.value) || 20;
 
     ANNUAL_CONTAINERS = containerType === '40ft' ? 6 : 12;
@@ -1216,6 +1262,7 @@ function setLanguage(lang) {
         if (value) el.innerText = value;
     });
 
+    syncAnnualShipmentsLabel();
     renderTable();
 }
 
@@ -1386,12 +1433,13 @@ async function exportPurchaseOrderPDF() {
 
 async function fetchLiveFxRate() {
     try {
-        const response = await fetch('https://open.er-api.com/v6/latest/AUD');
+        const response = await fetch(FX_RATE_URL);
         if (!response.ok) throw new Error('Live FX Rate fetch failed');
         const data = await response.json();
-        if (data && data.rates && data.rates.USD) {
+        const usd = data && data.rates && data.rates.USD;
+        if (typeof usd === 'number' && usd > 0) {
             const inputFx = document.getElementById('input-fx');
-            if (inputFx) inputFx.value = data.rates.USD.toFixed(4);
+            if (inputFx) inputFx.value = String(usd);
             renderTable();
         }
     } catch (err) {
