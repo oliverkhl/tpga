@@ -3,6 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        html.tpga-staff-auth #password-modal { display: none !important; }
+        html.tpga-staff-auth #page-content {
+            filter: none !important;
+            -webkit-filter: none !important;
+            pointer-events: auto !important;
+            -webkit-user-select: auto !important;
+            user-select: auto !important;
+        }
+        .tpga-logout { display: none; }
+        html.tpga-show-logout .tpga-logout { display: inline; }
+    </style>
+    <script>
+        try {
+            if (sessionStorage.getItem('tpgaStaffAuth') === '1') {
+                document.documentElement.classList.add('tpga-staff-auth', 'tpga-show-logout');
+            }
+        } catch (e) {}
+        function tpgaStaffLogout(e) {
+            if (e && e.preventDefault) e.preventDefault();
+            try { sessionStorage.removeItem('tpgaStaffAuth'); } catch (err) {}
+            window.location.reload();
+            return false;
+        }
+    </script>
     <link rel="icon" href="favicon.ico" sizes="any">
     <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
     <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
@@ -146,6 +171,7 @@
                 <a href="Q1-1.html" class="text-slate-300 hover:text-white">Fast Entry</a>
                 <a href="qc1.html" class="text-slate-300 hover:text-white">Customer Quote</a>
                 <span aria-current="page" class="font-semibold text-white">OpEx Budget</span>
+                <a href="#" class="tpga-logout ml-auto text-slate-400 hover:text-gold-300" onclick="return tpgaStaffLogout(event)">Log out</a>
             </div>
         </nav>
     </header>
