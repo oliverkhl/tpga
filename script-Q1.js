@@ -105,12 +105,12 @@ function updateOpExFromInputs() {
 
     // Category 2
     const c2_1_base = parseFloat(document.getElementById('c2_1_base')?.value) || 0;
-    const c2_1_super = c2_1_base * 0.115;
+    const c2_1_super = c2_1_base * 0.12;
     const c2_1_wc = parseFloat(document.getElementById('c2_1_wc')?.value) || 0;
     const c2_1_tot = c2_1_base + c2_1_super + c2_1_wc;
 
     const c2_2_base = parseFloat(document.getElementById('c2_2_base')?.value) || 0;
-    const c2_2_super = c2_2_base * 0.115;
+    const c2_2_super = c2_2_base * 0.12;
     const c2_2_wc = parseFloat(document.getElementById('c2_2_wc')?.value) || 0;
     const c2_2_tot = c2_2_base + c2_2_super + c2_2_wc;
 
@@ -455,7 +455,7 @@ const translations = {
         c2_hdr: "Category 2: Personnel Overhead",
         th_role: "Role / Position",
         th_base: "Base Salary AUD",
-        th_super: "Super (11.5%)",
+        th_super: "Super (12%)",
         th_wc: "WorkCover",
         c2_role1: "Managing Director",
         c2_role2: "Operations Manager",
@@ -501,7 +501,7 @@ const translations = {
         opex_note2_title: "Import GST Deferred Scheme (DGST):",
         opex_note2_body: "Import GST (10%) is calculated on Customs Value + Duty + Transport/Insurance. Registering for Deferred GST defers border payment to monthly BAS returns.",
         opex_note3_title: "Superannuation Compliance:",
-        opex_note3_body: "Statutory Employer Superannuation Guarantee (11.5%) must be remitted quarterly to compliant Australian super funds before statutory due dates.",
+        opex_note3_body: "Statutory Employer Superannuation Guarantee (12%) must be remitted quarterly to compliant Australian super funds before statutory due dates.",
         master_profit_title: "Master Profit Model",
         master_profit_subtitle: "Business Entity: Cambodia-to-Melbourne Import & Distribution Business | Location: Melbourne, VIC, Australia (AUD)",
         btn_reset_master_profit: "Reset Orders",
@@ -630,7 +630,7 @@ const translations = {
         c2_hdr: "ប្រភេទ ២៖ ចំណាយបុគ្គលិក",
         th_role: "តួនាទី / តំណែង",
         th_base: "ប្រាក់ខែសរុប AUD",
-        th_super: "ប្រាក់សោធន (11.5%)",
+        th_super: "ប្រាក់សោធន (12%)",
         th_wc: "ធានារ៉ាប់រងបុគ្គលិក",
         c2_role1: "នាយកប្រតិបត្តិ",
         c2_role2: "អ្នកគ្រប់គ្រងប្រតិបត្តិការ",
@@ -676,7 +676,7 @@ const translations = {
         opex_note2_title: "ប្រព័ន្ធពន្យារការបង់ពន្ធ GST នាំចូល (DGST)៖",
         opex_note2_body: "ពន្ធ GST នាំចូល 10% ត្រូវគណនាលើតម្លៃគយ + ពន្ធ + ការដឹកជញ្ជូន។ ការចុះឈ្មោះប្រព័ន្ធ DGST អនុញ្ញាតឱ្យពន្យារការបង់ពន្ធរហូតដល់របាយការណ៍ BAS ប្រចាំខែ។",
         opex_note3_title: "អនុលោមភាពប្រាក់សោធននិវត្តន៍៖",
-        opex_note3_body: "ភាគទានប្រាក់សោធននិវត្តន៍កាតព្វកិច្ចរបស់និយោជក (11.5%) ត្រូវតែបង់ជូនមូលនិធិសោធនអូស្ត្រាលីរៀងរាល់ត្រីមាស។",
+        opex_note3_body: "ភាគទានប្រាក់សោធននិវត្តន៍កាតព្វកិច្ចរបស់និយោជក (12%) ត្រូវតែបង់ជូនមូលនិធិសោធនអូស្ត្រាលីរៀងរាល់ត្រីមាស។",
         master_profit_title: "ម៉ូឌែលចំណេញសរុប master profit",
         master_profit_subtitle: "អង្គភាពអាជីវកម្ម៖ អាជីវកម្មនាំចូល និងចែករំលែកពីកម្ពុជាទៅម៉ែលប៊ន | ទីតាំង៖ ម៉ែលប៊ន វិចតូរីយ៉ា អូស្ត្រាលី (AUD)",
         btn_reset_master_profit: "កំណត់ការកុម្ម៉ង់ឡើងវិញ",
@@ -805,7 +805,7 @@ const translations = {
         c2_hdr: "Catégorie 2: Frais de Personnel",
         th_role: "Rôle / Poste",
         th_base: "Salaire de base AUD",
-        th_super: "Retraite (11.5%)",
+        th_super: "Retraite (12%)",
         th_wc: "WorkCover",
         c2_role1: "Directeur Général",
         c2_role2: "Responsable des Opérations",
@@ -851,7 +851,7 @@ const translations = {
         opex_note2_title: "Régime de GST d'Importation Différée (DGST):",
         opex_note2_body: "La GST d'importation (10%) est calculée sur Valeur en douane + Droits + Transport. L'inscription au DGST reporte le paiement à la déclaration BAS mensuelle.",
         opex_note3_title: "Conformité de la Retraite (Superannuation):",
-        opex_note3_body: "La contribution légale de l'employeur à la retraite (11,5%) doit être versée chaque trimestre à des fonds de retraite australiens conformes.",
+        opex_note3_body: "La contribution légale de l'employeur à la retraite (12%) doit être versée chaque trimestre à des fonds de retraite australiens conformes.",
         master_profit_title: "Modèle de Profit Master",
         master_profit_subtitle: "Entité commerciale: Import & Distribution Cambodge-Melbourne | Lieu: Melbourne, VIC, Australie (AUD)",
         btn_reset_master_profit: "Réinitialiser la commande",
@@ -980,7 +980,7 @@ const translations = {
         c2_hdr: "类别 2: 人员薪酬开支",
         th_role: "职位 / 岗位",
         th_base: "基本年薪 AUD",
-        th_super: "养老金 (11.5%)",
+        th_super: "养老金 (12%)",
         th_wc: "工伤保险",
         c2_role1: "总经理",
         c2_role2: "运营经理",
@@ -1026,7 +1026,7 @@ const translations = {
         opex_note2_title: "进口 GST 延期缴纳计划 (DGST):",
         opex_note2_body: "进口 GST (10%) 按海关价值 + 关税 + 运费/保险计算。注册延期 GST 计划可将清关时的支付延期至每月 BAS 申报时缴纳。",
         opex_note3_title: "雇主养老金合规要求:",
-        opex_note3_body: "法定雇主养老金 (11.5%) 必须在法定截止日期前按季度缴纳至符合条件的澳大利亚养老金基金中。",
+        opex_note3_body: "法定雇主养老金 (12%) 必须在法定截止日期前按季度缴纳至符合条件的澳大利亚养老金基金中。",
         master_profit_title: "总利润模型 Master Profit Model",
         master_profit_subtitle: "业务主体：柬埔寨至墨尔本进口与分销业务 | 业务地点：澳大利亚墨尔本 (AUD)",
         btn_reset_master_profit: "重置订货量",
