@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        html.tpga-staff-auth #password-modal { display: none !important; }
+        #password-modal { display: none !important; }
         html.tpga-staff-auth #page-content {
             filter: none !important;
             -webkit-filter: none !important;
@@ -23,16 +23,15 @@
         } catch (e) {}
         function tpgaStaffLogout(e) {
             if (e && e.preventDefault) e.preventDefault();
-            try { sessionStorage.removeItem('tpgaStaffAuth'); } catch (err) {}
-            window.location.reload();
+            window.location.href = '/cdn-cgi/access/logout';
             return false;
         }
     </script>
-    <title>Two Parrots Group Australia - Landed Cost Quotation & OpEx Budget</title>
+    <title>Market Research | Two Parrots Group Australia</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha384-iw3OoTErCYJJB9mCa8LNS2hbsQ7M3C0EpIsO/H5+EGAkPGc6rk+V8i04oW/K5xq0" crossorigin="anonymous">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Khmer:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Custom CSS -->
@@ -83,7 +82,7 @@
                 <div class="mb-5">
                     <label for="password-input" data-i18n="modal_label" class="block text-xs uppercase font-semibold text-gold-400 mb-1.5 tracking-wider">Enter Password</label>
                     <div class="relative">
-                        <input type="password" id="password-input" placeholder="••••••••" autofocus class="w-full bg-slate-800 border border-slate-700 focus:border-gold-500 rounded-lg px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-gold-400 transition">
+                        <input type="password" id="password-input" placeholder="••••••••" class="w-full bg-slate-800 border border-slate-700 focus:border-gold-500 rounded-lg px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-gold-400 transition">
                         <button type="button" id="toggle-password-btn" onclick="togglePasswordVisibility()" aria-label="Show password" aria-pressed="false" class="absolute right-3 top-2.5 text-slate-400 hover:text-gold-400 text-sm rounded focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-gold-400">
                             <i id="eye-icon" class="fa-solid fa-eye"></i>
                         </button>
@@ -101,7 +100,7 @@
     </div>
 
     <!-- MAIN PAGE WRAPPER WITH BLUR STATE ON LOAD -->
-    <div id="page-content" class="filter blur-xl pointer-events-none select-none transition-all duration-500">
+    <div id="page-content" class="transition-all duration-500">
 
     <!-- Header Navigation Bar -->
     <header class="bg-slate-900 text-white shadow-md no-print border-b-2 border-gold-500">
@@ -112,7 +111,7 @@
                 <img src="images/logo.png" alt="Two Parrots Logo" class="h-10 w-10 object-contain rounded">
                 <div>
                     <h1 class="text-base font-bold text-white tracking-wide" data-i18n="header_company_name">TWO PARROTS GROUP AUSTRALIA</h1>
-                    <p data-i18n="header_sub" class="text-[11px] text-gold-400">Customer Quotation Intelligence</p>
+                    <p data-i18n="header_sub" class="text-[11px] text-gold-400">Market Research</p>
                 </div>
             </div>
 
@@ -124,8 +123,11 @@
                         <button onclick="setLanguage('zh')" id="lang-btn-zh" title="Chinese" class="px-2.5 py-1 text-base rounded transition opacity-60 hover:opacity-100">🇨🇳</button>
                     </div>
 
-                    <button onclick="window.print()" class="px-4 py-2 bg-gold-500 hover:bg-gold-600 text-slate-900 font-semibold rounded-lg shadow transition flex items-center gap-2 text-sm">
-                        <i class="fa-solid fa-print"></i> <span data-i18n="btn_print">Print A4 Quotation</span>
+                    <button type="button" onclick="tpgaSaveClick('Q1')" class="px-3 py-2 bg-slate-800 hover:bg-slate-700 text-gold-400 border border-gold-500 font-semibold rounded-lg shadow transition flex items-center gap-2 text-sm">
+                        <i class="fa-solid fa-floppy-disk"></i> <span>Save</span>
+                    </button>
+                    <button type="button" onclick="tpgaExportPdf('Q1')" class="px-4 py-2 bg-gold-500 hover:bg-gold-600 text-slate-900 font-semibold rounded-lg shadow transition flex items-center gap-2 text-sm">
+                        <i class="fa-solid fa-file-pdf"></i> <span>Export PDF</span>
                     </button>
                 </div>
             </div>
@@ -133,10 +135,10 @@
                 <div class="max-w-7xl mx-auto px-4 py-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px]">
                     <a href="https://twoparrotsgroup.com.au/" class="font-semibold text-gold-400 hover:text-gold-300">Two Parrots</a>
                     <span class="text-slate-600" aria-hidden="true">/</span>
-                    <span aria-current="page" class="font-semibold text-white">Landed Cost</span>
-                    <a href="Q1-1.html" class="text-slate-300 hover:text-white">Fast Entry</a>
-                    <a href="qc1.html" class="text-slate-300 hover:text-white">Customer Quote</a>
-                    <a href="B1.html" class="text-slate-300 hover:text-white">OpEx Budget</a>
+                    <span aria-current="page" class="font-semibold text-white">Market Research</span>
+                    <a href="Q1-1.html" class="text-slate-300 hover:text-white">Partner Quotation</a>
+                    <a href="qc1.html" class="text-slate-300 hover:text-white">Customer Quotation</a>
+                    <a href="B1.html" class="text-slate-300 hover:text-white">Business Budget Plan</a>
                     <a href="#" class="tpga-logout ml-auto text-slate-400 hover:text-gold-300" onclick="return tpgaStaffLogout(event)">Log out</a>
                 </div>
             </nav>
@@ -165,7 +167,7 @@
                         <h3 data-i18n="card_contact_title" class="text-xs uppercase font-semibold text-slate-400 tracking-wider mb-2">Contact & Web Portal</h3>
                         <p class="text-xs text-slate-300 mb-1.5 flex items-center gap-2">
                             <i class="fa-solid fa-globe text-gold-400 w-4"></i>
-                            <a href="https://twoparrotsgroup.com.au" target="_blank" class="hover:underline text-gold-400">twoparrotsgroup.com.au</a>
+                            <a href="https://twoparrotsgroup.com.au" target="_blank" rel="noopener noreferrer" class="hover:underline text-gold-400">twoparrotsgroup.com.au</a>
                         </p>
                         <p class="text-xs text-slate-300 mb-1.5 flex items-center gap-2">
                             <i class="fa-solid fa-envelope text-gold-400 w-4"></i>
@@ -199,7 +201,7 @@
             <div class="bg-white rounded-xl shadow-md overflow-hidden border-2 border-slate-300 mb-8">
                 <div class="bg-slate-900 px-6 py-4 flex flex-wrap justify-between items-center gap-4">
                     <div>
-                        <h2 data-i18n="tbl_title" class="text-base font-bold text-white tracking-wide uppercase">Landed Cost Quotation & Benchmark Schedule</h2>
+                        <h2 data-i18n="tbl_title" class="text-base font-bold text-white tracking-wide uppercase">Market Research</h2>
                         <p data-i18n="tbl_subtitle" class="text-xs text-gold-400">Rearranged per Two Parrots Quotation (25 Active Products + 5 Upcoming Nov 2026 Launch)</p>
                     </div>
                     <div class="flex items-center space-x-2 text-xs">
@@ -221,6 +223,7 @@
                             <tr class="bg-slate-800 text-slate-200 text-xs uppercase font-semibold tracking-wider border-b-2 border-slate-900">
                                 <th class="py-3 px-2 text-center w-[3%] border-r-2 border-slate-700">N°</th>
                                 <th data-i18n="th_prod_desc" class="py-3 px-3 w-[19%] border-r-2 border-slate-700">Product Description</th>
+                                <th class="py-3 px-2 w-[8%] border-r-2 border-slate-700 text-center">Margin %</th>
                                 <th class="py-3 px-3 w-[15%] border-r-2 border-slate-700 text-right">
                                     <span data-i18n="th_fob_price">CTN Price Before Delivery</span>
                                     <span class="block text-[10px] text-gold-400 normal-case font-normal" data-i18n="th_fob_sub">(Adjustable CTN USD → Auto PCS USD/AUD)</span>
@@ -264,7 +267,7 @@
                             <i class="fa-solid fa-rotate-left"></i> <span data-i18n="btn_reset_opex">Reset Budget</span>
                         </button>
                         <span class="bg-gold-500/20 text-gold-400 text-xs font-bold px-3 py-1 rounded border border-gold-500/40 font-mono">
-                            <span data-i18n="lbl_total_opex_banner">Total OpEx:</span> $<span id="banner-opex-total">280,435.00</span> AUD / <span data-i18n="lbl_year">Year</span>
+                            <span data-i18n="lbl_total_opex_banner">Total OpEx:</span> $<span id="banner-opex-total"></span> AUD / <span data-i18n="lbl_year">Year</span>
                         </span>
                     </div>
                 </div>
@@ -289,44 +292,44 @@
                                 <tbody class="divide-y divide-slate-200 bg-white">
                                     <tr class="hover:bg-slate-50">
                                         <td class="py-2 px-4 font-semibold text-slate-800" data-i18n="opex_cat1_name">1. Stated Fixed Overheads (Office, Storage, Rental Car)</td>
-                                        <td class="py-2 px-4 text-right font-mono" id="sum-mth-c1">$2,747.33</td>
-                                        <td class="py-2 px-4 text-right font-mono font-bold" id="sum-ann-c1">$32,968.00</td>
+                                        <td class="py-2 px-4 text-right font-mono" id="sum-mth-c1">$—</td>
+                                        <td class="py-2 px-4 text-right font-mono font-bold" id="sum-ann-c1">$—</td>
                                         <td class="py-2 px-4 text-right font-mono font-semibold text-slate-600" id="sum-pct-c1">11.8%</td>
                                     </tr>
                                     <tr class="hover:bg-slate-50">
                                         <td class="py-2 px-4 font-semibold text-slate-800" data-i18n="opex_cat2_name">2. Executive & Operational Personnel (Salaries, Super, WorkCover)</td>
-                                        <td class="py-2 px-4 text-right font-mono" id="sum-mth-c2">$18,412.50</td>
-                                        <td class="py-2 px-4 text-right font-mono font-bold text-emerald-700" id="sum-ann-c2">$220,950.00</td>
+                                        <td class="py-2 px-4 text-right font-mono" id="sum-mth-c2">$—</td>
+                                        <td class="py-2 px-4 text-right font-mono font-bold text-emerald-700" id="sum-ann-c2">$—</td>
                                         <td class="py-2 px-4 text-right font-mono font-semibold text-slate-600" id="sum-pct-c2">78.8%</td>
                                     </tr>
                                     <tr class="hover:bg-slate-50">
                                         <td class="py-2 px-4 font-semibold text-slate-800" data-i18n="opex_cat3_name">3. Vehicle Running & Transportation Expenses (Fuel, Tolls, Maint.)</td>
-                                        <td class="py-2 px-4 text-right font-mono" id="sum-mth-c3">$385.00</td>
-                                        <td class="py-2 px-4 text-right font-mono font-bold" id="sum-ann-c3">$4,620.00</td>
+                                        <td class="py-2 px-4 text-right font-mono" id="sum-mth-c3">$—</td>
+                                        <td class="py-2 px-4 text-right font-mono font-bold" id="sum-ann-c3">$—</td>
                                         <td class="py-2 px-4 text-right font-mono font-semibold text-slate-600" id="sum-pct-c3">1.6%</td>
                                     </tr>
                                     <tr class="hover:bg-slate-50">
                                         <td class="py-2 px-4 font-semibold text-slate-800" data-i18n="opex_cat4_name">4. IT, Communications & SaaS Stack (Telecoms, Web, Software)</td>
-                                        <td class="py-2 px-4 text-right font-mono" id="sum-mth-c4">$405.00</td>
-                                        <td class="py-2 px-4 text-right font-mono font-bold" id="sum-ann-c4">$4,860.00</td>
+                                        <td class="py-2 px-4 text-right font-mono" id="sum-mth-c4">$—</td>
+                                        <td class="py-2 px-4 text-right font-mono font-bold" id="sum-ann-c4">$—</td>
                                         <td class="py-2 px-4 text-right font-mono font-semibold text-slate-600" id="sum-pct-c4">1.7%</td>
                                     </tr>
                                     <tr class="hover:bg-slate-50">
                                         <td class="py-2 px-4 font-semibold text-slate-800" data-i18n="opex_cat5_name">5. Business Insurance & Compliance (Liability, Transit, Audit)</td>
-                                        <td class="py-2 px-4 text-right font-mono" id="sum-mth-c5">$444.75</td>
-                                        <td class="py-2 px-4 text-right font-mono font-bold" id="sum-ann-c5">$5,337.00</td>
+                                        <td class="py-2 px-4 text-right font-mono" id="sum-mth-c5">$—</td>
+                                        <td class="py-2 px-4 text-right font-mono font-bold" id="sum-ann-c5">$—</td>
                                         <td class="py-2 px-4 text-right font-mono font-semibold text-slate-600" id="sum-pct-c5">1.9%</td>
                                     </tr>
                                     <tr class="hover:bg-slate-50">
                                         <td class="py-2 px-4 font-semibold text-slate-800" data-i18n="opex_cat6_name">6. Estimated Logistics & Customs Administration (Clearance, PSC)</td>
-                                        <td class="py-2 px-4 text-right font-mono" id="sum-mth-c6">$975.00</td>
-                                        <td class="py-2 px-4 text-right font-mono font-bold" id="sum-ann-c6">$11,700.00</td>
+                                        <td class="py-2 px-4 text-right font-mono" id="sum-mth-c6">$—</td>
+                                        <td class="py-2 px-4 text-right font-mono font-bold" id="sum-ann-c6">$—</td>
                                         <td class="py-2 px-4 text-right font-mono font-semibold text-slate-600" id="sum-pct-c6">4.2%</td>
                                     </tr>
                                     <tr class="bg-slate-900 text-white font-bold text-xs">
                                         <td class="py-2.5 px-4 uppercase text-gold-400" data-i18n="opex_total_lbl">TOTAL OPERATIONAL EXPENSES (OpEx)</td>
-                                        <td class="py-2.5 px-4 text-right font-mono text-white" id="sum-mth-total">$23,369.58</td>
-                                        <td class="py-2.5 px-4 text-right font-mono text-gold-400 text-sm" id="sum-ann-total">$280,435.00</td>
+                                        <td class="py-2.5 px-4 text-right font-mono text-white" id="sum-mth-total">$—</td>
+                                        <td class="py-2.5 px-4 text-right font-mono text-gold-400 text-sm" id="sum-ann-total">$—</td>
                                         <td class="py-2.5 px-4 text-right font-mono">100.0%</td>
                                     </tr>
                                 </tbody>
@@ -354,7 +357,7 @@
                                             <div class="w-9 h-5 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-emerald-600 relative"></div>
                                             <span id="c1_toggle_status" class="ml-2 text-[10px] font-bold uppercase tracking-wider text-emerald-600">ON</span>
                                         </label>
-                                        <span class="text-gold-800 font-mono font-bold text-xs" id="subtotal-c1-hdr">$32,968.00/yr</span>
+                                        <span class="text-gold-800 font-mono font-bold text-xs" id="subtotal-c1-hdr">$—/yr</span>
                                     </div>
                                 </div>
                                 <table class="w-full text-[11px] bg-white rounded border border-slate-200">
@@ -370,32 +373,32 @@
                                         <tr>
                                             <td class="p-1.5 font-medium" data-i18n="c1_item1">Office Rent</td>
                                             <td class="p-1.5 text-right font-mono">
-                                                $<input type="number" id="c1_1_input" value="60.00" step="5" min="0" oninput="updateOpExFromInputs()" class="w-16 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
+                                                $<input type="number" id="c1_1_input" step="5" min="0" oninput="updateOpExFromInputs()" class="w-16 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
                                             </td>
-                                            <td class="p-1.5 text-right font-mono" id="c1_1_mth">$260.00</td>
-                                            <td class="p-1.5 text-right font-mono font-bold" id="c1_1_ann">$3,120.00</td>
+                                            <td class="p-1.5 text-right font-mono" id="c1_1_mth">$—</td>
+                                            <td class="p-1.5 text-right font-mono font-bold" id="c1_1_ann">$—</td>
                                         </tr>
                                         <tr>
                                             <td class="p-1.5 font-medium" data-i18n="c1_item2">Storage Unit / Small Warehouse</td>
                                             <td class="p-1.5 text-right font-mono">
-                                                $<input type="number" id="c1_2_input" value="130.00" step="5" min="0" oninput="updateOpExFromInputs()" class="w-16 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
+                                                $<input type="number" id="c1_2_input" step="5" min="0" oninput="updateOpExFromInputs()" class="w-16 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
                                             </td>
-                                            <td class="p-1.5 text-right font-mono" id="c1_2_mth">$563.33</td>
-                                            <td class="p-1.5 text-right font-mono font-bold" id="c1_2_ann">$6,760.00</td>
+                                            <td class="p-1.5 text-right font-mono" id="c1_2_mth">$—</td>
+                                            <td class="p-1.5 text-right font-mono font-bold" id="c1_2_ann">$—</td>
                                         </tr>
                                         <tr>
                                             <td class="p-1.5 font-medium" data-i18n="c1_item3">Commercial Vehicle Rental</td>
                                             <td class="p-1.5 text-right font-mono">
-                                                $<input type="number" id="c1_3_input" value="444.00" step="10" min="0" oninput="updateOpExFromInputs()" class="w-16 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
+                                                $<input type="number" id="c1_3_input" step="10" min="0" oninput="updateOpExFromInputs()" class="w-16 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
                                             </td>
-                                            <td class="p-1.5 text-right font-mono" id="c1_3_mth">$1,924.00</td>
-                                            <td class="p-1.5 text-right font-mono font-bold" id="c1_3_ann">$23,088.00</td>
+                                            <td class="p-1.5 text-right font-mono" id="c1_3_mth">$—</td>
+                                            <td class="p-1.5 text-right font-mono font-bold" id="c1_3_ann">$—</td>
                                         </tr>
                                         <tr class="bg-slate-100 font-bold border-t border-slate-300">
                                             <td class="p-1.5 text-slate-900" data-i18n="lbl_subtotal_ex_gst">Subtotal (excl. GST)</td>
-                                            <td class="p-1.5 text-right font-mono" id="c1_wk_sub">$634.00</td>
-                                            <td class="p-1.5 text-right font-mono" id="c1_mth_sub">$2,747.33</td>
-                                            <td class="p-1.5 text-right font-mono text-gold-800" id="c1_ann_sub">$32,968.00</td>
+                                            <td class="p-1.5 text-right font-mono" id="c1_wk_sub">$—</td>
+                                            <td class="p-1.5 text-right font-mono" id="c1_mth_sub">$—</td>
+                                            <td class="p-1.5 text-right font-mono text-gold-800" id="c1_ann_sub">$—</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -413,7 +416,7 @@
                                             <div class="w-9 h-5 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-emerald-600 relative"></div>
                                             <span id="c2_toggle_status" class="ml-2 text-[10px] font-bold uppercase tracking-wider text-slate-400">OFF</span>
                                         </label>
-                                        <span class="text-slate-400 font-mono font-bold text-xs" id="subtotal-c2-hdr">$0.00/yr (OFF)</span>
+                                        <span class="text-slate-400 font-mono font-bold text-xs" id="subtotal-c2-hdr">$—/yr (OFF)</span>
                                     </div>
                                 </div>
                                 <table class="w-full text-[11px] bg-white rounded border border-slate-200">
@@ -430,31 +433,31 @@
                                         <tr>
                                             <td class="p-1.5 font-medium" data-i18n="c2_role1">Managing Director</td>
                                             <td class="p-1.5 text-right font-mono">
-                                                $<input type="number" id="c2_1_base" value="110000.00" step="1000" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
+                                                $<input type="number" id="c2_1_base" step="1000" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
                                             </td>
-                                            <td class="p-1.5 text-right font-mono" id="c2_1_super">$12,650.00</td>
+                                            <td class="p-1.5 text-right font-mono" id="c2_1_super">$—</td>
                                             <td class="p-1.5 text-right font-mono">
-                                                $<input type="number" id="c2_1_wc" value="2200.00" step="100" min="0" oninput="updateOpExFromInputs()" class="w-16 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
+                                                $<input type="number" id="c2_1_wc" step="100" min="0" oninput="updateOpExFromInputs()" class="w-16 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
                                             </td>
-                                            <td class="p-1.5 text-right font-mono font-bold" id="c2_1_tot">$124,850.00</td>
+                                            <td class="p-1.5 text-right font-mono font-bold" id="c2_1_tot">$—</td>
                                         </tr>
                                         <tr>
                                             <td class="p-1.5 font-medium" data-i18n="c2_role2">Operations Manager</td>
                                             <td class="p-1.5 text-right font-mono">
-                                                $<input type="number" id="c2_2_base" value="84000.00" step="1000" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
+                                                $<input type="number" id="c2_2_base" step="1000" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
                                             </td>
-                                            <td class="p-1.5 text-right font-mono" id="c2_2_super">$9,660.00</td>
+                                            <td class="p-1.5 text-right font-mono" id="c2_2_super">$—</td>
                                             <td class="p-1.5 text-right font-mono">
-                                                $<input type="number" id="c2_2_wc" value="2440.00" step="100" min="0" oninput="updateOpExFromInputs()" class="w-16 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
+                                                $<input type="number" id="c2_2_wc" step="100" min="0" oninput="updateOpExFromInputs()" class="w-16 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
                                             </td>
-                                            <td class="p-1.5 text-right font-mono font-bold" id="c2_2_tot">$96,100.00</td>
+                                            <td class="p-1.5 text-right font-mono font-bold" id="c2_2_tot">$—</td>
                                         </tr>
                                         <tr class="bg-slate-100 font-bold border-t border-slate-300">
                                             <td class="p-1.5 text-slate-900" data-i18n="lbl_subtotal">Subtotal</td>
-                                            <td class="p-1.5 text-right font-mono" id="c2_base_sub">$194,000.00</td>
-                                            <td class="p-1.5 text-right font-mono" id="c2_super_sub">$22,310.00</td>
-                                            <td class="p-1.5 text-right font-mono" id="c2_wc_sub">$4,640.00</td>
-                                            <td class="p-1.5 text-right font-mono text-emerald-700" id="c2_ann_sub">$220,950.00</td>
+                                            <td class="p-1.5 text-right font-mono" id="c2_base_sub">$—</td>
+                                            <td class="p-1.5 text-right font-mono" id="c2_super_sub">$—</td>
+                                            <td class="p-1.5 text-right font-mono" id="c2_wc_sub">$—</td>
+                                            <td class="p-1.5 text-right font-mono text-emerald-700" id="c2_ann_sub">$—</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -472,7 +475,7 @@
                                             <div class="w-9 h-5 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-emerald-600 relative"></div>
                                             <span id="c3_toggle_status" class="ml-2 text-[10px] font-bold uppercase tracking-wider text-emerald-600">ON</span>
                                         </label>
-                                        <span class="text-gold-800 font-mono font-bold text-xs" id="subtotal-c3-hdr">$4,620.00/yr</span>
+                                        <span class="text-gold-800 font-mono font-bold text-xs" id="subtotal-c3-hdr">$—/yr</span>
                                     </div>
                                 </div>
                                 <table class="w-full text-[11px] bg-white rounded border border-slate-200">
@@ -487,28 +490,28 @@
                                         <tr>
                                             <td class="p-1.5 font-medium" data-i18n="c3_item1">Fuel (Unleaded / Diesel)</td>
                                             <td class="p-1.5 text-right font-mono">
-                                                $<input type="number" id="c3_1_mth_input" value="260.00" step="10" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
+                                                $<input type="number" id="c3_1_mth_input" step="10" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
                                             </td>
-                                            <td class="p-1.5 text-right font-mono font-bold" id="c3_1_ann">$3,120.00</td>
+                                            <td class="p-1.5 text-right font-mono font-bold" id="c3_1_ann">$—</td>
                                         </tr>
                                         <tr>
                                             <td class="p-1.5 font-medium" data-i18n="c3_item2">Transurban Tolls</td>
                                             <td class="p-1.5 text-right font-mono">
-                                                $<input type="number" id="c3_2_mth_input" value="85.00" step="5" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
+                                                $<input type="number" id="c3_2_mth_input" step="5" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
                                             </td>
-                                            <td class="p-1.5 text-right font-mono font-bold" id="c3_2_ann">$1,020.00</td>
+                                            <td class="p-1.5 text-right font-mono font-bold" id="c3_2_ann">$—</td>
                                         </tr>
                                         <tr>
                                             <td class="p-1.5 font-medium" data-i18n="c3_item3">Vehicle Maintenance</td>
                                             <td class="p-1.5 text-right font-mono">
-                                                $<input type="number" id="c3_3_mth_input" value="40.00" step="5" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
+                                                $<input type="number" id="c3_3_mth_input" step="5" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
                                             </td>
-                                            <td class="p-1.5 text-right font-mono font-bold" id="c3_3_ann">$480.00</td>
+                                            <td class="p-1.5 text-right font-mono font-bold" id="c3_3_ann">$—</td>
                                         </tr>
                                         <tr class="bg-slate-100 font-bold border-t border-slate-300">
                                             <td class="p-1.5 text-slate-900" data-i18n="lbl_subtotal_ex_gst">Subtotal (excl. GST)</td>
-                                            <td class="p-1.5 text-right font-mono" id="c3_mth_sub">$385.00</td>
-                                            <td class="p-1.5 text-right font-mono text-gold-800" id="c3_ann_sub">$4,620.00</td>
+                                            <td class="p-1.5 text-right font-mono" id="c3_mth_sub">$—</td>
+                                            <td class="p-1.5 text-right font-mono text-gold-800" id="c3_ann_sub">$—</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -526,7 +529,7 @@
                                             <div class="w-9 h-5 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-emerald-600 relative"></div>
                                             <span id="c4_toggle_status" class="ml-2 text-[10px] font-bold uppercase tracking-wider text-emerald-600">ON</span>
                                         </label>
-                                        <span class="text-gold-800 font-mono font-bold text-xs" id="subtotal-c4-hdr">$4,860.00/yr</span>
+                                        <span class="text-gold-800 font-mono font-bold text-xs" id="subtotal-c4-hdr">$—/yr</span>
                                     </div>
                                 </div>
                                 <table class="w-full text-[11px] bg-white rounded border border-slate-200">
@@ -541,42 +544,42 @@
                                         <tr>
                                             <td class="p-1.5 font-medium" data-i18n="c4_item1">Telecoms & Mobile Services</td>
                                             <td class="p-1.5 text-right font-mono">
-                                                $<input type="number" id="c4_1_mth_input" value="160.00" step="5" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
+                                                $<input type="number" id="c4_1_mth_input" step="5" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
                                             </td>
-                                            <td class="p-1.5 text-right font-mono font-bold" id="c4_1_ann">$1,920.00</td>
+                                            <td class="p-1.5 text-right font-mono font-bold" id="c4_1_ann">$—</td>
                                         </tr>
                                         <tr>
                                             <td class="p-1.5 font-medium" data-i18n="c4_item2">E-Commerce Platform</td>
                                             <td class="p-1.5 text-right font-mono">
-                                                $<input type="number" id="c4_2_mth_input" value="55.00" step="5" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
+                                                $<input type="number" id="c4_2_mth_input" step="5" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
                                             </td>
-                                            <td class="p-1.5 text-right font-mono font-bold" id="c4_2_ann">$660.00</td>
+                                            <td class="p-1.5 text-right font-mono font-bold" id="c4_2_ann">$—</td>
                                         </tr>
                                         <tr>
                                             <td class="p-1.5 font-medium" data-i18n="c4_item3">Email & Productivity</td>
                                             <td class="p-1.5 text-right font-mono">
-                                                $<input type="number" id="c4_3_mth_input" value="30.00" step="5" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
+                                                $<input type="number" id="c4_3_mth_input" step="5" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
                                             </td>
-                                            <td class="p-1.5 text-right font-mono font-bold" id="c4_3_ann">$360.00</td>
+                                            <td class="p-1.5 text-right font-mono font-bold" id="c4_3_ann">$—</td>
                                         </tr>
                                         <tr>
                                             <td class="p-1.5 font-medium" data-i18n="c4_item4">Accounting & ERP Integration</td>
                                             <td class="p-1.5 text-right font-mono">
-                                                $<input type="number" id="c4_4_mth_input" value="90.00" step="5" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
+                                                $<input type="number" id="c4_4_mth_input" step="5" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
                                             </td>
-                                            <td class="p-1.5 text-right font-mono font-bold" id="c4_4_ann">$1,080.00</td>
+                                            <td class="p-1.5 text-right font-mono font-bold" id="c4_4_ann">$—</td>
                                         </tr>
                                         <tr>
                                             <td class="p-1.5 font-medium" data-i18n="c4_item5">Inventory Management Software</td>
                                             <td class="p-1.5 text-right font-mono">
-                                                $<input type="number" id="c4_5_mth_input" value="70.00" step="5" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
+                                                $<input type="number" id="c4_5_mth_input" step="5" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
                                             </td>
-                                            <td class="p-1.5 text-right font-mono font-bold" id="c4_5_ann">$840.00</td>
+                                            <td class="p-1.5 text-right font-mono font-bold" id="c4_5_ann">$—</td>
                                         </tr>
                                         <tr class="bg-slate-100 font-bold border-t border-slate-300">
                                             <td class="p-1.5 text-slate-900" data-i18n="lbl_subtotal_ex_gst">Subtotal (excl. GST)</td>
-                                            <td class="p-1.5 text-right font-mono" id="c4_mth_sub">$405.00</td>
-                                            <td class="p-1.5 text-right font-mono text-gold-800" id="c4_ann_sub">$4,860.00</td>
+                                            <td class="p-1.5 text-right font-mono" id="c4_mth_sub">$—</td>
+                                            <td class="p-1.5 text-right font-mono text-gold-800" id="c4_ann_sub">$—</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -594,7 +597,7 @@
                                             <div class="w-9 h-5 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-emerald-600 relative"></div>
                                             <span id="c5_toggle_status" class="ml-2 text-[10px] font-bold uppercase tracking-wider text-emerald-600">ON</span>
                                         </label>
-                                        <span class="text-gold-800 font-mono font-bold text-xs" id="subtotal-c5-hdr">$5,337.00/yr</span>
+                                        <span class="text-gold-800 font-mono font-bold text-xs" id="subtotal-c5-hdr">$—/yr</span>
                                     </div>
                                 </div>
                                 <table class="w-full text-[11px] bg-white rounded border border-slate-200">
@@ -609,35 +612,35 @@
                                         <tr>
                                             <td class="p-1.5 font-medium" data-i18n="c5_item1">Accounting & Tax Compliance Fee</td>
                                             <td class="p-1.5 text-right font-mono">
-                                                $<input type="number" id="c5_1_ann_input" value="177.00" step="10" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
+                                                $<input type="number" id="c5_1_ann_input" step="10" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
                                             </td>
-                                            <td class="p-1.5 text-right font-mono" id="c5_1_inc_gst">$194.70</td>
+                                            <td class="p-1.5 text-right font-mono" id="c5_1_inc_gst">$—</td>
                                         </tr>
                                         <tr>
                                             <td class="p-1.5 font-medium" data-i18n="c5_item2">Public & Products Liability</td>
                                             <td class="p-1.5 text-right font-mono">
-                                                $<input type="number" id="c5_2_ann_input" value="1800.00" step="50" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
+                                                $<input type="number" id="c5_2_ann_input" step="50" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
                                             </td>
-                                            <td class="p-1.5 text-right font-mono" id="c5_2_inc_gst">$1,980.00</td>
+                                            <td class="p-1.5 text-right font-mono" id="c5_2_inc_gst">$—</td>
                                         </tr>
                                         <tr>
                                             <td class="p-1.5 font-medium" data-i18n="c5_item3">Marine Cargo / Transit Insurance</td>
                                             <td class="p-1.5 text-right font-mono">
-                                                $<input type="number" id="c5_3_ann_input" value="1500.00" step="50" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
+                                                $<input type="number" id="c5_3_ann_input" step="50" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
                                             </td>
-                                            <td class="p-1.5 text-right font-mono" id="c5_3_inc_gst">$1,650.00</td>
+                                            <td class="p-1.5 text-right font-mono" id="c5_3_inc_gst">$—</td>
                                         </tr>
                                         <tr>
                                             <td class="p-1.5 font-medium" data-i18n="c5_item4">Management Liability & Cyber</td>
                                             <td class="p-1.5 text-right font-mono">
-                                                $<input type="number" id="c5_4_ann_input" value="1860.00" step="50" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
+                                                $<input type="number" id="c5_4_ann_input" step="50" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
                                             </td>
-                                            <td class="p-1.5 text-right font-mono" id="c5_4_inc_gst">$2,046.00</td>
+                                            <td class="p-1.5 text-right font-mono" id="c5_4_inc_gst">$—</td>
                                         </tr>
                                         <tr class="bg-slate-100 font-bold border-t border-slate-300">
                                             <td class="p-1.5 text-slate-900" data-i18n="lbl_subtotal">Subtotal</td>
-                                            <td class="p-1.5 text-right font-mono text-gold-800" id="c5_ex_sub">$5,337.00</td>
-                                            <td class="p-1.5 text-right font-mono text-slate-800" id="c5_inc_sub">$5,870.70</td>
+                                            <td class="p-1.5 text-right font-mono text-gold-800" id="c5_ex_sub">$—</td>
+                                            <td class="p-1.5 text-right font-mono text-slate-800" id="c5_inc_sub">$—</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -655,7 +658,7 @@
                                             <div class="w-9 h-5 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-emerald-600 relative"></div>
                                             <span id="c6_toggle_status" class="ml-2 text-[10px] font-bold uppercase tracking-wider text-emerald-600">ON</span>
                                         </label>
-                                        <span class="text-gold-800 font-mono font-bold text-xs" id="subtotal-c6-hdr">$115,331.52/yr</span>
+                                        <span class="text-gold-800 font-mono font-bold text-xs" id="subtotal-c6-hdr">$—/yr</span>
                                     </div>
                                 </div>
                                 <table class="w-full text-[11px] bg-white rounded border border-slate-200">
@@ -670,22 +673,22 @@
                                         <tr>
                                             <td class="p-1.5 font-medium">
                                                 <div data-i18n="c6_item1">Local Charges & GST</div>
-                                                <div class="text-[9.5px] text-slate-400 font-normal" data-i18n="c6_note1">Handling fees + local GST ($207.24)</div>
+                                                <div class="text-[9.5px] text-slate-400 font-normal" data-i18n="c6_note1">Handling fees + local GST ($—)</div>
                                             </td>
                                             <td class="p-1.5 text-right font-mono">
-                                                $<input type="number" id="c6_1_ship_input" value="3479.64" step="0.01" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
+                                                $<input type="number" id="c6_1_ship_input" step="0.01" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
                                             </td>
-                                            <td class="p-1.5 text-right font-mono font-bold" id="c6_1_ann">$41,755.68</td>
+                                            <td class="p-1.5 text-right font-mono font-bold" id="c6_1_ann">$—</td>
                                         </tr>
                                         <tr>
                                             <td class="p-1.5 font-medium">
                                                 <div data-i18n="c6_item2">Warehouse Services & GST</div>
-                                                <div class="text-[9.5px] text-slate-400 font-normal" data-i18n="c6_note2">Unpacking, 38 pallets, storage, admin + GST ($293)</div>
+                                                <div class="text-[9.5px] text-slate-400 font-normal" data-i18n="c6_note2">Unpacking, 38 pallets, storage, admin + GST ($—)</div>
                                             </td>
                                             <td class="p-1.5 text-right font-mono">
-                                                $<input type="number" id="c6_2_ship_input" value="3223.00" step="0.01" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
+                                                $<input type="number" id="c6_2_ship_input" step="0.01" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
                                             </td>
-                                            <td class="p-1.5 text-right font-mono font-bold" id="c6_2_ann">$38,676.00</td>
+                                            <td class="p-1.5 text-right font-mono font-bold" id="c6_2_ann">$—</td>
                                         </tr>
                                         <tr>
                                             <td class="p-1.5 font-medium">
@@ -693,34 +696,34 @@
                                                 <div class="text-[9.5px] text-emerald-600 font-normal" data-i18n="c6_note3">Waived via valid Free Trade Agreement certificate</div>
                                             </td>
                                             <td class="p-1.5 text-right font-mono">
-                                                $<input type="number" id="c6_3_ship_input" value="0.00" step="0.01" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
+                                                $<input type="number" id="c6_3_ship_input" step="0.01" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
                                             </td>
-                                            <td class="p-1.5 text-right font-mono font-bold" id="c6_3_ann">$0.00</td>
+                                            <td class="p-1.5 text-right font-mono font-bold" id="c6_3_ann">$—</td>
                                         </tr>
                                         <tr>
                                             <td class="p-1.5 font-medium">
                                                 <div data-i18n="c6_item4">Import GST</div>
-                                                <div class="text-[9.5px] text-slate-400 font-normal" data-i18n="c6_note4">Recalculated at 10% of VoTI ($26,853.20 CIF value + freight)</div>
+                                                <div class="text-[9.5px] text-slate-400 font-normal" data-i18n="c6_note4">Recalculated at 10% of VoTI ($— CIF value + freight)</div>
                                             </td>
                                             <td class="p-1.5 text-right font-mono">
-                                                $<input type="number" id="c6_4_ship_input" value="2685.32" step="0.01" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
+                                                $<input type="number" id="c6_4_ship_input" step="0.01" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
                                             </td>
-                                            <td class="p-1.5 text-right font-mono font-bold" id="c6_4_ann">$32,223.84</td>
+                                            <td class="p-1.5 text-right font-mono font-bold" id="c6_4_ann">$—</td>
                                         </tr>
                                         <tr>
                                             <td class="p-1.5 font-medium">
                                                 <div data-i18n="c6_item5">Electronic Entry Fee</div>
-                                                <div class="text-[9.5px] text-slate-400 font-normal" data-i18n="c6_note5">Tiered fee for consignments over AUD 10,000</div>
+                                                <div class="text-[9.5px] text-slate-400 font-normal" data-i18n="c6_note5">Tiered fee for higher-value consignments</div>
                                             </td>
                                             <td class="p-1.5 text-right font-mono">
-                                                $<input type="number" id="c6_5_ship_input" value="223.00" step="0.01" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
+                                                $<input type="number" id="c6_5_ship_input" step="0.01" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 hover:bg-amber-50 focus:bg-white border border-slate-300 focus:border-gold-500 rounded text-right font-bold py-0.5 px-1 text-[11px]">
                                             </td>
-                                            <td class="p-1.5 text-right font-mono font-bold" id="c6_5_ann">$2,676.00</td>
+                                            <td class="p-1.5 text-right font-mono font-bold" id="c6_5_ann">$—</td>
                                         </tr>
                                         <tr class="bg-slate-100 font-bold border-t border-slate-300">
                                             <td class="p-1.5 text-slate-900" data-i18n="lbl_subtotal_ex_ocean">Subtotal (excl. Ocean & Duty)</td>
-                                            <td class="p-1.5 text-right font-mono" id="c6_ship_sub">$9,610.96</td>
-                                            <td class="p-1.5 text-right font-mono text-gold-800" id="c6_ann_sub">$115,331.52</td>
+                                            <td class="p-1.5 text-right font-mono" id="c6_ship_sub">$—</td>
+                                            <td class="p-1.5 text-right font-mono text-gold-800" id="c6_ann_sub">$—</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -778,20 +781,20 @@
                     <!-- FX Rate with Daily Auto-Update -->
                     <div class="flex flex-col">
                             <label data-i18n="lbl_fx" class="text-[10px] text-gold-400 uppercase font-semibold mb-0.5">FX Rate (AUD/USD)</label>
-                            <input type="number" id="input-fx" value="0.6620" step="0.0005" min="0.1" class="bg-slate-800 border border-slate-700 text-white rounded px-2.5 py-1 text-xs w-24 text-right focus:outline-none focus:border-gold-500">
+                            <input type="number" id="input-fx" step="0.0005" min="0.1" class="bg-slate-800 border border-slate-700 text-white rounded px-2.5 py-1 text-xs w-24 text-right focus:outline-none focus:border-gold-500">
                     </div>
 
                     <!-- Ocean freight. The label and value follow the container selector. -->
                     <div class="flex flex-col">
                         <label id="engine-freight-label" data-i18n="lbl_freight" class="text-[10px] text-gold-400 uppercase font-semibold mb-0.5">20ft Freight (USD)</label>
-                        <input type="number" id="input-freight" value="2480" step="25" min="0" class="bg-slate-800 border border-slate-700 text-white rounded px-2.5 py-1 text-xs w-28 text-right focus:outline-none focus:border-gold-500">
+                        <input type="number" id="input-freight" step="25" min="0" class="bg-slate-800 border border-slate-700 text-white rounded px-2.5 py-1 text-xs w-28 text-right focus:outline-none focus:border-gold-500">
                     </div>
 
                     <!-- Target Margin % -->
                     <div class="flex flex-col">
                         <label data-i18n="lbl_margin" class="text-[10px] text-gold-400 uppercase font-semibold mb-0.5">Target Margin (%)</label>
                         <div class="relative">
-                            <input type="number" id="input-margin" value="20" step="1" min="0" max="95" class="bg-slate-800 border border-gold-500 text-gold-400 font-bold rounded px-2.5 py-1 text-xs w-24 text-right focus:outline-none pr-5">
+                            <input type="number" id="input-margin" step="1" min="0" max="95" title="Used when a product margin box is left blank" class="bg-slate-800 border border-gold-500 text-gold-400 font-bold rounded px-2.5 py-1 text-xs w-24 text-right focus:outline-none pr-5">
                             <span class="absolute right-2 top-1 text-xs text-gold-400">%</span>
                         </div>
                     </div>
@@ -809,7 +812,7 @@
 					<div class="flex flex-col min-w-[160px] bg-slate-800/80 border border-slate-700 rounded px-2.5 py-1 justify-center">
 					<!-- Top: Total Order Net Profit -->
 						<div class="flex items-center justify-between text-[10px] leading-tight mb-1">
-							<span id="floating-total-profit" class="font-black text-emerald-400 font-mono">$0.00 AUD</span>
+							<span id="floating-total-profit" class="font-black text-emerald-400 font-mono">$— AUD</span>
 						</div>
 					<!-- Bottom: Container Capacity Bar & Count -->
 						<div class="w-full">
@@ -834,6 +837,7 @@
     </div>
 
     <!-- Custom Script -->
+    <script src="staff-store.js"></script>
     <script src="script-Q1.js?v=20261115e"></script>
 </body>
 </html>

@@ -1,31 +1,47 @@
 // --- MASTER STATE DECLARATIONS & BASELINES ---
-let currentAnnualOpExAUD = 169155.70;
+let currentAnnualOpExAUD = null;
 let ANNUAL_CONTAINERS = 12;
-let currentOpExPerContainerAUD = currentAnnualOpExAUD / ANNUAL_CONTAINERS;
+let currentOpExPerContainerAUD = null;
 
 // Default OpEx Baseline Values for Reset Button
 const defaultOpExValues = {
-    // Category 1: Business Start Up Expense (One-Off)
-    c1_1_input: 1718.18, c1_2_input: 322.00, c1_3_input: 3200.00,
-    c1_4_input: 150.00, c1_5_input: 150.00, c1_6_input: 50.00, c1_7_input: 150.00,
-    c1_8_input: 299.00,
-    // Category 2: Stated Fixed Overheads
-    c2_1_input: 60.00, c2_2_input: 130.00, c2_3_input: 444.00,
-    // Category 3: Personnel Overhead
-    c3_1_base: 110000.00, c3_1_wc: 2200.00, c3_2_base: 84000.00, c3_2_wc: 2440.00,
-    // Category 4: Vehicle Running Expenses
-    c4_1_mth_input: 260.00, c4_2_mth_input: 85.00, c4_3_mth_input: 40.00,
-    // Category 5: IT & SaaS Stack
-    c5_1_mth_input: 160.00, c5_2_mth_input: 55.00, c5_3_mth_input: 30.00, c5_4_mth_input: 90.00, c5_5_mth_input: 70.00,
-    // Category 6: Business Insurance & Compliance
-    c6_1_ann_input: 177.00, c6_2_ann_input: 1800.00, c6_3_ann_input: 1500.00, c6_4_ann_input: 1860.00,
-    // Category 7: Import Freight Clearance & Customs
-    c7_1_ship_input: 3479.64, c7_2_ship_input: 3223.00, c7_3_ship_input: 0.00, c7_4_ship_input: 2685.32, c7_5_ship_input: 223.00
+    "c1_1_input": null,
+    "c1_2_input": null,
+    "c1_3_input": null,
+    "c1_4_input": null,
+    "c1_5_input": null,
+    "c1_6_input": null,
+    "c1_7_input": null,
+    "c1_8_input": null,
+    "c2_1_input": null,
+    "c2_2_input": null,
+    "c2_3_input": null,
+    "c3_1_base": null,
+    "c3_1_wc": null,
+    "c3_2_base": null,
+    "c3_2_wc": null,
+    "c4_1_mth_input": null,
+    "c4_2_mth_input": null,
+    "c4_3_mth_input": null,
+    "c5_1_mth_input": null,
+    "c5_2_mth_input": null,
+    "c5_3_mth_input": null,
+    "c5_4_mth_input": null,
+    "c5_5_mth_input": null,
+    "c6_1_ann_input": null,
+    "c6_2_ann_input": null,
+    "c6_3_ann_input": null,
+    "c6_4_ann_input": null,
+    "c7_1_ship_input": null,
+    "c7_2_ship_input": null,
+    "c7_3_ship_input": null,
+    "c7_4_ship_input": null,
+    "c7_5_ship_input": null
 };
 
 function getAudToUsdRate() {
     const val = parseFloat(document.getElementById('aud-usd-rate-input')?.value);
-    return (!isNaN(val) && val > 0) ? val : 0.65;
+    return (!isNaN(val) && val > 0) ? val : tpgaNum('fxFallback');
 }
 
 // Shared staff session for this tab (Q1, Q1-1, B1, qc1).
@@ -66,7 +82,7 @@ function unlockPage(e) {
     const modal = document.getElementById('password-modal');
     const content = document.getElementById('page-content');
 
-    if (inputVal === 'twoparrots') {
+    if (false) {
         tpgaRememberStaffAuth();
         if (modal) {
             modal.classList.add('opacity-0', 'pointer-events-none');
@@ -201,7 +217,7 @@ function getCategoryState(catNum, rawSubtotal, suffix = '/yr') {
             headerEl.innerText = '$' + rawSubtotal.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + suffix;
             headerEl.className = (catNum === 3 ? "text-emerald-700" : "text-gold-800") + " font-mono font-bold text-xs";
         } else {
-            headerEl.innerText = `$0.00${suffix} (OFF)`;
+            headerEl.innerText = 'Off';
             headerEl.className = "text-slate-400 font-mono font-bold text-xs";
         }
     }
@@ -263,12 +279,12 @@ function updateOpExFromInputs() {
 
     // Category 3: Personnel Overhead
     const c3_1_base = parseFloat(document.getElementById('c3_1_base')?.value) || 0;
-    const c3_1_super = c3_1_base * 0.12;
+    const c3_1_super = c3_1_base * tpgaNum('superRate');
     const c3_1_wc = parseFloat(document.getElementById('c3_1_wc')?.value) || 0;
     const c3_1_tot = c3_1_base + c3_1_super + c3_1_wc;
 
     const c3_2_base = parseFloat(document.getElementById('c3_2_base')?.value) || 0;
-    const c3_2_super = c3_2_base * 0.12;
+    const c3_2_super = c3_2_base * tpgaNum('superRate');
     const c3_2_wc = parseFloat(document.getElementById('c3_2_wc')?.value) || 0;
     const c3_2_tot = c3_2_base + c3_2_super + c3_2_wc;
 
@@ -429,6 +445,8 @@ function updateOpExFromInputs() {
 
 // --- INDIVIDUAL BILINGUAL (EN + KM) CATEGORY PDF EXPORT ENGINE (WITH AUD & USD COLUMNS) ---
 async function exportCategoryPDF(catNum) {
+    const saved = await tpgaSaveRecord('B1', 'export_pdf');
+    tpgaShowStatus(saved.ok ? 'Saved. Preparing the PDF.' : 'Could not save to Cloudflare (' + saved.message + '). The PDF will still download.', saved.ok);
     try {
         await ensurePdfLibraries();
     } catch (err) {
@@ -561,8 +579,8 @@ async function exportCategoryPDF(catNum) {
             ${thCell('Annual AUD', 'សរុប AUD', 'right')}
             ${thCell('Annual USD', 'សរុប USD', 'right')}
         </tr>`;
-        const b1 = getVal('c3_1_base'), wc1 = getVal('c3_1_wc'), tot1 = b1 + (b1 * 0.12) + wc1;
-        const b2 = getVal('c3_2_base'), wc2 = getVal('c3_2_wc'), tot2 = b2 + (b2 * 0.12) + wc2;
+        const b1 = getVal('c3_1_base'), wc1 = getVal('c3_1_wc'), tot1 = b1 + (b1 * tpgaNum('superRate')) + wc1;
+        const b2 = getVal('c3_2_base'), wc2 = getVal('c3_2_wc'), tot2 = b2 + (b2 * tpgaNum('superRate')) + wc2;
         const totalAud = tot1 + tot2;
         const rows = [
             ['Managing Director', 'នាយកគ្រប់គ្រង', fmt(b1), getTxt('c3_1_super'), fmt(wc1), tot1],
@@ -692,11 +710,11 @@ async function exportCategoryPDF(catNum) {
             ${thCell('Annual USD', 'ប្រចាំឆ្នាំ USD', 'right')}
         </tr>`;
         const rows = [
-            ['Local Charges & GST', 'ថ្លៃសេវាក្នុងស្រុក និង GST', 'Handling fees + local GST ($207.24)', 'ថ្លៃលើកដាក់ទំនិញ + ពន្ធ GST ក្នុងស្រុក ($207.24)', getVal('c7_1_ship_input')],
-            ['Warehouse Services & GST', 'សេវាកម្មឃ្លាំង និង GST', 'Unpacking, 38 pallets, storage, admin + GST ($293)', 'ការរើទំនិញ ប៉ាឡែត ៣៨ ការស្តុកទុក រដ្ឋបាល + GST ($293)', getVal('c7_2_ship_input')],
+            ['Local Charges & GST', 'ថ្លៃសេវាក្នុងស្រុក និង GST', 'Handling fees + local GST', 'ថ្លៃលើកដាក់ទំនិញ + ពន្ធ GST ក្នុងស្រុក', getVal('c7_1_ship_input')],
+            ['Warehouse Services & GST', 'សេវាកម្មឃ្លាំង និង GST', 'Unpacking, 38 pallets, storage, admin + GST', 'ការរើទំនិញ ប៉ាឡែត ៣៨ ការស្តុកទុក រដ្ឋបាល + GST', getVal('c7_2_ship_input')],
             ['Customs Duty', 'ពន្ធគយនាំចូល', 'Waived via valid Free Trade Agreement certificate', 'លើកលែងពន្ធតាមវិញ្ញាបនបត្រកិច្ចព្រមព្រៀងពាណិជ្ជកម្មសេរី (FTA)', getVal('c7_3_ship_input')],
-            ['Import GST', 'ពន្ធ GST នាំចូល', 'Recalculated at 10% of VoTI ($26,853.20 CIF value + freight)', 'គណនា 10% លើតម្លៃ VoTI (តម្លៃ CIF $26,853.20 + ថ្លៃដឹកជញ្ជូន)', getVal('c7_4_ship_input')],
-            ['Electronic Entry Fee', 'កម្រៃប្រតិវេទន៍អេឡិចត្រូនិក', 'Tiered fee for consignments over AUD 10,000', 'កម្រៃតាមកម្រិតសម្រាប់ទំនិញនាំចូលលើសពី AUD 10,000', getVal('c7_5_ship_input')]
+            ['Import GST', 'ពន្ធ GST នាំចូល', 'Recalculated at 10% of VoTI (CIF value + freight)', 'គណនា 10% លើតម្លៃ VoTI (តម្លៃ CIF + ថ្លៃដឹកជញ្ជូន)', getVal('c7_4_ship_input')],
+            ['Electronic Entry Fee', 'កម្រៃប្រតិវេទន៍អេឡិចត្រូនិក', 'Tiered fee for higher-value consignments', 'កម្រៃតាមកម្រិតសម្រាប់ទំនិញតម្លៃខ្ពស់', getVal('c7_5_ship_input')]
         ];
         const totalShipAud = rows.reduce((s, r) => s + r[4], 0);
         const totalAnnAud = totalShipAud * shipmentsCount;
@@ -806,7 +824,7 @@ async function exportCategoryPDF(catNum) {
             </div>
 
             <div style="margin-top: 18px; font-size: 10px; color: #64748B; border-top: 1px solid #E2E8F0; padding-top: 10px;">
-                Two Parrots Group Australia Pty Ltd — Master Operational Expense Budget (AUD incl. GST | 1 AUD = ${fxRate.toFixed(4)} USD) &nbsp;|&nbsp;
+                Two Parrots Group Australia Pty Ltd — Business Budget Plan (AUD incl. GST | 1 AUD = ${fxRate.toFixed(4)} USD) &nbsp;|&nbsp;
                 <span style="font-family: 'Noto Sans Khmer', sans-serif;">ក្រុមហ៊ុន ថូ ផារ៉ត គ្រុប អូស្ត្រាលី (រួមបញ្ចូល GST)</span>
             </div>
         </div>
@@ -840,7 +858,7 @@ async function exportCategoryPDF(catNum) {
             doc.addImage(imgData, 'PNG', 0, 0, imgWidth * scaleFactor, pageHeight);
         }
 
-        doc.save(`TwoParrots_Category_${catNum}_Bilingual_AUD_USD_Report.pdf`);
+        doc.save(`TwoParrots_Business_Budget_Plan_Category_${catNum}.pdf`);
     } finally {
         document.body.removeChild(container);
     }
@@ -862,7 +880,7 @@ function resetOpExBudget() {
     if (preparedByInput) preparedByInput.value = '';
 
     const fxInput = document.getElementById('aud-usd-rate-input');
-    if (fxInput) fxInput.value = '0.65';
+    if (fxInput) fxInput.value = String(tpgaNum('fxFallback'));
 
     [1, 2, 4, 5, 6, 7].forEach(i => {
         const toggle = document.getElementById(`c${i}_toggle_input`);
@@ -878,12 +896,46 @@ function resetOpExBudget() {
 }
 
 // --- INITIALIZATION ON PAGE LOAD ---
-document.addEventListener('DOMContentLoaded', () => {
-    initPasswordModalA11y();
-    if (tpgaStaffSessionActive()) tpgaApplyStaffUnlock();
-    updateOpExFromInputs();
-});
-
-if (document.readyState === 'complete' || document.readyState === 'interactive') {
+async function tpgaBoot() {
+    try {
+        const loaded = await tpgaHydratePage('B1', { defaults: defaultOpExValues });
+        currentAnnualOpExAUD = loaded.engine.currentAnnualOpExAUD;
+        currentOpExPerContainerAUD = currentAnnualOpExAUD / ANNUAL_CONTAINERS;
+    } catch (err) {
+        tpgaShowStatus('Could not load prices from Cloudflare. ' + err.message, false);
+        return;
+    }
     updateOpExFromInputs();
 }
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', tpgaBoot);
+else tpgaBoot();
+
+
+async function exportBudgetPDF() {
+    try {
+        await ensurePdfLibraries();
+    } catch (err) {
+        alert('Could not load the PDF libraries. Check your connection and try again.');
+        return;
+    }
+    const target = document.getElementById('page-content');
+    const canvas = await html2canvas(target, { scale: 2, useCORS: true, backgroundColor: '#ffffff' });
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+    const img = canvas.toDataURL('image/png');
+    const pageWidth = 210;
+    const pageHeight = 297;
+    const imgHeight = (canvas.height * pageWidth) / canvas.width;
+    let heightLeft = imgHeight;
+    let position = 0;
+    doc.addImage(img, 'PNG', 0, position, pageWidth, imgHeight);
+    heightLeft -= pageHeight;
+    while (heightLeft > 0) {
+        position -= pageHeight;
+        doc.addPage();
+        doc.addImage(img, 'PNG', 0, position, pageWidth, imgHeight);
+        heightLeft -= pageHeight;
+    }
+    doc.save('TwoParrots_Business_Budget_Plan.pdf');
+}
+window.exportBudgetPDF = exportBudgetPDF;

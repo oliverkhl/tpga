@@ -1,0 +1,79 @@
+# Two Parrots Group Australia
+
+The public site is static HTML. Internal quote and budget pages load their prices from a Cloudflare Worker (`two-parrots-db`) backed by the D1 database `tpga-internal`. Staff save a quote or export a PDF through the same API.
+
+## Cloudflare Access
+
+Access application **TPGA internal pages** locks the internal tools. Staff sign in with a one-time email PIN (`kimheng@` and `info@twoparrotsgroup.com.au`). The old password typed into the page is gone.
+
+The file names stay the same so the Access paths keep working. The visible names are:
+
+| File | Name | What the page is |
+| --- | --- | --- |
+| `Q1.html` | Market Research | Landed-cost engine and competitor shelf survey |
+| `Q1-1.html` | Partner Quotation | Quotation sent to the origin partner |
+| `qc1.html` | Customer Quotation | Quotation sent to a customer |
+| `B1.html` | Business Budget Plan | Salaries and operating-cost budget |
+
+Paths already on that application:
+
+- `/Q1.html` and `/Q1`
+- `/Q1-1.html` and `/Q1-1`
+- `/qc1.html` and `/qc1`
+- `/B1.html` and `/B1`
+- `/api/*`
+
+Add these as well. The quote pages load them, and they are not covered by the paths above:
+
+- `/staff-store.js`
+- `/script-Q1.js`
+- `/script-Q2.js`
+- `/script-Q3.js`
+- `/script-b3.js`
+- `/styles-Q1.css`
+
+No other HTML page or API path was added. `POST /api/prices/survey` is already inside `/api/*`.
+
+After someone passes Access, Cloudflare sends `Cf-Access-Jwt-Assertion`. The Worker checks the signature against the team certificates, and checks the audience against `POLICY_AUD`. The email on the token is stored as `saved_by`.
+
+### Worker variables and secrets
+
+`TEAM_DOMAIN` and `POLICY_AUD` are plain vars in `wrangler.jsonc` (not secrets):
+
+- `TEAM_DOMAIN` = `https://holy-limit-fa1d.cloudflareaccess.com`
+- `POLICY_AUD` = `e14558467b6fe9598d2a8ac660e8468eff3e8c4facf2f1e3cc17e3769c175c68`
+
+| Name | Kind | Where it is set | Purpose |
+| --- | --- | --- | --- |
+| `PRICE_UPDATE_SECRET` | Worker secret | `npx wrangler secret put PRICE_UPDATE_SECRET` | Shared secret checked only on `POST /api/prices/survey`. |
+| `PRICE_UPDATE_SECRET` | GitHub Actions secret | Repository secret, same name. | Sent as `X-Price-Update-Secret`. |
+| `CF_ACCESS_CLIENT_ID` | GitHub Actions secret | Repository secret, this exact name. | Access service token id. Sent as `CF-Access-Client-Id`. |
+| `CF_ACCESS_CLIENT_SECRET` | GitHub Actions secret | Repository secret, this exact name. | Access service token secret. Sent as `CF-Access-Client-Secret`. |
+
+Create the service token in Zero Trust and allow it on **TPGA internal pages** (same audience as `POLICY_AUD`). Access checks the token at the edge and adds the JWT. The Worker then checks that JWT and the shared secret. The service token headers alone do not open the other API routes. A staff PIN login does not open the price-update route unless it also has the shared secret.
+
+Do not put `PRICE_UPDATE_SECRET`, `CF_ACCESS_CLIENT_ID`, or `CF_ACCESS_CLIENT_SECRET` in `wrangler.jsonc`.
+
+### Database
+
+D1 database `tpga-internal`, id `1f207914-0258-4ffd-b5e2-405ea7e9a0b2`, binding `DB`.
+
+Branch previews use a separate empty database, `tpga-internal-preview`, id `51a77988-55b9-42f0-82c3-35a4d684067d`, so a preview cannot write into the live price database. Its tables match the migration and contain no prices until you load the seed there yourself.
+
+Migrations in `migrations/` create empty tables. `0002_product_margin.sql` adds a nullable `product_costs.margin_pct`. A blank value means that product uses the page's main Margin box. Apply migrations before the seed:
+
+```bash
+npx wrangler d1 migrations apply tpga-internal --remote
+```
+
+The current price figures are in `/opt/cursor/artifacts/tpga-price-seed.sql` from the maintenance run that moved them out of git. That file does not set `margin_pct`, so every product starts on the main margin. Apply that file yourself:
+
+```bash
+npx wrangler d1 execute tpga-internal --remote --file=/opt/cursor/artifacts/tpga-price-seed.sql
+```
+
+Those figures also remain in git history from before this change.
+
+### Local check
+
+`wrangler dev` serves the HTML and `/api/*` together. Local reads and saves work only when `.dev.vars` contains `DEV_AUTH_BYPASS=1` (git ignores that file) and the request hostname is not `twoparrotsgroup.com.au` or `*.workers.dev`. The flag is not in `wrangler.jsonc`. A deployed Worker, including a preview on `workers.dev`, still returns 401 when the Access JWT is missing, even if that flag were present. `POST /api/prices/survey` also needs `PRICE_UPDATE_SECRET` in `.dev.vars`. On the public hostname that route needs both a valid Access service-token JWT and the shared secret.

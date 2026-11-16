@@ -1,0 +1,17 @@
+node_modules/**
+.git/**
+.wrangler/**
+.dev.vars
+worker
+migrations
+.github
+README.md
+package.json
+package-lock.json
+wrangler.jsonc
+.gitignore
+.assetsignore
+update_prices.py
+P1.py
+**/*.sql
+**/__pycache__
