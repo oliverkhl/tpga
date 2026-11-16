@@ -1,6 +1,6 @@
-node_modules
-.git
-.wrangler
+node_modules/**
+.git/**
+.wrangler/**
 .dev.vars
 worker
 migrations
