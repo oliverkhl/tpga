@@ -1,0 +1,36 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "two-parrots-db",
+  "account_id": "cd0a13d95eccc5ef12b9c1b345260dc3",
+  "main": "worker/index.js",
+  "compatibility_date": "2026-11-16",
+  "compatibility_flags": ["nodejs_compat"],
+  // Only the API is attached to the public hostname. The HTML site stays on GitHub Pages.
+  "routes": [
+    { "pattern": "twoparrotsgroup.com.au/api/*", "zone_name": "twoparrotsgroup.com.au" }
+  ],
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "tpga-internal",
+      "database_id": "1f207914-0258-4ffd-b5e2-405ea7e9a0b2",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "assets": {
+    "directory": ".",
+    "binding": "ASSETS",
+    "run_worker_first": ["/api/*"]
+  },
+  "observability": {
+    "enabled": true,
+    "logs": { "enabled": true, "head_sampling_rate": 1 },
+    "traces": { "enabled": true, "head_sampling_rate": 1 }
+  },
+  // Access application "TPGA internal pages". These are not secrets.
+  // PRICE_UPDATE_SECRET stays a secret: `npx wrangler secret put PRICE_UPDATE_SECRET`
+  "vars": {
+    "TEAM_DOMAIN": "https://holy-limit-fa1d.cloudflareaccess.com",
+    "POLICY_AUD": "e14558467b6fe9598d2a8ac660e8468eff3e8c4facf2f1e3cc17e3769c175c68"
+  }
+}

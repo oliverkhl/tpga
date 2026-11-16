@@ -1,0 +1,11 @@
+{
+  "name": "tpga",
+  "private": true,
+  "scripts": {
+    "dev": "wrangler dev",
+    "types": "wrangler types"
+  },
+  "devDependencies": {
+    "wrangler": "^4.162.0"
+  }
+}

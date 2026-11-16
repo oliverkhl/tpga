@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        html.tpga-staff-auth #password-modal { display: none !important; }
+        #password-modal { display: none !important; }
         html.tpga-staff-auth #page-content {
             filter: none !important;
             -webkit-filter: none !important;
@@ -23,8 +23,7 @@
         } catch (e) {}
         function tpgaStaffLogout(e) {
             if (e && e.preventDefault) e.preventDefault();
-            try { sessionStorage.removeItem('tpgaStaffAuth'); } catch (err) {}
-            window.location.reload();
+            window.location.href = '/cdn-cgi/access/logout';
             return false;
         }
     </script>
@@ -110,7 +109,7 @@
                     Enter Password <span class="normal-case font-normal text-slate-300 ml-1">/ បញ្ចូលពាក្យសម្ងាត់</span>
                 </label>
                 <div class="relative">
-                    <input type="password" id="password-input" placeholder="••••••••" autofocus class="w-full bg-slate-800 border border-slate-700 focus:border-gold-500 rounded-lg px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-gold-400 transition">
+                    <input type="password" id="password-input" placeholder="••••••••" class="w-full bg-slate-800 border border-slate-700 focus:border-gold-500 rounded-lg px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-gold-400 transition">
                     <button type="button" id="toggle-password-btn" onclick="togglePasswordVisibility()" aria-label="Show password" aria-pressed="false" class="absolute right-3 top-2.5 text-slate-400 hover:text-gold-400 text-sm rounded focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-gold-400">
                         <i id="eye-icon" class="fa-solid fa-eye"></i>
                     </button>
@@ -136,7 +135,7 @@
 </div>
 
 <!-- MAIN PAGE WRAPPER WITH BLUR STATE ON LOAD -->
-<div id="page-content" class="filter blur-xl pointer-events-none select-none transition-all duration-500">
+<div id="page-content" class="transition-all duration-500">
 
     <!-- Header Navigation Bar -->
     <header class="bg-slate-900 text-white shadow-md no-print border-b-2 border-gold-500">
@@ -154,12 +153,13 @@
             </div>
 
             <div class="flex items-center space-x-3">
-                <button onclick="window.print()" class="px-3 py-1.5 bg-gold-500 hover:bg-gold-600 text-slate-900 font-semibold rounded-lg shadow transition flex items-center gap-2 text-xs">
-                    <i class="fa-solid fa-print"></i>
-                    <span class="text-left leading-tight">
-                        Print Budget Report
-                        <span class="km-sub text-[10px] font-normal">បោះពុម្ពរបាយការណ៍ថវិកា</span>
-                    </span>
+                <button type="button" onclick="tpgaSaveClick('B1')" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-gold-400 border border-gold-500 font-semibold rounded-lg shadow transition flex items-center gap-2 text-xs">
+                    <i class="fa-solid fa-floppy-disk"></i>
+                    <span>Save</span>
+                </button>
+                <button type="button" onclick="tpgaExportPdf('B1')" class="px-3 py-1.5 bg-gold-500 hover:bg-gold-600 text-slate-900 font-semibold rounded-lg shadow transition flex items-center gap-2 text-xs">
+                    <i class="fa-solid fa-file-pdf"></i>
+                    <span>Export PDF</span>
                 </button>
             </div>
         </div>
@@ -237,7 +237,7 @@
                             AUD → USD:
                             <span class="km-sub text-[9.5px] text-slate-300 normal-case">អត្រាប្តូរប្រាក់៖</span>
                         </label>
-                        <input type="number" id="aud-usd-rate-input" value="0.65" step="0.005" min="0.01" oninput="updateOpExFromInputs()" class="bg-slate-900 border border-slate-600 focus:border-gold-500 text-white rounded px-2 py-1 text-xs font-mono font-bold outline-none w-20 text-right">
+                        <input type="number" id="aud-usd-rate-input" step="0.005" min="0.01" oninput="updateOpExFromInputs()" class="bg-slate-900 border border-slate-600 focus:border-gold-500 text-white rounded px-2 py-1 text-xs font-mono font-bold outline-none w-20 text-right">
                     </div>
 
                     <!-- PREPARED BY INPUT BOX -->
@@ -257,7 +257,7 @@
                         </span>
                     </button>
                     <div class="bg-gold-500/20 text-gold-400 text-xs font-bold px-2.5 py-1 rounded border border-gold-500/40 font-mono text-right">
-                        <div>Total OpEx (incl. GST): $<span id="banner-opex-total">169,155.70</span> AUD (<span class="text-emerald-300">$<span id="banner-opex-total-usd">109,951.21</span> USD</span>)</div>
+                        <div>Total OpEx (incl. GST): $<span id="banner-opex-total"></span> AUD (<span class="text-emerald-300">$<span id="banner-opex-total-usd"></span> USD</span>)</div>
                         <span class="km-sub text-[10px] text-slate-200">ចំណាយប្រតិបត្តិការសរុបប្រចាំឆ្នាំ (រួមបញ្ចូល GST)</span>
                     </div>
                 </div>
@@ -309,7 +309,7 @@
                                         One-Off
                                         <span class="km-sub text-[10px] text-slate-400">ម្តងគត់</span>
                                     </td>
-                                    <td class="py-1.5 px-3 text-right font-mono font-bold" id="sum-ann-c1">$6,039.18</td>
+                                    <td class="py-1.5 px-3 text-right font-mono font-bold" id="sum-ann-c1">$—</td>
                                     <td class="py-1.5 px-3 text-right font-mono font-semibold text-slate-600" id="sum-pct-c1">3.6%</td>
                                 </tr>
                                 <tr class="hover:bg-slate-50">
@@ -317,8 +317,8 @@
                                         2. Stated Fixed Overheads (Office, Storage, Rental Car)
                                         <span class="km-sub text-[10.5px] text-slate-500">២. ចំណាយថេរប្រចាំ (ការិយាល័យ ឃ្លាំងស្តុក និងជួលរថយន្ត)</span>
                                     </td>
-                                    <td class="py-1.5 px-3 text-right font-mono" id="sum-mth-c2">$2,747.33</td>
-                                    <td class="py-1.5 px-3 text-right font-mono font-bold" id="sum-ann-c2">$32,968.00</td>
+                                    <td class="py-1.5 px-3 text-right font-mono" id="sum-mth-c2">$—</td>
+                                    <td class="py-1.5 px-3 text-right font-mono font-bold" id="sum-ann-c2">$—</td>
                                     <td class="py-1.5 px-3 text-right font-mono font-semibold text-slate-600" id="sum-pct-c2">19.5%</td>
                                 </tr>
                                 <tr class="hover:bg-slate-50">
@@ -326,8 +326,8 @@
                                         3. Executive & Operational Personnel (Salaries, Super, WorkCover)
                                         <span class="km-sub text-[10.5px] text-slate-500">៣. បុគ្គលិកប្រតិបត្តិ និងប្រតិបត្តិការ (ប្រាក់ខែ Super និងធានារ៉ាប់រងការងារ)</span>
                                     </td>
-                                    <td class="py-1.5 px-3 text-right font-mono" id="sum-mth-c3">$0.00</td>
-                                    <td class="py-1.5 px-3 text-right font-mono font-bold text-emerald-700" id="sum-ann-c3">$0.00</td>
+                                    <td class="py-1.5 px-3 text-right font-mono" id="sum-mth-c3">$—</td>
+                                    <td class="py-1.5 px-3 text-right font-mono font-bold text-emerald-700" id="sum-ann-c3">$—</td>
                                     <td class="py-1.5 px-3 text-right font-mono font-semibold text-slate-600" id="sum-pct-c3">0.0%</td>
                                 </tr>
                                 <tr class="hover:bg-slate-50">
@@ -335,8 +335,8 @@
                                         4. Vehicle Running & Transportation Expenses (Fuel, Tolls, Maint.)
                                         <span class="km-sub text-[10.5px] text-slate-500">៤. ចំណាយប្រតិបត្តិការយានយន្ត និងដឹកជញ្ជូន (ប្រេងឥន្ធនៈ ផ្លូវល្បឿនលឿន ជួសជុល)</span>
                                     </td>
-                                    <td class="py-1.5 px-3 text-right font-mono" id="sum-mth-c4">$385.00</td>
-                                    <td class="py-1.5 px-3 text-right font-mono font-bold" id="sum-ann-c4">$4,620.00</td>
+                                    <td class="py-1.5 px-3 text-right font-mono" id="sum-mth-c4">$—</td>
+                                    <td class="py-1.5 px-3 text-right font-mono font-bold" id="sum-ann-c4">$—</td>
                                     <td class="py-1.5 px-3 text-right font-mono font-semibold text-slate-600" id="sum-pct-c4">2.7%</td>
                                 </tr>
                                 <tr class="hover:bg-slate-50">
@@ -344,8 +344,8 @@
                                         5. IT, Communications & SaaS Stack (Telecoms, Web, Software)
                                         <span class="km-sub text-[10.5px] text-slate-500">៥. បច្ចេកវិទ្យា ទំនាក់ទំនង និងកម្មវិធី SaaS (ទូរស័ព្ទ គេហទំព័រ កម្មវិធី)</span>
                                     </td>
-                                    <td class="py-1.5 px-3 text-right font-mono" id="sum-mth-c5">$405.00</td>
-                                    <td class="py-1.5 px-3 text-right font-mono font-bold" id="sum-ann-c5">$4,860.00</td>
+                                    <td class="py-1.5 px-3 text-right font-mono" id="sum-mth-c5">$—</td>
+                                    <td class="py-1.5 px-3 text-right font-mono font-bold" id="sum-ann-c5">$—</td>
                                     <td class="py-1.5 px-3 text-right font-mono font-semibold text-slate-600" id="sum-pct-c5">2.9%</td>
                                 </tr>
                                 <tr class="hover:bg-slate-50">
@@ -353,8 +353,8 @@
                                         6. Business Insurance & Compliance (Liability, Transit, Audit)
                                         <span class="km-sub text-[10.5px] text-slate-500">៦. ធានារ៉ាប់រងអាជីវកម្ម និងអនុលោមភាព (ទំនួលខុសត្រូវ ដឹកជញ្ជូន សវនកម្ម)</span>
                                     </td>
-                                    <td class="py-1.5 px-3 text-right font-mono" id="sum-mth-c6">$444.75</td>
-                                    <td class="py-1.5 px-3 text-right font-mono font-bold" id="sum-ann-c6">$5,337.00</td>
+                                    <td class="py-1.5 px-3 text-right font-mono" id="sum-mth-c6">$—</td>
+                                    <td class="py-1.5 px-3 text-right font-mono font-bold" id="sum-ann-c6">$—</td>
                                     <td class="py-1.5 px-3 text-right font-mono font-semibold text-slate-600" id="sum-pct-c6">3.2%</td>
                                 </tr>
                                 <tr class="hover:bg-slate-50">
@@ -362,8 +362,8 @@
                                         7. Estimated Logistics & Customs Administration (Clearance, PSC)
                                         <span class="km-sub text-[10.5px] text-slate-500">៧. ការប៉ាន់ស្មានភស្តុភារកម្ម និងរដ្ឋបាលគយ (ការបញ្ចេញទំនិញពីគយ)</span>
                                     </td>
-                                    <td class="py-1.5 px-3 text-right font-mono" id="sum-mth-c7">$9,610.96</td>
-                                    <td class="py-1.5 px-3 text-right font-mono font-bold" id="sum-ann-c7">$115,331.52</td>
+                                    <td class="py-1.5 px-3 text-right font-mono" id="sum-mth-c7">$—</td>
+                                    <td class="py-1.5 px-3 text-right font-mono font-bold" id="sum-ann-c7">$—</td>
                                     <td class="py-1.5 px-3 text-right font-mono font-semibold text-slate-600" id="sum-pct-c7">68.2%</td>
                                 </tr>
                                 <tr class="bg-slate-900 text-white font-bold text-xs">
@@ -371,8 +371,8 @@
                                         TOTAL OPERATIONAL EXPENSES (OpEx incl. GST)
                                         <span class="km-sub text-[10.5px] text-slate-300 normal-case">ចំណាយប្រតិបត្តិការសរុបទាំងអស់ (OpEx រួមបញ្ចូល GST)</span>
                                     </td>
-                                    <td class="py-2 px-3 text-right font-mono text-white" id="sum-mth-total">$13,593.04</td>
-                                    <td class="py-2 px-3 text-right font-mono text-gold-400 text-xs" id="sum-ann-total">$169,155.70</td>
+                                    <td class="py-2 px-3 text-right font-mono text-white" id="sum-mth-total">$—</td>
+                                    <td class="py-2 px-3 text-right font-mono text-gold-400 text-xs" id="sum-ann-total">$—</td>
                                     <td class="py-2 px-3 text-right font-mono">100.0%</td>
                                 </tr>
                             </tbody>
@@ -411,7 +411,7 @@
                                         <div class="w-8 h-4 bg-slate-300 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-emerald-600 relative"></div>
                                         <span id="c1_toggle_status" class="ml-1.5 text-[10px] font-bold uppercase text-emerald-600">ON</span>
                                     </label>
-                                    <span class="text-gold-800 font-mono font-bold text-xs" id="subtotal-c1-hdr">$6,039.18</span>
+                                    <span class="text-gold-800 font-mono font-bold text-xs" id="subtotal-c1-hdr">$—</span>
                                 </div>
                             </div>
                             <table class="w-full text-[11px] bg-white rounded border border-slate-200">
@@ -433,63 +433,63 @@
                                             1. ABN/ACN Registration
                                             <span class="km-sub text-[10px] text-slate-500">១. ការចុះបញ្ជី ABN/ACN</span>
                                         </td>
-                                        <td class="p-1.5 text-right font-mono">$<input type="number" id="c1_1_input" value="1718.18" step="10" min="0" oninput="updateOpExFromInputs()" class="w-24 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
+                                        <td class="p-1.5 text-right font-mono">$<input type="number" id="c1_1_input" step="10" min="0" oninput="updateOpExFromInputs()" class="w-24 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
                                     </tr>
                                     <tr>
                                         <td class="p-1.5 font-medium">
                                             2. Accounting Fee
                                             <span class="km-sub text-[10px] text-slate-500">២. កម្រៃសេវាគណនេយ្យ</span>
                                         </td>
-                                        <td class="p-1.5 text-right font-mono">$<input type="number" id="c1_2_input" value="322.00" step="10" min="0" oninput="updateOpExFromInputs()" class="w-24 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
+                                        <td class="p-1.5 text-right font-mono">$<input type="number" id="c1_2_input" step="10" min="0" oninput="updateOpExFromInputs()" class="w-24 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
                                     </tr>
                                     <tr>
                                         <td class="p-1.5 font-medium">
                                             3. Business Structure Lawyer Fee
                                             <span class="km-sub text-[10px] text-slate-500">៣. កម្រៃមេធាវីរៀបចំរចនាសម្ព័ន្ធអាជីវកម្ម</span>
                                         </td>
-                                        <td class="p-1.5 text-right font-mono">$<input type="number" id="c1_3_input" value="3200.00" step="50" min="0" oninput="updateOpExFromInputs()" class="w-24 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
+                                        <td class="p-1.5 text-right font-mono">$<input type="number" id="c1_3_input" step="50" min="0" oninput="updateOpExFromInputs()" class="w-24 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
                                     </tr>
                                     <tr>
                                         <td class="p-1.5 font-medium">
                                             4. Business Transport Expenses
                                             <span class="km-sub text-[10px] text-slate-500">៤. ចំណាយធ្វើដំណើរអាជីវកម្ម</span>
                                         </td>
-                                        <td class="p-1.5 text-right font-mono">$<input type="number" id="c1_4_input" value="150.00" step="10" min="0" oninput="updateOpExFromInputs()" class="w-24 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
+                                        <td class="p-1.5 text-right font-mono">$<input type="number" id="c1_4_input" step="10" min="0" oninput="updateOpExFromInputs()" class="w-24 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
                                     </tr>
                                     <tr>
                                         <td class="p-1.5 font-medium">
                                             5. Business Meeting Expenses
                                             <span class="km-sub text-[10px] text-slate-500">៥. ចំណាយប្រជុំអាជីវកម្ម</span>
                                         </td>
-                                        <td class="p-1.5 text-right font-mono">$<input type="number" id="c1_5_input" value="150.00" step="10" min="0" oninput="updateOpExFromInputs()" class="w-24 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
+                                        <td class="p-1.5 text-right font-mono">$<input type="number" id="c1_5_input" step="10" min="0" oninput="updateOpExFromInputs()" class="w-24 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
                                     </tr>
                                     <tr>
                                         <td class="p-1.5 font-medium">
                                             6. Business Events Expenses
                                             <span class="km-sub text-[10px] text-slate-500">៦. ចំណាយចូលរួមព្រឹត្តិការណ៍អាជីវកម្ម</span>
                                         </td>
-                                        <td class="p-1.5 text-right font-mono">$<input type="number" id="c1_6_input" value="50.00" step="10" min="0" oninput="updateOpExFromInputs()" class="w-24 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
+                                        <td class="p-1.5 text-right font-mono">$<input type="number" id="c1_6_input" step="10" min="0" oninput="updateOpExFromInputs()" class="w-24 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
                                     </tr>
                                     <tr>
                                         <td class="p-1.5 font-medium">
                                             7. Business Online Setup Expense
                                             <span class="km-sub text-[10px] text-slate-500">៧. ចំណាយរៀបចំប្រព័ន្ធអនឡាញអាជីវកម្ម</span>
                                         </td>
-                                        <td class="p-1.5 text-right font-mono">$<input type="number" id="c1_7_input" value="150.00" step="10" min="0" oninput="updateOpExFromInputs()" class="w-24 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
+                                        <td class="p-1.5 text-right font-mono">$<input type="number" id="c1_7_input" step="10" min="0" oninput="updateOpExFromInputs()" class="w-24 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
                                     </tr>
                                     <tr>
                                         <td class="p-1.5 font-medium">
                                             8. Permit and Licence Expense
                                             <span class="km-sub text-[10px] text-slate-500">៨. ចំណាយលិខិតអនុញ្ញាត និងអាជ្ញាប័ណ្ណ</span>
                                         </td>
-                                        <td class="p-1.5 text-right font-mono">$<input type="number" id="c1_8_input" value="299.00" step="10" min="0" oninput="updateOpExFromInputs()" class="w-24 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
+                                        <td class="p-1.5 text-right font-mono">$<input type="number" id="c1_8_input" step="10" min="0" oninput="updateOpExFromInputs()" class="w-24 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
                                     </tr>
                                     <tr class="bg-slate-100 font-bold border-t border-slate-300">
                                         <td class="p-1.5 text-slate-900">
                                             Subtotal (incl. GST)
                                             <span class="km-sub text-[10px] text-slate-600">សរុបរង (រួមបញ្ចូល GST)</span>
                                         </td>
-                                        <td class="p-1.5 text-right font-mono text-gold-800" id="c1_ann_sub">$6,039.18</td>
+                                        <td class="p-1.5 text-right font-mono text-gold-800" id="c1_ann_sub">$—</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -514,7 +514,7 @@
                                         <div class="w-8 h-4 bg-slate-300 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-emerald-600 relative"></div>
                                         <span id="c2_toggle_status" class="ml-1.5 text-[10px] font-bold uppercase text-emerald-600">ON</span>
                                     </label>
-                                    <span class="text-gold-800 font-mono font-bold text-xs" id="subtotal-c2-hdr">$32,968.00/yr</span>
+                                    <span class="text-gold-800 font-mono font-bold text-xs" id="subtotal-c2-hdr">$—/yr</span>
                                 </div>
                             </div>
                             <table class="w-full text-[11px] bg-white rounded border border-slate-200">
@@ -544,36 +544,36 @@
                                             Office Rent
                                             <span class="km-sub text-[10px] text-slate-500">ឈ្នួលការិយាល័យ</span>
                                         </td>
-                                        <td class="p-1.5 text-right font-mono">$<input type="number" id="c2_1_input" value="60.00" step="5" min="0" oninput="updateOpExFromInputs()" class="w-16 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
-                                        <td class="p-1.5 text-right font-mono" id="c2_1_mth">$260.00</td>
-                                        <td class="p-1.5 text-right font-mono font-bold" id="c2_1_ann">$3,120.00</td>
+                                        <td class="p-1.5 text-right font-mono">$<input type="number" id="c2_1_input" step="5" min="0" oninput="updateOpExFromInputs()" class="w-16 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
+                                        <td class="p-1.5 text-right font-mono" id="c2_1_mth">$—</td>
+                                        <td class="p-1.5 text-right font-mono font-bold" id="c2_1_ann">$—</td>
                                     </tr>
                                     <tr>
                                         <td class="p-1.5 font-medium">
                                             Storage Unit / Small Warehouse
                                             <span class="km-sub text-[10px] text-slate-500">ឃ្លាំងស្តុកទំនិញខ្នាតតូច</span>
                                         </td>
-                                        <td class="p-1.5 text-right font-mono">$<input type="number" id="c2_2_input" value="130.00" step="5" min="0" oninput="updateOpExFromInputs()" class="w-16 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
-                                        <td class="p-1.5 text-right font-mono" id="c2_2_mth">$563.33</td>
-                                        <td class="p-1.5 text-right font-mono font-bold" id="c2_2_ann">$6,760.00</td>
+                                        <td class="p-1.5 text-right font-mono">$<input type="number" id="c2_2_input" step="5" min="0" oninput="updateOpExFromInputs()" class="w-16 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
+                                        <td class="p-1.5 text-right font-mono" id="c2_2_mth">$—</td>
+                                        <td class="p-1.5 text-right font-mono font-bold" id="c2_2_ann">$—</td>
                                     </tr>
                                     <tr>
                                         <td class="p-1.5 font-medium">
                                             Commercial Vehicle Rental
                                             <span class="km-sub text-[10px] text-slate-500">ការជួលរថយន្តពាណិជ្ជកម្ម</span>
                                         </td>
-                                        <td class="p-1.5 text-right font-mono">$<input type="number" id="c2_3_input" value="444.00" step="10" min="0" oninput="updateOpExFromInputs()" class="w-16 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
-                                        <td class="p-1.5 text-right font-mono" id="c2_3_mth">$1,924.00</td>
-                                        <td class="p-1.5 text-right font-mono font-bold" id="c2_3_ann">$23,088.00</td>
+                                        <td class="p-1.5 text-right font-mono">$<input type="number" id="c2_3_input" step="10" min="0" oninput="updateOpExFromInputs()" class="w-16 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
+                                        <td class="p-1.5 text-right font-mono" id="c2_3_mth">$—</td>
+                                        <td class="p-1.5 text-right font-mono font-bold" id="c2_3_ann">$—</td>
                                     </tr>
                                     <tr class="bg-slate-100 font-bold border-t border-slate-300">
                                         <td class="p-1.5 text-slate-900">
                                             Subtotal (incl. GST)
                                             <span class="km-sub text-[10px] text-slate-600">សរុបរង (រួមបញ្ចូល GST)</span>
                                         </td>
-                                        <td class="p-1.5 text-right font-mono" id="c2_wk_sub">$634.00</td>
-                                        <td class="p-1.5 text-right font-mono" id="c2_mth_sub">$2,747.33</td>
-                                        <td class="p-1.5 text-right font-mono text-gold-800" id="c2_ann_sub">$32,968.00</td>
+                                        <td class="p-1.5 text-right font-mono" id="c2_wk_sub">$—</td>
+                                        <td class="p-1.5 text-right font-mono" id="c2_mth_sub">$—</td>
+                                        <td class="p-1.5 text-right font-mono text-gold-800" id="c2_ann_sub">$—</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -598,7 +598,7 @@
                                         <div class="w-8 h-4 bg-slate-300 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-emerald-600 relative"></div>
                                         <span id="c3_toggle_status" class="ml-1.5 text-[10px] font-bold uppercase text-slate-400">OFF</span>
                                     </label>
-                                    <span class="text-slate-400 font-mono font-bold text-xs" id="subtotal-c3-hdr">$0.00/yr (OFF)</span>
+                                    <span class="text-slate-400 font-mono font-bold text-xs" id="subtotal-c3-hdr">$—/yr (OFF)</span>
                                 </div>
                             </div>
                             <table class="w-full text-[11px] bg-white rounded border border-slate-200">
@@ -632,30 +632,30 @@
                                             Managing Director
                                             <span class="km-sub text-[10px] text-slate-500">នាយកគ្រប់គ្រង</span>
                                         </td>
-                                        <td class="p-1.5 text-right font-mono">$<input type="number" id="c3_1_base" value="110000.00" step="1000" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
-                                        <td class="p-1.5 text-right font-mono" id="c3_1_super">$12,650.00</td>
-                                        <td class="p-1.5 text-right font-mono">$<input type="number" id="c3_1_wc" value="2200.00" step="100" min="0" oninput="updateOpExFromInputs()" class="w-16 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
-                                        <td class="p-1.5 text-right font-mono font-bold" id="c3_1_tot">$124,850.00</td>
+                                        <td class="p-1.5 text-right font-mono">$<input type="number" id="c3_1_base" step="1000" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
+                                        <td class="p-1.5 text-right font-mono" id="c3_1_super">$—</td>
+                                        <td class="p-1.5 text-right font-mono">$<input type="number" id="c3_1_wc" step="100" min="0" oninput="updateOpExFromInputs()" class="w-16 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
+                                        <td class="p-1.5 text-right font-mono font-bold" id="c3_1_tot">$—</td>
                                     </tr>
                                     <tr>
                                         <td class="p-1.5 font-medium">
                                             Operations Manager
                                             <span class="km-sub text-[10px] text-slate-500">ប្រធានគ្រប់គ្រងប្រតិបត្តិការ</span>
                                         </td>
-                                        <td class="p-1.5 text-right font-mono">$<input type="number" id="c3_2_base" value="84000.00" step="1000" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
-                                        <td class="p-1.5 text-right font-mono" id="c3_2_super">$9,660.00</td>
-                                        <td class="p-1.5 text-right font-mono">$<input type="number" id="c3_2_wc" value="2440.00" step="100" min="0" oninput="updateOpExFromInputs()" class="w-16 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
-                                        <td class="p-1.5 text-right font-mono font-bold" id="c3_2_tot">$96,100.00</td>
+                                        <td class="p-1.5 text-right font-mono">$<input type="number" id="c3_2_base" step="1000" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
+                                        <td class="p-1.5 text-right font-mono" id="c3_2_super">$—</td>
+                                        <td class="p-1.5 text-right font-mono">$<input type="number" id="c3_2_wc" step="100" min="0" oninput="updateOpExFromInputs()" class="w-16 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
+                                        <td class="p-1.5 text-right font-mono font-bold" id="c3_2_tot">$—</td>
                                     </tr>
                                     <tr class="bg-slate-100 font-bold border-t border-slate-300">
                                         <td class="p-1.5 text-slate-900">
                                             Subtotal (incl. GST)
                                             <span class="km-sub text-[10px] text-slate-600">សរុបរង (រួមបញ្ចូល GST)</span>
                                         </td>
-                                        <td class="p-1.5 text-right font-mono" id="c3_base_sub">$194,000.00</td>
-                                        <td class="p-1.5 text-right font-mono" id="c3_super_sub">$22,310.00</td>
-                                        <td class="p-1.5 text-right font-mono" id="c3_wc_sub">$4,640.00</td>
-                                        <td class="p-1.5 text-right font-mono text-emerald-700" id="c3_ann_sub">$220,950.00</td>
+                                        <td class="p-1.5 text-right font-mono" id="c3_base_sub">$—</td>
+                                        <td class="p-1.5 text-right font-mono" id="c3_super_sub">$—</td>
+                                        <td class="p-1.5 text-right font-mono" id="c3_wc_sub">$—</td>
+                                        <td class="p-1.5 text-right font-mono text-emerald-700" id="c3_ann_sub">$—</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -680,7 +680,7 @@
                                         <div class="w-8 h-4 bg-slate-300 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-emerald-600 relative"></div>
                                         <span id="c4_toggle_status" class="ml-1.5 text-[10px] font-bold uppercase text-emerald-600">ON</span>
                                     </label>
-                                    <span class="text-gold-800 font-mono font-bold text-xs" id="subtotal-c4-hdr">$4,620.00/yr</span>
+                                    <span class="text-gold-800 font-mono font-bold text-xs" id="subtotal-c4-hdr">$—/yr</span>
                                 </div>
                             </div>
                             <table class="w-full text-[11px] bg-white rounded border border-slate-200">
@@ -706,32 +706,32 @@
                                             Fuel (Unleaded / Diesel)
                                             <span class="km-sub text-[10px] text-slate-500">ប្រេងឥន្ធនៈ (សាំង / ម៉ាស៊ូត)</span>
                                         </td>
-                                        <td class="p-1.5 text-right font-mono">$<input type="number" id="c4_1_mth_input" value="260.00" step="10" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
-                                        <td class="p-1.5 text-right font-mono font-bold" id="c4_1_ann">$3,120.00</td>
+                                        <td class="p-1.5 text-right font-mono">$<input type="number" id="c4_1_mth_input" step="10" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
+                                        <td class="p-1.5 text-right font-mono font-bold" id="c4_1_ann">$—</td>
                                     </tr>
                                     <tr>
                                         <td class="p-1.5 font-medium">
                                             Transurban Tolls
                                             <span class="km-sub text-[10px] text-slate-500">ថ្លៃផ្លូវល្បឿនលឿន (Transurban Tolls)</span>
                                         </td>
-                                        <td class="p-1.5 text-right font-mono">$<input type="number" id="c4_2_mth_input" value="85.00" step="5" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
-                                        <td class="p-1.5 text-right font-mono font-bold" id="c4_2_ann">$1,020.00</td>
+                                        <td class="p-1.5 text-right font-mono">$<input type="number" id="c4_2_mth_input" step="5" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
+                                        <td class="p-1.5 text-right font-mono font-bold" id="c4_2_ann">$—</td>
                                     </tr>
                                     <tr>
                                         <td class="p-1.5 font-medium">
                                             Vehicle Maintenance
                                             <span class="km-sub text-[10px] text-slate-500">ការថែទាំ និងជួសជុលរថយន្ត</span>
                                         </td>
-                                        <td class="p-1.5 text-right font-mono">$<input type="number" id="c4_3_mth_input" value="40.00" step="5" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
-                                        <td class="p-1.5 text-right font-mono font-bold" id="c4_3_ann">$480.00</td>
+                                        <td class="p-1.5 text-right font-mono">$<input type="number" id="c4_3_mth_input" step="5" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
+                                        <td class="p-1.5 text-right font-mono font-bold" id="c4_3_ann">$—</td>
                                     </tr>
                                     <tr class="bg-slate-100 font-bold border-t border-slate-300">
                                         <td class="p-1.5 text-slate-900">
                                             Subtotal (incl. GST)
                                             <span class="km-sub text-[10px] text-slate-600">សរុបរង (រួមបញ្ចូល GST)</span>
                                         </td>
-                                        <td class="p-1.5 text-right font-mono" id="c4_mth_sub">$385.00</td>
-                                        <td class="p-1.5 text-right font-mono text-gold-800" id="c4_ann_sub">$4,620.00</td>
+                                        <td class="p-1.5 text-right font-mono" id="c4_mth_sub">$—</td>
+                                        <td class="p-1.5 text-right font-mono text-gold-800" id="c4_ann_sub">$—</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -756,7 +756,7 @@
                                         <div class="w-8 h-4 bg-slate-300 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-emerald-600 relative"></div>
                                         <span id="c5_toggle_status" class="ml-1.5 text-[10px] font-bold uppercase text-emerald-600">ON</span>
                                     </label>
-                                    <span class="text-gold-800 font-mono font-bold text-xs" id="subtotal-c5-hdr">$4,860.00/yr</span>
+                                    <span class="text-gold-800 font-mono font-bold text-xs" id="subtotal-c5-hdr">$—/yr</span>
                                 </div>
                             </div>
                             <table class="w-full text-[11px] bg-white rounded border border-slate-200">
@@ -782,48 +782,48 @@
                                             Telecoms & Mobile Services
                                             <span class="km-sub text-[10px] text-slate-500">សេវាទូរគមនាគមន៍ និងទូរស័ព្ទចល័ត</span>
                                         </td>
-                                        <td class="p-1.5 text-right font-mono">$<input type="number" id="c5_1_mth_input" value="160.00" step="5" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
-                                        <td class="p-1.5 text-right font-mono font-bold" id="c5_1_ann">$1,920.00</td>
+                                        <td class="p-1.5 text-right font-mono">$<input type="number" id="c5_1_mth_input" step="5" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
+                                        <td class="p-1.5 text-right font-mono font-bold" id="c5_1_ann">$—</td>
                                     </tr>
                                     <tr>
                                         <td class="p-1.5 font-medium">
                                             E-Commerce Platform
                                             <span class="km-sub text-[10px] text-slate-500">ប្រព័ន្ធពាណិជ្ជកម្មអេឡិចត្រូនិក (E-Commerce)</span>
                                         </td>
-                                        <td class="p-1.5 text-right font-mono">$<input type="number" id="c5_2_mth_input" value="55.00" step="5" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
-                                        <td class="p-1.5 text-right font-mono font-bold" id="c5_2_ann">$660.00</td>
+                                        <td class="p-1.5 text-right font-mono">$<input type="number" id="c5_2_mth_input" step="5" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
+                                        <td class="p-1.5 text-right font-mono font-bold" id="c5_2_ann">$—</td>
                                     </tr>
                                     <tr>
                                         <td class="p-1.5 font-medium">
                                             Email & Productivity
                                             <span class="km-sub text-[10px] text-slate-500">អ៊ីមែល និងកម្មវិធីការងារ</span>
                                         </td>
-                                        <td class="p-1.5 text-right font-mono">$<input type="number" id="c5_3_mth_input" value="30.00" step="5" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
-                                        <td class="p-1.5 text-right font-mono font-bold" id="c5_3_ann">$360.00</td>
+                                        <td class="p-1.5 text-right font-mono">$<input type="number" id="c5_3_mth_input" step="5" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
+                                        <td class="p-1.5 text-right font-mono font-bold" id="c5_3_ann">$—</td>
                                     </tr>
                                     <tr>
                                         <td class="p-1.5 font-medium">
                                             Accounting & ERP Integration
                                             <span class="km-sub text-[10px] text-slate-500">ប្រព័ន្ធគណនេយ្យ និង ERP</span>
                                         </td>
-                                        <td class="p-1.5 text-right font-mono">$<input type="number" id="c5_4_mth_input" value="90.00" step="5" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
-                                        <td class="p-1.5 text-right font-mono font-bold" id="c5_4_ann">$1,080.00</td>
+                                        <td class="p-1.5 text-right font-mono">$<input type="number" id="c5_4_mth_input" step="5" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
+                                        <td class="p-1.5 text-right font-mono font-bold" id="c5_4_ann">$—</td>
                                     </tr>
                                     <tr>
                                         <td class="p-1.5 font-medium">
                                             Inventory Management Software
                                             <span class="km-sub text-[10px] text-slate-500">កម្មវិធីគ្រប់គ្រងស្តុកទំនិញ</span>
                                         </td>
-                                        <td class="p-1.5 text-right font-mono">$<input type="number" id="c5_5_mth_input" value="70.00" step="5" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
-                                        <td class="p-1.5 text-right font-mono font-bold" id="c5_5_ann">$840.00</td>
+                                        <td class="p-1.5 text-right font-mono">$<input type="number" id="c5_5_mth_input" step="5" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
+                                        <td class="p-1.5 text-right font-mono font-bold" id="c5_5_ann">$—</td>
                                     </tr>
                                     <tr class="bg-slate-100 font-bold border-t border-slate-300">
                                         <td class="p-1.5 text-slate-900">
                                             Subtotal (incl. GST)
                                             <span class="km-sub text-[10px] text-slate-600">សរុបរង (រួមបញ្ចូល GST)</span>
                                         </td>
-                                        <td class="p-1.5 text-right font-mono" id="c5_mth_sub">$405.00</td>
-                                        <td class="p-1.5 text-right font-mono text-gold-800" id="c5_ann_sub">$4,860.00</td>
+                                        <td class="p-1.5 text-right font-mono" id="c5_mth_sub">$—</td>
+                                        <td class="p-1.5 text-right font-mono text-gold-800" id="c5_ann_sub">$—</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -848,7 +848,7 @@
                                         <div class="w-8 h-4 bg-slate-300 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-emerald-600 relative"></div>
                                         <span id="c6_toggle_status" class="ml-1.5 text-[10px] font-bold uppercase text-emerald-600">ON</span>
                                     </label>
-                                    <span class="text-gold-800 font-mono font-bold text-xs" id="subtotal-c6-hdr">$5,337.00/yr</span>
+                                    <span class="text-gold-800 font-mono font-bold text-xs" id="subtotal-c6-hdr">$—/yr</span>
                                 </div>
                             </div>
                             <table class="w-full text-[11px] bg-white rounded border border-slate-200">
@@ -874,40 +874,40 @@
                                             Accounting & Tax Compliance Fee
                                             <span class="km-sub text-[10px] text-slate-500">កម្រៃសេវាគណនេយ្យ និងអនុលោមភាពពន្ធ</span>
                                         </td>
-                                        <td class="p-1.5 text-right font-mono">$<input type="number" id="c6_1_ann_input" value="177.00" step="10" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
-                                        <td class="p-1.5 text-right font-mono" id="c6_1_inc_gst">$194.70</td>
+                                        <td class="p-1.5 text-right font-mono">$<input type="number" id="c6_1_ann_input" step="10" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
+                                        <td class="p-1.5 text-right font-mono" id="c6_1_inc_gst">$—</td>
                                     </tr>
                                     <tr>
                                         <td class="p-1.5 font-medium">
                                             Public & Products Liability
                                             <span class="km-sub text-[10px] text-slate-500">ធានារ៉ាប់រងទំនួលខុសត្រូវសាធារណៈ និងផលិតផល</span>
                                         </td>
-                                        <td class="p-1.5 text-right font-mono">$<input type="number" id="c6_2_ann_input" value="1800.00" step="50" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
-                                        <td class="p-1.5 text-right font-mono" id="c6_2_inc_gst">$1,980.00</td>
+                                        <td class="p-1.5 text-right font-mono">$<input type="number" id="c6_2_ann_input" step="50" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
+                                        <td class="p-1.5 text-right font-mono" id="c6_2_inc_gst">$—</td>
                                     </tr>
                                     <tr>
                                         <td class="p-1.5 font-medium">
                                             Marine Cargo / Transit Insurance
                                             <span class="km-sub text-[10px] text-slate-500">ធានារ៉ាប់រងទំនិញតាមផ្លូវសមុទ្រ / ដឹកជញ្ជូន</span>
                                         </td>
-                                        <td class="p-1.5 text-right font-mono">$<input type="number" id="c6_3_ann_input" value="1500.00" step="50" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
-                                        <td class="p-1.5 text-right font-mono" id="c6_3_inc_gst">$1,650.00</td>
+                                        <td class="p-1.5 text-right font-mono">$<input type="number" id="c6_3_ann_input" step="50" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
+                                        <td class="p-1.5 text-right font-mono" id="c6_3_inc_gst">$—</td>
                                     </tr>
                                     <tr>
                                         <td class="p-1.5 font-medium">
                                             Management Liability & Cyber
                                             <span class="km-sub text-[10px] text-slate-500">ធានារ៉ាប់រងទំនួលខុសត្រូវគ្រប់គ្រង និងសុវត្ថិភាពតាមអ៊ីនធឺណិត</span>
                                         </td>
-                                        <td class="p-1.5 text-right font-mono">$<input type="number" id="c6_4_ann_input" value="1860.00" step="50" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
-                                        <td class="p-1.5 text-right font-mono" id="c6_4_inc_gst">$2,046.00</td>
+                                        <td class="p-1.5 text-right font-mono">$<input type="number" id="c6_4_ann_input" step="50" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
+                                        <td class="p-1.5 text-right font-mono" id="c6_4_inc_gst">$—</td>
                                     </tr>
                                     <tr class="bg-slate-100 font-bold border-t border-slate-300">
                                         <td class="p-1.5 text-slate-900">
                                             Subtotal (incl. GST)
                                             <span class="km-sub text-[10px] text-slate-600">សរុបរង (រួមបញ្ចូល GST)</span>
                                         </td>
-                                        <td class="p-1.5 text-right font-mono text-gold-800" id="c6_ex_sub">$5,337.00</td>
-                                        <td class="p-1.5 text-right font-mono text-slate-800" id="c6_inc_sub">$5,870.70</td>
+                                        <td class="p-1.5 text-right font-mono text-gold-800" id="c6_ex_sub">$—</td>
+                                        <td class="p-1.5 text-right font-mono text-slate-800" id="c6_inc_sub">$—</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -932,7 +932,7 @@
                                         <div class="w-8 h-4 bg-slate-300 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-emerald-600 relative"></div>
                                         <span id="c7_toggle_status" class="ml-1.5 text-[10px] font-bold uppercase text-emerald-600">ON</span>
                                     </label>
-                                    <span class="text-gold-800 font-mono font-bold text-xs" id="subtotal-c7-hdr">$115,331.52/yr</span>
+                                    <span class="text-gold-800 font-mono font-bold text-xs" id="subtotal-c7-hdr">$—/yr</span>
                                 </div>
                             </div>
                             <table class="w-full text-[11px] bg-white rounded border border-slate-200">
@@ -956,19 +956,19 @@
                                     <tr>
                                         <td class="p-1.5 font-medium">
                                             <div>Local Charges & GST <span class="text-slate-600 font-normal">/ ថ្លៃសេវាក្នុងស្រុក និង GST</span></div>
-                                            <div class="text-[9.5px] text-slate-400 font-normal">Handling fees + local GST ($207.24) — ថ្លៃលើកដាក់ទំនិញ + ពន្ធ GST ក្នុងស្រុក ($207.24)</div>
+                                            <div class="text-[9.5px] text-slate-400 font-normal">Handling fees + local GST ($—) — ថ្លៃលើកដាក់ទំនិញ + ពន្ធ GST ក្នុងស្រុក ($—)</div>
                                         </td>
-                                        <td class="p-1.5 text-right font-mono">$<input type="number" id="c7_1_ship_input" value="3479.64" step="0.01" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
-                                        <td class="p-1.5 text-right font-mono font-bold" id="c7_1_ann">$41,755.68</td>
+                                        <td class="p-1.5 text-right font-mono">$<input type="number" id="c7_1_ship_input" step="0.01" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
+                                        <td class="p-1.5 text-right font-mono font-bold" id="c7_1_ann">$—</td>
                                     </tr>
 
                                     <tr>
                                         <td class="p-1.5 font-medium">
                                             <div>Warehouse Services & GST <span class="text-slate-600 font-normal">/ សេវាកម្មឃ្លាំង និង GST</span></div>
-                                            <div class="text-[9.5px] text-slate-400 font-normal">Unpacking, 38 pallets, storage, admin + GST ($293) — ការរើទំនិញ ប៉ាឡែត ៣៨ ការស្តុកទុក រដ្ឋបាល + GST ($293)</div>
+                                            <div class="text-[9.5px] text-slate-400 font-normal">Unpacking, 38 pallets, storage, admin + GST ($—) — ការរើទំនិញ ប៉ាឡែត ៣៨ ការស្តុកទុក រដ្ឋបាល + GST ($—)</div>
                                         </td>
-                                        <td class="p-1.5 text-right font-mono">$<input type="number" id="c7_2_ship_input" value="3223.00" step="0.01" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
-                                        <td class="p-1.5 text-right font-mono font-bold" id="c7_2_ann">$38,676.00</td>
+                                        <td class="p-1.5 text-right font-mono">$<input type="number" id="c7_2_ship_input" step="0.01" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
+                                        <td class="p-1.5 text-right font-mono font-bold" id="c7_2_ann">$—</td>
                                     </tr>
 
                                     <tr>
@@ -976,26 +976,26 @@
                                             <div>Customs Duty <span class="text-slate-600 font-normal">/ ពន្ធគយនាំចូល</span></div>
                                             <div class="text-[9.5px] text-emerald-600 font-normal">Waived via valid Free Trade Agreement certificate — លើកលែងពន្ធតាមរយៈវិញ្ញាបនបត្រកិច្ចព្រមព្រៀងពាណិជ្ជកម្មសេរី (FTA)</div>
                                         </td>
-                                        <td class="p-1.5 text-right font-mono">$<input type="number" id="c7_3_ship_input" value="0.00" step="0.01" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
-                                        <td class="p-1.5 text-right font-mono font-bold" id="c7_3_ann">$0.00</td>
+                                        <td class="p-1.5 text-right font-mono">$<input type="number" id="c7_3_ship_input" step="0.01" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
+                                        <td class="p-1.5 text-right font-mono font-bold" id="c7_3_ann">$—</td>
                                     </tr>
 
                                     <tr>
                                         <td class="p-1.5 font-medium">
                                             <div>Import GST <span class="text-slate-600 font-normal">/ ពន្ធ GST នាំចូល</span></div>
-                                            <div class="text-[9.5px] text-slate-400 font-normal">Recalculated at 10% of VoTI ($26,853.20 CIF value + freight) — គណនា 10% លើតម្លៃ VoTI (តម្លៃ CIF $26,853.20 + ថ្លៃដឹកជញ្ជូន)</div>
+                                            <div class="text-[9.5px] text-slate-400 font-normal">Recalculated at 10% of VoTI ($— CIF value + freight) — គណនា 10% លើតម្លៃ VoTI (តម្លៃ CIF $— + ថ្លៃដឹកជញ្ជូន)</div>
                                         </td>
-                                        <td class="p-1.5 text-right font-mono">$<input type="number" id="c7_4_ship_input" value="2685.32" step="0.01" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
-                                        <td class="p-1.5 text-right font-mono font-bold" id="c7_4_ann">$32,223.84</td>
+                                        <td class="p-1.5 text-right font-mono">$<input type="number" id="c7_4_ship_input" step="0.01" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
+                                        <td class="p-1.5 text-right font-mono font-bold" id="c7_4_ann">$—</td>
                                     </tr>
 
                                     <tr>
                                         <td class="p-1.5 font-medium">
                                             <div>Electronic Entry Fee <span class="text-slate-600 font-normal">/ កម្រៃប្រតិវេទន៍អេឡិចត្រូនិក</span></div>
-                                            <div class="text-[9.5px] text-slate-400 font-normal">Tiered fee for consignments over AUD 10,000 — កម្រៃតាមកម្រិតសម្រាប់ទំនិញនាំចូលលើសពី AUD 10,000</div>
+                                            <div class="text-[9.5px] text-slate-400 font-normal">Tiered fee for higher-value consignments — កម្រៃតាមកម្រិតសម្រាប់ទំនិញតម្លៃខ្ពស់</div>
                                         </td>
-                                        <td class="p-1.5 text-right font-mono">$<input type="number" id="c7_5_ship_input" value="223.00" step="0.01" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
-                                        <td class="p-1.5 text-right font-mono font-bold" id="c7_5_ann">$2,676.00</td>
+                                        <td class="p-1.5 text-right font-mono">$<input type="number" id="c7_5_ship_input" step="0.01" min="0" oninput="updateOpExFromInputs()" class="w-20 bg-slate-100 border border-slate-300 rounded text-right font-bold py-0.5 px-1 text-[11px]"></td>
+                                        <td class="p-1.5 text-right font-mono font-bold" id="c7_5_ann">$—</td>
                                     </tr>
 
                                     <tr class="bg-slate-100 font-bold border-t border-slate-300">
@@ -1003,8 +1003,8 @@
                                             Subtotal (incl. GST, excl. Ocean & Duty)
                                             <span class="km-sub text-[10px] text-slate-600">សរុបរង (រួមបញ្ចូល GST មិនរួមថ្លៃដឹកតាមសមុទ្រ និងពន្ធគយ)</span>
                                         </td>
-                                        <td class="p-1.5 text-right font-mono" id="c7_ship_sub">$9,610.96</td>
-                                        <td class="p-1.5 text-right font-mono text-gold-800" id="c7_ann_sub">$115,331.52</td>
+                                        <td class="p-1.5 text-right font-mono" id="c7_ship_sub">$—</td>
+                                        <td class="p-1.5 text-right font-mono text-gold-800" id="c7_ann_sub">$—</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -1057,7 +1057,8 @@
 </div>
 
 <!-- JavaScript Engine Link -->
-<script src="script-b3.js?v=20261115e"></script>
+<script src="staff-store.js"></script>
+    <script src="script-b3.js?v=20261115e"></script>
 
 </body>
 </html>
