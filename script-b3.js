@@ -824,7 +824,7 @@ async function exportCategoryPDF(catNum) {
             </div>
 
             <div style="margin-top: 18px; font-size: 10px; color: #64748B; border-top: 1px solid #E2E8F0; padding-top: 10px;">
-                Two Parrots Group Australia Pty Ltd — Master Operational Expense Budget (AUD incl. GST | 1 AUD = ${fxRate.toFixed(4)} USD) &nbsp;|&nbsp;
+                Two Parrots Group Australia Pty Ltd — Business Budget Plan (AUD incl. GST | 1 AUD = ${fxRate.toFixed(4)} USD) &nbsp;|&nbsp;
                 <span style="font-family: 'Noto Sans Khmer', sans-serif;">ក្រុមហ៊ុន ថូ ផារ៉ត គ្រុប អូស្ត្រាលី (រួមបញ្ចូល GST)</span>
             </div>
         </div>
@@ -858,7 +858,7 @@ async function exportCategoryPDF(catNum) {
             doc.addImage(imgData, 'PNG', 0, 0, imgWidth * scaleFactor, pageHeight);
         }
 
-        doc.save(`TwoParrots_Category_${catNum}_Bilingual_AUD_USD_Report.pdf`);
+        doc.save(`TwoParrots_Business_Budget_Plan_Category_${catNum}.pdf`);
     } finally {
         document.body.removeChild(container);
     }
@@ -936,6 +936,6 @@ async function exportBudgetPDF() {
         doc.addImage(img, 'PNG', 0, position, pageWidth, imgHeight);
         heightLeft -= pageHeight;
     }
-    doc.save('TwoParrots_Budget.pdf');
+    doc.save('TwoParrots_Business_Budget_Plan.pdf');
 }
 window.exportBudgetPDF = exportBudgetPDF;

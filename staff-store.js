@@ -1,3 +1,55 @@
+function tpgaInstallMarginStyle() {
+  if (document.getElementById('tpga-margin-style')) return;
+  const style = document.createElement('style');
+  style.id = 'tpga-margin-style';
+  style.textContent = 'tr.tpga-margin-override{box-shadow:inset 4px 0 0 #d97706;}input.tpga-margin-override{background:#fffbeb;border-color:#d97706;color:#92400e;font-weight:700;}';
+  document.head.appendChild(style);
+}
+
+function tpgaMainMargin() {
+  const raw = parseFloat((document.getElementById('input-margin') || {}).value);
+  if (Number.isFinite(raw) && raw >= 0) return raw;
+  const fallback = tpgaNum('marginPercent');
+  return Number.isFinite(fallback) ? fallback : 0;
+}
+
+function tpgaEffectiveMargin(product) {
+  const override = product && product.marginOverride;
+  if (override != null && override !== '' && Number.isFinite(Number(override))) {
+    return { percent: Number(override), override: true };
+  }
+  return { percent: tpgaMainMargin(), override: false };
+}
+
+function tpgaMarginInputHtml(product) {
+  const main = tpgaMainMargin();
+  const active = product.marginOverride != null && Number.isFinite(Number(product.marginOverride));
+  const value = active ? product.marginOverride : '';
+  const cls = active ? 'tpga-margin-override' : '';
+  return '<label class="inline-flex items-center gap-1">' +
+    '<input type="number" id="product-margin-' + product.id + '" value="' + value + '" placeholder="' + main + '" min="0" max="95" step="0.5" title="Leave blank to use the main margin (' + main + '%)" aria-label="Margin percent for product ' + product.id + '" oninput="tpgaSyncProductMargin(' + product.id + ', this.value)" class="w-16 text-right border rounded py-0.5 px-1 font-mono text-xs focus:outline-none ' + cls + '">' +
+    (active ? '<span class="text-[9px] font-bold uppercase text-amber-700">override</span>' : '') +
+    '</label>';
+}
+
+function tpgaSyncProductMargin(id, value) {
+  const product = (window.tpgaProducts || []).find(function (item) { return item.id === id; });
+  if (!product) return;
+  if (value === '' || value == null) product.marginOverride = null;
+  else {
+    const number = parseFloat(value);
+    product.marginOverride = Number.isFinite(number) && number >= 0 ? number : null;
+  }
+  const previous = document.getElementById('product-margin-' + id);
+  const caret = previous ? previous.selectionStart : null;
+  if (typeof renderTable === 'function') renderTable();
+  const field = document.getElementById('product-margin-' + id);
+  if (field) {
+    field.focus();
+    if (caret != null && field.setSelectionRange) field.setSelectionRange(caret, caret);
+  }
+}
+
 function tpgaNum(key) {
   const value = window.tpgaEngineState && window.tpgaEngineState[key];
   const number = Number(value);
@@ -49,8 +101,10 @@ async function tpgaHydratePage(page, refs) {
       if (row.ctnPriceUsd != null) product.ctnPriceUsd = row.ctnPriceUsd;
       if (row.asianComps) product.asianComps = row.asianComps;
       if (row.ausComps) product.ausComps = row.ausComps;
+      product.marginOverride = row.marginPct == null ? null : Number(row.marginPct);
     });
   }
+  tpgaInstallMarginStyle();
   if (refs && refs.presets) {
     if (refs.presets['20ft']) {
       refs.presets['20ft'].freightUsd = data.engine.freight20;
@@ -74,9 +128,19 @@ function tpgaSnapshot(page) {
     if (!field.id || field.id === 'password-input') return;
     inputs[field.id] = field.type === 'checkbox' ? field.checked : field.value;
   });
+  const mainMargin = tpgaMainMargin();
   const products = (window.tpgaProducts || []).map(function (product) {
     const name = product.name && product.name.en ? product.name.en : product.name;
-    return { id: product.id, name: name || '', orderQty: product.orderQty || 0, fobUsd: product.fobUsd };
+    const margin = tpgaEffectiveMargin(product);
+    return {
+      id: product.id,
+      name: name || '',
+      orderQty: product.orderQty || 0,
+      fobUsd: product.fobUsd,
+      marginPct: product.marginOverride == null ? null : product.marginOverride,
+      effectiveMarginPct: margin.percent,
+      marginSource: margin.override ? 'product' : 'main'
+    };
   });
   const customer = {
     company: (document.getElementById('cust-company') || {}).value || '',
@@ -93,9 +157,9 @@ function tpgaSnapshot(page) {
     page: page,
     recordType: 'save',
     customer: customer,
-    lineItems: products.filter(function (product) { return product.orderQty; }),
+    lineItems: products,
     totals: totals,
-    formData: { inputs: inputs, products: products }
+    formData: { inputs: inputs, mainMargin: mainMargin, products: products }
   };
 }
 
@@ -141,11 +205,12 @@ async function tpgaSimpleQuotePdf() {
   doc.setFontSize(14);
   doc.text('Two Parrots Group Australia', 14, 16);
   doc.setFontSize(10);
-  doc.text('Landed cost quotation', 14, 23);
+  doc.text('Market Research', 14, 23);
   let y = 32;
   (window.tpgaProducts || []).forEach(function (product) {
     const name = product.name && product.name.en ? product.name.en : String(product.name || product.id);
-    const line = product.id + '. ' + name + '   qty ' + (product.orderQty || 0) + '   FOB USD ' + Number(product.fobUsd).toFixed(4);
+    const margin = tpgaEffectiveMargin(product);
+    const line = product.id + '. ' + name + '   qty ' + (product.orderQty || 0) + '   margin ' + margin.percent + '%' + (margin.override ? ' override' : ' main') + '   FOB USD ' + Number(product.fobUsd).toFixed(4);
     doc.text(line.slice(0, 110), 14, y);
     y += 6;
     if (y > 280) {
@@ -153,7 +218,7 @@ async function tpgaSimpleQuotePdf() {
       y = 16;
     }
   });
-  doc.save('TwoParrots_Q1_Quotation.pdf');
+  doc.save('TwoParrots_Market_Research.pdf');
 }
 
 async function tpgaExportPdf(page) {
@@ -168,6 +233,10 @@ async function tpgaExportPdf(page) {
 }
 
 window.tpgaNum = tpgaNum;
+window.tpgaMainMargin = tpgaMainMargin;
+window.tpgaEffectiveMargin = tpgaEffectiveMargin;
+window.tpgaMarginInputHtml = tpgaMarginInputHtml;
+window.tpgaSyncProductMargin = tpgaSyncProductMargin;
 window.tpgaHydratePage = tpgaHydratePage;
 window.tpgaSaveRecord = tpgaSaveRecord;
 window.tpgaSaveClick = tpgaSaveClick;

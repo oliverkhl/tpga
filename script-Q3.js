@@ -398,7 +398,7 @@ const translations = {
         modal_error: "Incorrect password. Please try again.",
         modal_btn: "Unlock Dashboard",
         header_company_name: "TWO PARROTS GROUP AUSTRALIA",
-        header_sub: "Customer Quotation Intelligence",
+        header_sub: "Customer Quotation",
         btn_print: "Print A4 Quotation",
         hdr_company_title: "Two Parrots Group Australia Pty Ltd",
         tbl_title: "Customer Quotation",
@@ -489,7 +489,7 @@ const translations = {
         modal_error: "ពាក្យសម្ងាត់មិនត្រឹមត្រូវ។ សូមព្យាយាមម្តងទៀត។",
         modal_btn: "បើកផ្ទាំងគ្រប់គ្រង",
         header_company_name: "ក្រុមហ៊ុន ថូ ផារ៉ត គ្រុប អូស្ត្រាលី",
-        header_sub: "ព័ត៌មានវិភាគសម្រង់តម្លៃអតិថិជន",
+        header_sub: "សម្រង់តម្លៃអតិថិជន",
         btn_print: "បោះពុម្ពសម្រង់តម្លៃ A4",
         hdr_company_title: "ក្រុមហ៊ុន ថូ ផារ៉ត គ្រុប អូស្ត្រាលី ភីធីវ៉ាយ អិលធីឌី",
         tbl_title: "សម្រង់តម្លៃអតិថិជន",
@@ -580,7 +580,7 @@ const translations = {
         modal_error: "Mot de passe incorrect. Veuillez réessayer.",
         modal_btn: "Déverrouiller le tableau de bord",
         header_company_name: "TWO PARROTS GROUP AUSTRALIA",
-        header_sub: "Intelligence des devis clients",
+        header_sub: "Devis client",
         btn_print: "Imprimer devis A4",
         hdr_company_title: "Two Parrots Group Australia Pty Ltd",
         tbl_title: "Devis Client",
@@ -671,7 +671,7 @@ const translations = {
         modal_error: "密码不正确，请重试。",
         modal_btn: "解锁控制面板",
         header_company_name: "双鹦鹉集团澳大利亚公司",
-        header_sub: "客户报价情报",
+        header_sub: "客户报价",
         btn_print: "打印 A4 报价单",
         hdr_company_title: "双鹦鹉集团澳大利亚有限公司",
         tbl_title: "客户报价单",
@@ -1366,8 +1366,7 @@ function renderTable() {
     const containerType = document.getElementById('input-container-type')?.value || '20ft';
     const fx = parseFloat(document.getElementById('input-fx')?.value) || tpgaNum('fxFallback');
     const oceanFreightUsd = parseFloat(document.getElementById('input-freight')?.value) || tpgaNum('freight20');
-    const marginPercent = parseFloat(document.getElementById('input-margin')?.value) || 20;
-    
+
     const isGstInc = document.getElementById('toggle-gst-inc')?.checked ?? true;
     const gstMultiplier = isGstInc ? 1.1 : 1.0;
 
@@ -1386,6 +1385,8 @@ function renderTable() {
     }
 
     productsData.forEach((p, idx) => {
+        const rowMargin = tpgaEffectiveMargin(p);
+        const marginPercent = rowMargin.percent;
         const specStr = typeof p.spec === 'object' ? p.spec.en : p.spec;
         const pcsPerCtn = getPcsPerCtn(specStr);
         const displayName = p.name[currentLang] || p.name.en;
@@ -1405,12 +1406,14 @@ function renderTable() {
         const sellingPriceAudPcs = pcsPerCtn > 0 ? sellingPriceAudCtn / pcsPerCtn : 0;
         
         p.lastCalculatedSellingPriceCtn = sellingPriceAudCtn;
+        p.lastSellingPriceAudPcs = sellingPriceAudPcs;
+        p.lastMarginLabel = marginPercent + '%' + (rowMargin.override ? ' *' : '');
 
         const qty = p.orderQty || 0;
         const orderPriceTotal = sellingPriceAudCtn * qty;
 
         const tr = document.createElement('tr');
-        tr.className = `hover:bg-amber-50/60 transition ${p.status === 'Upcoming' ? 'bg-amber-50/40' : (idx % 2 === 0 ? 'bg-white' : 'bg-slate-50/60')}`;
+        tr.className = `hover:bg-amber-50/60 transition ${rowMargin.override ? 'tpga-margin-override ' : ''}${p.status === 'Upcoming' ? 'bg-amber-50/40' : (idx % 2 === 0 ? 'bg-white' : 'bg-slate-50/60')}`;
         tr.innerHTML = `
             <td class="py-1 px-2 text-center font-bold text-slate-400 border-r border-slate-200">${p.id}</td>
             <td class="py-1 px-3 border-r border-slate-200">
@@ -1434,6 +1437,7 @@ function renderTable() {
                     onkeydown="handleKeyDown(event, ${p.id}, 'qty')"
                     class="w-20 text-center bg-white border-2 border-emerald-300 focus:border-emerald-600 font-bold font-mono text-xs text-slate-900 rounded py-0.5 px-1 focus:outline-none transition">
             </td>
+            <td class="py-1 px-2 border-r border-slate-200 text-center">${tpgaMarginInputHtml(p)}</td>
             <td class="py-1 px-3 text-right font-mono border-r border-slate-200 font-bold text-slate-700">$${sellingPriceAudPcs.toFixed(2)}</td>
             <td class="py-1 px-3 text-right font-mono border-r border-slate-200 text-gold-800 font-bold">$${sellingPriceAudCtn.toFixed(2)}</td>
             <td class="py-1 px-3 text-right font-mono font-bold bg-slate-900 text-gold-400" id="master-profit-val-${p.id}">
@@ -1568,8 +1572,34 @@ async function exportPurchaseOrderPDF() {
     doc.setFontSize(10);
     doc.text(`Date: ${formattedDateOnly}`, 14, 28);
     doc.text(`Container Type: ${containerType}`, 14, 34);
+    doc.setFontSize(8);
+    doc.text('A star on the margin means that product uses its own margin. A blank product margin uses the main Margin.', 14, 40);
 
-    doc.save(`Customer_Quotation_${formattedDateOnly}.pdf`);
+    const rows = [];
+    productsData.forEach(function (p) {
+        const qty = p.orderQty || 0;
+        if (qty <= 0) return;
+        const name = typeof p.name === 'object' ? p.name.en : p.name;
+        const margin = tpgaEffectiveMargin(p);
+        rows.push([
+            String(p.id),
+            String(name || ''),
+            String(qty),
+            margin.percent + '%' + (margin.override ? ' *' : ''),
+            p.lastCalculatedSellingPriceCtn != null ? '$' + Number(p.lastCalculatedSellingPriceCtn).toFixed(2) : '',
+            p.lastSellingPriceAudPcs != null ? '$' + Number(p.lastSellingPriceAudPcs).toFixed(2) : ''
+        ]);
+    });
+    if (!rows.length) rows.push(['-', 'No product quantities entered yet.', '0', '', '', '']);
+    doc.autoTable({
+        startY: 46,
+        head: [['N°', 'Product', 'CTN', 'Margin', 'Sell AUD/CTN', 'Sell AUD/pc']],
+        body: rows,
+        styles: { fontSize: 8 },
+        headStyles: { fillColor: [15, 23, 42] }
+    });
+
+    doc.save(`TwoParrots_Customer_Quotation_${formattedDateOnly}.pdf`);
 }
 
 async function tpgaBoot() {

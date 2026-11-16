@@ -27,7 +27,7 @@
             return false;
         }
     </script>
-    <title>Two Parrots Group Australia - Landed Cost Quotation & OpEx Budget</title>
+    <title>Market Research | Two Parrots Group Australia</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome Icons -->
@@ -111,7 +111,7 @@
                 <img src="images/logo.png" alt="Two Parrots Logo" class="h-10 w-10 object-contain rounded">
                 <div>
                     <h1 class="text-base font-bold text-white tracking-wide" data-i18n="header_company_name">TWO PARROTS GROUP AUSTRALIA</h1>
-                    <p data-i18n="header_sub" class="text-[11px] text-gold-400">Customer Quotation Intelligence</p>
+                    <p data-i18n="header_sub" class="text-[11px] text-gold-400">Market Research</p>
                 </div>
             </div>
 
@@ -135,10 +135,10 @@
                 <div class="max-w-7xl mx-auto px-4 py-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px]">
                     <a href="https://twoparrotsgroup.com.au/" class="font-semibold text-gold-400 hover:text-gold-300">Two Parrots</a>
                     <span class="text-slate-600" aria-hidden="true">/</span>
-                    <span aria-current="page" class="font-semibold text-white">Landed Cost</span>
-                    <a href="Q1-1.html" class="text-slate-300 hover:text-white">Fast Entry</a>
-                    <a href="qc1.html" class="text-slate-300 hover:text-white">Customer Quote</a>
-                    <a href="B1.html" class="text-slate-300 hover:text-white">OpEx Budget</a>
+                    <span aria-current="page" class="font-semibold text-white">Market Research</span>
+                    <a href="Q1-1.html" class="text-slate-300 hover:text-white">Partner Quotation</a>
+                    <a href="qc1.html" class="text-slate-300 hover:text-white">Customer Quotation</a>
+                    <a href="B1.html" class="text-slate-300 hover:text-white">Business Budget Plan</a>
                     <a href="#" class="tpga-logout ml-auto text-slate-400 hover:text-gold-300" onclick="return tpgaStaffLogout(event)">Log out</a>
                 </div>
             </nav>
@@ -201,7 +201,7 @@
             <div class="bg-white rounded-xl shadow-md overflow-hidden border-2 border-slate-300 mb-8">
                 <div class="bg-slate-900 px-6 py-4 flex flex-wrap justify-between items-center gap-4">
                     <div>
-                        <h2 data-i18n="tbl_title" class="text-base font-bold text-white tracking-wide uppercase">Landed Cost Quotation & Benchmark Schedule</h2>
+                        <h2 data-i18n="tbl_title" class="text-base font-bold text-white tracking-wide uppercase">Market Research</h2>
                         <p data-i18n="tbl_subtitle" class="text-xs text-gold-400">Rearranged per Two Parrots Quotation (25 Active Products + 5 Upcoming Nov 2026 Launch)</p>
                     </div>
                     <div class="flex items-center space-x-2 text-xs">
@@ -223,6 +223,7 @@
                             <tr class="bg-slate-800 text-slate-200 text-xs uppercase font-semibold tracking-wider border-b-2 border-slate-900">
                                 <th class="py-3 px-2 text-center w-[3%] border-r-2 border-slate-700">N°</th>
                                 <th data-i18n="th_prod_desc" class="py-3 px-3 w-[19%] border-r-2 border-slate-700">Product Description</th>
+                                <th class="py-3 px-2 w-[8%] border-r-2 border-slate-700 text-center">Margin %</th>
                                 <th class="py-3 px-3 w-[15%] border-r-2 border-slate-700 text-right">
                                     <span data-i18n="th_fob_price">CTN Price Before Delivery</span>
                                     <span class="block text-[10px] text-gold-400 normal-case font-normal" data-i18n="th_fob_sub">(Adjustable CTN USD → Auto PCS USD/AUD)</span>
@@ -793,7 +794,7 @@
                     <div class="flex flex-col">
                         <label data-i18n="lbl_margin" class="text-[10px] text-gold-400 uppercase font-semibold mb-0.5">Target Margin (%)</label>
                         <div class="relative">
-                            <input type="number" id="input-margin" step="1" min="0" max="95" class="bg-slate-800 border border-gold-500 text-gold-400 font-bold rounded px-2.5 py-1 text-xs w-24 text-right focus:outline-none pr-5">
+                            <input type="number" id="input-margin" step="1" min="0" max="95" title="Used when a product margin box is left blank" class="bg-slate-800 border border-gold-500 text-gold-400 font-bold rounded px-2.5 py-1 text-xs w-24 text-right focus:outline-none pr-5">
                             <span class="absolute right-2 top-1 text-xs text-gold-400">%</span>
                         </div>
                     </div>

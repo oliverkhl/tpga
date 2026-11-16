@@ -394,7 +394,7 @@ const translations = {
         modal_error: "Incorrect password. Please try again.",
         modal_btn: "Unlock Dashboard",
         header_company_name: "TWO PARROTS GROUP AUSTRALIA",
-        header_sub: "Import & Distribution Landed Cost Intelligence",
+        header_sub: "Market Research",
         btn_print: "Print A4 Quotation",
         hdr_company_title: "Two Parrots Group Australia",
         lbl_md: "Managing Director:",
@@ -527,7 +527,7 @@ const translations = {
         th_order_qty: "Order Qty (Cartons)",
         th_order_profit: "Order Net Profit (AUD)",
         lbl_total_shipment_profit: "Total Shipment Order Profit",
-        tbl_title: "Landed Cost Quotation & Benchmark Schedule",
+        tbl_title: "Market Research",
         tbl_subtitle: "Rearranged per Two Parrots Quotation (25 Active Products + 5 Upcoming Nov 2026 Launch)",
         lbl_active: "Active",
         lbl_upcoming: "Upcoming",
@@ -569,7 +569,7 @@ const translations = {
         modal_error: "ពាក្យសម្ងាត់មិនត្រឹមត្រូវ។ សូមព្យាយាមម្តងទៀត។",
         modal_btn: "បើកផ្ទាំងគ្រប់គ្រង",
         header_company_name: "ក្រុមហ៊ុន ថូ ផារ៉ត គ្រុប អូស្ត្រាលី",
-        header_sub: "ព័ត៌មានវិភាគថ្លៃដើមនាំចូល និងចែករំលែក",
+        header_sub: "ការស្រាវជ្រាវទីផ្សារ",
         btn_print: "បោះពុម្ពសម្រង់តម្លៃ A4",
         hdr_company_title: "ក្រុមហ៊ុន ថូ ផារ៉ត គ្រុប អូស្ត្រាលី",
         lbl_md: "នាយកប្រតិបត្តិ:",
@@ -702,7 +702,7 @@ const translations = {
         th_order_qty: "ចំនួនបញ្ជាទិញ (កេស)",
         th_order_profit: "ចំណេញសុទ្ធនៃការកុម្ម៉ង់ (AUD)",
         lbl_total_shipment_profit: "ចំណេញការកុម្ម៉ង់សរុបក្នុងមួយជើង",
-        tbl_title: "តារាងសម្រង់តម្លៃដើមនាំចូល និងការប្រៀបធៀប",
+        tbl_title: "ការស្រាវជ្រាវទីផ្សារ",
         tbl_subtitle: "រៀបចំឡើងវិញតាមសម្រង់តម្លៃ Two Parrots (២៥ ផលិតផលសកម្ម + ៥ ផលិតផលថ្មី)",
         lbl_active: "សកម្ម",
         lbl_upcoming: "ជិតចេញលក់",
@@ -744,7 +744,7 @@ const translations = {
         modal_error: "Mot de passe incorrect. Veuillez réessayer.",
         modal_btn: "Déverrouiller le tableau de bord",
         header_company_name: "TWO PARROTS GROUP AUSTRALIA",
-        header_sub: "Intelligence du coût de revient à destination & distribution",
+        header_sub: "Étude de marché",
         btn_print: "Imprimer devis A4",
         hdr_company_title: "Two Parrots Group Australia",
         lbl_md: "Directeur Général:",
@@ -877,7 +877,7 @@ const translations = {
         th_order_qty: "Qté Commandée (Cartons)",
         th_order_profit: "Bénéfice Net Commande (AUD)",
         lbl_total_shipment_profit: "Bénéfice Total de la Commande d'Expédition",
-        tbl_title: "Devis des coûts rendus & Tableau comparatif",
+        tbl_title: "Étude de marché",
         tbl_subtitle: "Réorganisé selon le devis Two Parrots (25 produits actifs + 5 nouveaux nov. 2026)",
         lbl_active: "Actifs",
         lbl_upcoming: "À venir",
@@ -919,7 +919,7 @@ const translations = {
         modal_error: "密码不正确，请重试。",
         modal_btn: "解锁控制面板",
         header_company_name: "双鹦鹉集团澳大利亚公司",
-        header_sub: "进口与分销到岸成本情报",
+        header_sub: "市场调研",
         btn_print: "打印 A4 报价单",
         hdr_company_title: "双鹦鹉集团澳大利亚公司",
         lbl_md: "总经理:",
@@ -1052,7 +1052,7 @@ const translations = {
         th_order_qty: "订货数量 (箱/CTN)",
         th_order_profit: "订单净利润 (AUD)",
         lbl_total_shipment_profit: "整柜订单总净利润",
-        tbl_title: "到岸成本报价与市场标杆对照表",
+        tbl_title: "市场调研",
         tbl_subtitle: "根据 Two Parrots 报价单重新排列（25 个在售产品 + 5 个 2026 年 11 月新品）",
         lbl_active: "在售",
         lbl_upcoming: "即将上市",
@@ -1894,6 +1894,8 @@ function renderTable() {
     const t = translations[currentLang];
 
     productsData.forEach((p, idx) => {
+        const rowMargin = tpgaEffectiveMargin(p);
+        const marginPercent = rowMargin.percent;
         const calc = calculateProductCosts(p, fx, oceanFreightUsd, localCartageAud, marginPercent, containerType);
         const isUpcoming = p.status === 'Upcoming';
         const displayName = p.name[currentLang] || p.name.en;
@@ -1910,7 +1912,7 @@ function renderTable() {
 
         const tr = document.createElement('tr');
         tr.id = `product-row-${p.id}`;
-        tr.className = `hover:bg-slate-100/80 transition border-b-2 border-slate-300 ${isUpcoming ? 'bg-amber-50/50' : (idx % 2 === 0 ? 'bg-white' : 'bg-slate-50/70')}`;
+        tr.className = `hover:bg-slate-100/80 transition border-b-2 border-slate-300 ${rowMargin.override ? 'tpga-margin-override ' : ''}${isUpcoming ? 'bg-amber-50/50' : (idx % 2 === 0 ? 'bg-white' : 'bg-slate-50/70')}`;
 
         tr.innerHTML = `
             <td class="py-3 px-2 text-center font-bold text-slate-500 border-r-2 border-slate-200">${p.id}</td>
@@ -1928,6 +1930,7 @@ function renderTable() {
                 </div>
 				${p.id >= 1 && p.id <= 25 ? `<div class="mt-2">${productImageTag(p.id, displayName)}</div>` : ''}
             </td>
+            <td class="py-3 px-2 border-r-2 border-slate-200 text-center align-middle">${tpgaMarginInputHtml(p)}</td>
             <td class="py-3 px-3 border-r-2 border-slate-200 text-right font-mono">
                 <div class="flex items-center justify-end gap-1 mb-1">
                     <span class="text-xs text-slate-500 font-bold">$</span>

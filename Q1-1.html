@@ -27,7 +27,7 @@
             return false;
         }
     </script>
-    <title>Two Parrots Group Australia - Landed Cost Quotation & OpEx Budget</title>
+    <title>Partner Quotation | Two Parrots Group Australia</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome Icons -->
@@ -132,7 +132,7 @@
                 <img src="images/logo.png" alt="Two Parrots Logo" class="h-10 w-10 object-contain rounded">
                 <div>
                     <h1 class="text-base font-bold text-white tracking-wide" data-i18n="header_company_name">TWO PARROTS GROUP AUSTRALIA</h1>
-                    <p data-i18n="header_sub" class="text-[11px] text-gold-400">Customer Quotation Intelligence</p>
+                    <p data-i18n="header_sub" class="text-[11px] text-gold-400">Partner Quotation</p>
                 </div>
             </div>
 
@@ -156,10 +156,10 @@
                 <div class="max-w-7xl mx-auto px-4 py-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px]">
                     <a href="https://twoparrotsgroup.com.au/" class="font-semibold text-gold-400 hover:text-gold-300">Two Parrots</a>
                     <span class="text-slate-600" aria-hidden="true">/</span>
-                    <a href="Q1.html" class="text-slate-300 hover:text-white">Landed Cost</a>
-                    <span aria-current="page" class="font-semibold text-white">Fast Entry</span>
-                    <a href="qc1.html" class="text-slate-300 hover:text-white">Customer Quote</a>
-                    <a href="B1.html" class="text-slate-300 hover:text-white">OpEx Budget</a>
+                    <a href="Q1.html" class="text-slate-300 hover:text-white">Market Research</a>
+                    <span aria-current="page" class="font-semibold text-white">Partner Quotation</span>
+                    <a href="qc1.html" class="text-slate-300 hover:text-white">Customer Quotation</a>
+                    <a href="B1.html" class="text-slate-300 hover:text-white">Business Budget Plan</a>
                     <a href="#" class="tpga-logout ml-auto text-slate-400 hover:text-gold-300" onclick="return tpgaStaffLogout(event)">Log out</a>
                 </div>
             </nav>
@@ -271,15 +271,15 @@
             <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-300 mb-6">
                 <div class="bg-slate-900 px-4 py-2 flex flex-wrap justify-between items-center gap-2 border-b border-gold-500">
                     <div>
-                        <h2 data-i18n="tbl_title" class="text-xs font-bold text-white tracking-wide uppercase">Landed Cost Quotation & Benchmark Schedule (Fast Entry + CTN Price Inputs)</h2>
+                        <h2 data-i18n="tbl_title" class="text-xs font-bold text-white tracking-wide uppercase">Partner Quotation</h2>
                         <p class="text-[10px] text-gold-400">Adjust CTN Price (USD) or Volume (CTN) per product. Press Tab ↹ or Enter ↵ to cycle inputs fast.</p>
                     </div>
                     <div class="flex items-center gap-2 text-xs">
                         <button onclick="resetMasterProfitOrders()" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 rounded text-[10px] font-semibold transition flex items-center gap-1">
                             <i class="fa-solid fa-rotate-left"></i> Reset Volume
                         </button>
-                        <button onclick="exportPurchaseOrderPDF()" class="px-2.5 py-1 gold-gradient hover:opacity-90 text-slate-900 font-bold rounded text-[10px] shadow transition flex items-center gap-1.5">
-                            <i class="fa-solid fa-file-pdf"></i> Export Purchase Order PDF
+                        <button onclick="tpgaExportPdf('Q1-1')" class="px-2.5 py-1 gold-gradient hover:opacity-90 text-slate-900 font-bold rounded text-[10px] shadow transition flex items-center gap-1.5">
+                            <i class="fa-solid fa-file-pdf"></i> Export Partner Quotation
                         </button>
                     </div>
                 </div>
@@ -296,6 +296,7 @@
                                 <th data-i18n="th_prod_desc" class="py-1.5 px-3 border-r border-slate-700">Product Description & Packaging Spec</th>
                                 <th class="py-1.5 px-2 w-28 border-r border-slate-700 text-center bg-slate-850 text-gold-400">CTN Price (USD)</th>
                                 <th class="py-1.5 px-2 w-28 border-r border-slate-700 text-center bg-slate-850 text-emerald-400">Volume CTN</th>
+                                <th class="py-1.5 px-2 w-24 border-r border-slate-700 text-center">Margin %</th>
                                 <th class="py-1.5 px-3 w-28 border-r border-slate-700 text-right">Landed / CTN</th>
                                 <th class="py-1.5 px-3 w-28 border-r border-slate-700 text-right">Selling / CTN</th>
                                 <th class="py-1.5 px-3 w-28 text-right border-r border-slate-700 bg-emerald-900/30 text-emerald-300">Net Profit / CTN</th>
@@ -783,7 +784,7 @@
 
                     <div class="flex flex-col">
                         <label data-i18n="lbl_margin" class="text-[9px] text-gold-400 uppercase font-semibold mb-0.5">Target Margin (%)</label>
-                        <input type="number" id="input-margin" step="1" min="0" max="95" oninput="renderTable()" class="bg-slate-800 border border-gold-500 text-gold-400 font-bold rounded px-2 py-0.5 text-xs w-16 text-right">
+                        <input type="number" id="input-margin" step="1" min="0" max="95" oninput="renderTable()" title="Used when a product margin box is left blank" class="bg-slate-800 border border-gold-500 text-gold-400 font-bold rounded px-2 py-0.5 text-xs w-16 text-right">
                     </div>
 
                     <div class="flex flex-col">

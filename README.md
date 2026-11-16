@@ -6,6 +6,15 @@ The public site is static HTML. Internal quote and budget pages load their price
 
 Access application **TPGA internal pages** locks the internal tools. Staff sign in with a one-time email PIN (`kimheng@` and `info@twoparrotsgroup.com.au`). The old password typed into the page is gone.
 
+The file names stay the same so the Access paths keep working. The visible names are:
+
+| File | Name | What the page is |
+| --- | --- | --- |
+| `Q1.html` | Market Research | Landed-cost engine and competitor shelf survey |
+| `Q1-1.html` | Partner Quotation | Quotation sent to the origin partner |
+| `qc1.html` | Customer Quotation | Quotation sent to a customer |
+| `B1.html` | Business Budget Plan | Salaries and operating-cost budget |
+
 Paths already on that application:
 
 - `/Q1.html` and `/Q1`
@@ -51,7 +60,13 @@ D1 database `tpga-internal`, id `1f207914-0258-4ffd-b5e2-405ea7e9a0b2`, binding 
 
 Branch previews use a separate empty database, `tpga-internal-preview`, id `51a77988-55b9-42f0-82c3-35a4d684067d`, so a preview cannot write into the live price database. Its tables match the migration and contain no prices until you load the seed there yourself.
 
-Migrations in `migrations/` create empty tables. The current price figures are in `/opt/cursor/artifacts/tpga-price-seed.sql` from the maintenance run that moved them out of git. Apply that file yourself:
+Migrations in `migrations/` create empty tables. `0002_product_margin.sql` adds a nullable `product_costs.margin_pct`. A blank value means that product uses the page's main Margin box. Apply migrations before the seed:
+
+```bash
+npx wrangler d1 migrations apply tpga-internal --remote
+```
+
+The current price figures are in `/opt/cursor/artifacts/tpga-price-seed.sql` from the maintenance run that moved them out of git. That file does not set `margin_pct`, so every product starts on the main margin. Apply that file yourself:
 
 ```bash
 npx wrangler d1 execute tpga-internal --remote --file=/opt/cursor/artifacts/tpga-price-seed.sql
@@ -61,4 +76,4 @@ Those figures also remain in git history from before this change.
 
 ### Local check
 
-`wrangler dev` serves the HTML and `/api/*` together. A request with no `cf-ray` header may read prices and save records without an Access token. Cloudflare adds that header to every deployed request and replaces any copy a client sends, so the bypass cannot be switched on in production. Locally, `POST /api/prices/survey` still needs `PRICE_UPDATE_SECRET` in `.dev.vars` (git ignores that file). The service-token headers are only required once the call goes through Access on the public hostname.
+`wrangler dev` serves the HTML and `/api/*` together. Local reads and saves work only when `.dev.vars` contains `DEV_AUTH_BYPASS=1` (git ignores that file) and the request hostname is not `twoparrotsgroup.com.au` or `*.workers.dev`. The flag is not in `wrangler.jsonc`. A deployed Worker, including a preview on `workers.dev`, still returns 401 when the Access JWT is missing, even if that flag were present. `POST /api/prices/survey` also needs `PRICE_UPDATE_SECRET` in `.dev.vars`. On the public hostname that route needs both a valid Access service-token JWT and the shared secret.

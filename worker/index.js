@@ -39,12 +39,24 @@ async function secretsMatch(provided, expected) {
   return crypto.subtle.timingSafeEqual(providedHash, expectedHash);
 }
 
-// Cloudflare adds a cf-ray header to every request that reaches a deployed
-// Worker, and it replaces any value a client sends. Local `wrangler dev`
-// does not add cf-ray (it does set cf-connecting-ip to 127.0.0.1 and rewrites
-// the host to the route zone). No variable can remove cf-ray in production.
-function isLocalDev(request) {
-  return !request.headers.get('cf-ray');
+function bypassFlagOn(env) {
+  const flag = env && env.DEV_AUTH_BYPASS;
+  return flag === true || flag === 1 || flag === '1' || flag === 'true';
+}
+
+function productionHostname(hostname) {
+  const host = String(hostname || '').toLowerCase();
+  return host === 'twoparrotsgroup.com.au' || host.endsWith('.workers.dev');
+}
+
+// DEV_AUTH_BYPASS is never set in wrangler.jsonc. It can only be supplied by
+// .dev.vars or the local wrangler process. A production hostname still refuses
+// the bypass, so a deployed Worker cannot be opened by omitting an Access token.
+function allowDevBypass(request, env) {
+  if (!bypassFlagOn(env)) return false;
+  const host = new URL(request.url).hostname;
+  if (productionHostname(host)) return false;
+  return true;
 }
 
 async function accessKey(host, kid) {
@@ -91,7 +103,7 @@ async function verifyAccessJwt(token, env) {
 }
 
 async function authorizeStaff(request, env) {
-  if (isLocalDev(request)) {
+  if (allowDevBypass(request, env)) {
     return { ok: true, email: 'local-dev@localhost' };
   }
   if (!env.TEAM_DOMAIN || !env.POLICY_AUD) {
@@ -117,10 +129,8 @@ async function authorizePriceUpdate(request, env) {
   const provided = request.headers.get('X-Price-Update-Secret') || '';
   const secretOk = await secretsMatch(provided, env.PRICE_UPDATE_SECRET);
   if (!secretOk) return { ok: false, status: 401, error: 'unauthorized' };
-  // /api/* is behind Access. The GitHub Action sends a service token, Access
-  // checks it, and the Worker still requires the JWT Access adds. Local
-  // wrangler has no Access in front, so the shared secret is enough there.
-  if (isLocalDev(request)) return { ok: true };
+  // Production requires the Access JWT (from a staff PIN or a service token)
+  // and the shared secret. The local bypass never applies on the public hosts.
   return authorizeStaff(request, env);
 }
 
@@ -152,7 +162,7 @@ async function loadPrices(db, page) {
   const inputs = {};
   for (const row of inputRows.results) inputs[row.input_id] = row.amount;
   const costRows = await db.prepare(
-    'SELECT product_id, fob_usd, ctn_price_usd FROM product_costs WHERE page = ? ORDER BY product_id'
+    'SELECT product_id, fob_usd, ctn_price_usd, margin_pct FROM product_costs WHERE page = ? ORDER BY product_id'
   ).bind(page).all();
   const compRows = await db.prepare(
     'SELECT product_id, market, brand, weight_g, price_aud, source FROM competitor_prices WHERE page = ? ORDER BY product_id, market, sort_order'
@@ -174,6 +184,7 @@ async function loadPrices(db, page) {
       id: row.product_id,
       fobUsd: row.fob_usd,
       ctnPriceUsd: row.ctn_price_usd,
+      marginPct: row.margin_pct == null ? null : row.margin_pct,
       asianComps: comps.asian,
       ausComps: comps.aus
     };
