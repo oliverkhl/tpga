@@ -32,5 +32,21 @@
   "vars": {
     "TEAM_DOMAIN": "https://holy-limit-fa1d.cloudflareaccess.com",
     "POLICY_AUD": "e14558467b6fe9598d2a8ac660e8468eff3e8c4facf2f1e3cc17e3769c175c68"
+  },
+  // Workers Builds runs `wrangler preview`. These bindings are not inherited.
+  // The preview database is empty and separate from tpga-internal.
+  "previews": {
+    "vars": {
+      "TEAM_DOMAIN": "https://holy-limit-fa1d.cloudflareaccess.com",
+      "POLICY_AUD": "e14558467b6fe9598d2a8ac660e8468eff3e8c4facf2f1e3cc17e3769c175c68"
+    },
+    "d1_databases": [
+      {
+        "binding": "DB",
+        "database_name": "tpga-internal-preview",
+        "database_id": "51a77988-55b9-42f0-82c3-35a4d684067d",
+        "migrations_dir": "migrations"
+      }
+    ]
   }
 }

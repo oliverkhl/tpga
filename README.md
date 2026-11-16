@@ -49,6 +49,8 @@ Do not put `PRICE_UPDATE_SECRET`, `CF_ACCESS_CLIENT_ID`, or `CF_ACCESS_CLIENT_SE
 
 D1 database `tpga-internal`, id `1f207914-0258-4ffd-b5e2-405ea7e9a0b2`, binding `DB`.
 
+Branch previews use a separate empty database, `tpga-internal-preview`, id `51a77988-55b9-42f0-82c3-35a4d684067d`, so a preview cannot write into the live price database. Its tables match the migration and contain no prices until you load the seed there yourself.
+
 Migrations in `migrations/` create empty tables. The current price figures are in `/opt/cursor/artifacts/tpga-price-seed.sql` from the maintenance run that moved them out of git. Apply that file yourself:
 
 ```bash
