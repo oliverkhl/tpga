@@ -1527,6 +1527,8 @@ function recalculateMasterProfitTotal() {
         dashBar.style.width = barWidth;
         dashBar.className = spacePct > 100 ? 'bg-rose-600 h-full transition-all duration-300' : 'bg-gold-500 h-full transition-all duration-300';
     }
+
+    renderCustomerQuotation();
 }
 
 function setLanguage(lang) {
@@ -1551,6 +1553,258 @@ function setLanguage(lang) {
     renderTable();
 }
 
+function formatQuotationMoney(amount) {
+    const value = Number(amount);
+    const safe = Number.isFinite(value) ? value : 0;
+    return '$' + safe.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+
+function quotationDateStamp(date) {
+    return date.toLocaleDateString('en-GB', {
+        day: '2-digit', month: 'short', year: 'numeric'
+    }).toUpperCase();
+}
+
+function readQuotationField(id, fallback) {
+    const value = document.getElementById(id)?.value;
+    const text = value == null ? '' : String(value).trim();
+    return text || fallback;
+}
+
+function sellingPricesForQuote(product) {
+    if (product.lastCalculatedSellingPriceCtn != null && product.lastSellingPriceAudPcs != null) {
+        return {
+            ctn: product.lastCalculatedSellingPriceCtn,
+            pcs: product.lastSellingPriceAudPcs
+        };
+    }
+    const containerType = document.getElementById('input-container-type')?.value || '20ft';
+    const maxCtn = containerType === '40ft' ? 2000 : 1000;
+    const fx = parseFloat(document.getElementById('input-fx')?.value) || tpgaNum('fxFallback');
+    const oceanFreightUsd = parseFloat(document.getElementById('input-freight')?.value) || tpgaNum('freight20');
+    const annualContainers = containerType === '40ft' ? 6 : 12;
+    const annualOpEx = Number(currentAnnualOpExAUD) || 0;
+    const safeFx = Number.isFinite(fx) && fx > 0 ? fx : 1;
+    const opexPerCtn = (annualOpEx / annualContainers) / maxCtn;
+    const freightAudPerCtn = (oceanFreightUsd / safeFx) / maxCtn;
+    const customsAudPerCtn = (tpgaNum('totalFixedCustomsAud') || 0) / maxCtn;
+    const isGstInc = document.getElementById('toggle-gst-inc')?.checked ?? true;
+    const specStr = typeof product.spec === 'object' ? product.spec.en : product.spec;
+    const pcsPerCtn = getPcsPerCtn(specStr);
+    const ctnPriceAud = (product.ctnPriceUsd || 0) / safeFx;
+    const landedCostAudCtn = ctnPriceAud + freightAudPerCtn + customsAudPerCtn + opexPerCtn;
+    const marginDecimal = tpgaEffectiveMargin(product).percent / 100;
+    const baseSelling = marginDecimal < 1 ? landedCostAudCtn / (1 - marginDecimal) : landedCostAudCtn;
+    const sellingCtn = baseSelling * (isGstInc ? 1.1 : 1);
+    return { ctn: sellingCtn, pcs: pcsPerCtn > 0 ? sellingCtn / pcsPerCtn : 0 };
+}
+
+function buildCustomerQuotation() {
+    const now = new Date();
+    const isGstInc = document.getElementById('toggle-gst-inc')?.checked ?? true;
+    const ctnPerPallet = parseFloat(document.getElementById('input-ctn-per-pallet')?.value) || 100;
+    const discountPct = Math.max(0, parseFloat(document.getElementById('dash-discount-input')?.value) || 0);
+    let totalCartons = 0;
+    let totalQuotationPrice = 0;
+    const rows = [];
+
+    productsData.forEach((product) => {
+        const qty = product.orderQty || 0;
+        if (qty <= 0) return;
+        totalCartons += qty;
+        const prices = sellingPricesForQuote(product);
+        const rowTotal = prices.ctn * qty;
+        totalQuotationPrice += rowTotal;
+        const specStr = typeof product.spec === 'object' ? product.spec.en : product.spec;
+        const name = typeof product.name === 'object' ? product.name.en : product.name;
+        rows.push({
+            id: String(product.id),
+            name: String(name || ''),
+            packaging: String(specStr || ''),
+            qtyLabel: qty.toLocaleString('en-US') + ' CTN',
+            pricePcs: formatQuotationMoney(prices.pcs),
+            priceCtn: formatQuotationMoney(prices.ctn),
+            total: formatQuotationMoney(rowTotal)
+        });
+    });
+
+    if (!rows.length) {
+        rows.push({
+            id: '-',
+            name: 'No product quantities entered yet.',
+            packaging: '-',
+            qtyLabel: '0 CTN',
+            pricePcs: '-',
+            priceCtn: '-',
+            total: '-'
+        });
+    }
+
+    const discountAmount = totalQuotationPrice * (discountPct / 100);
+    const subtotalAfterDiscount = totalQuotationPrice - discountAmount;
+    const gstAmount = isGstInc
+        ? subtotalAfterDiscount - (subtotalAfterDiscount / 1.1)
+        : subtotalAfterDiscount * 0.10;
+    const grandTotal = isGstInc ? subtotalAfterDiscount : subtotalAfterDiscount + gstAmount;
+
+    return {
+        date: quotationDateStamp(now),
+        fileDate: now.toISOString().slice(0, 10),
+        volumeLabel: totalCartons.toLocaleString('en-US') + ' CTN / ' + (totalCartons / ctnPerPallet).toFixed(1) + ' Pallets',
+        customer: {
+            company: readQuotationField('cust-company', 'Customer Company Name'),
+            contact: readQuotationField('cust-contact', 'Contact Person'),
+            phone: readQuotationField('cust-phone', 'Phone Number'),
+            email: readQuotationField('cust-email', 'Email Address'),
+            address: readQuotationField('cust-address', 'Delivery Address'),
+            terms: readQuotationField('cust-terms', '30 Days Net')
+        },
+        salesRep: readQuotationField('sales-rep', 'Kim Heng Ly'),
+        issuer: {
+            company: 'TWO PARROTS GROUP AUSTRALIA PTY LTD',
+            abnPhone: 'ABN: 79699476107 | Phone: 0468829988',
+            address: '1/57 Elonera Rd, Noble Park North VIC 3174',
+            email: 'info@twoparrotsgroup.com.au',
+            web: 'twoparrotsgroup.com.au'
+        },
+        remittance: {
+            bank: 'NAB Bank',
+            accountName: 'Two Parrots Group Australia',
+            bsb: '083-004',
+            account: '201346243'
+        },
+        rows,
+        isGstInc,
+        discountPct,
+        discountAmount,
+        totalQuotationPrice,
+        gstAmount,
+        grandTotal,
+        subtotalLabel: isGstInc ? 'Subtotal (Inc GST):' : 'Subtotal (Ex GST):',
+        gstLabel: isGstInc ? 'Includes GST (10%):' : 'Add GST (10%):'
+    };
+}
+
+function renderCustomerQuotation() {
+    const root = document.getElementById('customer-quotation-sheet');
+    if (!root || typeof productsData === 'undefined') return;
+    const quote = buildCustomerQuotation();
+    const customer = quote.customer;
+    const lines = [
+        'Attn: ' + customer.contact,
+        'Phone: ' + customer.phone,
+        'Email: ' + customer.email,
+        'Delivery: ' + customer.address
+    ].map((line) => '<p>' + escapeHtml(line) + '</p>').join('');
+    const body = quote.rows.map((row) => (
+        '<tr>' +
+        '<td class="cq-num">' + escapeHtml(row.id) + '</td>' +
+        '<td>' + escapeHtml(row.name) + '</td>' +
+        '<td>' + escapeHtml(row.packaging) + '</td>' +
+        '<td class="cq-qty">' + escapeHtml(row.qtyLabel) + '</td>' +
+        '<td class="cq-money">' + escapeHtml(row.pricePcs) + '</td>' +
+        '<td class="cq-money">' + escapeHtml(row.priceCtn) + '</td>' +
+        '<td class="cq-money cq-total">' + escapeHtml(row.total) + '</td>' +
+        '</tr>'
+    )).join('');
+    const discountRow = quote.discountPct > 0
+        ? '<div class="cq-total-line cq-discount"><span>Discount (' + escapeHtml(String(quote.discountPct)) + '%):</span><span>-' + formatQuotationMoney(quote.discountAmount) + '</span></div>'
+        : '';
+
+    root.innerHTML =
+        '<header class="cq-banner">' +
+            '<img class="cq-logo" src="images/logo.png" alt="Two Parrots logo">' +
+            '<div class="cq-banner-main">' +
+                '<h2 class="cq-title">CUSTOMER QUOTATION</h2>' +
+                '<p class="cq-subtitle">Two Parrots Group Australia — Wholesale Distribution</p>' +
+            '</div>' +
+            '<div class="cq-banner-meta">' +
+                '<p class="cq-date">Date: ' + escapeHtml(quote.date) + '</p>' +
+                '<p class="cq-volume">Volume: ' + escapeHtml(quote.volumeLabel) + '</p>' +
+            '</div>' +
+        '</header>' +
+        '<div class="cq-parties">' +
+            '<article class="cq-card">' +
+                '<span class="cq-card-accent cq-card-gold"></span>' +
+                '<h3 class="cq-kicker">PREPARED FOR:</h3>' +
+                '<p class="cq-company">' + escapeHtml(customer.company.toUpperCase()) + '</p>' +
+                '<div class="cq-lines">' + lines + '</div>' +
+            '</article>' +
+            '<article class="cq-card">' +
+                '<span class="cq-card-accent cq-card-navy"></span>' +
+                '<h3 class="cq-kicker">ISSUED BY:</h3>' +
+                '<p class="cq-company">' + escapeHtml(quote.issuer.company) + '</p>' +
+                '<div class="cq-lines">' +
+                    '<p>' + escapeHtml(quote.issuer.abnPhone) + '</p>' +
+                    '<p>Sales Rep: ' + escapeHtml(quote.salesRep) + '</p>' +
+                    '<p>Address: ' + escapeHtml(quote.issuer.address) + '</p>' +
+                    '<p>Email: ' + escapeHtml(quote.issuer.email) + '</p>' +
+                    '<p>Web: ' + escapeHtml(quote.issuer.web) + '</p>' +
+                '</div>' +
+            '</article>' +
+        '</div>' +
+        '<div class="cq-table-wrap">' +
+            '<table class="cq-table">' +
+                '<thead><tr>' +
+                    '<th class="cq-num">N°</th><th>Product Description</th><th>Packaging</th>' +
+                    '<th class="cq-qty">Qty</th><th class="cq-money">Price/PC</th><th class="cq-money">Price/CTN</th><th class="cq-money">Total</th>' +
+                '</tr></thead>' +
+                '<tbody>' + body + '</tbody>' +
+            '</table>' +
+        '</div>' +
+        '<div class="cq-totals">' +
+            '<div class="cq-total-line"><span>' + escapeHtml(quote.subtotalLabel) + '</span><span>' + formatQuotationMoney(quote.totalQuotationPrice) + '</span></div>' +
+            discountRow +
+            '<div class="cq-total-line"><span>' + escapeHtml(quote.gstLabel) + '</span><span>' + formatQuotationMoney(quote.gstAmount) + '</span></div>' +
+            '<div class="cq-grand"><span class="cq-grand-label">GRAND TOTAL (AUD):</span><span class="cq-grand-amount">' + formatQuotationMoney(quote.grandTotal) + '</span></div>' +
+        '</div>' +
+        '<section class="cq-terms">' +
+            '<div><h3>COMMERCIAL TERMS</h3>' +
+                '<p>Payment: ' + escapeHtml(customer.terms.toUpperCase()) + '</p>' +
+                '<p>Validity: 14 DAYS FROM ISSUE DATE</p>' +
+            '</div>' +
+            '<div><h3>REMITTANCE DETAILS (EFT)</h3>' +
+                '<p>Bank: ' + escapeHtml(quote.remittance.bank) + '</p>' +
+                '<p>Account Name: ' + escapeHtml(quote.remittance.accountName) + '</p>' +
+                '<p>BSB: ' + escapeHtml(quote.remittance.bsb) + ' &nbsp;|&nbsp; Account No: ' + escapeHtml(quote.remittance.account) + '</p>' +
+            '</div>' +
+        '</section>' +
+        '<footer class="cq-signatures">' +
+            '<div class="cq-sign">Customer Acceptance / Signature</div>' +
+            '<div class="cq-sign">Authorized Director (Two Parrots Group)</div>' +
+        '</footer>';
+}
+
+function bindCustomerQuotationInputs() {
+    if (document.body.dataset.quotationBound === '1') return;
+    document.body.dataset.quotationBound = '1';
+    ['cust-company', 'cust-contact', 'cust-phone', 'cust-email', 'cust-address', 'cust-terms', 'sales-rep'].forEach((id) => {
+        const field = document.getElementById(id);
+        if (!field) return;
+        field.addEventListener('input', renderCustomerQuotation);
+        field.addEventListener('change', renderCustomerQuotation);
+    });
+}
+
+let quotationLogoPromise = null;
+function loadQuotationLogo() {
+    if (!quotationLogoPromise) {
+        quotationLogoPromise = fetch('images/logo.png')
+            .then((response) => {
+                if (!response.ok) throw new Error('logo');
+                return response.blob();
+            })
+            .then((blob) => new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = reject;
+                reader.readAsDataURL(blob);
+            }))
+            .catch(() => null);
+    }
+    return quotationLogoPromise;
+}
+
 async function exportPurchaseOrderPDF() {
     try {
         await ensurePdfLibraries();
@@ -1560,49 +1814,189 @@ async function exportPurchaseOrderPDF() {
     }
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
-    
-    const containerType = document.getElementById('input-container-type')?.value || '20ft';
-    const now = new Date();
-    const formattedDateOnly = now.toLocaleDateString('en-GB', {
-        day: '2-digit', month: 'short', year: 'numeric'
-    }).toUpperCase();
+    const quote = buildCustomerQuotation();
+    const darkSlate = [30, 41, 59];
+    const goldLine = [212, 175, 55];
+    const goldText = [230, 198, 85];
+    const lightGrey = [248, 250, 252];
+    const logo = await loadQuotationLogo();
 
-    doc.setFontSize(16);
-    doc.text("CUSTOMER QUOTATION", 14, 20);
+    doc.setFillColor(...darkSlate);
+    doc.rect(0, 0, 210, 32, 'F');
+    doc.setFillColor(...goldLine);
+    doc.rect(0, 32, 210, 1.5, 'F');
+    if (logo) {
+        try { doc.addImage(logo, 'PNG', 12, 5, 22, 22); } catch (err) { /* keep the quotation if the logo cannot be drawn */ }
+    }
+
+    doc.setTextColor(255, 255, 255);
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(14);
+    doc.text('CUSTOMER QUOTATION', 38, 15);
+    doc.setFontSize(8.5);
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(...goldText);
+    doc.text('Two Parrots Group Australia — Wholesale Distribution', 38, 23);
+    doc.setTextColor(255, 255, 255);
+    doc.setFont('helvetica', 'bold');
     doc.setFontSize(10);
-    doc.text(`Date: ${formattedDateOnly}`, 14, 28);
-    doc.text(`Container Type: ${containerType}`, 14, 34);
-    doc.setFontSize(8);
-    doc.text('A star on the margin means that product uses its own margin. A blank product margin uses the main Margin.', 14, 40);
+    doc.text('Date: ' + quote.date, 198, 15, { align: 'right' });
+    doc.setFontSize(8.5);
+    doc.setTextColor(...goldText);
+    doc.text('Volume: ' + quote.volumeLabel, 198, 22, { align: 'right' });
 
-    const rows = [];
-    productsData.forEach(function (p) {
-        const qty = p.orderQty || 0;
-        if (qty <= 0) return;
-        const name = typeof p.name === 'object' ? p.name.en : p.name;
-        const margin = tpgaEffectiveMargin(p);
-        rows.push([
-            String(p.id),
-            String(name || ''),
-            String(qty),
-            margin.percent + '%' + (margin.override ? ' *' : ''),
-            p.lastCalculatedSellingPriceCtn != null ? '$' + Number(p.lastCalculatedSellingPriceCtn).toFixed(2) : '',
-            p.lastSellingPriceAudPcs != null ? '$' + Number(p.lastSellingPriceAudPcs).toFixed(2) : ''
-        ]);
-    });
-    if (!rows.length) rows.push(['-', 'No product quantities entered yet.', '0', '', '', '']);
+    const startY = 38;
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(7.5);
+    const emailLines = doc.splitTextToSize('Email: ' + quote.customer.email, 82);
+    const deliveryLines = doc.splitTextToSize('Delivery: ' + quote.customer.address, 82);
+    const lineGap = 3.05;
+    const deliveryY = 28 + Math.max(5, emailLines.length * lineGap);
+    const contentBottom = deliveryY + (deliveryLines.length - 1) * lineGap + 5;
+    const cardHeight = Math.max(42, contentBottom);
+
+    doc.setFillColor(...lightGrey);
+    doc.setDrawColor(203, 213, 225);
+    doc.roundedRect(12, startY, 90, cardHeight, 2, 2, 'FD');
+    doc.setFillColor(234, 179, 8);
+    doc.rect(12, startY, 2, cardHeight, 'F');
+    doc.setTextColor(...darkSlate);
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(9);
+    doc.text('PREPARED FOR:', 17, startY + 6);
+    doc.setFontSize(8.5);
+    doc.setTextColor(15, 23, 42);
+    doc.text(quote.customer.company.toUpperCase(), 17, startY + 12);
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(7.5);
+    doc.setTextColor(71, 85, 105);
+    doc.text('Attn: ' + quote.customer.contact, 17, startY + 18);
+    doc.text('Phone: ' + quote.customer.phone, 17, startY + 23);
+    doc.text(emailLines, 17, startY + 28);
+    doc.text(deliveryLines, 17, startY + deliveryY);
+
+    doc.setFillColor(...lightGrey);
+    doc.roundedRect(108, startY, 90, cardHeight, 2, 2, 'FD');
+    doc.setFillColor(...darkSlate);
+    doc.rect(108, startY, 2, cardHeight, 'F');
+    doc.setTextColor(...darkSlate);
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(9);
+    doc.text('ISSUED BY:', 113, startY + 6);
+    doc.setFontSize(8.5);
+    doc.setTextColor(15, 23, 42);
+    doc.text(quote.issuer.company, 113, startY + 12);
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(7.5);
+    doc.setTextColor(71, 85, 105);
+    doc.text(quote.issuer.abnPhone, 113, startY + 18);
+    doc.text('Sales Rep: ' + quote.salesRep, 113, startY + 23);
+    doc.text('Address: ' + quote.issuer.address, 113, startY + 28);
+    doc.text('Email: ' + quote.issuer.email, 113, startY + 33);
+    doc.text('Web: ' + quote.issuer.web, 113, startY + 38);
+
     doc.autoTable({
-        startY: 46,
-        head: [['N°', 'Product', 'CTN', 'Margin', 'Sell AUD/CTN', 'Sell AUD/pc']],
-        body: rows,
-        styles: { fontSize: 8 },
-        headStyles: { fillColor: [15, 23, 42] }
+        startY: startY + cardHeight + 5,
+        margin: { top: 14, right: 10, bottom: 16, left: 14 },
+        head: [['N°', 'Product Description', 'Packaging', 'Qty', 'Price/PC', 'Price/CTN', 'Total']],
+        body: quote.rows.map((row) => [row.id, row.name, row.packaging, row.qtyLabel, row.pricePcs, row.priceCtn, row.total]),
+        theme: 'striped',
+        showHead: 'everyPage',
+        headStyles: {
+            fillColor: darkSlate,
+            textColor: [255, 255, 255],
+            fontSize: 8.5,
+            fontStyle: 'bold',
+            halign: 'left'
+        },
+        columnStyles: {
+            0: { halign: 'center', cellWidth: 8 },
+            1: { cellWidth: 62 },
+            2: { cellWidth: 35 },
+            3: { halign: 'center', cellWidth: 15, fontStyle: 'bold' },
+            4: { halign: 'right', cellWidth: 20 },
+            5: { halign: 'right', cellWidth: 22 },
+            6: { halign: 'right', cellWidth: 24, fontStyle: 'bold' }
+        },
+        styles: { font: 'helvetica', fontSize: 8, cellPadding: 2.5, textColor: [80, 80, 80], overflow: 'linebreak' },
+        alternateRowStyles: { fillColor: [241, 245, 249] }
     });
 
-    doc.save(`TwoParrots_Customer_Quotation_${formattedDateOnly}.pdf`);
+    let finalY = doc.lastAutoTable.finalY + 6;
+    const totalsHeight = (quote.discountPct > 0 ? 5 : 0) + 31;
+    if (finalY + totalsHeight > 285) {
+        doc.addPage();
+        finalY = 20;
+    }
+
+    doc.setFontSize(8.5);
+    doc.setTextColor(...darkSlate);
+    doc.setFont('helvetica', 'normal');
+    doc.text(quote.subtotalLabel, 160, finalY, { align: 'right' });
+    doc.text(formatQuotationMoney(quote.totalQuotationPrice), 196, finalY, { align: 'right' });
+    finalY += 5;
+    if (quote.discountPct > 0) {
+        doc.setTextColor(220, 38, 38);
+        doc.text('Discount (' + quote.discountPct + '%):', 160, finalY, { align: 'right' });
+        doc.text('-' + formatQuotationMoney(quote.discountAmount), 196, finalY, { align: 'right' });
+        finalY += 5;
+        doc.setTextColor(...darkSlate);
+    }
+    doc.text(quote.gstLabel, 160, finalY, { align: 'right' });
+    doc.text(formatQuotationMoney(quote.gstAmount), 196, finalY, { align: 'right' });
+    finalY += 6;
+
+    doc.setFillColor(...darkSlate);
+    doc.roundedRect(118, finalY - 4, 80, 10, 1, 1, 'F');
+    doc.setTextColor(...goldText);
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(9.5);
+    doc.text('GRAND TOTAL (AUD):', 160, finalY + 3, { align: 'right' });
+    doc.setTextColor(255, 255, 255);
+    doc.text(formatQuotationMoney(quote.grandTotal), 196, finalY + 3, { align: 'right' });
+    finalY += 14;
+
+    doc.setFillColor(...lightGrey);
+    doc.setDrawColor(203, 213, 225);
+    doc.roundedRect(12, finalY, 186, 20, 2, 2, 'FD');
+    doc.setTextColor(71, 85, 105);
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(8);
+    doc.text('COMMERCIAL TERMS', 16, finalY + 6);
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(7.5);
+    doc.text('Payment: ' + quote.customer.terms.toUpperCase(), 16, finalY + 11);
+    doc.text('Validity: 14 DAYS FROM ISSUE DATE', 16, finalY + 15);
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(8);
+    doc.text('REMITTANCE DETAILS (EFT)', 105, finalY + 6);
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(7.5);
+    doc.text('Bank: ' + quote.remittance.bank, 105, finalY + 11);
+    doc.text('Account Name: ' + quote.remittance.accountName, 105, finalY + 15);
+    doc.text('BSB: ' + quote.remittance.bsb + '   |   Account No: ' + quote.remittance.account, 105, finalY + 19);
+
+    finalY += 30;
+    let footerY = Math.max(finalY, 250);
+    if (footerY > 275) {
+        doc.addPage();
+        footerY = 250;
+    }
+    doc.setDrawColor(203, 213, 225);
+    doc.line(12, footerY, 80, footerY);
+    doc.line(128, footerY, 198, footerY);
+    doc.setFontSize(7.5);
+    doc.setTextColor(100, 116, 139);
+    doc.setFont('helvetica', 'normal');
+    doc.text('Customer Acceptance / Signature', 12, footerY + 4);
+    doc.text('Authorized Director (Two Parrots Group)', 128, footerY + 4);
+
+    const safeCompanyName = quote.customer.company.replace(/[^a-z0-9]/gi, '_');
+    doc.save('Customer_Quotation_' + safeCompanyName + '_' + quote.fileDate + '.pdf');
 }
 
 async function tpgaBoot() {
+    bindCustomerQuotationInputs();
     try {
         const loaded = await tpgaHydratePage('qc1', { products: productsData, defaults: defaultOpExValues });
         currentAnnualOpExAUD = loaded.engine.currentAnnualOpExAUD;

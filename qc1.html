@@ -57,10 +57,122 @@
         .gold-gradient {
             background: linear-gradient(135deg, #E6C655 0%, #D4AF37 50%, #C59B27 100%);
         }
+        .customer-quotation-wrap { margin: 0 0 1.5rem; overflow-x: auto; }
+        .customer-quotation-sheet {
+            width: 210mm;
+            min-height: 297mm;
+            margin: 0 auto;
+            background: #ffffff;
+            color: #1e293b;
+            box-shadow: 0 12px 40px rgba(15, 23, 42, 0.12);
+            display: flex;
+            flex-direction: column;
+            font-family: Inter, Helvetica, Arial, sans-serif;
+        }
+        .cq-banner {
+            background: #1e293b;
+            color: #ffffff;
+            min-height: 32mm;
+            padding: 5mm 12mm 5mm;
+            display: flex;
+            align-items: center;
+            gap: 4mm;
+            border-bottom: 1.5mm solid #d4af37;
+        }
+        .cq-logo { width: 22mm; height: 22mm; object-fit: contain; border-radius: 50%; background: #ffffff; flex: none; }
+        .cq-banner-main { min-width: 0; }
+        .cq-title { margin: 0; font-size: 14pt; line-height: 1.15; font-weight: 700; letter-spacing: 0.01em; }
+        .cq-subtitle { margin: 1.6mm 0 0; font-size: 8.5pt; font-weight: 400; color: #e6c655; }
+        .cq-banner-meta { margin-left: auto; text-align: right; flex: none; }
+        .cq-date { margin: 0; font-size: 10pt; font-weight: 700; }
+        .cq-volume { margin: 1.4mm 0 0; font-size: 8.5pt; font-weight: 700; color: #e6c655; }
+        .cq-parties { display: grid; grid-template-columns: 1fr 1fr; gap: 6mm; padding: 6mm 12mm 0; }
+        .cq-card {
+            position: relative;
+            background: #f8fafc;
+            border: 1px solid #cbd5e1;
+            border-radius: 2mm;
+            min-height: 42mm;
+            padding: 4mm 4mm 4mm 7mm;
+            overflow: hidden;
+        }
+        .cq-card-accent { position: absolute; left: 0; top: 0; bottom: 0; width: 2mm; }
+        .cq-card-gold { background: #eab308; }
+        .cq-card-navy { background: #1e293b; }
+        .cq-kicker { margin: 0 0 1.5mm; font-size: 9pt; font-weight: 700; color: #1e293b; }
+        .cq-company { margin: 0 0 1.5mm; font-size: 8.5pt; font-weight: 700; color: #0f172a; line-height: 1.25; }
+        .cq-lines { margin: 0; font-size: 7.5pt; line-height: 1.45; color: #475569; }
+        .cq-lines p { margin: 0; }
+        .cq-table-wrap { padding: 5mm 14mm 0; }
+        .cq-table { width: 100%; border-collapse: collapse; }
+        .cq-table thead { display: table-header-group; }
+        .cq-table th {
+            background: #1e293b;
+            color: #ffffff;
+            font-size: 8.5pt;
+            font-weight: 700;
+            text-align: left;
+            padding: 2.2mm 2mm;
+        }
+        .cq-table td {
+            font-size: 8pt;
+            color: #505050;
+            padding: 2.2mm 2mm;
+            vertical-align: top;
+        }
+        .cq-table tbody tr:nth-child(even) td { background: #f1f5f9; }
+        .cq-table .cq-num, .cq-table .cq-qty { text-align: center; }
+        .cq-table .cq-money { text-align: right; white-space: nowrap; }
+        .cq-table .cq-qty, .cq-table .cq-total { font-weight: 700; }
+        .cq-totals { margin: 4mm 14mm 0 auto; width: 92mm; font-size: 8.5pt; color: #1e293b; }
+        .cq-total-line { display: flex; justify-content: space-between; gap: 6mm; margin: 0 0 1.4mm; }
+        .cq-total-line span:last-child { min-width: 28mm; text-align: right; }
+        .cq-discount { color: #dc2626; }
+        .cq-grand {
+            margin-top: 1.5mm;
+            background: #1e293b;
+            border-radius: 1mm;
+            min-height: 10mm;
+            padding: 2mm 3mm;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 4mm;
+            font-size: 9.5pt;
+            font-weight: 700;
+        }
+        .cq-grand-label { color: #e6c655; }
+        .cq-grand-amount { color: #ffffff; }
+        .cq-terms {
+            margin: 6mm 12mm 0;
+            background: #f8fafc;
+            border: 1px solid #cbd5e1;
+            border-radius: 2mm;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6mm;
+            padding: 4mm 4mm 3.5mm;
+            color: #475569;
+        }
+        .cq-terms h3 { margin: 0 0 1.4mm; font-size: 8pt; font-weight: 700; letter-spacing: 0.01em; }
+        .cq-terms p { margin: 0; font-size: 7.5pt; line-height: 1.45; }
+        .cq-signatures {
+            margin-top: auto;
+            padding: 16mm 12mm 14mm;
+            display: flex;
+            justify-content: space-between;
+            gap: 12mm;
+            color: #64748b;
+            font-size: 7.5pt;
+        }
+        .cq-sign { width: 68mm; border-top: 1px solid #cbd5e1; padding-top: 1.5mm; }
         @media print {
-            .no-print { display: none !important; }
+            .no-print, .staff-workspace, #password-modal, #landed-cost-engine, #tpga-save-status { display: none !important; }
             body { padding-bottom: 0 !important; background: white !important; }
             .max-h-\[420px\] { max-height: none !important; overflow: visible !important; }
+            .customer-quotation-wrap { overflow: visible; margin: 0; }
+            .customer-quotation-sheet { box-shadow: none; width: 100%; min-height: 0; }
+            @page { size: A4 portrait; margin: 0; }
         }
     </style>
     <script>
@@ -170,7 +282,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
 
 <!-- 1. HEADER BOX -->
-        <div class="bg-slate-900 text-white rounded-xl shadow-md p-3.5 mb-4 border-l-4 border-gold-500 relative overflow-hidden">
+        <div class="staff-workspace bg-slate-900 text-white rounded-xl shadow-md p-3.5 mb-4 border-l-4 border-gold-500 relative overflow-hidden">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 relative z-10 text-xs">
                 
                 <!-- Left Column: Two Parrots Group Australia Combined Details -->
@@ -282,7 +394,7 @@
         </div>
 
         <!-- DASHBOARD METRIC CARDS OVERVIEW -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-5">
+        <div class="staff-workspace grid grid-cols-1 md:grid-cols-3 gap-4 mb-5">
 <!-- Card 1: Total Order Price (AUD) -->
             <div class="bg-white rounded-xl shadow-md p-4 border border-slate-200 border-l-4 border-l-emerald-500 relative overflow-hidden">
                 <div class="flex justify-between items-start">
@@ -367,11 +479,12 @@
         </div>
 
         <!-- 2. CUSTOMER QUOTATION TABLE -->
-        <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-300 mb-6">
+        <div class="staff-workspace bg-white rounded-xl shadow-md overflow-hidden border border-slate-300 mb-6">
             <div class="bg-slate-900 px-4 py-2 flex flex-wrap justify-between items-center gap-2 border-b border-gold-500">
                 <div>
                     <h2 data-i18n="tbl_title" class="text-xs font-bold text-white tracking-wide uppercase">Customer Quotation</h2>
                     <p class="text-[10px] text-gold-400">This Quotation is subject to change due to AUD/USD Exchange rate and Sea Freight, it only valid for 14 Days</p>
+                    <p class="text-[10px] text-slate-400 mt-1">Staff pricing. Margin boxes set the selling prices and stay on this screen. The customer quotation and the PDF leave them out.</p>
                 </div>
 				<div class="flex items-center gap-3 text-xs">
                     <!-- New GST Inclusive Toggle -->
@@ -430,8 +543,12 @@
             </div>
         </div>
 
+        <div class="customer-quotation-wrap">
+            <section id="customer-quotation-sheet" class="customer-quotation-sheet" aria-label="Customer quotation"></section>
+        </div>
+
         <!-- 3. FULL MASTER OPERATIONAL EXPENSE BUDGET & OPERATING MODEL -->
-		<details class="budget-accordion">
+		<details class="budget-accordion staff-workspace">
 		<summary class="budget-summary"></summary>
     
     <div class="accordion-content">
@@ -979,7 +1096,7 @@
 
 <!-- JavaScript Engine Link -->
 <script src="staff-store.js"></script>
-    <script src="script-Q3.js?v=20261115e"></script>
+    <script src="script-Q3.js?v=20261116a"></script>
 
 </body>
 </html>
