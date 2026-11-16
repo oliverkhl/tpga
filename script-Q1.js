@@ -2120,6 +2120,16 @@ function renderMasterProfitModelTable() {
     recalculateMasterProfitTotal();
 }
 
+function isPlaceholderPriceRow(entry) {
+    if (!entry || typeof entry !== 'object') return true;
+    if (/^Product Item #\d+$/.test(String(entry.name || ''))) return true;
+    const rows = [].concat(entry.asianComps || [], entry.ausComps || []);
+    if (!rows.length) return true;
+    return rows.every(function (row) {
+        return /^(Asian Import Brand|AU Retail Brand) #\d+$/.test(String(row && row.brand || ''));
+    });
+}
+
 async function loadLatestPrices() {
     try {
         fetchLiveFxRate();
@@ -2130,10 +2140,10 @@ async function loadLatestPrices() {
         if (data && data.competitors) {
             productsData.forEach(product => {
                 const compUpdate = data.competitors[product.id];
-                if (compUpdate) {
-                    if (compUpdate.asianComps) product.asianComps = compUpdate.asianComps;
-                    if (compUpdate.ausComps) product.ausComps = compUpdate.ausComps;
-                }
+                // The daily file used to invent "Product Item #N" rows. Never let those replace surveyed prices.
+                if (!compUpdate || isPlaceholderPriceRow(compUpdate)) return;
+                if (compUpdate.asianComps) product.asianComps = compUpdate.asianComps;
+                if (compUpdate.ausComps) product.ausComps = compUpdate.ausComps;
             });
         }
     } catch (err) {

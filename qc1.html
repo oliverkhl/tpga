@@ -35,7 +35,7 @@
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha384-iw3OoTErCYJJB9mCa8LNS2hbsQ7M3C0EpIsO/H5+EGAkPGc6rk+V8i04oW/K5xq0" crossorigin="anonymous">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+Khmer:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- jsPDF and AutoTable load on the first PDF export click -->
@@ -205,7 +205,7 @@
                             </p>
                             <p class="text-[11px] text-slate-300 flex items-center gap-2 mb-1.5">
                                 <i class="fa-solid fa-globe text-gold-400 w-3 text-center shrink-0"></i>
-                                <a href="https://twoparrotsgroup.com.au" target="_blank" class="hover:underline text-gold-400">twoparrotsgroup.com.au</a>
+                                <a href="https://twoparrotsgroup.com.au" target="_blank" rel="noopener noreferrer" class="hover:underline text-gold-400">twoparrotsgroup.com.au</a>
                             </p>
                             <p class="text-[11px] text-slate-300 flex items-center gap-2">
                                 <i class="fa-solid fa-phone text-gold-400 w-3 text-center shrink-0"></i>
@@ -245,10 +245,9 @@
                         <div class="relative">
                             <i class="fa-solid fa-file-contract absolute left-2.5 top-1.5 text-gold-400/50 text-[10px]"></i>
                             <select id="cust-terms" class="w-full bg-slate-800/50 border border-slate-700 focus:border-gold-500 rounded pl-7 pr-2 py-1 text-[11px] text-white placeholder-slate-500 outline-none transition appearance-none cursor-pointer">
-                                <option value="COD or 7-14 Days from Invoice" title="For Independent & Small Retailers (e.g. Asian Grocers)">Small Retail: COD or 7-14 Days</option>
+                                <option value="COD or 7-14 Days from Invoice" title="For Independent & Small Retailers (e.g. Asian Grocers)" selected>Small Retail: COD or 7-14 Days</option>
                                 <option value="30 Days from End of Month (EOM)" title="For Mid-Sized Independent Supermarkets (e.g. IGA, Foodworks)">Mid-Sized: 30 Days EOM</option>
                                 <option value="60 to 90 Days" title="For Major Supermarket Chains (e.g. Coles, Woolworths)">Major Chains: 60 - 90 Days</option>
-                                <option value="COD or 7-14 Days from Invoice" selected>Small Retail: COD or 7-14 Days</option>
                             </select>
 							</div>
 	<div class="flex items-center gap-3">

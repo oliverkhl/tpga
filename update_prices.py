@@ -95,38 +95,18 @@ PRODUCT_BENCHMARKS = {
     }
 }
 
-def generate_catalog_for_all_30():
-    """Ensures all 30 products exist in the dataset."""
-    full_catalog = {}
-    for i in range(1, 31):
-        product_key = str(i)
-        if product_key in PRODUCT_BENCHMARKS:
-            full_catalog[product_key] = PRODUCT_BENCHMARKS[product_key]
-        else:
-            full_catalog[product_key] = {
-                "name": f"Product Item #{product_key}",
-                "asianComps": [
-                    {
-                        "brand": f"Asian Import Brand #{product_key}",
-                        "weightG": 500,
-                        "priceAud": round(2.50 + (i * 0.08), 2),
-                        "source": "Src: Local Asian Grocery"
-                    }
-                ],
-                "ausComps": [
-                    {
-                        "brand": f"AU Retail Brand #{product_key}",
-                        "weightG": 500,
-                        "priceAud": round(3.00 + (i * 0.12), 2),
-                        "source": "Src: Major Supermarket AU"
-                    }
-                ]
-            }
-    return full_catalog
+def surveyed_benchmarks():
+    """Return only products with a real price survey.
+
+    Invented rows ("Product Item #N", "Asian Import Brand #N") were being
+    copied over the quote tool's surveyed prices. Products without a survey
+    keep the prices already stored in the quote scripts.
+    """
+    return {key: PRODUCT_BENCHMARKS[key] for key in sorted(PRODUCT_BENCHMARKS, key=int)}
 
 def main():
     aud_usd_rate = fetch_live_aud_usd_rate()
-    competitors_data = generate_catalog_for_all_30()
+    competitors_data = surveyed_benchmarks()
 
     payload = {
         "lastUpdated": datetime.now(timezone.utc).isoformat(),
@@ -143,7 +123,7 @@ def main():
     with open(JSON_FILE, "w", encoding="utf-8") as f:
         json.dump(payload, f, indent=2)
 
-    print(f"Successfully generated {JSON_FILE} with 30 products and AUD/USD = {aud_usd_rate}")
+    print(f"Successfully generated {JSON_FILE} with {len(competitors_data)} surveyed products and AUD/USD = {aud_usd_rate}")
 
 if __name__ == "__main__":
     main()
