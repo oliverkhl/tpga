@@ -696,6 +696,27 @@ function ensurePdfLibraries() {
     return pdfLibsPromise;
 }
 
+function loadImageForPdf(url) {
+    return new Promise((resolve) => {
+        const img = new Image();
+        img.crossOrigin = 'Anonymous';
+        img.onload = () => {
+            try {
+                const canvas = document.createElement('canvas');
+                canvas.width = img.naturalWidth || img.width;
+                canvas.height = img.naturalHeight || img.height;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0);
+                resolve(canvas.toDataURL('image/png'));
+            } catch (err) {
+                resolve(null);
+            }
+        };
+        img.onerror = () => resolve(null);
+        img.src = url;
+    });
+}
+
 function getPcsPerCtn(specStr) {
     if (!specStr) return 1;
     const specText = typeof specStr === 'object' ? specStr.en : specStr;
@@ -1186,7 +1207,7 @@ function renderTable() {
             <td class="py-1 px-2 border-r border-slate-200 text-center bg-slate-50">
                 <div class="flex items-center justify-center gap-0.5">
                     <span class="text-slate-400 font-bold">$</span>
-                    <input type="number" id="input-ctn-price-${p.id}" value="${p.ctnPriceUsd.toFixed(2)}" step="0.50" min="0"
+                    <input type="number" id="input-ctn-price-${p.id}" value="${(p.ctnPriceUsd ?? 0).toFixed(2)}" step="0.50" min="0"
                         oninput="syncCtnPrice(${p.id}, this.value)"
                         onkeydown="handleKeyDown(event, ${p.id}, 'price')"
                         class="w-20 text-right bg-white border border-slate-300 focus:border-gold-500 font-bold font-mono text-xs text-gold-800 rounded py-0.5 px-1 focus:outline-none transition">
@@ -1308,6 +1329,8 @@ async function exportPurchaseOrderPDF() {
     const goldColor = [212, 175, 55];
     const lightGrey = [248, 250, 252];
 
+    const khLogoDataUrl = await loadImageForPdf('images/khtg.png');
+
     // Header Banner
     doc.setFillColor(...darkSlate);
     doc.rect(0, 0, 210, 32, 'F');
@@ -1316,31 +1339,37 @@ async function exportPurchaseOrderPDF() {
 
     doc.setTextColor(255, 255, 255);
     doc.setFont('helvetica', 'bold');
-    doc.setFontSize(11);
+    doc.setFontSize(12);
     doc.text('PARTNER QUOTATION', 12, 13);
 
-    doc.setFontSize(8.5);
-    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(9.5);
+    doc.setFont('helvetica', 'bold');
     doc.setTextColor(230, 198, 85);
-    doc.text('Two Parrots Group Australia — Import Logistics Portal', 12, 21);
+    doc.text('KH Trading Group', 12, 21);
+
+    const rightTextX = khLogoDataUrl ? 173 : 198;
+    if (khLogoDataUrl) {
+        doc.addImage(khLogoDataUrl, 'PNG', 177, 5, 21, 21);
+    }
 
     doc.setTextColor(255, 255, 255);
     doc.setFont('helvetica', 'bold');
-    doc.setFontSize(13);
-    doc.text(formattedDateOnly, 198, 14, { align: 'right' });
+    doc.setFontSize(12);
+    doc.text(formattedDateOnly, rightTextX, 13.5, { align: 'right' });
 
-    doc.setFontSize(9);
+    doc.setFontSize(8.5);
     doc.setTextColor(230, 198, 85);
-    doc.text(containerLabel, 198, 22, { align: 'right' });
+    doc.text(containerLabel, rightTextX, 21, { align: 'right' });
 
     // Seller & Buyer Cards
     const startY = 38;
+    const cardHeight = 48;
 
     doc.setFillColor(...lightGrey);
     doc.setDrawColor(203, 213, 225);
-    doc.roundedRect(12, startY, 90, 42, 2, 2, 'FD');
+    doc.roundedRect(12, startY, 90, cardHeight, 2, 2, 'FD');
     doc.setFillColor(234, 179, 8);
-    doc.rect(12, startY, 2, 42, 'F');
+    doc.rect(12, startY, 2, cardHeight, 'F');
 
     doc.setTextColor(...darkSlate);
     doc.setFont('helvetica', 'bold');
@@ -1357,25 +1386,29 @@ async function exportPurchaseOrderPDF() {
     doc.text('Web: www.two-parrots.com', 17, startY + 28);
 
     doc.setFillColor(...lightGrey);
-    doc.roundedRect(108, startY, 90, 42, 2, 2, 'FD');
+    doc.roundedRect(108, startY, 90, cardHeight, 2, 2, 'FD');
     doc.setFillColor(...darkSlate);
-    doc.rect(108, startY, 2, 42, 'F');
+    doc.rect(108, startY, 2, cardHeight, 'F');
 
     doc.setTextColor(...darkSlate);
     doc.setFont('helvetica', 'bold');
     doc.setFontSize(9);
     doc.text('IMPORTER (BUYER):', 113, startY + 6);
-    doc.setFontSize(8.5);
+
+    doc.setFontSize(8);
     doc.setTextColor(15, 23, 42);
-    doc.text('TWO PARROTS GROUP AUSTRALIA', 113, startY + 12);
-    doc.setFont('helvetica', 'normal');
+    doc.text('TWO PARROTS GROUP AUSTRALIA', 113, startY + 11.5);
     doc.setFontSize(7.5);
+    doc.text('Trading As KH Trading Group', 113, startY + 16);
+
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(7.2);
     doc.setTextColor(71, 85, 105);
-    doc.text('Managing Director: Kim Heng Ly', 113, startY + 18);
-    doc.text('Address: 1/57 Elonera Rd, Noble Park North VIC 3174', 113, startY + 23);
-    doc.text('Port of Discharge: Swanson Dock, VIC, Australia', 113, startY + 28);
-    doc.text('Email: info@twoparrotsgroup.com.au', 113, startY + 33);
-    doc.text('Web: twoparrotsgroup.com.au', 113, startY + 38);
+    doc.text('Managing Director: Kim Heng Ly', 113, startY + 21.5);
+    doc.text('Address: 1/57 Elonera Rd, Noble Park North VIC 3174', 113, startY + 26.5);
+    doc.text('Port of Discharge: Swanson Dock, VIC, Australia', 113, startY + 31.5);
+    doc.text('Email: info@twoparrotsgroup.com.au | info@khtrading.com.au', 113, startY + 36.5);
+    doc.text('Web: twoparrotsgroup.com.au | khtrading.com.au', 113, startY + 41.5);
 
     // Table
     let totalOrderCartons = 0;
@@ -1404,7 +1437,7 @@ async function exportPurchaseOrderPDF() {
     }
 
     doc.autoTable({
-        startY: 85,
+        startY: startY + cardHeight + 5,
         head: [['N°', 'Product Description', 'Packaging', 'Order Volume', 'Margin', 'Sell AUD/CTN']],
         body: tableRows,
         theme: 'striped',
@@ -1453,7 +1486,7 @@ async function exportPurchaseOrderPDF() {
     }
 
     const formattedFileNameDate = now.toISOString().slice(0, 10);
-    doc.save(`TwoParrots_Partner_Quotation_${formattedFileNameDate}.pdf`);
+    doc.save(`KHTrading_Partner_Quotation_${formattedFileNameDate}.pdf`);
 }
 
 async function fetchLiveFxRate() {
@@ -1514,4 +1547,3 @@ async function tpgaBoot() {
 }
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', tpgaBoot);
 else tpgaBoot();
-
