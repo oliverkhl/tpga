@@ -13,40 +13,40 @@
 	<meta property="og:locale" content="en_AU" />
 	<link rel="icon" href="favicon.ico" sizes="any">
 	<style>
-		@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+		@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
 		:root {
-			--bg-obsidian: #0B0907;
-			--bg-charcoal: #16110D;
-			--bg-slate: #201812;
-			--bg-paper: #FAF6F0;
+			--bg-obsidian: #363D47;
+			--bg-charcoal: #424A56;
+			--bg-slate: #4F5866;
+			--bg-paper: #ECEFF3;
 			--bg-white: #FFFFFF;
 			--gold-champagne: #E5B53A;
-			--gold-muted: #B88416;
+			--gold-muted: #B07E16;
 			--orange-accent: #EA580C;
 			--orange-bright: #F97316;
-			--silver-ink: #F3EFEA;
-			--silver-muted: #B8AFA4;
-			--text-ink: #17120E;
-			--text-charcoal: #574A3F;
-			--border-dark: rgba(249, 115, 22, 0.16);
-			--border-gold: rgba(229, 181, 58, 0.48);
-			--border-orange: rgba(234, 88, 12, 0.55);
-			--border-light: #E8DFD3;
+			--silver-ink: #F4F6F9;
+			--silver-muted: #CBD2DC;
+			--text-ink: #1E242B;
+			--text-charcoal: #47515E;
+			--border-dark: rgba(226, 232, 240, 0.18);
+			--border-gold: rgba(229, 181, 58, 0.58);
+			--border-orange: rgba(249, 115, 22, 0.65);
+			--border-light: #D0D7E0;
 			--container-max: 1240px;
 		}
 
 		* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 		html { scroll-behavior: smooth; }
 		body {
-			font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+			font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 			background: var(--bg-obsidian);
 			color: var(--silver-ink);
 			line-height: 1.65;
 			overflow-x: hidden;
 		}
 		h1, h2, h3, .serif {
-			font-family: 'Cormorant Garamond', Georgia, serif;
+			font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 			letter-spacing: -0.01em;
 		}
 		a { text-decoration: none; color: inherit; }
@@ -64,7 +64,7 @@
 		   1. INSTITUTIONAL TOP RIBBON & OBSIDIAN HEADER (WITH STAFF LOGIN)
 		   ========================================================================== */
 		.group-ribbon {
-			background: #040609;
+			background: #2B313A;
 			border-bottom: 1px solid var(--border-dark);
 			padding: 8px 0;
 			font-size: 0.74rem;
@@ -85,7 +85,7 @@
 			position: sticky;
 			top: 0;
 			z-index: 1000;
-			background: rgba(8, 11, 16, 0.96);
+			background: rgba(54, 61, 71, 0.96);
 			backdrop-filter: blur(12px);
 			border-bottom: 1px solid var(--border-dark);
 		}
@@ -109,7 +109,7 @@
 		}
 		.brand-title strong {
 			display: block;
-			font-family: 'Cormorant Garamond', Georgia, serif;
+			font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 			font-size: 1.32rem;
 			font-weight: 700;
 			color: #FFFFFF;
@@ -155,7 +155,7 @@
 			min-height: 44px;
 			padding: 9px 16px;
 			border: 1px solid var(--gold-champagne);
-			background: linear-gradient(135deg, rgba(229, 181, 58, 0.14), rgba(234, 88, 12, 0.14));
+			background: linear-gradient(135deg, rgba(229, 181, 58, 0.16), rgba(234, 88, 12, 0.16));
 			color: #FFFFFF;
 			font-size: 0.75rem;
 			font-weight: 600;
@@ -168,7 +168,7 @@
 		.subsidiary-header-btn:hover {
 			background: linear-gradient(135deg, var(--gold-champagne), var(--orange-bright));
 			border-color: var(--orange-bright);
-			color: var(--bg-obsidian);
+			color: #FFFFFF;
 		}
 		.mobile-menu-toggle {
 			display: none;
@@ -184,7 +184,7 @@
 		}
 		.mobile-drawer {
 			display: none;
-			background: #06080C;
+			background: #303741;
 			border-top: 1px solid var(--border-dark);
 			border-bottom: 1px solid var(--border-gold);
 			padding: 18px 4% 24px;
@@ -201,7 +201,7 @@
 		.mobile-drawer-links a {
 			display: block;
 			padding: 12px 6px;
-			border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+			border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 			font-size: 0.88rem;
 			font-weight: 600;
 			letter-spacing: 0.08em;
@@ -221,7 +221,7 @@
 		   2. OPTION 1 HERO: EDITORIAL SPLIT-SCREEN (VISUAL LEFT, HOLDING STATEMENT RIGHT)
 		   ========================================================================== */
 		.hero-editorial {
-			background: var(--bg-obsidian);
+			background: linear-gradient(135deg, #343B45 0%, #454E5B 55%, #38404B 100%);
 			border-bottom: 1px solid var(--border-dark);
 			padding: 68px 0;
 		}
@@ -275,14 +275,14 @@
 			background: var(--gold-champagne);
 		}
 		.hero-statement-panel h1 {
-			font-size: clamp(2.35rem, 4vw, 3.55rem);
+			font-size: clamp(2.1rem, 3.5vw, 3.1rem); letter-spacing: -0.025em;
 			font-weight: 700;
 			line-height: 1.15;
 			color: #FFFFFF;
 			margin-bottom: 14px;
 		}
 		.hero-pillars-line {
-			font-family: 'Cormorant Garamond', Georgia, serif;
+			font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 			font-style: italic;
 			font-size: 1.15rem;
 			color: var(--gold-champagne);
@@ -312,7 +312,7 @@
 		}
 		.btn-champagne-outline:hover {
 			background: var(--gold-champagne);
-			color: var(--bg-obsidian);
+			color: #FFFFFF;
 		}
 		.btn-champagne-solid {
 			display: inline-block;
@@ -329,7 +329,7 @@
 		}
 		.btn-champagne-solid:hover {
 			background: linear-gradient(135deg, var(--orange-bright) 0%, var(--gold-champagne) 100%);
-			color: var(--bg-obsidian);
+			color: #FFFFFF;
 		}
 
 		/* ==========================================================================
@@ -355,7 +355,7 @@
 			margin-bottom: 8px;
 		}
 		.section-center-title h2 {
-			font-size: clamp(2.2rem, 3.5vw, 3.05rem);
+			font-size: clamp(1.95rem, 3.1vw, 2.65rem); letter-spacing: -0.02em;
 			color: var(--text-ink);
 			margin-bottom: 10px;
 		}
@@ -366,7 +366,7 @@
 
 		/* Featured Dark Subsidiary Card on Warm Ivory Canvas (Matching Option 1 Preview) */
 		.structure-showcase-card {
-			background: var(--bg-charcoal);
+			background: linear-gradient(145deg, #3E4652 0%, #4C5563 100%);
 			color: #FFFFFF;
 			border-top: 4px solid var(--orange-bright);
 			border-right: 1px solid var(--border-gold);
@@ -388,7 +388,7 @@
 		}
 		.primary-subsidiary-box {
 			border: 1px solid var(--border-gold);
-			background: rgba(255, 255, 255, 0.02);
+			background: rgba(255, 255, 255, 0.04);
 			padding: 32px;
 			display: grid;
 			grid-template-columns: auto 1fr auto;
@@ -405,7 +405,7 @@
 			align-items: center;
 			justify-content: center;
 			padding: 10px;
-			background: var(--bg-obsidian);
+			background: #2E353E;
 		}
 		.sub-monogram img {
 			width: 58px;
@@ -442,7 +442,7 @@
 		}
 		.division-pillar strong {
 			display: block;
-			font-family: 'Cormorant Garamond', Georgia, serif;
+			font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 			font-size: 1.08rem;
 			color: #FFFFFF;
 			margin-bottom: 4px;
@@ -475,7 +475,7 @@
 		}
 		.vision-card:hover { border-color: var(--gold-champagne); }
 		.vision-num {
-			font-family: 'Cormorant Garamond', Georgia, serif;
+			font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 			font-size: 2.1rem;
 			color: var(--orange-bright);
 			line-height: 1;
@@ -511,7 +511,7 @@
 		}
 		.exec-card strong {
 			display: block;
-			font-family: 'Cormorant Garamond', Georgia, serif;
+			font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 			font-size: 1.3rem;
 			color: var(--text-ink);
 		}
@@ -575,7 +575,7 @@
 		.f-field input, .f-field select, .f-field textarea {
 			width: 100%;
 			padding: 13px 14px;
-			background: var(--bg-obsidian);
+			background: #2C323B;
 			border: 1px solid var(--border-dark);
 			color: #FFFFFF;
 			font-family: inherit;
@@ -590,7 +590,7 @@
 		   7. INSTITUTIONAL FOOTER (WITH STAFF LOGIN LINK)
 		   ========================================================================== */
 		.institutional-footer {
-			background: #040609;
+			background: #2B313A;
 			border-top: 1px solid var(--border-dark);
 			padding: 64px 0 30px;
 			font-size: 0.84rem;
@@ -604,7 +604,7 @@
 			border-bottom: 1px solid var(--border-dark);
 		}
 		.institutional-footer h4 {
-			font-family: 'Plus Jakarta Sans', sans-serif;
+			font-family: 'Inter', sans-serif;
 			font-size: 0.75rem;
 			font-weight: 700;
 			letter-spacing: 0.16em;
@@ -637,7 +637,7 @@
 			.paper-section, .vision-section, .contact-obsidian { padding: 60px 0; }
 			.primary-subsidiary-box { text-align: center; justify-items: center; padding: 24px 18px; }
 			.structure-showcase-card { padding: 26px 20px; }
-			.division-pillar { padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+			.division-pillar { padding: 12px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
 			.division-pillar:last-child { border-bottom: none; padding-bottom: 0; }
 		}
 		@media (max-width: 640px) {
@@ -800,7 +800,7 @@
 		<section id="vision" class="vision-section">
 			<div class="container">
 				<span class="eyebrow-gold">Our Vision</span>
-				<h2 style="font-size: clamp(2.1rem, 3.3vw, 2.85rem); color: #FFFFFF; max-width: 700px;">
+				<h2 style="font-size: clamp(1.85rem, 3vw, 2.45rem); letter-spacing: -0.02em; color: #FFFFFF; max-width: 700px;">
 					Building Long-Term Agricultural Supply Infrastructure Between Origin &amp; Australia
 				</h2>
 
@@ -837,7 +837,7 @@
 			<div class="container governance-grid">
 				<div>
 					<span style="display: block; font-size: 0.74rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-muted); margin-bottom: 8px;">Governance &amp; Leadership</span>
-					<h2 style="font-size: clamp(2.1rem, 3.3vw, 2.85rem); margin-bottom: 18px;">
+					<h2 style="font-size: clamp(1.85rem, 3vw, 2.45rem); letter-spacing: -0.02em; margin-bottom: 18px;">
 						Executive Oversight &amp; Victorian Operations
 					</h2>
 					<p style="color: var(--text-charcoal); margin-bottom: 24px; line-height: 1.75;">
@@ -871,7 +871,7 @@
 			<div class="container contact-split">
 				<div>
 					<span class="eyebrow-gold">Corporate &amp; Trade Desk</span>
-					<h2 style="font-size: clamp(2.1rem, 3.3vw, 2.8rem); color: #FFFFFF; margin-bottom: 16px;">
+					<h2 style="font-size: clamp(1.85rem, 3vw, 2.4rem); letter-spacing: -0.02em; color: #FFFFFF; margin-bottom: 16px;">
 						Connect with Two Parrots Group Australia
 					</h2>
 					<p style="color: var(--silver-muted);">
@@ -949,7 +949,7 @@
 				<div>
 					<div style="display: flex; align-items: center; gap: 12px; margin-bottom: 14px;">
 						<img src="images/logo.png" alt="Two Parrots Group Australia Pty Ltd" width="54" height="54" style="width: 54px; height: 54px; object-fit: contain;">
-						<strong style="font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.12rem; color: #FFFFFF;">Two Parrots Group Australia Pty Ltd</strong>
+						<strong style="font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 1.12rem; color: #FFFFFF;">Two Parrots Group Australia Pty Ltd</strong>
 					</div>
 					<p style="line-height: 1.7;">
 						Australian corporate holding group overseeing international agricultural sourcing, biosecurity QA, and wholesale B2B distribution via subsidiary KH Trading Group.
