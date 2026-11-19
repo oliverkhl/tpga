@@ -147,7 +147,9 @@
 		.subsidiary-header-btn {
 			display: inline-flex;
 			align-items: center;
+			justify-content: center;
 			gap: 6px;
+			min-height: 44px;
 			padding: 9px 16px;
 			border: 1px solid var(--gold-champagne);
 			background: transparent;
@@ -156,12 +158,59 @@
 			font-weight: 600;
 			letter-spacing: 0.06em;
 			text-transform: uppercase;
+			white-space: nowrap;
 			transition: all 0.2s ease;
 		}
 		.staff-login-btn:hover,
 		.subsidiary-header-btn:hover {
 			background: var(--gold-champagne);
 			color: var(--bg-obsidian);
+		}
+		.mobile-menu-toggle {
+			display: none;
+			align-items: center;
+			justify-content: center;
+			width: 44px;
+			height: 44px;
+			border: 1px solid var(--gold-champagne);
+			background: transparent;
+			color: var(--gold-champagne);
+			font-size: 1.25rem;
+			cursor: pointer;
+		}
+		.mobile-drawer {
+			display: none;
+			background: #06080C;
+			border-top: 1px solid var(--border-dark);
+			border-bottom: 1px solid var(--border-gold);
+			padding: 18px 4% 24px;
+		}
+		.mobile-drawer.open {
+			display: block;
+		}
+		.mobile-drawer-links {
+			display: flex;
+			flex-direction: column;
+			gap: 4px;
+			margin-bottom: 16px;
+		}
+		.mobile-drawer-links a {
+			display: block;
+			padding: 12px 6px;
+			border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+			font-size: 0.88rem;
+			font-weight: 600;
+			letter-spacing: 0.08em;
+			text-transform: uppercase;
+			color: var(--silver-ink);
+		}
+		.mobile-drawer-links a:hover {
+			color: var(--gold-champagne);
+		}
+		.mobile-drawer-ctas {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 10px;
 		}
 
 		/* ==========================================================================
@@ -568,18 +617,48 @@
 			font-size: 0.78rem;
 		}
 
-		@media (max-width: 1024px) {
+		@media (max-width: 1060px) {
 			.nav-links { display: none; }
+			.mobile-menu-toggle { display: inline-flex; }
 		}
 		@media (max-width: 900px) {
 			.hero-editorial-grid, .primary-subsidiary-box, .sub-divisions-footer, .vision-grid, .governance-grid, .contact-split, .footer-cols {
 				grid-template-columns: 1fr;
 			}
-			.primary-subsidiary-box { text-align: center; justify-items: center; }
+			.hero-editorial { padding: 44px 0; }
+			.hero-visual-panel img { height: 300px; }
+			.paper-section, .vision-section, .contact-obsidian { padding: 60px 0; }
+			.primary-subsidiary-box { text-align: center; justify-items: center; padding: 24px 18px; }
+			.structure-showcase-card { padding: 26px 20px; }
+			.division-pillar { padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+			.division-pillar:last-child { border-bottom: none; padding-bottom: 0; }
 		}
-		@media (max-width: 560px) {
-			.f-row-2 { grid-template-columns: 1fr; }
+		@media (max-width: 640px) {
+			.group-ribbon { font-size: 0.68rem; padding: 7px 0; }
+			.ribbon-inner { justify-content: center; text-align: center; gap: 4px; }
+			.header-inner { height: 76px; gap: 10px; }
+			.brand-lockup { gap: 10px; }
+			.brand-lockup img { width: 48px; height: 48px; }
+			.brand-title strong { font-size: 1.05rem; }
+			.brand-title span { font-size: 0.6rem; letter-spacing: 0.14em; }
 			.subsidiary-header-btn { display: none; }
+			.staff-login-btn { padding: 8px 11px; font-size: 0.68rem; min-height: 40px; }
+			.mobile-menu-toggle { width: 40px; height: 40px; }
+			.hero-visual-panel { padding: 8px; }
+			.hero-visual-panel img { height: 220px; }
+			.hero-visual-meta { flex-direction: column; gap: 4px; text-align: center; }
+			.hero-pillars-line { font-size: 1rem; }
+			.hero-cta-group { flex-direction: column; }
+			.hero-cta-group a, .primary-subsidiary-box .btn-champagne-solid { width: 100%; text-align: center; min-height: 48px; }
+			.f-row-2 { grid-template-columns: 1fr; }
+			.f-field input, .f-field select, .f-field textarea { font-size: 16px; min-height: 46px; }
+			.inquiry-form-box, .hq-details-box, .exec-card, .vision-card { padding: 24px 18px; }
+			.hq-details-box p { word-break: break-word; line-height: 1.75; margin-bottom: 8px; }
+			.footer-bottom { flex-direction: column; text-align: center; }
+		}
+		@media (max-width: 400px) {
+			.mobile-drawer-ctas { grid-template-columns: 1fr; }
+			.brand-title strong { font-size: 0.96rem; }
 		}
 	</style>
 </head>
@@ -613,6 +692,21 @@
 
 			<div class="header-actions">
 				<a href="Q1.html" rel="nofollow" class="staff-login-btn" title="Staff Login Portal">🔒 Staff Login</a>
+				<a href="https://khtrading.com.au/" target="_blank" rel="noopener noreferrer" class="subsidiary-header-btn">KH Trading Group &nearr;</a>
+				<button type="button" class="mobile-menu-toggle" id="mobileMenuBtn" aria-label="Toggle Navigation Menu" aria-expanded="false">&#9776;</button>
+			</div>
+		</div>
+
+		<div class="mobile-drawer" id="mobileDrawer">
+			<nav class="mobile-drawer-links" aria-label="Mobile Navigation">
+				<a href="#top">Home</a>
+				<a href="#vision">Our Vision</a>
+				<a href="#structure">Group Structure</a>
+				<a href="#governance">Governance &amp; Leadership</a>
+				<a href="#contact">Corporate &amp; Trade Desk</a>
+			</nav>
+			<div class="mobile-drawer-ctas">
+				<a href="Q1.html" rel="nofollow" class="staff-login-btn">🔒 Staff Login</a>
 				<a href="https://khtrading.com.au/" target="_blank" rel="noopener noreferrer" class="subsidiary-header-btn">KH Trading Group &nearr;</a>
 			</div>
 		</div>
@@ -933,6 +1027,22 @@
 						submitBtn.disabled = false;
 						submitBtn.innerText = 'Transmit Inquiry';
 					});
+			});
+		}
+		const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+		const mobileDrawer = document.getElementById('mobileDrawer');
+		if (mobileMenuBtn && mobileDrawer) {
+			mobileMenuBtn.addEventListener('click', function() {
+				const isOpen = mobileDrawer.classList.toggle('open');
+				mobileMenuBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+				mobileMenuBtn.innerHTML = isOpen ? '&times;' : '&#9776;';
+			});
+			mobileDrawer.querySelectorAll('a').forEach(function(link) {
+				link.addEventListener('click', function() {
+					mobileDrawer.classList.remove('open');
+					mobileMenuBtn.setAttribute('aria-expanded', 'false');
+					mobileMenuBtn.innerHTML = '&#9776;';
+				});
 			});
 		}
 	</script>
