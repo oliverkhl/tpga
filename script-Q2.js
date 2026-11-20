@@ -1491,10 +1491,11 @@ async function exportPurchaseOrderPDF() {
 
 async function fetchLiveFxRate() {
     try {
-        const response = await fetch(FX_RATE_URL);
-        if (!response.ok) throw new Error('Live FX Rate fetch failed');
+        // Fetch the AUD/USD rate from our own Worker (server-side Frankfurter + D1 cache).
+        const response = await fetch('/api/fx');
+        if (!response.ok) throw new Error('FX fetch failed');
         const data = await response.json();
-        const usd = data && data.rates && data.rates.USD;
+        const usd = data && data.rate;
         if (typeof usd === 'number' && usd > 0) {
             const inputFx = document.getElementById('input-fx');
             if (inputFx) inputFx.value = String(usd);
