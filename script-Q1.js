@@ -356,22 +356,14 @@ function resetMasterProfitOrders() {
 async function fetchLiveFxRate() {
     const statusTag = document.getElementById('fx-status-tag');
     try {
-        if (statusTag) {
-            statusTag.innerText = 'Updating...';
-            statusTag.className = 'text-[9px] text-amber-400 font-mono ml-1';
-        }
-        const response = await fetch('https://open.er-api.com/v6/latest/AUD');
-        if (!response.ok) throw new Error('Live FX Rate fetch failed');
-        
+        // Fetch the AUD/USD rate from our own Worker (server-side Frankfurter + D1 cache).
+        const response = await fetch('/api/fx');
+        if (!response.ok) throw new Error('FX fetch failed');
         const data = await response.json();
-        if (data && data.rates && data.rates.USD) {
-            const liveUsdRate = data.rates.USD;
+        const usd = data && data.rate;
+        if (typeof usd === 'number' && usd > 0) {
             const inputFx = document.getElementById('input-fx');
-            if (inputFx) inputFx.value = liveUsdRate.toFixed(4);
-            if (statusTag) {
-                statusTag.innerText = 'Live Daily Updated';
-                statusTag.className = 'text-[9px] text-emerald-400 font-mono ml-1';
-            }
+            if (inputFx) inputFx.value = String(usd);
             renderTable();
         }
     } catch (err) {
