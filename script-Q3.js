@@ -1995,6 +1995,23 @@ async function exportPurchaseOrderPDF() {
     doc.save('Customer_Quotation_' + safeCompanyName + '_' + quote.fileDate + '.pdf');
 }
 
+async function fetchLiveFxRate() {
+    try {
+        const response = await fetch('/api/fx');
+        if (!response.ok) throw new Error('FX fetch failed');
+        const data = await response.json();
+        const usd = data && data.rate;
+        if (typeof usd === 'number' && usd > 0) {
+            const inputFx = document.getElementById('input-fx');
+            if (inputFx) inputFx.value = String(usd);
+            renderTable();
+        }
+    } catch (err) {
+        console.warn('FX Rate fetch fallback activated:', err);
+    }
+}
+
+
 async function tpgaBoot() {
     bindCustomerQuotationInputs();
     try {
@@ -2009,7 +2026,9 @@ async function tpgaBoot() {
     if (typeof populateCustomerDropdown === 'function') populateCustomerDropdown();
     try { updateOpExFromInputs(); } catch (err) { console.warn('OpEx calculation warning:', err); }
     if (typeof renderTable === 'function') renderTable();
+    fetchLiveFxRate();
 }
+
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', tpgaBoot);
 else tpgaBoot();
 
